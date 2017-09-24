@@ -8,6 +8,7 @@
 	<style type="text/css">
 		.clickEffect {
 			cursor: pointer;
+			color: #ffffff;
 		}
 	</style>
 	<title>资源管理</title>
