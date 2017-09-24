@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="eap:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="springmvc-study.war">
+      <element id="artifact" artifact-name="eap:war exploded" />
+    </root>
+  </artifact>
+</component>

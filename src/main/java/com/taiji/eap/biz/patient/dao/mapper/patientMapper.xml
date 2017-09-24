@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.patient.dao.PatientDao">
+    <select id="getPatients" parameterType="string" resultType="com.taiji.eap.biz.patient.entity.Patient">
+        select * from v_patients where pp_wardcode = #{area_id}
+    </select>
+</mapper>
