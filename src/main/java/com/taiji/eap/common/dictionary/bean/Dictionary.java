@@ -31,14 +31,19 @@ public class Dictionary extends BaseModel{
     @DateTimeFormat(pattern = "yyyy-MM-dd")//存日期时使用
     private Date updateTime;//修改时间
     private String valid;
-    private String creater;
+    private Long creater;
 
     public Dictionary(String keystone, String value) {
         this.keystone = keystone;
         this.value = value;
     }
 
-    public Dictionary(Long dicId, String keystone, String value, String param1, String param2, String param3, String param4, String param5, String param6, String param7, Long parentId, Integer seq, Date createTime, Date updateTime, String valid, String creater) {
+    public Dictionary(Long dicId, String value) {
+        this.dicId = dicId;
+        this.value = value;
+    }
+
+    public Dictionary(Long dicId, String keystone, String value, String param1, String param2, String param3, String param4, String param5, String param6, String param7, Long parentId, Integer seq, Date createTime, Date updateTime, String valid, Long creater) {
         this.dicId = dicId;
         this.keystone = keystone;
         this.value = value;
@@ -180,17 +185,17 @@ public class Dictionary extends BaseModel{
         this.valid = valid;
     }
 
-    public String getCreater() {
+    public Long getCreater() {
         return creater;
     }
 
-    public void setCreater(String creater) {
+    public void setCreater(Long creater) {
         this.creater = creater;
     }
 
     @Override
     public String toString() {
-        return "Dictionary{" +
+        return "DictionaryController{" +
                 "dicId=" + dicId +
                 ", keystone='" + keystone + '\'' +
                 ", value='" + value + '\'' +

@@ -6,10 +6,6 @@
 <html>
 <head>
 	<style type="text/css">
-		.clickEffect {
-			cursor: pointer;
-			color: #ffffff;
-		}
 	</style>
 	<title>资源管理</title>
 </head>
@@ -35,7 +31,7 @@
         var form =  layui.form;
 
         $("#addBtn").click(function () {
-            showModel("新增资源","${pageContext.request.contextPath}/resource/link?url=system/setting/resource/add&resourceId=0");
+            showModel("新增资源","${pageContext.request.contextPath}/resource/link?url=system/setting/resource/form&resourceId=0");
         });
 
         //弹出录入框
@@ -126,7 +122,7 @@
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("新增资源","${pageContext.request.contextPath}/resource/link?url=system/setting/resource/add&resourceId="+row.resourceId);
+                            showModel("新增资源","${pageContext.request.contextPath}/resource/link?url=system/setting/resource/form&resourceId="+row.resourceId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

@@ -32,7 +32,12 @@ public class DicSelectTag extends TagSupport{
     @Override
     public int doEndTag() throws JspException {
         dictionaryService = (DictionaryService) SpringContextUtil.getBean("dictionaryService");
-        List<Dictionary> dictionaries = dictionaryService.selectByPid(0L);
+        List<Dictionary> dictionaries = null;
+        try {
+            dictionaries = dictionaryService.listByPid(getParentId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         StringBuffer sb = new StringBuffer();
         JspWriter out = pageContext.getOut();
 

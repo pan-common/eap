@@ -15,7 +15,7 @@
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 		<result column="valid" property="valid" jdbcType="VARCHAR" />
-		<result column="creater" property="creater" jdbcType="INTEGER" />
+		<result column="creater" property="creater" jdbcType="DECIMAL" />
 	</resultMap>
 
 	<select id="selectMenuByPuriewIds" resultMap="BaseResultMap">

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.dictionary.dao.DictionaryDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.dictionary.bean.Dictionary">
+        <id column="dic_id" property="dicId" jdbcType="DECIMAL"></id>
+        <result column="keystone" property="keystone" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="param1" property="param1" jdbcType="VARCHAR" />
+        <result column="param2" property="param2" jdbcType="VARCHAR" />
+        <result column="param3" property="param3" jdbcType="VARCHAR" />
+        <result column="param4" property="param4" jdbcType="VARCHAR" />
+        <result column="param5" property="param5" jdbcType="VARCHAR" />
+        <result column="param6" property="param6" jdbcType="VARCHAR" />
+        <result column="param7" property="param7" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_dictionary
+        <where>
+            valid = '1'
+            <if test="searchText!=null and searchText!=''">
+
+            </if>
+        </where>
+    </select>
+
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_dictionary
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL} AND valid = '1'
+            <if test="searchText!=null and searchText!=''">
+
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_dictionary WHERE dic_id = #{dicId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.dictionary.bean.Dictionary">
+        <selectKey resultType="java.lang.Long" keyProperty="dicId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS dic_id
+        </selectKey>
+        INSERT INTO t_sys_dictionary(dic_id,keystone,value,param1,param2,param3,param4,param5,
+        param6,param7,parent_id,seq,create_time,update_time,valid,creater)
+        VALUES (
+        #{dicId,jdbcType=DECIMAL},
+        #{keystone,jdbcType=VARCHAR},
+        #{value,jdbcType=VARCHAR},
+        #{param1,jdbcType=VARCHAR},
+        #{param2,jdbcType=VARCHAR},
+        #{param3,jdbcType=VARCHAR},
+        #{param4,jdbcType=VARCHAR},
+        #{param5,jdbcType=VARCHAR},
+        #{param6,jdbcType=VARCHAR},
+        #{param7,jdbcType=VARCHAR},
+        #{parentId,jdbcType=DECIMAL},
+        #{seq,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{valid,jdbcType=VARCHAR},
+        #{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.dictionary.bean.Dictionary">
+        UPDATE t_sys_dictionary SET
+        keystone = #{keystone,jdbcType=VARCHAR},
+        value = #{value,jdbcType=VARCHAR},
+        param1 =  #{param1,jdbcType=VARCHAR},
+        param2 =  #{param2,jdbcType=VARCHAR},
+        param3 =  #{param3,jdbcType=VARCHAR},
+        param4 =  #{param4,jdbcType=VARCHAR},
+        param5 =  #{param5,jdbcType=VARCHAR},
+        param6 =  #{param6,jdbcType=VARCHAR},
+        param7 =  #{param7,jdbcType=VARCHAR},
+        parent_id =  #{parentId,jdbcType=VARCHAR},
+        seq = #{seq,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        valid = #{valid,jdbcType=VARCHAR},
+        creater =  #{creater,jdbcType=DECIMAL}
+       WHERE dic_id = #{dicId,jdbcType=DECIMAL}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        UPDATE t_sys_dictionary SET valid = '2' WHERE dic_id = #{dicId,jdbcType=DECIMAL}
+    </update>
+</mapper>

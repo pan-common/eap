@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component LANGUAGE_LEVEL="JDK_1_6" jdk="1.8" jdk_type="JavaSDK">
+<component LANGUAGE_LEVEL="JDK_1_6" inheritJdk="true">
 	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
 	<contentEntry url="file://$MODULE_DIR$">
 		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
@@ -27,6 +27,7 @@
 		<level name="Maven: org.springframework:spring-context-support:4.3.7.RELEASE" value="project"/>
 		<level name="Maven: org.springframework:spring-oxm:4.3.7.RELEASE" value="project"/>
 		<level name="Maven: org.aspectj:aspectjrt:1.6.10" value="project"/>
+		<level name="Maven: org.aspectj:aspectjweaver:1.5.4" value="project"/>
 		<level name="Maven: org.slf4j:slf4j-api:1.6.6" value="project"/>
 		<level name="Maven: org.slf4j:jcl-over-slf4j:1.6.6" value="project"/>
 		<level name="Maven: org.slf4j:slf4j-log4j12:1.6.6" value="project"/>
