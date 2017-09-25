@@ -1,6 +1,7 @@
 package com.taiji.eap.common.shiro.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -82,10 +83,11 @@ public class SysResourceServiceImpl implements SysResourceService{
 	@Override
 	public List<SysResource> getPath(Long resourceId) {
 		List<SysResource> list = new ArrayList<SysResource>();
-		list.add(new SysResource(0L, "资源管理"));
 		if(resourceId!=0){
 			disPlay(resourceId, list);
 		}
+		list.add(new SysResource(0L, "资源管理"));
+		Collections.reverse(list);
 		return list;
 	}
 
@@ -120,7 +122,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 	private void disPlay(Long resourceId,List<SysResource> list){
 		SysResource sysResource = sysResourceDao.selectByPrimaryKey(resourceId);
 		if(sysResource!=null){
-			list.add(list.size(), sysResource);
+			list.add(sysResource);
 			disPlay(sysResource.getParentId(), list);
 		}
 	}

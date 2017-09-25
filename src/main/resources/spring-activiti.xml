@@ -6,7 +6,7 @@
 	<!-- Activiti处理引擎的配置，交由Spring管理 -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<!-- 配置数据源,和系统使用同一个数据源 -->
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="jobExecutorActivate" value="true" />
 		<!-- 统一的事务管理 -->

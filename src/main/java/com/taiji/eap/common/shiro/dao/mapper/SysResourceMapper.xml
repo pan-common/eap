@@ -82,9 +82,9 @@
 		UPDATE t_qx_resource SET name = #{name,jdbcType=VARCHAR},parent_id = #{parentId,jdbcType=DECIMAL},
 		type_code = #{typeCode,jdbcType=VARCHAR},type_desc = #{typeDesc,jdbcType=VARCHAR},
 		icon = #{icon,jdbcType=VARCHAR},link = #{link,jdbcType=VARCHAR},seq = #{seq,jdbcType=INTEGER},
-		note = #{note,jdbcType=VARCHAR},create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP},valid = #{valid,jdbcType=VARCHAR},
-		creater = #{creater,jdbcType=DECIMAL} WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
+		note = #{note,jdbcType=VARCHAR},update_time = #{updateTime,jdbcType=TIMESTAMP},
+		valid = #{valid,jdbcType=VARCHAR},creater = #{creater,jdbcType=DECIMAL}
+		WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
 	</update>
 	<update id="delete" parameterType="java.lang.Long">
 		UPDATE t_qx_resource SET valid = '2'  WHERE resource_id = #{resourceId,jdbcType=DECIMAL}

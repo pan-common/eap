@@ -85,6 +85,9 @@
                     title : "序号",
                     field : "seq",
                 },{
+                    title : "ID",
+                    field : "dicId",
+                },{
                     title : "键",
                     field : "keystone"
                 },{
@@ -147,23 +150,31 @@
     });
 
     function del(dic_id) {
-        $.post('${pageContext.request.contextPath}/dictionary/delete',
-            {
-                dicId : dic_id
-            },
-            function (data, status) {
-                if (status == "success") {
-                    if (data.body.resultCode == "0") {
-                        refreshTable();
+        layer.confirm("该操作将删除节点下全部数据，请确认？",{
+            btn: ['确定','取消'],
+            offset: '150px',
+        },function () {
+            $.post('${pageContext.request.contextPath}/dictionary/delete',
+                {
+                    dicId : dic_id
+                },
+                function (data, status) {
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            refreshTable();
+                        }else {
+                            layer.msg(data.body.resultContent);
+                        }
                     }else {
-                        layer.msg(data.body.resultContent);
+                        layer.msg("网络错误");
                     }
-                }else {
-                    layer.msg("网络错误");
-                }
-            }).error(function (e) {
-            layer.msg("网络错误："+e.status);
-        })
+                }).error(function (e) {
+                layer.msg("网络错误："+e.status);
+            })
+        },function () {
+            
+        });
+
     }
 
     function loadPath() {

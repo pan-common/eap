@@ -28,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择资源类型</label>
         <div class="layui-input-block" style="margin-right: 10px">
-            <dic:selectTag parentId="0" id="typeCode" selectName="typeCode" layfilter="typeCode"/>
+            <dic:selectTag parentId="23" id="typeCode" selectedValue="01" selectName="typeCode" layfilter="typeCode"/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -66,6 +66,9 @@
     layui.use(['form'],function () {
         var form = layui.form();
         form.render('select','form');
+
+        $("#typeDesc").val($("#typeCode").find("option:selected").text());
+
         if(resourceId){
             url = "${pageContext.request.contextPath}/resource/edit";
             $.get("${pageContext.request.contextPath}/resource/selectOne",{

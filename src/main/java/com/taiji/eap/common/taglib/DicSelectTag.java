@@ -46,6 +46,9 @@ public class DicSelectTag extends TagSupport{
         if (!StringUtils.isEmpty(this.getCssClass())){
             sb.append("class=\"" + this.getCssClass() + "\"");
         }
+        if(!StringUtils.isEmpty(this.getValue())){
+            sb.append("value=\"" + this.getValue() + "\"");
+        }
         if(!StringUtils.isEmpty(this.getStyleClass())){
             sb.append("style=\"" + this.getStyleClass() + "\"");
         }

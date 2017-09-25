@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.generator.dao.GeneratorDao">
-
 	<resultMap type="com.taiji.eap.common.generator.bean.Table" id="BaseResultMap">
-	    <result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />
-	    <result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
-	    <result column="TABLE_TYPE" property="tableType" jdbcType="VARCHAR" />
-	    <result column="TABLE_COMMENT" property="tableComment" jdbcType="VARCHAR" />
+		<result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />
+		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+		<result column="TABLE_TYPE" property="tableType" jdbcType="VARCHAR" />
+		<result column="TABLE_COMMENT" property="tableComment" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<select id="selectTables" resultMap="BaseResultMap">
 		select * from
 		information_schema.`TABLES` where TABLE_SCHEMA = 'court'
 	</select>
-
 </mapper>

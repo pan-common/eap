@@ -43,9 +43,18 @@
 		<property name="logAbandoned" value="${logAbandoned}" />
 	</bean>
 
+	<bean id="dynamicDataSource" class="com.taiji.eap.common.datasource.base.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="defaultDataSource" value-ref="dataSource"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSource"></property>
+	</bean>
+
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dynamicDataSource" />
 		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations">
@@ -75,7 +84,7 @@
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dynamicDataSource" />
 	</bean>
 
 	<!-- 开启事务控制的注解支持 -->

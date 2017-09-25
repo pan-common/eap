@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service("dictionaryService")
@@ -63,17 +64,18 @@ public class DictionaryServiceImpl implements DictionaryService{
     @Override
     public List<Dictionary> getPath(Long dicId) throws Exception {
         List<Dictionary> list = new ArrayList<Dictionary>();
-        list.add(new Dictionary(0L,"数据字典"));
         if(dicId!=0){
             disPlay(dicId, list);
         }
+        list.add(new Dictionary(0L,"数据字典"));
+        Collections.reverse(list);
         return list;
     }
 
     private void disPlay(Long dicId,List<Dictionary> list){
         Dictionary dictionary = dictionaryDao.selectByPrimaryKey(dicId);
         if(dictionary!=null){
-            list.add(list.size(), dictionary);
+            list.add(dictionary);
             disPlay(dictionary.getParentId(), list);
         }
     }
