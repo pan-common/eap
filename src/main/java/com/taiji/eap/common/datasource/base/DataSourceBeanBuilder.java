@@ -4,6 +4,7 @@ public class DataSourceBeanBuilder {
 
     private static final String URL_FORMATTER="jdbc:mysql://%s:%s/%s?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;failOverReadOnly=false";
     private String driverClassName="com.mysql.jdbc.Driver";
+    private final String connectName;
     private final String beanName;
     private final String databaseIP;
     private final String databasePort;
@@ -13,14 +14,16 @@ public class DataSourceBeanBuilder {
     private String validationQuery="select 1";
     private boolean testOnBorrow=true;
 
-    public DataSourceBeanBuilder(String beanName,String databaseIP,String databasePort,String databaseName,String username,String password){
-        this.beanName=beanName;
-        this.databaseIP=databaseIP;
-        this.databasePort=databasePort;
-        this.databaseName=databaseName;
-        this.username=username;
-        this.password=password;
+    public DataSourceBeanBuilder(String connectName, String beanName, String databaseIP, String databasePort, String databaseName, String username, String password) {
+        this.connectName = connectName;
+        this.beanName = beanName;
+        this.databaseIP = databaseIP;
+        this.databasePort = databasePort;
+        this.databaseName = databaseName;
+        this.username = username;
+        this.password = password;
     }
+
     public DataSourceBeanBuilder driverClassName(String value){
         this.driverClassName=value;
         return this;
@@ -62,6 +65,18 @@ public class DataSourceBeanBuilder {
 
     public String getBeanName() {
         return beanName;
+    }
+
+    public String getConnectName() {
+        return connectName;
+    }
+
+    public String getDatabaseIP() {
+        return databaseIP;
+    }
+
+    public String getDatabaseName() {
+        return databaseName;
     }
 
     @Override

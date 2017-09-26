@@ -1,73 +1,108 @@
 package com.taiji.eap.common.generator.bean;
 /**
- * 数据库表中列的实体类
  * @author panho
  *
  */
 public class Column {
 	
-	private String tableSchema;//表空间
-	private String tableName;//表名
-	private String columnName;//列名
-	private String isNullAble;//是否可以为空
-	private String dateType;//数据类型
-	private String columnKey;//是否为 键PRI主键约束；UNI唯一约束；MUL可以重复。
-	
-	public Column(String tableSchema, String tableName, String columnName,
-			String isNullAble, String dateType, String columnKey) {
-		super();
+	private String tableSchema;//鏁版嵁搴撳悕
+	private String tableName;//琛ㄥ悕
+	private String columnName;//鍒楀悕
+	private String isNullAble;//鏄惁涓虹┖
+	private String ordinalPosition;//鎺掑簭
+	private String dateType;//鏁版嵁绫诲瀷
+	private String columnKey;//涓婚敭
+	private String columnComment;//娉ㄩ噴
+
+	public Column(String tableSchema, String tableName, String columnName, String isNullAble, String ordinalPosition, String dateType, String columnKey, String columnComment) {
 		this.tableSchema = tableSchema;
 		this.tableName = tableName;
 		this.columnName = columnName;
 		this.isNullAble = isNullAble;
+		this.ordinalPosition = ordinalPosition;
 		this.dateType = dateType;
 		this.columnKey = columnKey;
+		this.columnComment = columnComment;
 	}
+
 	public Column() {
-		super();
 	}
+
 	public String getTableSchema() {
 		return tableSchema;
 	}
+
 	public void setTableSchema(String tableSchema) {
 		this.tableSchema = tableSchema;
 	}
+
 	public String getTableName() {
 		return tableName;
 	}
+
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
+
 	public String getColumnName() {
 		return columnName;
 	}
+
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;
 	}
+
 	public String getIsNullAble() {
 		return isNullAble;
 	}
+
 	public void setIsNullAble(String isNullAble) {
 		this.isNullAble = isNullAble;
 	}
+
+	public String getOrdinalPosition() {
+		return ordinalPosition;
+	}
+
+	public void setOrdinalPosition(String ordinalPosition) {
+		this.ordinalPosition = ordinalPosition;
+	}
+
 	public String getDateType() {
 		return dateType;
 	}
+
 	public void setDateType(String dateType) {
 		this.dateType = dateType;
 	}
+
 	public String getColumnKey() {
 		return columnKey;
 	}
+
 	public void setColumnKey(String columnKey) {
 		this.columnKey = columnKey;
 	}
+
+	public String getColumnComment() {
+		return columnComment;
+	}
+
+	public void setColumnComment(String columnComment) {
+		this.columnComment = columnComment;
+	}
+
 	@Override
 	public String toString() {
-		return "Column [tableSchema=" + tableSchema + ", tableName="
-				+ tableName + ", columnName=" + columnName + ", isNullAble="
-				+ isNullAble + ", dateType=" + dateType + ", columnKey="
-				+ columnKey + "]";
+		return "Column{" +
+				"tableSchema='" + tableSchema + '\'' +
+				", tableName='" + tableName + '\'' +
+				", columnName='" + columnName + '\'' +
+				", isNullAble='" + isNullAble + '\'' +
+				", ordinalPosition='" + ordinalPosition + '\'' +
+				", dateType='" + dateType + '\'' +
+				", columnKey='" + columnKey + '\'' +
+				", columnComment='" + columnComment + '\'' +
+				'}';
 	}
-	
 }

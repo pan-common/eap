@@ -4,50 +4,61 @@ package com.taiji.eap.common.generator.bean;
  * @author panho
  *
  */
-public class Table {
-	private String tableSchema;//表所属库
-	private String tableName;//表名
-	private String tableType;//表类型
-	private String tableComment;//表注释
-	public Table(String tableSchema, String tableName, String tableType,
-			String tableComment) {
-		super();
-		this.tableSchema = tableSchema;
-		this.tableName = tableName;
-		this.tableType = tableType;
-		this.tableComment = tableComment;
+public class Table extends LayuiTree{
+	private String tSchema;//表所属库
+	private String tName;//表名
+	private String tType;//表类型
+	private String tComment;//表注释
+
+	public Table(String tSchema, String tName, String tType, String tComment) {
+		this.tSchema = tSchema;
+		this.tName = tName;
+		this.tType = tType;
+		this.tComment = tComment;
 	}
+
 	public Table() {
-		super();
 	}
-	public String getTableSchema() {
-		return tableSchema;
+
+	public String gettSchema() {
+		return tSchema;
 	}
-	public void setTableSchema(String tableSchema) {
-		this.tableSchema = tableSchema;
+
+	public void settSchema(String tSchema) {
+		this.tSchema = tSchema;
 	}
-	public String getTableName() {
-		return tableName;
+
+	public String gettName() {
+		return tName;
 	}
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
+
+	public void settName(String tName) {
+		this.tName = tName;
 	}
-	public String getTableType() {
-		return tableType;
+
+	public String gettType() {
+		return tType;
 	}
-	public void setTableType(String tableType) {
-		this.tableType = tableType;
+
+	public void settType(String tType) {
+		this.tType = tType;
 	}
-	public String getTableComment() {
-		return tableComment;
+
+	public String gettComment() {
+		return tComment;
 	}
-	public void setTableComment(String tableComment) {
-		this.tableComment = tableComment;
+
+	public void settComment(String tComment) {
+		this.tComment = tComment;
 	}
+
 	@Override
 	public String toString() {
-		return "Table [tableSchema=" + tableSchema + ", tableName=" + tableName
-				+ ", tableType=" + tableType + ", tableComment=" + tableComment
-				+ "]";
+		return "Table{" +
+				"tSchema='" + tSchema + '\'' +
+				", tName='" + tName + '\'' +
+				", tType='" + tType + '\'' +
+				", tComment='" + tComment + '\'' +
+				'}';
 	}
 }

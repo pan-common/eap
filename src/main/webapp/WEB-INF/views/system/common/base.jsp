@@ -18,6 +18,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/eap/base/image/computer.png" type="image/x-icon" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-table/css/bootstrap-table.min.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/layui/css/layui.css" media="all" />

@@ -1,0 +1,31 @@
+#parse("velocity/common.vm" )
+package com.taiji.eap.biz.${param.alias}.bean;
+
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.taiji.eap.common.base.BaseModel;
+
+public class #toUpperCase(${param.alias}) extends BaseModel{
+## 生成属性
+#foreach($column in $columns)
+#if(${column.dateType}=="datetime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")  //取日期时使用
+    @DateTimeFormat(pattern = "yyyy-MM-dd")//存日期时使用
+#end
+    private #toFieldType(${column.dateType}) #camel(${column.columnName});//${column.columnComment}
+#end
+## 生成get set方法
+#foreach($column in $columns)
+
+    public #toFieldType(${column.dateType}) get#camelToUpperCase(${column.columnName})() {
+        return #camel(${column.columnName});
+    }
+
+    public void set#camelToUpperCase(${column.columnName})(#toFieldType(${column.dateType}) #camel(${column.columnName})) {
+        this.#camel(${column.columnName}) = #camel(${column.columnName});
+    }
+
+#end
+
+}

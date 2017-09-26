@@ -1,61 +1,77 @@
 package com.taiji.eap.common.generator.bean;
 
-public class DataSource {
+import com.taiji.eap.common.datasource.base.DataSourceBeanBuilder;
 
-    private String driver;
-    private String url;
-    private String username;
-    private String password;
+public class DataSource extends LayuiTree{
 
-    public DataSource(String driver, String url, String username, String password) {
-        this.driver = driver;
-        this.url = url;
-        this.username = username;
-        this.password = password;
+    private final String beanName;
+    private final String connectName;
+    private final String driverClassName;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final String validationQuery;
+    private final String databaseName;
+    private final boolean testOnBorrow;
+
+    public DataSource(DataSourceBeanBuilder beanBuilder){
+        this.beanName=beanBuilder.getBeanName();
+        this.connectName = beanBuilder.getConnectName();
+        this.driverClassName=beanBuilder.getDriverClassName();
+        this.url=beanBuilder.getUrl();
+        this.password=beanBuilder.getPassword();
+        this.testOnBorrow=beanBuilder.isTestOnBorrow();
+        this.username=beanBuilder.getUsername();
+        this.validationQuery=beanBuilder.getValidationQuery();
+        this.databaseName = beanBuilder.getDatabaseName();
     }
 
-    public DataSource() {
+    public String getBeanName() {
+        return beanName;
     }
 
-    public String getDriver() {
-        return driver;
+    public String getConnectName() {
+        return connectName;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+    public String getDriverClassName() {
+        return driverClassName;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getDatabaseName() {
+        return databaseName;
     }
+
+    public String getValidationQuery() {
+        return validationQuery;
+    }
+
+    public boolean isTestOnBorrow() {
+        return testOnBorrow;
+    }
+
 
     @Override
     public String toString() {
-        return "DataSourceService{" +
-                "driver='" + driver + '\'' +
+        return "DataSourceBean{" +
+                "driverClassName='" + driverClassName + '\'' +
                 ", url='" + url + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", validationQuery='" + validationQuery + '\'' +
+                ", testOnBorrow=" + testOnBorrow +
                 '}';
     }
 }

@@ -1,9 +1,7 @@
 package com.taiji.eap.common.shiro.bean;
 
 import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 /**

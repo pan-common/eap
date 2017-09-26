@@ -1,6 +1,7 @@
 package com.taiji.eap.common.datasource.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.taiji.eap.common.generator.bean.DataSource;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -33,12 +34,12 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         if(dataSourceBeanBuilder==null){
             return null;
         }
-        DataSourceBean dataSourceBean = new DataSourceBean(dataSourceBeanBuilder);
+        DataSource dataSource = new DataSource(dataSourceBeanBuilder);
         try {
             Map<Object,Object> map = getTargetDataSources();
             synchronized (map){
-                if(!map.containsKey(dataSourceBean.getBeanName())){
-                    map.put(dataSourceBean.getBeanName(),createDataSource(dataSourceBean));
+                if(!map.containsKey(dataSource.getBeanName())){
+                    map.put(dataSource.getBeanName(),createDataSource(dataSource));
                     super.afterPropertiesSet();//通知spring有bean更新
                 }
             }
@@ -50,11 +51,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         return null;
     }
 
-    private Object createDataSource(DataSourceBean dataSourceBean) throws IllegalAccessException {
+    private Object createDataSource(DataSource dataSourceBean) throws IllegalAccessException {
         ConfigurableApplicationContext context = (ConfigurableApplicationContext) applicationContext;
         DefaultListableBeanFactory factory = (DefaultListableBeanFactory) context.getBeanFactory();
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DruidDataSource.class);
-        Map<String,Object> properties = getPropertyKeyValues(DataSourceBean.class,dataSourceBean);
+        Map<String,Object> properties = getPropertyKeyValues(DataSource.class,dataSourceBean);
         for (Map.Entry<String,Object> entry:properties.entrySet()){
             beanDefinitionBuilder.addPropertyValue(entry.getKey(),entry.getValue());
         }

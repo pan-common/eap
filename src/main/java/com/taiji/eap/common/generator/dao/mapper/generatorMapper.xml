@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.generator.dao.GeneratorDao">
-	<resultMap type="com.taiji.eap.common.generator.bean.Table" id="BaseResultMap">
-		<result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />
-		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
-		<result column="TABLE_TYPE" property="tableType" jdbcType="VARCHAR" />
-		<result column="TABLE_COMMENT" property="tableComment" jdbcType="VARCHAR" />
+	<resultMap id="TableResultMap" type="com.taiji.eap.common.generator.bean.Table">
+		<result column="TABLE_SCHEMA" property="tSchema" jdbcType="VARCHAR" />
+		<result column="TABLE_NAME" property="tName" jdbcType="VARCHAR" />
+		<result column="TABLE_TYPE" property="tType" jdbcType="VARCHAR" />
+		<result column="TABLE_COMMENT" property="tComment" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<select id="selectTables" resultMap="BaseResultMap">
-		select * from
-		information_schema.`TABLES` where TABLE_SCHEMA = 'court'
+	<resultMap id="ColumResultMap" type="com.taiji.eap.common.generator.bean.Column">
+		<result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />
+		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+		<result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
+		<result column="ORDINAL_POSITION" property="ordinalPosition" jdbcType="VARCHAR" />
+		<result column="IS_NULLABLE" property="isNullAble" jdbcType="VARCHAR" />
+		<result column="DATA_TYPE" property="dateType" jdbcType="VARCHAR" />
+		<result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR" />
+		<result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectTables" resultMap="TableResultMap">
+		select TABLE_SCHEMA,TABLE_NAME,TABLE_TYPE,TABLE_COMMENT from information_schema.`TABLES`
+        where  TABLE_SCHEMA = 'eap' and TABLE_NAME  like 't_%';
+	</select>
+
+	<select id="selectColums" resultMap="ColumResultMap">
+		select TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,IS_NULLABLE,
+		DATA_TYPE,COLUMN_KEY,COLUMN_COMMENT
+		from information_schema.columns
+		where TABLE_SCHEMA = #{schema,jdbcType=VARCHAR} and TABLE_NAME = #{table,jdbcType=VARCHAR}
 	</select>
 </mapper>

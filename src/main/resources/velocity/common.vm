@@ -1,0 +1,38 @@
+## 驼峰命名法转换
+#macro(camel $word)
+#set ($array = $word.split("_"))
+#set ($camelWord = "")
+#foreach($item in $!{array})
+#set ($camelWord=$camelWord+$item.substring(0,1).toUpperCase()+$item.substring(1,$item.length()))
+#end
+#set ($camelWord=$camelWord.substring(0,1).toLowerCase()+$camelWord.substring(1,$camelWord.length()))
+${camelWord}##
+#end
+##驼峰命名法转换+首字母大写
+#macro(camelToUpperCase $word)
+#set ($array = $word.split("_"))
+#set ($camelWord = "")
+#foreach($item in $!{array})
+#set ($camelWord=$camelWord+$item.substring(0,1).toUpperCase()+$item.substring(1,$item.length()))
+#end
+#set ($camelWord=$camelWord.substring(0,1).toLowerCase()+$camelWord.substring(1,$camelWord.length()))
+#set ($newWord=${camelWord.substring(0,1).toUpperCase()}+${camelWord.substring(1,$camelWord.length())})
+${newWord}##
+#end
+## 大小写字母转换
+#macro(toUpperCase $word)
+#set ($newWord=${word.substring(0,1).toUpperCase()}+${word.substring(1,$word.length())})
+${newWord}##
+#end
+##数据库字段类型转java字段类型
+#macro(toFieldType $fieldType)
+#if($!fieldType=="varchar")
+String##
+#elseif($!fieldType=="bigint")
+Long##
+#elseif($!fieldType=="int")
+Integer##
+#elseif($!fieldType=="datetime")
+Date##
+#end
+#end
