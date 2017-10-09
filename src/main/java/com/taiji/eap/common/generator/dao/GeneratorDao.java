@@ -15,6 +15,13 @@ public interface GeneratorDao {
 	public List<Table> selectTables(@Param("schema") String schema);
 
 	/**
+	 * 查询数据库下全部视图
+	 * @param schema
+	 * @return
+	 */
+	public List<Table> selectViews(@Param("schema") String schema);
+
+	/**
 	 * 查询表总全部列
 	 * @param schema
 	 * @param table

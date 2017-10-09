@@ -17,6 +17,8 @@ public abstract class LayuiTree {
 
     public static final String DICTIONARY = "05";
 
+    public static final String OTHER = "255";
+
     protected String name;
 
     protected boolean spread;

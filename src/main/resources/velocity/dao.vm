@@ -1,0 +1,22 @@
+#parse("velocity/common.vm" )
+#set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($daoPackage = "#getDaoPackage(${param.packageName}${param.alias}${param.aliasUse})")
+package ${daoPackage};
+
+import ${beanPackage}.#toUpperCase(${param.alias});
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
+
+public interface #toUpperCase(${param.alias})Dao {
+
+    int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey);
+
+    int insert(#toUpperCase(${param.alias}) ${param.alias});
+
+    #toUpperCase(${param.alias}) selectByPrimaryKey(#getPkFieldType($columns) primaryKey);
+
+    int updateByPrimaryKey(#toUpperCase(${param.alias}) ${param.alias});
+
+    List<#toUpperCase(${param.alias})> list(@Param("searchText") String searchText);
+
+}

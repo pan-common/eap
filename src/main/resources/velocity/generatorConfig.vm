@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+#parse("velocity/common.vm" )
+#set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($daoPackage = "#getDaoPackage(${param.packageName}${param.alias}${param.aliasUse})")
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <!--<properties resource="init.properties"/>-->
+    <!-- 一个数据库一个context -->
+    <context id="my" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${param.driverClass}"
+                        connectionURL="${param.connectionURL}"
+                        userId="${param.userId}"
+                        password="${param.password}"/>
+        <!-- 生成实体类地址 -->
+        <javaModelGenerator targetPackage="${beanPackage}" targetProject="${param.projectPath}">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.taiji.eap.common.base.BaseModel"/>
+        </javaModelGenerator>
+        <!-- 生成mapper文件 -->
+        <sqlMapGenerator targetPackage="${daoPackage}.mapper" targetProject="${param.projectPath}">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成mapxml文件 -->
+        <javaClientGenerator targetPackage="${daoPackage}" targetProject="${param.projectPath}" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 配置表信息 -->
+        <!--下面你可以重复添加对应多个表-->
+        <!--后面选项：是否生成 example类 -->
+        <table tableName="${param.tableName}" domainObjectName="#toUpperCase(${param.alias})"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="#getPkColumn($columns)" sqlStatement="SELECT LAST_INSERT_ID()" />
+        </table>
+    </context>
+</generatorConfiguration>

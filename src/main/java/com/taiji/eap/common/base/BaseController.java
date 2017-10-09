@@ -4,6 +4,7 @@ import com.sun.beans.editors.IntegerEditor;
 import com.sun.beans.editors.LongEditor;
 import com.taiji.eap.common.base.propertyeditors.DoubleEditor;
 import com.taiji.eap.common.base.propertyeditors.FloatEditor;
+import com.taiji.eap.common.base.propertyeditors.StringArrayEditor;
 import com.taiji.eap.common.base.propertyeditors.StringEscapeEditor;
 import com.taiji.eap.common.http.entity.Response;
 import com.taiji.eap.common.http.methods.HttpResponseHelper;

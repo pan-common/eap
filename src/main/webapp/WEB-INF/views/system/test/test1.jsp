@@ -9,26 +9,23 @@
     <title></title>
 </head>
 <body>
-<table>
-    <tr>
-        <td><label class="layui-form-label">包名包名</label></td>
-        <td><input type="text" name="packageName" required  lay-verify="required"  class="layui-input"></td>
-        <td style="padding: 2px"><button id="1" class="layui-btn layui-btn-small">选择</button></td>
-
-        <td><label class="layui-form-label">包名</label></td>
-        <td><input type="text" name="packageName" required  lay-verify="required"  class="layui-input"></td>
-        <td style="padding: 2px"><button id="2" class="layui-btn layui-btn-small">选择</button></td>
-    </tr>
-    <tr>
-        <td><label class="layui-form-label">包名</label></td>
-        <td><input type="text" name="packageName" required  lay-verify="required"  class="layui-input"></td>
-        <td style="padding: 2px"><button id="3" class="layui-btn layui-btn-small">选择</button></td>
-
-        <td><label class="layui-form-label">包名</label></td>
-        <td><input type="text" name="packageName" required  lay-verify="required"  class="layui-input"></td>
-        <td style="padding: 2px"><button id="4" class="layui-btn layui-btn-small">选择</button></td>
-    </tr>
-</table>
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>用户管理</li>
+        <li>权限分配</li>
+        <li>商品管理</li>
+        <li>订单管理</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">1</div>
+        <div class="layui-tab-item">2</div>
+        <div class="layui-tab-item">3</div>
+        <div class="layui-tab-item">4</div>
+        <div class="layui-tab-item">5</div>
+        <div class="layui-tab-item">6</div>
+    </div>
+</div>
 </body>
 <script type="text/javascript">
     layui.use([ 'layer', 'form' ], function(layer, form) {

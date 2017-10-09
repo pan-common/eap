@@ -10,17 +10,17 @@ public class Column {
 	private String columnName;//列名
 	private String isNullAble;//是否为空
 	private String ordinalPosition;//排序
-	private String dateType;//数据类型
+	private String dataType;//数据类型
 	private String columnKey;//主键
 	private String columnComment;//注释
 
-	public Column(String tableSchema, String tableName, String columnName, String isNullAble, String ordinalPosition, String dateType, String columnKey, String columnComment) {
+	public Column(String tableSchema, String tableName, String columnName, String isNullAble, String ordinalPosition, String dataType, String columnKey, String columnComment) {
 		this.tableSchema = tableSchema;
 		this.tableName = tableName;
 		this.columnName = columnName;
 		this.isNullAble = isNullAble;
 		this.ordinalPosition = ordinalPosition;
-		this.dateType = dateType;
+		this.dataType = dataType;
 		this.columnKey = columnKey;
 		this.columnComment = columnComment;
 	}
@@ -68,12 +68,12 @@ public class Column {
 		this.ordinalPosition = ordinalPosition;
 	}
 
-	public String getDateType() {
-		return dateType;
+	public String getDataType() {
+		return dataType;
 	}
 
-	public void setDateType(String dateType) {
-		this.dateType = dateType;
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
 	}
 
 	public String getColumnKey() {
@@ -100,7 +100,7 @@ public class Column {
 				", columnName='" + columnName + '\'' +
 				", isNullAble='" + isNullAble + '\'' +
 				", ordinalPosition='" + ordinalPosition + '\'' +
-				", dateType='" + dateType + '\'' +
+				", dataType='" + dataType + '\'' +
 				", columnKey='" + columnKey + '\'' +
 				", columnComment='" + columnComment + '\'' +
 				'}';

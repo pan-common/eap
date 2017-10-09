@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
+import com.taiji.eap.common.generator.service.ColumnExtendService;
 import com.taiji.eap.common.generator.service.DataSourceService;
 import com.taiji.eap.common.generator.service.GeneratorService;
 import com.taiji.eap.common.http.entity.Response;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
@@ -35,6 +37,9 @@ public class GeneratorController extends BaseController{
 	@Autowired
 	DataSourceService dataSourceService;
 
+	@Autowired
+	ColumnExtendService columnExtendService;
+
 	@GetMapping(value = "getTables")
 	@ResponseBody
 	public Response<List<LayuiTree>> getTables(){
@@ -48,13 +53,38 @@ public class GeneratorController extends BaseController{
 			List<LayuiTree> dataSources = dataSourceService.getDataSources();
 			layuiTrees.get(i).addChildrens(dataSources);
 			for (int j = 0; j < dataSources.size(); j++) {
+				LayuiTree tableTree = new TableType();
+				tableTree.setType(LayuiTree.OTHER);
+				tableTree.setSpread(true);
+				tableTree.setName("表");
 				List<Table> tables = generatorService.selectTables(((DataSource)dataSources.get(i)).getDatabaseName());
 				for (int k = 0; k < tables.size() ; k++) {
 					tables.get(k).setName(tables.get(k).gettName());
 					tables.get(k).setSpread(true);
 					tables.get(k).setType(LayuiTree.TABLE);
-					dataSources.get(j).addChildren(tables.get(k));
+					tables.get(k).setDriverClass(((DataSource)dataSources.get(i)).getDriverClassName());
+					tables.get(k).setConnectionURL(((DataSource)dataSources.get(i)).getUrl());
+					tables.get(k).setUserId(((DataSource)dataSources.get(i)).getUsername());
+					tables.get(k).setPassword(((DataSource)dataSources.get(i)).getPassword());
+					tableTree.addChildren(tables.get(k));
 				}
+				dataSources.get(j).addChildren(tableTree);
+				LayuiTree viewTree = new TableType();
+				viewTree.setType(LayuiTree.OTHER);
+				viewTree.setSpread(true);
+				viewTree.setName("视图");
+				List<Table> views = generatorService.selectViews(((DataSource)dataSources.get(i)).getDatabaseName());
+				for (int k = 0; k <views.size() ; k++) {
+					views.get(k).setName(views.get(k).gettName());
+					views.get(k).setSpread(true);
+					views.get(k).setType(LayuiTree.TABLE);
+					views.get(k).setDriverClass(((DataSource)dataSources.get(i)).getDriverClassName());
+					views.get(k).setConnectionURL(((DataSource)dataSources.get(i)).getUrl());
+					views.get(k).setUserId(((DataSource)dataSources.get(i)).getUsername());
+					views.get(k).setPassword(((DataSource)dataSources.get(i)).getPassword());
+					viewTree.addChildren(views.get(k));
+				}
+				dataSources.get(j).addChildren(viewTree);
 			}
 		}
 		return renderSuccess(layuiTrees);
@@ -68,10 +98,38 @@ public class GeneratorController extends BaseController{
 		return pageInfo;
 	}
 
+	@GetMapping(value = "columnExtendlist")
+	@ResponseBody
+	public PageInfo<ColumnExtend> columnExtendlist(Integer pageNum,Integer pageSize,String searchText){
+		PageInfo<ColumnExtend> pageInfo = null;
+		try {
+			pageInfo = columnExtendService.list(pageNum,pageSize,searchText);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
+	}
+
 	@PostMapping(value = "execute")
 	@ResponseBody
-	public void execute(Param param){
-		generatorService.execute(param);
+	public Response<String> execute(Param param){
+		String projectPath = this.getClass().getClassLoader().getResource("").getPath().split("target/")[0]+"src/main/java/";
+		param.setProjectPath(projectPath);
+		String filePath = projectPath + param.getPackageName().replaceAll("\\.","/");
+		if(param.getAliasUse()!=null&&param.getAliasUse().equals("1")){
+			filePath = filePath +"/"+ param.getAlias();
+		}
+		param.setFilePath(filePath);
+		String pagePath = this.getClass().getClassLoader().getResource("").getPath().split("target/")[0]+"src/main/webapp/WEB-INF/views/";
+		String pageFilePath = pagePath+param.getPagePath()+"/"+param.getAlias();
+		param.setPageFilePath(pageFilePath);
+		try {
+			generatorService.execute(param);
+			return renderSuccess("代码生成成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return renderError(e.getMessage());
+		}
 	}
 
 	/**
@@ -85,6 +143,25 @@ public class GeneratorController extends BaseController{
 		List<LayuiTree> layuiTrees = null;
 		try {
 			layuiTrees = generatorService.projectTreeView(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return renderError(e.getMessage());
+		}
+		return renderSuccess(layuiTrees);
+	}
+
+	/**
+	 * 获取JSP页面路径树状视图
+	 * @return
+	 */
+	@GetMapping(value = "jspTreeView")
+	@ResponseBody
+	public Response<List<LayuiTree>> jspTreeView(){
+		String path = this.getClass().getClassLoader().getResource("").getPath().split("target/")[0]+"src/main/webapp/WEB-INF/views";
+		path = path.substring(1,path.length());
+		List<LayuiTree> layuiTrees = null;
+		try {
+			layuiTrees = generatorService.jspTreeView(path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return renderError(e.getMessage());

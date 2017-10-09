@@ -4,7 +4,7 @@ package com.taiji.eap.common.generator.bean;
  * @author panho
  *
  */
-public class Table extends LayuiTree{
+public class Table extends DataSourceTree{
 	private String tSchema;//表所属库
 	private String tName;//表名
 	private String tType;//表类型

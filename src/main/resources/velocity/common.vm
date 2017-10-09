@@ -36,3 +36,118 @@ Integer##
 Date##
 #end
 #end
+##数据库字段类型转java字段类型
+#macro(toJavaType $fieldType)
+#if($!fieldType=="varchar")
+java.lang.String##
+#elseif($!fieldType=="bigint")
+java.lang.Long##
+#elseif($!fieldType=="int")
+java.lang.Integer##
+#elseif($!fieldType=="datetime")
+java.util.Date##
+#end
+#end
+##数据库字段类型转JDBCTYPE
+#macro(toJdbcType $fieldType)
+#if($!fieldType=="varchar")
+VARCHAR##
+#elseif($!fieldType=="bigint")
+DECIMAL##
+#elseif($!fieldType=="int")
+INTEGER##
+#elseif($!fieldType=="datetime")
+TIMESTAMP##
+#end
+#end
+##获取实体类包名
+#macro(getBeanPackage $packageName$alias$aliasUse)
+#if(${aliasUse}=="1")
+#set ($package = ${packageName}+"."+${alias}+".bean")
+#else
+#set ($package = ${packageName}+".bean")
+#end
+${package}##
+#end
+##获取Dao包名
+#macro(getDaoPackage $packageName$alias$aliasUse)
+#if(${aliasUse}=="1")
+#set ($package = ${packageName}+"."+${alias}+".dao")
+#else
+#set ($package = ${param.packageName}+".dao")
+#end
+${package}##
+#end
+##获取Service包名
+#macro(getServicePackage $packageName$alias$aliasUse)
+#if(${aliasUse}=="1")
+#set ($package = ${packageName}+"."+${alias}+".service")
+#else
+#set ($package = ${param.packageName}+".service")
+#end
+${package}##
+#end
+##获取ServiceImpl包名
+#macro(getServiceImplPackage $packageName$alias$aliasUse)
+#if(${aliasUse}=="1")
+#set ($package = ${packageName}+"."+${alias}+".service.impl")
+#else
+#set ($package = ${param.packageName}+".service.impl")
+#end
+${package}##
+#end
+##获取Controller包名
+#macro(getControllerPackage $packageName$alias$aliasUse)
+#if(${aliasUse}=="1")
+#set ($package = ${packageName}+"."+${alias}+".controller")
+#else
+#set ($package = ${param.packageName}+".controller")
+#end
+${package}##
+#end
+##获取主键
+#macro(getPkColumn $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result=${column.columnName})
+#end
+#end
+${result}##
+#end
+##获取主键属性名
+#macro(getPkProperty $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result="#camel(${column.columnName})")
+#end
+#end
+${result}##
+#end
+##获取主键类型
+#macro(getPkJdbcType $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result="#toJdbcType(${column.dataType})")
+#end
+#end
+${result}##
+#end
+##获取主键JAVA类型
+#macro(getPkJavaType $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result="#toJavaType(${column.dataType})")
+#end
+#end
+${result}##
+#end
+##获取主键toFieldType类型
+#macro(getPkFieldType $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result="#toFieldType(${column.dataType})")
+#end
+#end
+${result}##
+#end
+

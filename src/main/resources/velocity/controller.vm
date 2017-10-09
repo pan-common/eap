@@ -1,0 +1,107 @@
+#parse("velocity/common.vm" )
+#set ($controllerPackage = "#getControllerPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($servicePackage = "#getServicePackage(${param.packageName}${param.alias}${param.aliasUse})")
+package ${controllerPackage};
+
+import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.base.BaseController;
+import ${beanPackage}.#toUpperCase(${param.alias});
+import ${servicePackage}.#toUpperCase(${param.alias})Service;
+import com.taiji.eap.common.http.entity.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Date;
+import java.util.List;
+
+@Controller
+@RequestMapping("${param.alias}")
+public class #toUpperCase(${param.alias})Controller extends BaseController{
+
+    @Autowired
+    private #toUpperCase(${param.alias})Service ${param.alias}Service;
+
+    @GetMapping(value = "list")
+    @ResponseBody
+    public PageInfo<#toUpperCase(${param.alias})> list(Integer pageNum,Integer pageSize,String searchText){
+        PageInfo<#toUpperCase(${param.alias})> pageInfo = null;
+        try {
+            pageInfo = ${param.alias}Service.list(pageNum,pageSize,searchText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+
+    @PostMapping(value = "add")
+    @ResponseBody
+    public Response<String> add(#toUpperCase(${param.alias}) ${param.alias}){
+        ${param.alias}.setCreateTime(new Date());
+        ${param.alias}.setUpdateTime(new Date());
+        ${param.alias}.setValid("1");
+        ${param.alias}.setCreater(1L);
+        try {
+            int k = ${param.alias}Service.insert(${param.alias});
+            if(k>0){
+                return renderSuccess("添加成功");
+            }else {
+                return renderError("失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "edit")
+    @ResponseBody
+    public Response<String> edit(#toUpperCase(${param.alias}) ${param.alias}){
+        ${param.alias}.setCreateTime(new Date());
+        ${param.alias}.setUpdateTime(new Date());
+        ${param.alias}.setValid("1");
+        ${param.alias}.setCreater(1L);
+        try {
+            int k = ${param.alias}Service.updateByPrimaryKey(${param.alias});
+            if(k>0){
+                return renderSuccess("修改成功");
+            }else {
+                return renderError("失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "delete")
+    @ResponseBody
+    public Response<String> delete(#getPkFieldType($columns) #getPkProperty($columns)){
+        try {
+            int k = ${param.alias}Service.deleteByPrimaryKey(#getPkProperty($columns));
+            if(k>0){
+                return renderSuccess("删除成功");
+            }else {
+                return renderError("删除失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "selectOne")
+    @ResponseBody
+    public Response<#toUpperCase(${param.alias})> selectOne(#getPkFieldType($columns) #getPkProperty($columns)){
+         try {
+            return renderSuccess(${param.alias}Service.selectByPrimaryKey(#getPkProperty($columns)));
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+          }
+    }
+}

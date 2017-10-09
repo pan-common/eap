@@ -13,7 +13,11 @@ public interface GeneratorService {
 
    public List<Column> selectColums(String schema,String table);
 
-   public void execute(Param param);
+   public void execute(Param param) throws Exception;
 
    List<LayuiTree> projectTreeView(String path) throws Exception;
+
+    List<LayuiTree> jspTreeView(String path) throws Exception;
+
+    List<Table> selectViews(String databaseName);
 }

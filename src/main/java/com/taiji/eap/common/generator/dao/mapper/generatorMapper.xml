@@ -14,14 +14,19 @@
 		<result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
 		<result column="ORDINAL_POSITION" property="ordinalPosition" jdbcType="VARCHAR" />
 		<result column="IS_NULLABLE" property="isNullAble" jdbcType="VARCHAR" />
-		<result column="DATA_TYPE" property="dateType" jdbcType="VARCHAR" />
+		<result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
 		<result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR" />
 		<result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<select id="selectTables" resultMap="TableResultMap">
 		select TABLE_SCHEMA,TABLE_NAME,TABLE_TYPE,TABLE_COMMENT from information_schema.`TABLES`
-        where  TABLE_SCHEMA = 'eap' and TABLE_NAME  like 't_%';
+        where  TABLE_SCHEMA = #{schema,jdbcType=VARCHAR} and TABLE_NAME  like 't_%';
+	</select>
+
+	<select id="selectViews" resultMap="TableResultMap">
+		select TABLE_SCHEMA,TABLE_NAME,TABLE_TYPE,TABLE_COMMENT from information_schema.`TABLES`
+		WHERE TABLE_SCHEMA = #{schema,jdbcType=VARCHAR} and TABLE_NAME  like 'v_%';
 	</select>
 
 	<select id="selectColums" resultMap="ColumResultMap">

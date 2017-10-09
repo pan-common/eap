@@ -1,0 +1,63 @@
+#parse("velocity/common.vm" )
+#set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($daoPackage = "#getDaoPackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($servicePackage = "#getServicePackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($serviceImplPackage = "#getServiceImplPackage(${param.packageName}${param.alias}${param.aliasUse})")
+package ${serviceImplPackage};
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import ${beanPackage}.#toUpperCase(${param.alias});
+import ${daoPackage}.#toUpperCase(${param.alias})Dao;
+import ${servicePackage}.#toUpperCase(${param.alias})Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@Service
+public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${param.alias})Service{
+
+    @Autowired
+    private #toUpperCase(${param.alias})Dao ${param.alias}Dao;
+
+    @Transactional
+    @Override
+    public int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey) {
+        return ${param.alias}Dao.deleteByPrimaryKey(primaryKey);
+    }
+
+    @Transactional
+    @Override
+    public int insert(#toUpperCase(${param.alias}) ${param.alias}) {
+        return ${param.alias}Dao.insert(${param.alias});
+    }
+
+    @Override
+    public #toUpperCase(${param.alias}) selectByPrimaryKey(#getPkFieldType($columns) primaryKey) {
+        return ${param.alias}Dao.selectByPrimaryKey(primaryKey);
+    }
+
+    @Transactional
+    @Override
+    public int updateByPrimaryKey(#toUpperCase(${param.alias}) ${param.alias}) {
+        return ${param.alias}Dao.updateByPrimaryKey(${param.alias});
+    }
+
+    @Override
+    public List<#toUpperCase(${param.alias})> list(String searchText) {
+        return ${param.alias}Dao.list(searchText);
+    }
+
+    @Override
+    public PageInfo<#toUpperCase(${param.alias})> list(int pageNum, int pageSize, String searchText) throws Exception {
+        PageHelper.startPage(pageNum,pageSize);
+        List<#toUpperCase(${param.alias})> ${param.alias}s = ${param.alias}Dao.list(searchText);
+        PageInfo<#toUpperCase(${param.alias})> pageInfo = new PageInfo<#toUpperCase(${param.alias})>(${param.alias}s);
+        return pageInfo;
+    }
+
+}

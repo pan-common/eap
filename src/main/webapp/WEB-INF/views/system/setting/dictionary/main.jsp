@@ -10,13 +10,15 @@
 </head>
 <body>
 <div style="margin: 15px;">
-    <div class="span6">
-        <ul class="breadcrumb"></ul>
-    </div>
-    <div  id="toolbar">
-        <button id='addBtn' class="layui-btn layui-btn-small">
-            <i class="layui-icon">&#xe608;</i> 添加菜单
-        </button>
+    <div id="topLayout">
+        <div class="span6">
+            <ul class="breadcrumb"></ul>
+        </div>
+        <div  id="toolbar">
+            <button id='addBtn' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe608;</i> 添加菜单
+            </button>
+        </div>
     </div>
     <table id='bootstrapTable'>
     </table>
@@ -50,6 +52,7 @@
 
         $('#bootstrapTable').bootstrapTable({
             url:"${pageContext.request.contextPath}/dictionary/list",
+            height:$(window).height()-$("#topLayout").height()-30,
             method:'GET',
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
@@ -172,7 +175,7 @@
                 layer.msg("网络错误："+e.status);
             })
         },function () {
-            
+
         });
 
     }

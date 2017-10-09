@@ -3,7 +3,6 @@ package com.taiji.eap.common.dictionary.service;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 public interface DictionaryService {

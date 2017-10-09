@@ -2,8 +2,8 @@ package com.taiji.eap.common.datasource.base;
 
 public class DataSourceBeanBuilder {
 
-    private static final String URL_FORMATTER="jdbc:mysql://%s:%s/%s?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;failOverReadOnly=false";
-    private String driverClassName="com.mysql.jdbc.Driver";
+    private static final String URL_FORMATTER="jdbc:mysql://%s:%s/%s?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&autoReconnect=true";
+    private String driverClassName="com.mysql.cj.jdbc.Driver";
     private final String connectName;
     private final String beanName;
     private final String databaseIP;

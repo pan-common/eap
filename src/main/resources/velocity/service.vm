@@ -1,0 +1,25 @@
+#parse("velocity/common.vm" )
+#set ($servicePackage = "#getServicePackage(${param.packageName}${param.alias}${param.aliasUse})")
+#set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
+package ${servicePackage};
+
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
+import ${beanPackage}.#toUpperCase(${param.alias});
+import java.util.List;
+
+public interface #toUpperCase(${param.alias})Service{
+
+    int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey) throws Exception;
+
+    int insert(#toUpperCase(${param.alias}) ${param.alias}) throws Exception;
+
+    #toUpperCase(${param.alias}) selectByPrimaryKey(#getPkFieldType($columns) primaryKey) throws Exception;
+
+    int updateByPrimaryKey(#toUpperCase(${param.alias}) ${param.alias}) throws Exception;
+
+    List<#toUpperCase(${param.alias})> list(String searchText) throws Exception;
+
+    PageInfo<#toUpperCase(${param.alias})> list(int pageNum, int pageSize, String searchText) throws Exception;
+
+}

@@ -3,15 +3,19 @@ package com.taiji.eap.common.generator.service.impl;
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
 import com.taiji.eap.common.generator.service.GeneratorService;
+import com.taiji.eap.common.utils.FileUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.Configuration;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -28,12 +32,17 @@ public class GeneratorServiceImpl implements GeneratorService{
     }
 
     @Override
+    public List<Table> selectViews(String schema) {
+        return generatorDao.selectViews(schema);
+    }
+
+    @Override
     public List<Column> selectColums(String schema, String table) {
         return generatorDao.selectColums(schema,table);
     }
 
     @Override
-    public void execute(Param param) {
+    public void execute(Param param) throws Exception{
         Properties properties = new Properties();
         try {
             properties.load(this.getClass().getResourceAsStream("/properties/velocity.properties"));
@@ -42,7 +51,157 @@ public class GeneratorServiceImpl implements GeneratorService{
         }
         Velocity.init(properties);
         List<Column> columns = selectColums(param.getSchema(),param.getTableName());
-        generateBean(param,columns);
+        boolean isHavePk = false;
+        for (Column column:columns) {
+            if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI")){
+                isHavePk = true;
+            }
+        }
+        if(!isHavePk){
+            throw new Exception("未找到主键");
+        }
+        //生成实体类
+        if(param.getGenerateItems().contains("bean")) {
+            generateBean(param, columns);
+        }
+        if(param.getGenerateItems().contains("dao")) {
+            //生成Dao
+            generateDao(param, columns);
+            //生成mapper.xml文件
+            generateMapper(param, columns);
+        }
+        if(param.getGenerateItems().contains("service")) {
+            //生成service
+            generateService(param, columns);
+            //生成service实现类
+            generateServiceImpl(param, columns);
+        }
+        if(param.getGenerateItems().contains("controller")) {
+            //生成Controller
+            generateController(param, columns);
+        }
+        if(param.getGenerateItems().contains("jsp")) {
+            //生成jsp主界面
+            generateJspMain(param, columns);
+            //生成jsp表单界面
+            generateJspForm(param, columns);
+        }
+    }
+
+    private String replaceTemplate(Param param,List<Column> columns,String templateFilePath){
+        Template template = Velocity.getTemplate(templateFilePath);
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("param",param);
+        velocityContext.put("columns",columns);
+        StringWriter sw = new StringWriter();
+        template.merge(velocityContext,sw);
+        return sw.toString();
+    }
+
+    /**
+     * 生成bean
+     */
+    private void generateBean(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/bean.vm");
+        String filePath = param.getFilePath()+"/bean";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+".java";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+    /**
+     * 生成Dao
+     */
+    private void generateDao(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/dao.vm");
+        String filePath = param.getFilePath()+"/dao";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+"Dao.java";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    private void generateMapper(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/mapper.vm");
+        String filePath = param.getFilePath()+"/dao/mapper";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+"Mapper.xml";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成service
+     */
+    private void generateService(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/service.vm");
+        String filePath = param.getFilePath()+"/service";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+"Service.java";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成service的实现
+     */
+    private void generateServiceImpl(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/serviceImpl.vm");
+        String filePath = param.getFilePath()+"/service/impl";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+"ServiceImpl.java";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成controller
+     */
+    private void generateController(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/controller.vm");
+        String filePath = param.getFilePath()+"/controller";
+        String fileName =param.getAlias().substring(0,1).toUpperCase()
+                +param.getAlias().substring(1,param.getAlias().length())+"Controller.java";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成JSP主页面
+     */
+    private void generateJspMain(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/jspMain.vm");
+        String filePath = param.getPageFilePath();
+        String fileName ="main.jsp";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成JSP Form也页面
+     * @param param
+     * @param columns
+     */
+    private void generateJspForm(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/jspForm.vm");
+        String filePath = param.getPageFilePath();
+        String fileName ="form.jsp";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+
+
+    private void generateMybatis(Param param,List<Column> columns){
+        String content = replaceTemplate(param,columns,"/velocity/generatorConfig.vm");
+        String filePath = param.getProjectPath().replace("java","resource");
+//        String fileName =param.getAlias().substring(0,1).toUpperCase()
+//                +param.getAlias().substring(1,param.getAlias().length())+"Dao.java";
+        FileUtil.writeStrToFile(filePath,"generatorConfig.xml",content);
+
+        List<String> warnings = new ArrayList<String>();
+        ConfigurationParser configurationParser = new ConfigurationParser(warnings);
+        boolean overwrite = true;
+        try {
+            Configuration config = configurationParser.parseConfiguration(new File(filePath,"generatorConfig.xml"));
+            DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+            MyBatisGenerator generator = new MyBatisGenerator(config,callback,warnings);
+            generator.generate(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -64,10 +223,33 @@ public class GeneratorServiceImpl implements GeneratorService{
         return layuiTrees;
     }
 
+    @Override
+    public List<LayuiTree> jspTreeView(String path) throws Exception{
+        List<LayuiTree> layuiTrees = new ArrayList<LayuiTree>();
+        File file = new File(path);
+        if(file.exists()){
+            FileTreeView fileTreeView = new FileTreeView();
+            fileTreeView.setPackageName(file.getName());
+            fileTreeView.setFileName(file.getName());
+            fileTreeView.setName("views");
+            fileTreeView.setSpread(true);
+            fileTreeView.setType(LayuiTree.DICTIONARY);
+            disPlay(file,fileTreeView);
+            layuiTrees.add(fileTreeView);
+        }else{
+            throw new Exception("文件夹不存在");
+        }
+        return layuiTrees;
+    }
+
     private void disPlay(File file, FileTreeView fileTreeView){
         if(file.isDirectory()){
             FileTreeView treeView = new FileTreeView();
-            treeView.setPackageName(file.getPath());
+            if(file.getPath().split("java\\\\").length>1) {
+                treeView.setPackageName(file.getPath().split("java\\\\")[1].replaceAll("\\\\", "."));
+            }else if(file.getPath().split("views\\\\").length>1){
+                treeView.setPackageName(file.getPath().split("views\\\\")[1]);
+            }
             treeView.setFileName(file.getName());
             treeView.setName(file.getName());
             treeView.setSpread(false);
@@ -80,47 +262,5 @@ public class GeneratorServiceImpl implements GeneratorService{
                 }
             }
         }
-    }
-
-    /**
-     * 生成bean
-     */
-    private void generateBean(Param param,List<Column> columns){
-        Template template = Velocity.getTemplate("velocity/bean.vm");
-        VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("param",param);
-        velocityContext.put("columns",columns);
-
-        StringWriter sw = new StringWriter();
-        template.merge(velocityContext,sw);
-        System.out.println(sw.toString());
-    }
-
-    /**
-     * 生成service
-     */
-    private void generateService(){
-
-    }
-
-    /**
-     * 生成Dao
-     */
-    private void generateDao(){
-
-    }
-
-    /**
-     * 生成controller
-     */
-    private void generateController(){
-
-    }
-
-    /**
-     * 生成JSP
-     */
-    private void generateJsp(){
-
     }
 }

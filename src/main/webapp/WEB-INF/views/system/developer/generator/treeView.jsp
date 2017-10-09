@@ -24,7 +24,10 @@
                         nodes:data.body.entity,
                         click: function(node){
                             if(node.type=="05"){
-
+                                //关闭录入窗口
+                                parent.packageName.val(node.packageName);
+                                var index = parent.layer.getFrameIndex(window.name);
+                                parent.layer.close(index);
                             }
                         }
                     });
