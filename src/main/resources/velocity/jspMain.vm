@@ -82,7 +82,7 @@ pageEncoding="UTF-8"%>
 #foreach($column in $columns)
                 {
                     title:"${column.columnComment}",
-                    field:"#camelToUpperCase(${column.columnName})",
+                    field:"#camel(${column.columnName})",
                 },
 #end
                 {

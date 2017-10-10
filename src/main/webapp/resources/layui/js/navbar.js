@@ -224,7 +224,7 @@ layui.define(['element', 'common'], function(exports) {
 				}
 				ulHtml += '</dl>';
 			} else {
-				var dataUrl = (data[i].link !== undefined && data[i].link !== '') ? ' data-url="' +(contextPath+"resource/link?url="+ data[i].link) + '"' : '';
+				var dataUrl = (data[i].link !== undefined && data[i].link !== '') ? ' data-url="' +(contextPath+ data[i].link) + '"' : '';
 				ulHtml += '<a href="javascript:;" ' + dataUrl + '>';
 				if(data[i].icon !== undefined && data[i].icon !== '') {
 					if(data[i].icon.indexOf('fa-') !== -1) {

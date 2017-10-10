@@ -23,7 +23,7 @@
                         <li>页面属性</li>
                         <li>表单属性</li>
                     </ul>
-                    <div class="layui-tab-content" style="height: 500px;">
+                    <div id="tab_content" class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
                             <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
                                 <table>
@@ -80,10 +80,10 @@
                             <table id='bootstrapTable'>
                             </table>
                         </div>
-                        <div class="layui-tab-item">
+                        <div id="topLayout" class="layui-tab-item">
                             <div  id="toolbar">
-                                <button id='addBtn' class="layui-btn layui-btn-small">
-                                    <i class="layui-icon">&#xe608;</i> 添加
+                                <button id='initBtn' class="layui-btn layui-btn-small">
+                                    <i class="layui-icon">&#xe608;</i> 初始化
                                 </button>
                             </div>
                             <table id='ColumnExtendTable'>
@@ -104,12 +104,33 @@
     var url = "${pageContext.request.contextPath}/generator/execute";
     var packageName = $("#packageName");
     var pagePath = $("#pagePath");
+    $("#tab_content").height($(window).height()-80);
     layui.use([ 'layer', 'form' ], function(layer, form) {
         var schema = "";
         var table = "";
 
         var form = layui.form();
         form.render();
+
+        $("#initBtn").click(function () {
+            $.post("${pageContext.request.contextPath}/generator/init",{
+                schema:schema,
+                table:table
+            },function (data,status) {
+                if(status=='success'){
+                    if(data.body.resultCode=="0"){
+                        layer.msg("初始化成功");
+                        refreshColumnExtendTable();
+                    }else {
+                        layer.msg(data.body.resultContent, {icon: 5});
+                    }
+                }else {
+                    layer.msg('网络错误', {icon: 5});
+                }
+            }).error(function (e) {
+                layer.msg('网络错误'+e.status, {icon: 5});
+            });
+        })
 
         $("#selectPackage").click(function () {
             showModel("选择包目录","${pageContext.request.contextPath}/resource/link?url=system/developer/generator/treeView");
@@ -172,6 +193,7 @@
                                 $("#schema").val(schema);
                                 $("#tableName").val(table);
                                 refreshTable();
+                                refreshColumnExtendTable();
                             }
                         }
                     });
@@ -185,6 +207,7 @@
 
         $('#bootstrapTable').bootstrapTable({
             url:"${pageContext.request.contextPath}/generator/getColumns",
+            height:$(window).height()-100,
             method:'GET',
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
@@ -281,7 +304,8 @@
 
         //======================================页面属性===========================================================
         $('#ColumnExtendTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/columnExtend/list",
+            url:"${pageContext.request.contextPath}/generator/columnExtendlist",
+            height:$(window).height()-$("#topLayout").height()-140,
             method:'GET',
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
@@ -315,27 +339,27 @@
             columns : [{checkbox : true},
                 {
                     title:"排序",
-                    field:"Seq",
+                    field:"seq",
                 },
                 {
                     title:"列名",
-                    field:"ColumnName",
+                    field:"columnName",
                 },
                 {
                     title:"注释",
-                    field:"ListShow",
+                    field:"columnComment",
                 },
                 {
                     title:"是否查询",
-                    field:"IsQuery",
+                    field:"isQuery",
                 },
                 {
                     title:"列表显示",
-                    field:"Param",
+                    field:"listShow",
                 },
                 {
                     title:"表单显示",
-                    field:"Verify",
+                    field:"formShow",
                 },
                 {
                     title : "操作",

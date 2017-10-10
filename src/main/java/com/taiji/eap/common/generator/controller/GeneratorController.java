@@ -100,14 +100,25 @@ public class GeneratorController extends BaseController{
 
 	@GetMapping(value = "columnExtendlist")
 	@ResponseBody
-	public PageInfo<ColumnExtend> columnExtendlist(Integer pageNum,Integer pageSize,String searchText){
+	public PageInfo<ColumnExtend> columnExtendlist(String schema, String table,String searchText){
 		PageInfo<ColumnExtend> pageInfo = null;
 		try {
-			pageInfo = columnExtendService.list(pageNum,pageSize,searchText);
+			pageInfo = columnExtendService.listByTable(schema,table,searchText);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return pageInfo;
+	}
+
+	@PostMapping(value = "init")
+	@ResponseBody
+	public Response<String> initColumnExtend(String schema, String table){
+		List<Column> columns = generatorService.selectColums(schema,table);
+		int k = columnExtendService.initColumnExtend(columns,schema,table);
+		if(k>0)
+			return renderSuccess("初始化成功");
+		else
+			return renderError("初始化失败");
 	}
 
 	@PostMapping(value = "execute")

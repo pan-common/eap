@@ -7,9 +7,9 @@
     <resultMap id="BaseResultMap" type="${beanPackage}.#toUpperCase(${param.alias})">
 #foreach($column in $columns)
 #if(${column.columnKey}=="PRI")
-        <id column="${column.columnName}" property="#camelToUpperCase(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})"></id>
+        <id column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})"></id>
 #else
-        <result column="${column.columnName}" property="#camelToUpperCase(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})" />
+        <result column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})" />
 #end
 #end
     </resultMap>
@@ -26,7 +26,7 @@
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
-        WHERE #getPkColumn($columns) = {#getPkProperty($columns),jdbcType=#getPkJdbcType($columns)}
+        WHERE #getPkColumn($columns) = #{#getPkProperty($columns),jdbcType=#getPkJdbcType($columns)}
     </select>
 
 ##循环生成列
