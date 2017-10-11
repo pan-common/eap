@@ -109,6 +109,17 @@ public class GeneratorController extends BaseController{
 		}
 		return pageInfo;
 	}
+	@GetMapping(value = "columnExtendFormlist")
+	@ResponseBody
+	public PageInfo<ColumnExtend> columnExtendFormlist(String schema, String table,String searchText){
+		PageInfo<ColumnExtend> pageInfo = null;
+		try {
+			pageInfo = columnExtendService.listFormByTable(schema,table,searchText);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pageInfo;
+	}
 
 	@PostMapping(value = "init")
 	@ResponseBody

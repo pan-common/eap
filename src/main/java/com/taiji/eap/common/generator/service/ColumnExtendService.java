@@ -23,5 +23,9 @@ public interface ColumnExtendService{
 
     int initColumnExtend(List<Column> columns, String schema, String table);
 
+    List<ColumnExtend> listByTable(String schema, String table);
+
     PageInfo<ColumnExtend> listByTable(String schema, String table,String searchText);
+
+    PageInfo<ColumnExtend> listFormByTable(String schema, String table, String searchText) throws Exception;
 }

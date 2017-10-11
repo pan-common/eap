@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system\setting/form&puriewId=0");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/puriew/form&puriewId=0");
         });
 
         //弹出录入框
@@ -80,10 +80,6 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
                 {
-                    title:"权限ID",
-                    field:"puriewId",
-                },
-                {
                     title:"权限名称",
                     field:"name",
                 },
@@ -96,20 +92,8 @@ pageEncoding="UTF-8"%>
                     field:"expression",
                 },
                 {
-                    title:"创建时间",
-                    field:"createTime",
-                },
-                {
                     title:"修改时间",
                     field:"updateTime",
-                },
-                {
-                    title:"是否有效",
-                    field:"valid",
-                },
-                {
-                    title:"创建人",
-                    field:"creater",
                 },
                 {
                     title : "操作",
@@ -117,7 +101,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system\setting/form&puriewId="+row.puriewId);
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/puriew/form&puriewId="+row.puriewId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
@@ -159,6 +143,7 @@ pageEncoding="UTF-8"%>
                     function (data, status) {
                         if (status == "success") {
                             if (data.body.resultCode == "0") {
+                                layer.close(layer.index);
                                 refreshTable();
                             }else {
                                 layer.msg(data.body.resultContent);

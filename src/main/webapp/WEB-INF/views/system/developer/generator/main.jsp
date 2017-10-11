@@ -62,7 +62,7 @@
                                     <tr>
                                         <td><label class="layui-form-label">生成项</label></td>
                                         <td colspan="5">
-                                            <dic:checkboxTag name="generateItems" parentId="27" checkPositions="all" />
+                                            <dic:checkboxTag name="generateItems" parentId="37" checkPositions="all" />
                                         </td>
                                     </tr>
                                     <tr>
@@ -90,7 +90,8 @@
                             </table>
                         </div>
                         <div class="layui-tab-item">
-
+                            <table id='ColumnExtendFormTable'>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -194,6 +195,7 @@
                                 $("#tableName").val(table);
                                 refreshTable();
                                 refreshColumnExtendTable();
+                                refreshColumnExtendFormTable();
                             }
                         }
                     });
@@ -322,7 +324,194 @@
             dataField:"list",
             totalField:"total",
             searchOnEnterKey : true,
-            strictSearch : true,
+            strictSearch : false,
+            showRefresh : false, //是否显示刷新按钮
+            showColumns : false, //是否显内容列下拉框
+            showPaginationSwitch : false,//是否显示 数据条数选择框
+            minimumCountColumns : 2, //最少允许的列数
+            clickToSelect : true, //是否启用点击选中行
+            uniqueId : "id", //每一行的唯一标识，一般为主键列
+            singleSelect : true,//设置true禁止多选
+            showToggle : false, //是否显示详细视图和列表视图的切换按钮
+            cardView : false, //是否显示详细视图
+            detailView : false, //是否显示父子表
+            showHeader : true,//是否显示列头
+            showFooter : false,//是否显示列脚
+            contentType : "application/x-www-form-urlencoded", //解决POST提交问题
+            columns : [{checkbox : true},
+                {
+                    title:"排序",
+                    field:"seq",
+                    editable:{
+                        type: 'text',
+                        title: '排序',
+                        validate: function (v) {
+                            if (isNaN(v)) return '序号必须是数字';
+                            var age = parseInt(v);
+                            if (age <= 0) return '序号必须是正整数';
+                        }
+                    }
+                },
+                {
+                    title:"列名",
+                    field:"columnName",
+                },
+                {
+                    title:"注释",
+                    field:"columnComment",
+                },
+                {
+                    title:"是否查询",
+                    field:"isQuery",
+                    editable: {
+                        type: 'select',
+                        title: '是否查询',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:34
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
+                        }
+                    }
+                },
+                {
+                    title:"列表显示",
+                    field:"listShow",
+                    editable: {
+                        type: 'select',
+                        title: '列表显示',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:34
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
+                        }
+                    }
+                },
+                {
+                    title:"表单显示",
+                    field:"formShow",
+                    editable: {
+                        type: 'select',
+                        title: '表单显示',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:34
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
+                        }
+                    }
+                }],
+            onEditableSave:function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "${pageContext.request.contextPath}/columnExtend/edit",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (data, status) {
+                        if (status == "success") {
+                            if (data.body.resultCode != "0") {
+                                layer.msg(data.body.resultContent);
+                            }
+                        }else {
+                            layer.msg("网络错误");
+                        }
+                    },
+                    error: function () {
+                        alert('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+                });
+            },
+            onLoadError : function(status) { //加载失败时执行
+                $.messager.show({
+                    title : 'Error',
+                    msg : "数据加载失败"
+                });
+            },
+            formatSearch: function () {
+                return '输入关键字查询';
+            }
+        });
+        //======================================表单属性===========================================================
+        $('#ColumnExtendFormTable').bootstrapTable({
+            url:"${pageContext.request.contextPath}/generator/columnExtendFormlist",
+            height:$(window).height()-140,
+            method:'GET',
+            striped : true, //是否显示行间隔色
+            cache : false, //是否使用缓存
+            pagination : true, //是否显示分页（*）
+            queryParams : queryParams,//传递参数（*）
+            queryParamsType : 'limit',
+            sidePagination : 'server', //分页方式
+            pageNumber : 1, //初始化加载第一页，默认第一页
+            pageSize : 15, //每页的记录行数（*）
+            pageList : [ 10, 15, 20, 50 ], //可供选择的每页的行数（*）
+            search : false,//是否显示表格搜索
+            searchAlign : "right",//指定搜索框位置
+            dataField:"list",
+            totalField:"total",
+            searchOnEnterKey : false,
+            strictSearch : false,
             showRefresh : true, //是否显示刷新按钮
             showColumns : false, //是否显内容列下拉框
             showPaginationSwitch : false,//是否显示 数据条数选择框
@@ -340,6 +529,15 @@
                 {
                     title:"排序",
                     field:"seq",
+                    editable:{
+                        type: 'text',
+                        title: '排序',
+                        validate: function (v) {
+                            if (isNaN(v)) return '序号必须是数字';
+                            var age = parseInt(v);
+                            if (age <= 0) return '序号必须是正整数';
+                        }
+                    }
                 },
                 {
                     title:"列名",
@@ -350,35 +548,137 @@
                     field:"columnComment",
                 },
                 {
-                    title:"是否查询",
-                    field:"isQuery",
-                },
-                {
-                    title:"列表显示",
-                    field:"listShow",
-                },
-                {
-                    title:"表单显示",
-                    field:"formShow",
-                },
-                {
-                    title : "操作",
-                    align : "center",
-                    events : {
-                        'click .edit' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system\developer/form&id="+row.id);
-                        },
-                        'click .delete' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            del(row.id);
+                    title:"控件类型",
+                    field:"inputType",
+                    editable: {
+                        type: 'select',
+                        title: '控件类型',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:43
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
                         }
-                    },
-                    formatter : function () {
-                        return ['<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
+                    }
+                },
+                {
+                    title:"是否必填",
+                    field:"required",
+                    editable: {
+                        type: 'select',
+                        title: '是否必填',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:34
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
+                        }
+                    }
+                },
+                {
+                    title:"校验规则",
+                    field:"verify",
+                    editable: {
+                        type: 'select',
+                        title: '校验规则',
+                        source: function () {
+                            var result = [];
+                            $.ajax({
+                                url: '${pageContext.request.contextPath}/dictionary/listByPid',
+                                async: false,
+                                type: "get",
+                                data: {
+                                    parentId:49
+                                },
+                                success: function (data, status) {
+                                    if (status == "success") {
+                                        if (data.body.resultCode == "0") {
+                                            $.each(data.body.entity, function (key, value) {
+                                                result.push({ value: value.keystone, text: value.value });
+                                            });
+                                        }else {
+                                            layer.msg(data.body.resultContent);
+                                        }
+                                    }else {
+                                        layer.msg("网络错误");
+                                    }
+                                }
+                            });
+                            return result;
+                        }
+                    }
+                },{
+                    title:"参数",
+                    field:"param",
+                    editable:{
+                        type: 'text',
+                        title: '参数',
+                        validate: function (v) {
+
+                        }
                     }
                 }],
+            onEditableSave:function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "${pageContext.request.contextPath}/columnExtend/edit",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (data, status) {
+                        if (status == "success") {
+                            if (data.body.resultCode != "0") {
+                                layer.msg(data.body.resultContent);
+                            }
+                        }else {
+                            layer.msg("网络错误");
+                        }
+                    },
+                    error: function () {
+                        alert('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+                });
+            },
             onLoadError : function(status) { //加载失败时执行
                 $.messager.show({
                     title : 'Error',
@@ -389,32 +689,9 @@
                 return '输入关键字查询';
             }
         });
-
-        function del(id) {
-            layer.confirm("删除数据不可恢复，请确认？",{
-                btn: ['确定','取消'],
-                offset: '150px',
-            },function () {
-                $.post('${pageContext.request.contextPath}/columnExtend/delete',
-                    {id : id},
-                    function (data, status) {
-                        if (status == "success") {
-                            if (data.body.resultCode == "0") {
-                                refreshColumnExtendTable();
-                            }else {
-                                layer.msg(data.body.resultContent);
-                            }
-                        }else {
-                            layer.msg("网络错误");
-                        }
-                    }).error(function (e) {
-                    layer.msg("网络错误："+e.status);
-                })
-            },function () {
-
-            });
-        }
     });
+
+
 
     function refreshTable() {
         $('#bootstrapTable').bootstrapTable('refresh');
@@ -422,6 +699,10 @@
 
     function refreshColumnExtendTable() {
         $('#ColumnExtendTable').bootstrapTable('refresh');
+    }
+
+    function refreshColumnExtendFormTable() {
+        $('#ColumnExtendFormTable').bootstrapTable('refresh');
     }
 </script>
 </html>

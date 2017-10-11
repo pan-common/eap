@@ -2,6 +2,7 @@ package com.taiji.eap.common.generator.service.impl;
 
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
+import com.taiji.eap.common.generator.service.ColumnExtendService;
 import com.taiji.eap.common.generator.service.GeneratorService;
 import com.taiji.eap.common.utils.FileUtil;
 import org.apache.velocity.Template;
@@ -25,6 +26,9 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Autowired
     private GeneratorDao generatorDao;
+
+    @Autowired
+    private ColumnExtendService columnExtendService;
 
     @Override
     public List<Table> selectTables(String schema) {
@@ -50,9 +54,10 @@ public class GeneratorServiceImpl implements GeneratorService{
             e.printStackTrace();
         }
         Velocity.init(properties);
-        List<Column> columns = selectColums(param.getSchema(),param.getTableName());
+        List<ColumnExtend> columns = columnExtendService.listByTable(param.getSchema(),param.getTableName());
+
         boolean isHavePk = false;
-        for (Column column:columns) {
+        for (ColumnExtend column:columns) {
             if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI")){
                 isHavePk = true;
             }
@@ -88,7 +93,7 @@ public class GeneratorServiceImpl implements GeneratorService{
         }
     }
 
-    private String replaceTemplate(Param param,List<Column> columns,String templateFilePath){
+    private String replaceTemplate(Param param,List<ColumnExtend> columns,String templateFilePath){
         Template template = Velocity.getTemplate(templateFilePath);
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("param",param);
@@ -101,7 +106,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成bean
      */
-    private void generateBean(Param param,List<Column> columns){
+    private void generateBean(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/bean.vm");
         String filePath = param.getFilePath()+"/bean";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -111,7 +116,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成Dao
      */
-    private void generateDao(Param param,List<Column> columns){
+    private void generateDao(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/dao.vm");
         String filePath = param.getFilePath()+"/dao";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -119,7 +124,7 @@ public class GeneratorServiceImpl implements GeneratorService{
         FileUtil.writeStrToFile(filePath,fileName,content);
     }
 
-    private void generateMapper(Param param,List<Column> columns){
+    private void generateMapper(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/mapper.vm");
         String filePath = param.getFilePath()+"/dao/mapper";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -130,7 +135,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成service
      */
-    private void generateService(Param param,List<Column> columns){
+    private void generateService(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/service.vm");
         String filePath = param.getFilePath()+"/service";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -141,7 +146,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成service的实现
      */
-    private void generateServiceImpl(Param param,List<Column> columns){
+    private void generateServiceImpl(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/serviceImpl.vm");
         String filePath = param.getFilePath()+"/service/impl";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -152,7 +157,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成controller
      */
-    private void generateController(Param param,List<Column> columns){
+    private void generateController(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/controller.vm");
         String filePath = param.getFilePath()+"/controller";
         String fileName =param.getAlias().substring(0,1).toUpperCase()
@@ -163,7 +168,7 @@ public class GeneratorServiceImpl implements GeneratorService{
     /**
      * 生成JSP主页面
      */
-    private void generateJspMain(Param param,List<Column> columns){
+    private void generateJspMain(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/jspMain.vm");
         String filePath = param.getPageFilePath();
         String fileName ="main.jsp";
@@ -175,7 +180,7 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @param param
      * @param columns
      */
-    private void generateJspForm(Param param,List<Column> columns){
+    private void generateJspForm(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/jspForm.vm");
         String filePath = param.getPageFilePath();
         String fileName ="form.jsp";
@@ -184,7 +189,7 @@ public class GeneratorServiceImpl implements GeneratorService{
 
 
 
-    private void generateMybatis(Param param,List<Column> columns){
+    private void generateMybatis(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/generatorConfig.vm");
         String filePath = param.getProjectPath().replace("java","resource");
 //        String fileName =param.getAlias().substring(0,1).toUpperCase()

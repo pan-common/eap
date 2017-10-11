@@ -26,7 +26,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath}/form&#getPkProperty($columns)=0");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0");
         });
 
         //弹出录入框
@@ -80,10 +80,12 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
 #foreach($column in $columns)
+#if(${column.listShow}=="01")
                 {
                     title:"${column.columnComment}",
                     field:"#camel(${column.columnName})",
                 },
+#end
 #end
                 {
                     title : "操作",
@@ -91,7 +93,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=${param.pagePath}/form&#getPkProperty($columns)="+row.#getPkProperty($columns));
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)="+row.#getPkProperty($columns));
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
@@ -133,6 +135,7 @@ pageEncoding="UTF-8"%>
                     function (data, status) {
                         if (status == "success") {
                             if (data.body.resultCode == "0") {
+                                layer.close(layer.index);
                                 refreshTable();
                             }else {
                                 layer.msg(data.body.resultContent);

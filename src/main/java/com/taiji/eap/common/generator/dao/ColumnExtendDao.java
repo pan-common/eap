@@ -20,4 +20,6 @@ public interface ColumnExtendDao {
     int deleteByTable(@Param("schema") String schema,@Param("table") String table);
 
     List<ColumnExtend> listByTable(@Param("schema")String schema, @Param("tableName")String table, @Param("searchText")String searchText);
+
+    List<ColumnExtend> listFormByTable(@Param("schema")String schema, @Param("tableName")String table, @Param("searchText")String searchText);
 }

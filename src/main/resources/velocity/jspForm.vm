@@ -1,0 +1,103 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/WEB-INF/views/system/common/base.jsp"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+#parse("velocity/common.vm" )
+<html>
+<head>
+    <title>${param.alias}</title>
+</head>
+<body>
+<form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
+#foreach($column in $columns)
+#if(${column.formShow}=="01")
+    <div class="layui-form-item">
+        <label class="layui-form-label">${column.columnComment}</label>
+        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
+#if(${column.inputType}=="01")
+##输入框
+        <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName})  lay-verify="number" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
+#elseif(${column.inputType}=="02")
+##下拉选择框
+        <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
+#elseif(${column.inputType}=="03")
+##复选框
+        <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
+#elseif(${column.inputType}=="04")
+##开关
+        <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
+#elseif(${column.inputType}=="05")
+##单选
+#end
+        </div>
+    </div>
+#end
+#end
+##===============获取是否必填的方法start==================
+#macro(isRequired $required)
+#if($!required=="01")
+required##
+#end
+#end
+##===============获取是否必填的方法end==================
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="margin-right: 10px">
+            <button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+#foreach($column in $columns)
+#if($!{column.formShow}!="01")
+    <input id="#camel(${column.columnName})" type="hidden" name="#camel(${column.columnName})">
+#end
+#end
+</form>
+</body>
+<script type="text/javascript">
+    #set($pkparam = "param.");
+    var #getPkProperty($columns) = ${${pkparam}#getPkProperty($columns)};
+    var url = "${pageContext.request.contextPath}/${param.alias}/add";
+    layui.use(['form'],function () {
+        var form = layui.form();
+        form.render('select','form');
+
+        if(#getPkProperty($columns)){
+            url = "${pageContext.request.contextPath}/${param.alias}/edit";
+            $.get("${pageContext.request.contextPath}/${param.alias}/selectOne",{
+            #getPkProperty($columns):#getPkProperty($columns)
+            },function (data,status) {
+                if(status=="success"){
+                    if(data.body.resultCode=="0"){
+                        $('#form').clearForm();
+                        $('#form').form('load',data.body.entity);
+                    }else {
+                        parent.layer.msg(data.body.resultContent, {icon: 5});
+                    }
+                }else {
+                    parent.layer.msg('网络错误', {icon: 5});
+                }
+            })
+        }
+
+        form.on("submit(submitBtn)",function (data,status) {
+            $.post(url,$("#form").serializeArray(),function (data,status) {
+                if(status=='success'){
+                    if(data.body.resultCode=="0"){
+                        //关闭录入窗口
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.refreshTable();
+                    }else {
+                        parent.layer.msg(data.body.resultContent, {icon: 5});
+                    }
+                }else {
+                    parent.layer.msg('网络错误', {icon: 5});
+                }
+            }).error(function (e) {
+                parent.layer.msg('网络错误'+e.status, {icon: 5});
+            });
+            return false;
+        });
+
+    });
+</script>
+</html>

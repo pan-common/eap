@@ -46,6 +46,20 @@ public class DictionaryController extends BaseController{
         return pageInfo;
     }
 
+    @GetMapping(value = "listByPid")
+    @ResponseBody
+    public Response<List<Dictionary>> listByPid(Long parentId){
+        List<Dictionary> dictionaries = null;
+        try {
+            dictionaries = dictionaryService.listByPid(parentId);
+            return renderSuccess(dictionaries);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+
+    }
+
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(Dictionary dictionary){

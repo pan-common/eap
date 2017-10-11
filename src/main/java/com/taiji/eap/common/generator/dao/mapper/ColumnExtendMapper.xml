@@ -39,8 +39,18 @@
 
             </if>
         </where>
+        ORDER BY ordinal_position
     </select>
+    <select id="listFormByTable" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM v_sys_column_extend
+        <where>
+            table_schema= #{schema,jdbcType=VARCHAR} AND table_name = #{tableName,jdbcType=VARCHAR} AND form_show = '01'
+            <if test="searchText!=null and searchText!=''">
 
+            </if>
+        </where>
+        ORDER BY ordinal_position
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         SELECT * FROM t_sys_column_extend
         WHERE id = #{id,jdbcType=DECIMAL}

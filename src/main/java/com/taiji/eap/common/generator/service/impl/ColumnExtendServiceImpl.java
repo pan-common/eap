@@ -69,8 +69,21 @@ public class ColumnExtendServiceImpl implements ColumnExtendService{
     }
 
     @Override
+    public List<ColumnExtend> listByTable(String schema, String table) {
+        List<ColumnExtend> columnExtends = columnExtendDao.listByTable(schema,table,null);
+        return columnExtends;
+    }
+
+    @Override
     public PageInfo<ColumnExtend> listByTable(String schema, String table,String searchText) {
         List<ColumnExtend> columnExtends = columnExtendDao.listByTable(schema,table,searchText);
+        PageInfo<ColumnExtend> pageInfo = new PageInfo<ColumnExtend>(columnExtends);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo<ColumnExtend> listFormByTable(String schema, String table, String searchText) throws Exception {
+        List<ColumnExtend> columnExtends = columnExtendDao.listFormByTable(schema,table,searchText);
         PageInfo<ColumnExtend> pageInfo = new PageInfo<ColumnExtend>(columnExtends);
         return pageInfo;
     }

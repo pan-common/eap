@@ -18,7 +18,7 @@
         <where>
             valid = '1'
             <if test="searchText!=null and searchText!=''">
-
+                AND CONCAT(name,',',expression) LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -27,7 +27,6 @@
         SELECT * FROM t_qx_puriew
         WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
     </select>
-
 
     <insert id="insert" parameterType="com.taiji.eap.biz.puriew.bean.Puriew">
         <selectKey resultType="java.lang.Long" keyProperty="puriewId" order="AFTER">

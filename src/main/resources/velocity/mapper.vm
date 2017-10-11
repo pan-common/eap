@@ -13,13 +13,38 @@
 #end
 #end
     </resultMap>
+##循环生成列
+#set($searchCount="1")
+#set($columnName="")
+#set($columnProperty="")
+#set($excludePKProperty="")
+#set($searchColumName="")
+#foreach($column in $columns)
+#if($!{velocityCount}>1||$!{velocityCount}<$!{list.size()})
+#set($columnName=${columnName}+",")
+#set($columnProperty=${columnProperty}+",")
+#set($excludePKProperty=${excludePKProperty}+",")
+#if(${column.isQuery}=="01")
+#if(${searchCount}!="1")
+#set($searchColumName=${searchColumName}+",',',")
+#end
+#set($searchCount=${searchCount}+"1")
+#end
+#end
+#set($columnName=${columnName}+${column.columnName})
+#set($columnProperty=${columnProperty}+"#{"+"#camel(${column.columnName})"+",jdbcType="+"#toJdbcType(${column.dataType})"+"}")
+#set($excludePKProperty=${excludePKProperty}+${column.columnName}+"=#{"+"#camel(${column.columnName})"+",jdbcType="+"#toJdbcType(${column.dataType})"+"}")
+#if(${column.isQuery}=="01")
+#set($searchColumName=${searchColumName}+${column.columnName})
+#end
+#end
 
     <select id="list" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
         <where>
             valid = '1'
             <if test="searchText!=null and searchText!=''">
-
+                AND CONCAT(${searchColumName}) LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -28,21 +53,6 @@
         SELECT * FROM ${param.tableName}
         WHERE #getPkColumn($columns) = #{#getPkProperty($columns),jdbcType=#getPkJdbcType($columns)}
     </select>
-
-##循环生成列
-#set($columnName="")
-#set($columnProperty="")
-#set($excludePKProperty="")
-#foreach($column in $columns)
-#if($!{velocityCount}>1||$!{velocityCount}<$!{list.size()})
-#set($columnName=${columnName}+",")
-#set($columnProperty=${columnProperty}+",")
-#set($excludePKProperty=${excludePKProperty}+",")
-#end
-#set($columnName=${columnName}+${column.columnName})
-#set($columnProperty=${columnProperty}+"#{"+"#camel(${column.columnName})"+",jdbcType="+"#toJdbcType(${column.dataType})"+"}")
-#set($excludePKProperty=${excludePKProperty}+${column.columnName}+"=#{"+"#camel(${column.columnName})"+",jdbcType="+"#toJdbcType(${column.dataType})"+"}")
-#end
 
     <insert id="insert" parameterType="${beanPackage}.#toUpperCase(${param.alias})">
         <selectKey resultType="#getPkJavaType($columns)" keyProperty="#getPkProperty($columns)" order="AFTER">
