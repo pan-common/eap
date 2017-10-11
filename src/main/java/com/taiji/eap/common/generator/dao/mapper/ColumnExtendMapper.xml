@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.taiji.eap.common.generator.dao.ColumnExtendDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.generator.bean.ColumnExtend">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="ordinal_position" property="ordinalPosition" jdbcType="VARCHAR" />
+        <result column="is_nullable" property="isNullAble" jdbcType="VARCHAR" />
+        <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+        <result column="column_key" property="columnKey" jdbcType="VARCHAR" />
+        <result column="column_comment" property="columnComment" jdbcType="VARCHAR" />
+        <result column="table_schema" property="tableSchema" jdbcType="VARCHAR" />
+        <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+        <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="form_show" property="formShow" jdbcType="VARCHAR" />
+        <result column="list_show" property="listShow" jdbcType="VARCHAR" />
+        <result column="input_type" property="inputType" jdbcType="VARCHAR" />
+        <result column="is_query" property="isQuery" jdbcType="VARCHAR" />
+        <result column="param" property="param" jdbcType="VARCHAR" />
+        <result column="verify" property="verify" jdbcType="VARCHAR" />
+        <result column="required" property="required" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM v_sys_column_extend
+        <where>
+            <if test="searchText!=null and searchText!=''">
+
+            </if>
+        </where>
+    </select>
+
+    <select id="listByTable" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM v_sys_column_extend
+        <where>
+            table_schema= #{schema,jdbcType=VARCHAR} and table_name = #{tableName,jdbcType=VARCHAR}
+            <if test="searchText!=null and searchText!=''">
+
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_column_extend
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+
+    <insert id="insert" parameterType="com.taiji.eap.common.generator.bean.ColumnExtend">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_sys_column_extend(
+        id,table_schema,table_name,column_name,seq,form_show,list_show,input_type,is_query,param,verify,required)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{tableSchema,jdbcType=VARCHAR},#{tableName,jdbcType=VARCHAR},#{columnName,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{formShow,jdbcType=VARCHAR},#{listShow,jdbcType=VARCHAR},#{inputType,jdbcType=VARCHAR},#{isQuery,jdbcType=VARCHAR},#{param,jdbcType=VARCHAR},#{verify,jdbcType=VARCHAR},#{required,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.generator.bean.ColumnExtend">
+        UPDATE t_sys_column_extend SET
+        id=#{id,jdbcType=DECIMAL},table_schema=#{tableSchema,jdbcType=VARCHAR},table_name=#{tableName,jdbcType=VARCHAR},column_name=#{columnName,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},form_show=#{formShow,jdbcType=VARCHAR},list_show=#{listShow,jdbcType=VARCHAR},input_type=#{inputType,jdbcType=VARCHAR},is_query=#{isQuery,jdbcType=VARCHAR},param=#{param,jdbcType=VARCHAR},verify=#{verify,jdbcType=VARCHAR},required=#{required,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_sys_column_extend WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <delete id="deleteByTable" parameterType="java.lang.String">
+        DELETE FROM t_sys_column_extend WHERE table_schema=#{schema,jdbcType=VARCHAR} and table_name = #{table,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>
