@@ -25,7 +25,6 @@ public class DictionaryController extends BaseController{
     @GetMapping(value = "getPath")
     @ResponseBody
     public Response<List<Dictionary>> getPath(Long dicId){
-        List<Dictionary> dictionaries = null;
         try {
             return renderSuccess(dictionaryService.getPath(dicId));
         } catch (Exception e) {
@@ -57,7 +56,6 @@ public class DictionaryController extends BaseController{
             e.printStackTrace();
             return renderError(e.getMessage());
         }
-
     }
 
     @PostMapping(value = "add")

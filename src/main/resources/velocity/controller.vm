@@ -26,6 +26,19 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
     @Autowired
     private #toUpperCase(${param.alias})Service ${param.alias}Service;
 
+#if(${param.isTree}=="01")
+    @GetMapping(value = "list")
+    @ResponseBody
+    public PageInfo<#toUpperCase(${param.alias})> list(#getParentIdFieldType($columns) ${parentField},Integer pageNum,Integer pageSize,String searchText){
+        PageInfo<#toUpperCase(${param.alias})> pageInfo = null;
+        try {
+            pageInfo = ${param.alias}Service.listByPid(${parentField},pageNum,pageSize,searchText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+#else
     @GetMapping(value = "list")
     @ResponseBody
     public PageInfo<#toUpperCase(${param.alias})> list(Integer pageNum,Integer pageSize,String searchText){
@@ -37,7 +50,7 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
         }
         return pageInfo;
     }
-
+#end
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(#toUpperCase(${param.alias}) ${param.alias}){
@@ -104,4 +117,29 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
              return renderError(e.getMessage());
           }
     }
+#if(${param.isTree}=="01")
+    @GetMapping(value = "getPath")
+    @ResponseBody
+    public Response<List<#toUpperCase(${param.alias})>> getPath(#getPkFieldType($columns) #getPkProperty($columns)){
+         try {
+             return renderSuccess(${param.alias}Service.getPath(#getPkProperty($columns)));
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+         }
+    }
+
+    @GetMapping(value = "listByPid")
+    @ResponseBody
+    public Response<List<#toUpperCase(${param.alias})>> listByPid(#getParentIdFieldType($columns) ${parentField}){
+         List<#toUpperCase(${param.alias})> list = null;
+         try {
+             list = ${param.alias}Service.listByPid(${parentField});
+             return renderSuccess(list);
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+         }
+    }
+#end
 }

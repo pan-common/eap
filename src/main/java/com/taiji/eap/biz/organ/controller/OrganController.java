@@ -24,16 +24,15 @@ public class OrganController extends BaseController{
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Organ> list(Integer pageNum,Integer pageSize,String searchText){
+    public PageInfo<Organ> list(Long parentId,Integer pageNum,Integer pageSize,String searchText){
         PageInfo<Organ> pageInfo = null;
         try {
-            pageInfo = organService.list(pageNum,pageSize,searchText);
+            pageInfo = organService.listByPid(parentId,pageNum,pageSize,searchText);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return pageInfo;
     }
-
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(Organ organ){
@@ -99,5 +98,28 @@ public class OrganController extends BaseController{
              e.printStackTrace();
              return renderError(e.getMessage());
           }
+    }
+    @GetMapping(value = "getPath")
+    @ResponseBody
+    public Response<List<Organ>> getPath(Long organId){
+         try {
+             return renderSuccess(organService.getPath(organId));
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+         }
+    }
+
+    @GetMapping(value = "listByPid")
+    @ResponseBody
+    public Response<List<Organ>> listByPid(Long parentId){
+         List<Organ> list = null;
+         try {
+             list = organService.listByPid(parentId);
+             return renderSuccess(list);
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+         }
     }
 }

@@ -10,6 +10,9 @@ pageEncoding="UTF-8"%>
 <body>
 <div style="margin: 15px;">
     <div id="topLayout">
+        <div class="span6">
+            <ul class="breadcrumb"></ul>
+        </div>
         <div  id="toolbar">
             <button id='addBtn' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe608;</i> 添加
@@ -21,6 +24,7 @@ pageEncoding="UTF-8"%>
 </div>
 </body>
 <script type="text/javascript">
+    var currentId = 0;
     layui.use([ 'layer', 'form' ], function(layer, form) {
         var layer = layui.layer;
         var form =  layui.form;
@@ -79,16 +83,16 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
                 {
+                    title:"排序",
+                    field:"seq",
+                },
+                {
                     title:"部门名称",
                     field:"name",
                 },
                 {
                     title:"部门图标",
                     field:"icon",
-                },
-                {
-                    title:"排序",
-                    field:"seq",
                 },
                 {
                     title:"修改时间",
@@ -98,6 +102,11 @@ pageEncoding="UTF-8"%>
                     title : "操作",
                     align : "center",
                     events : {
+                        'click .enter': function (e, value, row, index) {
+                            currentId = row.organId;
+                            refreshTable();
+                            loadPath();
+                        },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
                             showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/organ/form&organId="+row.organId);
@@ -108,7 +117,8 @@ pageEncoding="UTF-8"%>
                         }
                     },
                     formatter : function () {
-                        return ['<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
+                        return ['<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
+                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
                             '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
                     }
                 }],
@@ -127,9 +137,11 @@ pageEncoding="UTF-8"%>
                 pageSize : params.limit, //页面大小
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
+    parentId:currentId
             }
             return param;
         }
+        loadPath();
     });
 
     function del(organId) {
@@ -156,6 +168,35 @@ pageEncoding="UTF-8"%>
         },function () {
 
         });
+    }
+
+    function loadPath() {
+        $.get('${pageContext.request.contextPath}/organ/getPath/',
+                {
+        organId : currentId
+                }, function(data, status) {
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            var result = data.body.entity;
+                            $(".breadcrumb").empty();
+                            var html = "";
+                            for (var i = 0; i < result.length; i++) {
+                                 var html = '<li><a class="clickEffect" name="'
+                                +result[i].organId+'">'+ result[i].name+'</a></li>';
+                                $(".breadcrumb").append(html);
+                                $("a[name=" + result[i].organId + "]").bind("click", {
+                                    index : i
+                                }, clickHandler);
+                            }
+                            function clickHandler(event) {
+                                var i = event.data.index;
+                                currentId = result[i].organId;
+                                refreshTable();
+                                loadPath();
+                            }
+                        }
+                    }
+                });
     }
 
     function refreshTable() {

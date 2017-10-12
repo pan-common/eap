@@ -8,21 +8,21 @@
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
     <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
+        <input type="text" name="seq"   lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">部门名称</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-        <input type="text" name="name"   lay-verify="number" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
+        <input type="text" name="name"   lay-verify="required" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">部门图标</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-        <input type="text" name="icon"   lay-verify="number" placeholder="请输入部门图标" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">排序</label>
-        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-        <input type="text" name="seq"   lay-verify="number" placeholder="请输入排序" autocomplete="off" class="layui-input">
+        <input type="text" name="icon"   lay-verify="required" placeholder="请输入部门图标" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -50,20 +50,21 @@
         if(organId){
             url = "${pageContext.request.contextPath}/organ/edit";
             $.get("${pageContext.request.contextPath}/organ/selectOne",{
-            organId:organId            },function (data,status) {
-                if(status=="success"){
-                    if(data.body.resultCode=="0"){
-                        $('#form').clearForm();
-                        $('#form').form('load',data.body.entity);
+                organId:organId
+            },function (data,status) {
+                    if(status=="success"){
+                        if(data.body.resultCode=="0"){
+                            $('#form').clearForm();
+                            $('#form').form('load',data.body.entity);
+                        }else {
+                            parent.layer.msg(data.body.resultContent, {icon: 5});
+                        }
                     }else {
-                        parent.layer.msg(data.body.resultContent, {icon: 5});
+                        parent.layer.msg('网络错误', {icon: 5});
                     }
-                }else {
-                    parent.layer.msg('网络错误', {icon: 5});
-                }
-            })
-        }
-
+                })
+            }
+    $("#parentId").val(parent.currentId);
         form.on("submit(submitBtn)",function (data,status) {
             $.post(url,$("#form").serializeArray(),function (data,status) {
                 if(status=='success'){

@@ -56,7 +56,9 @@ public class GeneratorServiceImpl implements GeneratorService{
         }
         Velocity.init(properties);
         List<ColumnExtend> columns = columnExtendService.listByTable(param.getSchema(),param.getTableName());
-
+        if(columns.isEmpty()){
+            throw new Exception("未找到表的扩展属性！");
+        }
         boolean isHavePk = false;
         for (ColumnExtend column:columns) {
             if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI")){
@@ -64,7 +66,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             }
         }
         if(!isHavePk){
-            throw new Exception("未找到主键");
+            throw new Exception("未找到主键！");
         }
         //生成实体类
         if(param.getGenerateItems().contains("bean")) {

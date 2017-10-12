@@ -15,7 +15,7 @@
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
 #if(${column.inputType}=="01")
 ##输入框
-        <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName})  lay-verify="number" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
+        <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName})  lay-verify="${column.verify}" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
 #elseif(${column.inputType}=="02")
 ##下拉选择框
         <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
@@ -63,21 +63,24 @@ required##
         if(#getPkProperty($columns)){
             url = "${pageContext.request.contextPath}/${param.alias}/edit";
             $.get("${pageContext.request.contextPath}/${param.alias}/selectOne",{
-            #getPkProperty($columns):#getPkProperty($columns)
-            },function (data,status) {
-                if(status=="success"){
-                    if(data.body.resultCode=="0"){
-                        $('#form').clearForm();
-                        $('#form').form('load',data.body.entity);
-                    }else {
-                        parent.layer.msg(data.body.resultContent, {icon: 5});
-                    }
-                }else {
-                    parent.layer.msg('网络错误', {icon: 5});
-                }
-            })
-        }
+                #getPkProperty($columns):#getPkProperty($columns)##
 
+            },function (data,status) {
+                    if(status=="success"){
+                        if(data.body.resultCode=="0"){
+                            $('#form').clearForm();
+                            $('#form').form('load',data.body.entity);
+                        }else {
+                            parent.layer.msg(data.body.resultContent, {icon: 5});
+                        }
+                    }else {
+                        parent.layer.msg('网络错误', {icon: 5});
+                    }
+                })
+            }
+#if(${param.isTree}=="01")
+    $("#${parentField}").val(parent.currentId);
+#end
         form.on("submit(submitBtn)",function (data,status) {
             $.post(url,$("#form").serializeArray(),function (data,status) {
                 if(status=='success'){
