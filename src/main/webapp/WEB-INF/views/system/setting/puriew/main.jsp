@@ -80,12 +80,12 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
                 {
-                    title:"权限名称",
-                    field:"name",
-                },
-                {
                     title:"序号",
                     field:"seq",
+                },
+                {
+                    title:"权限名称",
+                    field:"name",
                 },
                 {
                     title:"权限表达式",

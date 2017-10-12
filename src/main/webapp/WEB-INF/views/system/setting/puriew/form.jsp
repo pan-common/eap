@@ -9,15 +9,15 @@
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
     <div class="layui-form-item">
-        <label class="layui-form-label">权限名称</label>
-        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-        <input type="text" name="name"   lay-verify="number" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label">序号</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
         <input type="text" name="seq"   lay-verify="number" placeholder="请输入序号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名称</label>
+        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
+        <input type="text" name="name"   lay-verify="number" placeholder="请输入权限名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -33,8 +33,8 @@
         </div>
     </div>
     <input id="puriewId" type="hidden" name="puriewId">
-    <input id="createTime" type="hidden" name="createTime">
     <input id="updateTime" type="hidden" name="updateTime">
+    <input id="createTime" type="hidden" name="createTime">
     <input id="valid" type="hidden" name="valid">
     <input id="creater" type="hidden" name="creater">
 </form>

@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 
-public class ColumnExtend extends BaseModel{
+public class ColumnExtend extends BaseModel implements Comparable<ColumnExtend>{
     private Long id;//
     private String tableSchema;//数据库名
     private String tableName;//表名
@@ -180,5 +180,10 @@ public class ColumnExtend extends BaseModel{
 
     public void setColumnComment(String columnComment) {
         this.columnComment = columnComment;
+    }
+
+    @Override
+    public int compareTo(ColumnExtend o) {
+        return this.getSeq().compareTo(o.getSeq());
     }
 }

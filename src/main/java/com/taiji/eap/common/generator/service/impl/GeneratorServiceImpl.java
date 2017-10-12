@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -169,6 +170,7 @@ public class GeneratorServiceImpl implements GeneratorService{
      * 生成JSP主页面
      */
     private void generateJspMain(Param param,List<ColumnExtend> columns){
+        Collections.sort(columns);
         String content = replaceTemplate(param,columns,"/velocity/jspMain.vm");
         String filePath = param.getPageFilePath();
         String fileName ="main.jsp";
@@ -181,6 +183,7 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @param columns
      */
     private void generateJspForm(Param param,List<ColumnExtend> columns){
+        Collections.sort(columns);
         String content = replaceTemplate(param,columns,"/velocity/jspForm.vm");
         String filePath = param.getPageFilePath();
         String fileName ="form.jsp";
