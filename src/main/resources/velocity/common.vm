@@ -1,3 +1,7 @@
+##=================================全局变量=====================================
+##设置父节点ID
+#set($parentField = "#camel(${param.parentField})")
+##=================================全局方法=====================================
 ## 驼峰命名法转换
 #macro(camel $word)
 #set ($array = $word.split("_"))
@@ -150,4 +154,21 @@ ${result}##
 #end
 ${result}##
 #end
-
+##获取父节点ID的toFieldType类型
+#macro(getParentIdFieldType $columns)
+#foreach($column in $columns)
+#if(${column.columnName}=="${param.parentField}")
+#set($result="#toFieldType(${column.dataType})")
+#end
+#end
+${result}##
+#end
+##获取父节点ID的toFieldType类型
+#macro(getParentIdJdbcType $columns)
+#foreach($column in $columns)
+#if(${column.columnName}=="${param.parentField}")
+#set($result="#toJdbcType(${column.dataType})")
+#end
+#end
+${result}##
+#end

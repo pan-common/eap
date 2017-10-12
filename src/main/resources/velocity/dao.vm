@@ -8,15 +8,44 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface #toUpperCase(${param.alias})Dao {
-
+     /**
+     * 通过主键删除数据
+     * @param primaryKey
+     * @return
+     */
     int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey);
-
+     /**
+     * 添加数据
+     * @param ${param.alias}
+     * @return
+     */
     int insert(#toUpperCase(${param.alias}) ${param.alias});
-
+     /**
+     * 通过主键查询数据
+     * @param primaryKey
+     * @return
+     */
     #toUpperCase(${param.alias}) selectByPrimaryKey(#getPkFieldType($columns) primaryKey);
-
+     /**
+     * 修改数据
+     * @param ${param.alias}
+     * @return
+     */
     int updateByPrimaryKey(#toUpperCase(${param.alias}) ${param.alias});
-
+     /**
+     * 搜索数据
+     * @param searchText 搜索条件
+     * @return
+     */
     List<#toUpperCase(${param.alias})> list(@Param("searchText") String searchText);
+
+#if(${param.isTree}=="01")
+     /**
+     * 通过父节点ID搜索数据
+     * @param searchText 搜索条件
+     * @return
+     */
+    List<#toUpperCase(${param.alias})> listByPid(@Param("${parentField}") #getParentIdFieldType($columns) ${parentField},@Param("searchText") String searchText);
+#end
 
 }

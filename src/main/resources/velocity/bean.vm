@@ -21,6 +21,17 @@ public class #toUpperCase(${param.alias}) extends BaseModel{
 #end
     private #toFieldType(${column.dataType}) #camel(${column.columnName});//${column.columnComment}
 #end
+## 生成无参构造方法和包含id name的构造方法
+#if(${param.isTree}=="01")
+    public #toUpperCase(${param.alias})(#getPkFieldType($columns) #getPkProperty($columns),String ${param.nameField}) {
+        this.#getPkProperty($columns) = #getPkProperty($columns);
+        this.#camel(${param.nameField}) = #camel(${param.nameField});
+    }
+
+    public #toUpperCase(${param.alias})() {
+
+    }
+#end
 ## 生成get set方法
 #foreach($column in $columns)
 

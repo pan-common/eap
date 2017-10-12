@@ -42,8 +42,12 @@ public interface DictionaryService {
 
     /**
      *
-     * @param searchText 搜索条件
+     * @param parentId
+     * @param pageNum
+     * @param pageSize
+     * @param searchText
      * @return
+     * @throws Exception
      */
     PageInfo<Dictionary> listByPid(Long parentId, int pageNum, int pageSize, String searchText) throws Exception;
 

@@ -66,6 +66,22 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><label class="layui-form-label">是否树</label></td>
+                                        <td colspan="2">
+                                            <dic:selectTag parentId="34" id="isTree" selectedValue="02" selectName="isTree" layfilter="isTree"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td id="nameLabel"><label class="layui-form-label">名称字段</label></td>
+                                        <td id="nameInput" colspan="2">
+                                            <input id="nameField" type="text" value="name" name="nameField" class="layui-input">
+                                        </td>
+                                        <td id="parentFieldLabel"><label class="layui-form-label">父ID字段</label></td>
+                                        <td id="parentFieldInput" colspan="2">
+                                            <input id="parentField" type="text" value="parent_id" name="parentField" class="layui-input">
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="3" align="center"><button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button></td>
                                         <td colspan="3" align="center"><button type="reset" class="layui-btn layui-btn-primary">重置</button></td>
                                     </tr>
@@ -112,6 +128,27 @@
 
         var form = layui.form();
         form.render();
+
+        //隐藏parentField
+        $("#parentFieldLabel").hide();
+        $("#parentFieldInput").hide();
+        $("#nameLabel").hide();
+        $("#nameInput").hide();
+        //是否树选择
+        form.on('select(isTree)',function (data) {
+            var value = data.value;
+            if(value=="01"){
+                $("#parentFieldLabel").show();
+                $("#parentFieldInput").show();
+                $("#nameLabel").show();
+                $("#nameInput").show();
+            }else {
+                $("#parentFieldLabel").hide();
+                $("#parentFieldInput").hide();
+                $("#nameLabel").hide();
+                $("#nameInput").hide();
+            }
+        });
 
         $("#initBtn").click(function () {
             $.post("${pageContext.request.contextPath}/generator/init",{

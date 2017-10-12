@@ -1,10 +1,9 @@
-
-package com.taiji.eap.biz.puriew.controller;
+package com.taiji.eap.biz.organ.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.biz.puriew.bean.Puriew;
-import com.taiji.eap.biz.puriew.service.PuriewService;
+import com.taiji.eap.biz.organ.bean.Organ;
+import com.taiji.eap.biz.organ.service.OrganService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,18 +16,18 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("puriew")
-public class PuriewController extends BaseController{
+@RequestMapping("organ")
+public class OrganController extends BaseController{
 
     @Autowired
-    private PuriewService puriewService;
+    private OrganService organService;
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Puriew> list(Integer pageNum,Integer pageSize,String searchText){
-        PageInfo<Puriew> pageInfo = null;
+    public PageInfo<Organ> list(Integer pageNum,Integer pageSize,String searchText){
+        PageInfo<Organ> pageInfo = null;
         try {
-            pageInfo = puriewService.list(pageNum,pageSize,searchText);
+            pageInfo = organService.list(pageNum,pageSize,searchText);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -37,13 +36,13 @@ public class PuriewController extends BaseController{
 
     @PostMapping(value = "add")
     @ResponseBody
-    public Response<String> add(Puriew puriew){
-        puriew.setCreateTime(new Date());
-        puriew.setUpdateTime(new Date());
-        puriew.setValid("1");
-        puriew.setCreater(1L);
+    public Response<String> add(Organ organ){
+        organ.setCreateTime(new Date());
+        organ.setUpdateTime(new Date());
+        organ.setValid("1");
+        organ.setCreater(1L);
         try {
-            int k = puriewService.insert(puriew);
+            int k = organService.insert(organ);
             if(k>0){
                 return renderSuccess("添加成功");
             }else {
@@ -57,13 +56,13 @@ public class PuriewController extends BaseController{
 
     @PostMapping(value = "edit")
     @ResponseBody
-    public Response<String> edit(Puriew puriew){
-        puriew.setCreateTime(new Date());
-        puriew.setUpdateTime(new Date());
-        puriew.setValid("1");
-        puriew.setCreater(1L);
+    public Response<String> edit(Organ organ){
+        organ.setCreateTime(new Date());
+        organ.setUpdateTime(new Date());
+        organ.setValid("1");
+        organ.setCreater(1L);
         try {
-            int k = puriewService.updateByPrimaryKey(puriew);
+            int k = organService.updateByPrimaryKey(organ);
             if(k>0){
                 return renderSuccess("修改成功");
             }else {
@@ -77,9 +76,9 @@ public class PuriewController extends BaseController{
 
     @PostMapping(value = "delete")
     @ResponseBody
-    public Response<String> delete(Long puriewId){
+    public Response<String> delete(Long organId){
         try {
-            int k = puriewService.deleteByPrimaryKey(puriewId);
+            int k = organService.deleteByPrimaryKey(organId);
             if(k>0){
                 return renderSuccess("删除成功");
             }else {
@@ -93,9 +92,9 @@ public class PuriewController extends BaseController{
 
     @GetMapping(value = "selectOne")
     @ResponseBody
-    public Response<Puriew> selectOne(Long puriewId){
+    public Response<Organ> selectOne(Long organId){
          try {
-            return renderSuccess(puriewService.selectByPrimaryKey(puriewId));
+            return renderSuccess(organService.selectByPrimaryKey(organId));
          } catch (Exception e) {
              e.printStackTrace();
              return renderError(e.getMessage());

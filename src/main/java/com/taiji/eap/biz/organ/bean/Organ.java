@@ -1,17 +1,17 @@
 
-
-package com.taiji.eap.biz.puriew.bean;
+package com.taiji.eap.biz.organ.bean;
 
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 
-public class Puriew extends BaseModel{
-    private Long puriewId;//权限ID
-    private String name;//权限名称
-    private Integer seq;//序号
-    private String expression;//权限表达式
+public class Organ extends BaseModel{
+    private Long organId;//部门ID
+    private String name;//部门名称
+    private String icon;//部门图标
+    private Long parentId;//上级部门ID
+    private Integer seq;//排序
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")  //取日期时使用
     @DateTimeFormat(pattern = "yyyy-MM-dd")//存日期时使用
     private Date createTime;//创建时间
@@ -20,13 +20,21 @@ public class Puriew extends BaseModel{
     private Date updateTime;//修改时间
     private String valid;//是否有效
     private Long creater;//创建人
-
-    public Long getPuriewId() {
-        return puriewId;
+    public Organ(Long organId,String name) {
+        this.organId = organId;
+        this.name = name;
     }
 
-    public void setPuriewId(Long puriewId) {
-        this.puriewId = puriewId;
+    public Organ() {
+
+    }
+
+    public Long getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(Long organId) {
+        this.organId = organId;
     }
 
 
@@ -39,21 +47,30 @@ public class Puriew extends BaseModel{
     }
 
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+
     public Integer getSeq() {
         return seq;
     }
 
     public void setSeq(Integer seq) {
         this.seq = seq;
-    }
-
-
-    public String getExpression() {
-        return expression;
-    }
-
-    public void setExpression(String expression) {
-        this.expression = expression;
     }
 
 

@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>puriew</title>
+    <title>organ</title>
 </head>
 <body>
 <div style="margin: 15px;">
@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/puriew/form&organId=0");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/organ/form&organId=0");
         });
 
         //弹出录入框
@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
         };
 
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/puriew/list",
+            url:"${pageContext.request.contextPath}/organ/list",
             method:'GET',
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
@@ -100,7 +100,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/puriew/form&organId="+row.organId);
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/organ/form&organId="+row.organId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
@@ -137,7 +137,7 @@ pageEncoding="UTF-8"%>
             btn: ['确定','取消'],
             offset: '150px',
         },function () {
-            $.post('${pageContext.request.contextPath}/puriew/delete',
+            $.post('${pageContext.request.contextPath}/organ/delete',
                     {organId : organId},
                     function (data, status) {
                         if (status == "success") {

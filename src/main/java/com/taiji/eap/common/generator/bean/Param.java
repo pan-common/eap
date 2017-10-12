@@ -20,6 +20,10 @@ public class Param {
 
     private String generateItems;//生成项
 
+    private String isTree;//是否树
+    private String parentField;//父ID字段名
+    private String nameField;//名称字段，用于路径显示
+
     public Param() {
     }
 
@@ -143,6 +147,30 @@ public class Param {
         this.generateItems = generateItems;
     }
 
+    public String getIsTree() {
+        return isTree;
+    }
+
+    public void setIsTree(String isTree) {
+        this.isTree = isTree;
+    }
+
+    public String getParentField() {
+        return parentField;
+    }
+
+    public void setParentField(String parentField) {
+        this.parentField = parentField;
+    }
+
+    public String getNameField() {
+        return nameField;
+    }
+
+    public void setNameField(String nameField) {
+        this.nameField = nameField;
+    }
+
     @Override
     public String toString() {
         return "Param{" +
@@ -160,6 +188,9 @@ public class Param {
                 ", deleteWay='" + deleteWay + '\'' +
                 ", pagePath='" + pagePath + '\'' +
                 ", pageFilePath='" + pageFilePath + '\'' +
+                ", generateItems='" + generateItems + '\'' +
+                ", isTree='" + isTree + '\'' +
+                ", parentField='" + parentField + '\'' +
                 '}';
     }
 }

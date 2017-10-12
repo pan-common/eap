@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>puriew</title>
+    <title>organ</title>
 </head>
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
@@ -42,14 +42,14 @@
 <script type="text/javascript">
     ;
     var organId = ${param.organId};
-    var url = "${pageContext.request.contextPath}/puriew/add";
+    var url = "${pageContext.request.contextPath}/organ/add";
     layui.use(['form'],function () {
         var form = layui.form();
         form.render('select','form');
 
         if(organId){
-            url = "${pageContext.request.contextPath}/puriew/edit";
-            $.get("${pageContext.request.contextPath}/puriew/selectOne",{
+            url = "${pageContext.request.contextPath}/organ/edit";
+            $.get("${pageContext.request.contextPath}/organ/selectOne",{
             organId:organId            },function (data,status) {
                 if(status=="success"){
                     if(data.body.resultCode=="0"){

@@ -59,5 +59,38 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         PageInfo<#toUpperCase(${param.alias})> pageInfo = new PageInfo<#toUpperCase(${param.alias})>(${param.alias}s);
         return pageInfo;
     }
+#if(${param.isTree}=="01")
 
+    @Override
+    public List<#toUpperCase(${param.alias})> listByPid(#getParentIdFieldType($columns) ${parentField}) throws Exception {
+        return ${param.alias}Dao.listByPid(${parentField},"");
+    }
+
+    @Override
+    public PageInfo<#toUpperCase(${param.alias})> listByPid(#getParentIdFieldType($columns) ${parentField}, int pageNum, int pageSize, String searchText) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<#toUpperCase(${param.alias})> list = ${param.alias}Dao.listByPid(parentId,searchText);
+        PageInfo<#toUpperCase(${param.alias})> pageInfo = new PageInfo<#toUpperCase(${param.alias})>(list);
+        return pageInfo;
+    }
+
+    @Override
+    public List<#toUpperCase(${param.alias})> getPath(#getPkFieldType($columns) #getPkProperty($columns)) throws Exception {
+        List<#toUpperCase(${param.alias})> list = new ArrayList<#toUpperCase(${param.alias})>();
+        if(#getPkProperty($columns)!=0){
+            disPlay(#getPkProperty($columns), list);
+        }
+        list.add(new #toUpperCase(${param.alias})(0L,"根路径"));
+        Collections.reverse(list);
+        return list;
+    }
+
+    private void disPlay(#getPkFieldType($columns) #getPkProperty($columns),List<#toUpperCase(${param.alias})> list){
+    #toUpperCase(${param.alias}) ${param.alias} = ${param.alias}Dao.selectByPrimaryKey(#getPkProperty($columns));
+        if(${param.alias}!=null){
+            list.add(${param.alias});
+            disPlay(${param.alias}.get#camelToUpperCase(${parentField})(), list);
+        }
+    }
+#end
 }
