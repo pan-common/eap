@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 
-public class SysResource extends BaseModel{
+public class SysResource extends LayuiTree{
 
 	/**
 	 * 
@@ -48,9 +49,6 @@ public class SysResource extends BaseModel{
 	
 	private boolean spread = false;
 	
-	private List<SysResource> children = new ArrayList<SysResource>();
-	
-
 	public SysResource(Long resourceId, String name) {
 		super();
 		this.resourceId = resourceId;
@@ -183,14 +181,6 @@ public class SysResource extends BaseModel{
 
 	public void setCreater(Long creater) {
 		this.creater = creater;
-	}
-	
-	public List<SysResource> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<SysResource> children) {
-		this.children = children;
 	}
 	
 	public boolean isSpread() {

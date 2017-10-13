@@ -44,7 +44,11 @@ pageEncoding="UTF-8"%>
                 type:2,
                 title:title,
                 content:url,
+#if(${param.formColumnNum}=="1")
                 area:["550px","550px"],
+#else
+                area:["800px","550px"],
+#end
                 offset: '0px',
                 shade:false,
                 maxmin:true,
@@ -57,9 +61,10 @@ pageEncoding="UTF-8"%>
         $('#bootstrapTable').bootstrapTable({
             url:"${pageContext.request.contextPath}/${param.alias}/list",
             method:'GET',
+            height:$(window).height()-$("#topLayout").height()-30,
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
-            cache : false, //是否使用缓存
+            cache : true, //是否使用缓存
             pagination : true, //是否显示分页（*）
             queryParams : queryParams,//传递参数（*）
             queryParamsType : 'limit',
@@ -80,7 +85,7 @@ pageEncoding="UTF-8"%>
             clickToSelect : true, //是否启用点击选中行
             uniqueId : "#getPkProperty($columns)", //每一行的唯一标识，一般为主键列
             singleSelect : true,//设置true禁止多选
-             showToggle : false, //是否显示详细视图和列表视图的切换按钮
+            showToggle : false, //是否显示详细视图和列表视图的切换按钮
             cardView : false, //是否显示详细视图
             detailView : false, //是否显示父子表
             showHeader : true,//是否显示列头
@@ -147,7 +152,9 @@ pageEncoding="UTF-8"%>
             }
             return param;
         }
+#if(${param.isTree}=="01")
         loadPath();
+#end
     });
 
     function del(#getPkProperty($columns)) {

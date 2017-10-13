@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>organ</title>
+    <title>sysOrgan</title>
 </head>
 <body>
 <div style="margin: 15px;">
@@ -16,6 +16,9 @@ pageEncoding="UTF-8"%>
         <div  id="toolbar">
             <button id='addBtn' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe608;</i> 添加
+            </button>
+            <button id='showTreeView' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe62e;</i> 显示树
             </button>
         </div>
     </div>
@@ -29,7 +32,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/organ/form&organId=0");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/form&organId=0");
         });
 
         //弹出录入框
@@ -50,11 +53,12 @@ pageEncoding="UTF-8"%>
         };
 
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/organ/list",
+            url:"${pageContext.request.contextPath}/sysOrgan/list",
             method:'GET',
+            height:$(window).height()-$("#topLayout").height()-30,
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
-            cache : false, //是否使用缓存
+            cache : true, //是否使用缓存
             pagination : true, //是否显示分页（*）
             queryParams : queryParams,//传递参数（*）
             queryParamsType : 'limit',
@@ -75,7 +79,7 @@ pageEncoding="UTF-8"%>
             clickToSelect : true, //是否启用点击选中行
             uniqueId : "organId", //每一行的唯一标识，一般为主键列
             singleSelect : true,//设置true禁止多选
-             showToggle : false, //是否显示详细视图和列表视图的切换按钮
+            showToggle : false, //是否显示详细视图和列表视图的切换按钮
             cardView : false, //是否显示详细视图
             detailView : false, //是否显示父子表
             showHeader : true,//是否显示列头
@@ -109,7 +113,7 @@ pageEncoding="UTF-8"%>
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/organ/form&organId="+row.organId);
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/form&organId="+row.organId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
@@ -149,7 +153,7 @@ pageEncoding="UTF-8"%>
             btn: ['确定','取消'],
             offset: '150px',
         },function () {
-            $.post('${pageContext.request.contextPath}/organ/delete',
+            $.post('${pageContext.request.contextPath}/sysOrgan/delete',
                     {organId : organId},
                     function (data, status) {
                         if (status == "success") {
@@ -171,7 +175,7 @@ pageEncoding="UTF-8"%>
     }
 
     function loadPath() {
-        $.get('${pageContext.request.contextPath}/organ/getPath/',
+        $.get('${pageContext.request.contextPath}/sysOrgan/getPath/',
                 {
         organId : currentId
                 }, function(data, status) {

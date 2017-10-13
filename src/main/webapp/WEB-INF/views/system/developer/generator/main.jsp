@@ -37,11 +37,11 @@
                                     <tr>
                                         <td><label class="layui-form-label">包名</label></td>
                                         <td><input id="packageName" type="text" name="packageName" readOnly="true"  class="layui-input"></td>
-                                        <td><button id="selectPackage" class="layui-btn layui-btn-small">选择</button></td>
+                                        <td><button id="selectPackage" class="layui-btn layui-btn-small" type="button">选择</button></td>
 
                                         <td><label class="layui-form-label">页面路径</label></td>
                                         <td><input id="pagePath" type="text" name="pagePath"  readOnly="true"  class="layui-input"></td>
-                                        <td><button id="selectPagePath" class="layui-btn layui-btn-small">选择</button></td>
+                                        <td><button id="selectPagePath" class="layui-btn layui-btn-small" type="button">选择</button></td>
                                     </tr>
                                     <tr>
                                         <td><label class="layui-form-label">删除方式</label></td>
@@ -82,6 +82,22 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td><label class="layui-form-label">Form显示列</label></td>
+                                        <td colspan="2">
+                                            <dic:radioTag parentId="57" name="formColumnNum"></dic:radioTag>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td id="menuInputLayout"><label class="layui-form-label">菜单名称</label></td>
+                                        <td id="menuInput" colspan="2">
+                                            <input id="menuName" type="text" name="menuName" class="layui-input">
+                                        </td>
+
+                                        <td><label class="layui-form-label">上级菜单</label></td>
+                                        <td><input id="menuLabel" type="text" name="menuLabel" readOnly="true"  class="layui-input"></td>
+                                        <td><button id="selectMenu" type="button" class="layui-btn layui-btn-small">选择</button></td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="3" align="center"><button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button></td>
                                         <td colspan="3" align="center"><button type="reset" class="layui-btn layui-btn-primary">重置</button></td>
                                     </tr>
@@ -90,6 +106,7 @@
                                 <input type="hidden" id="connectionURL" name="connectionURL">
                                 <input type="hidden" id="userId" name="userId">
                                 <input type="hidden" id="password" name="password">
+                                <input type="hidden" id="menuId" name="menuId">
                             </form>
                         </div>
                         <div class="layui-tab-item">
@@ -121,6 +138,11 @@
     var url = "${pageContext.request.contextPath}/generator/execute";
     var packageName = $("#packageName");
     var pagePath = $("#pagePath");
+    var menuLabel = $("#menuLabel");
+    var menuId = $("#menuId");
+    var menuInputLayout = $("#menuInputLayout");
+    var menuInput = $("#menuInput");
+
     $("#tab_content").height($(window).height()-80);
     layui.use([ 'layer', 'form' ], function(layer, form) {
         var schema = "";
@@ -175,7 +197,11 @@
         });
 
         $("#selectPagePath").click(function () {
-            showModel("选择包目录","${pageContext.request.contextPath}/resource/link?url=system/developer/generator/jspTreeView");
+            showModel("选择页面路径","${pageContext.request.contextPath}/resource/link?url=system/developer/generator/jspTreeView");
+        })
+
+        $("#selectMenu").click(function () {
+            showModel("选择挂靠菜单","${pageContext.request.contextPath}/resource/link?url=system/developer/generator/menuTreeView")
         })
 
         //弹出录入框

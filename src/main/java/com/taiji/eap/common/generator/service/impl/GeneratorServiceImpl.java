@@ -4,6 +4,8 @@ import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
 import com.taiji.eap.common.generator.service.GeneratorService;
+import com.taiji.eap.common.shiro.bean.SysResource;
+import com.taiji.eap.common.shiro.service.SysResourceService;
 import com.taiji.eap.common.utils.FileUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -17,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 @Service
 public class GeneratorServiceImpl implements GeneratorService{
@@ -30,6 +29,9 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Autowired
     private ColumnExtendService columnExtendService;
+
+    @Autowired
+    private SysResourceService sysResourceService;
 
     @Override
     public List<Table> selectTables(String schema) {
@@ -60,14 +62,19 @@ public class GeneratorServiceImpl implements GeneratorService{
             throw new Exception("未找到表的扩展属性！");
         }
         boolean isHavePk = false;
+        boolean isTree = false;
         for (ColumnExtend column:columns) {
-            if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI")){
+            if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI"))
                 isHavePk = true;
+            if(param.getIsTree().equals("01")) {
+                if (column.getColumnName() != null && column.getColumnName().equals(param.getParentField()))
+                    isTree = true;
             }
         }
-        if(!isHavePk){
+        if(!isHavePk)
             throw new Exception("未找到主键！");
-        }
+        if(param.getIsTree().equals("01")&&!isTree)
+            throw new Exception("未找到名为"+param.getParentField()+"的字段，表非树结构或字段名录入错误！");
         //生成实体类
         if(param.getGenerateItems().contains("bean")) {
             generateBean(param, columns);
@@ -94,6 +101,22 @@ public class GeneratorServiceImpl implements GeneratorService{
             //生成jsp表单界面
             generateJspForm(param, columns);
         }
+
+        //挂靠菜单
+        SysResource sysResource = new SysResource();
+        sysResource.setName(param.getMenuName());
+        sysResource.setParentId(Long.valueOf(param.getMenuId()));
+        sysResource.setTypeCode("01");
+        sysResource.setTypeDesc("菜单");
+        sysResource.setIcon("fa-trademark");
+        sysResource.setLink("resource/link?url="+param.getPagePath().replaceAll("\\\\","/")+"/"+param.getAlias()+"/main");
+        sysResource.setSeq(1);
+        sysResource.setNote("无");
+        sysResource.setValid("1");
+        sysResource.setCreateTime(new Date());
+        sysResource.setUpdateTime(new Date());
+        sysResource.setCreater(0L);
+        sysResourceService.add(sysResource);
     }
 
     private String replaceTemplate(Param param,List<ColumnExtend> columns,String templateFilePath){

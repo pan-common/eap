@@ -8,29 +8,88 @@
 </head>
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
+#if(${param.formColumnNum}=="2")
+    <table>
+#foreach($column in $columns)
+#set($temp=$velocityCount)
+#set($temp=$temp - 1)
+#if(${column.formShow}=="01"&&${temp}%2==0)
+        <tr>
+#end
+#if(${column.formShow}=="01")
+#if(${column.inputType}=="01")
+                ##输入框
+            <td><label class="layui-form-label">${column.columnComment}</label></td>
+            <td colspan="2">
+                <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName}) lay-verify="${column.verify}" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
+            </td>
+#elseif(${column.inputType}=="02")
+                ##下拉选择框
+            <td><label class="layui-form-label">${column.columnComment}</label></td>
+            <td colspan="2">
+                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
+            </td>
+#elseif(${column.inputType}=="03")
+                ##复选框
+            <td><label class="layui-form-label">${column.columnComment}</label></td>
+            <td colspan="2">
+                <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
+            </td>
+#elseif(${column.inputType}=="04")
+                ##开关
+            <td><label class="layui-form-label">${column.columnComment}</label></td>
+            <td colspan="2">
+                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
+            </td>
+#elseif(${column.inputType}=="05")
+                ##单选
+            <td><label class="layui-form-label">${column.columnComment}</label></td>
+            <td colspan="2">
+                <dic:radioTag parentId="${column.param}" name="#camel(${column.columnName})"></dic:radioTag>
+            </td>
+#end
+#end
+#if(${column.formShow}=="01"&&(${temp}+1)%2==0)
+        </tr>
+#end
+#end
+        <tr>
+            <td colspan="3" align="center"><button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button></td>
+            <td colspan="3" align="center"><button type="reset" class="layui-btn layui-btn-primary">重置</button></td>
+        </tr>
+    </table>
+#else
 #foreach($column in $columns)
 #if(${column.formShow}=="01")
-    <div class="layui-form-item">
-        <label class="layui-form-label">${column.columnComment}</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label">${column.columnComment}</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
 #if(${column.inputType}=="01")
-##输入框
-        <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName})  lay-verify="${column.verify}" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
+            ##输入框
+                <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName}) lay-verify="${column.verify}" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
 #elseif(${column.inputType}=="02")
-##下拉选择框
-        <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
+            ##下拉选择框
+                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
 #elseif(${column.inputType}=="03")
-##复选框
-        <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
+            ##复选框
+                <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
 #elseif(${column.inputType}=="04")
-##开关
-        <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
+            ##开关
+                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
 #elseif(${column.inputType}=="05")
-##单选
+            ##单选
+                <dic:radioTag parentId="${column.param}" name="#camel(${column.columnName})"></dic:radioTag>
+#end
 #end
         </div>
     </div>
 #end
+    <div class="layui-form-item">
+        <div class="layui-input-block" style="margin-right: 10px">
+            <button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
 #end
 ##===============获取是否必填的方法start==================
 #macro(isRequired $required)
@@ -39,12 +98,7 @@ required##
 #end
 #end
 ##===============获取是否必填的方法end==================
-    <div class="layui-form-item">
-        <div class="layui-input-block" style="margin-right: 10px">
-            <button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-        </div>
-    </div>
+
 #foreach($column in $columns)
 #if($!{column.formShow}!="01")
     <input id="#camel(${column.columnName})" type="hidden" name="#camel(${column.columnName})">

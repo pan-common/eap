@@ -9,7 +9,7 @@
     <display-name>dictionary core</display-name>
     <tlib-version>1.0</tlib-version>
     <short-name>dic</short-name>
-
+<!--==================================selectTag=================================================-->
     <tag>
         <name>selectTag</name>
         <tag-class>com.taiji.eap.common.taglib.DicSelectTag</tag-class>
@@ -84,7 +84,7 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
-
+<!--===================================checkboxTag================================================-->
     <tag>
         <name>checkboxTag</name>
         <tag-class>com.taiji.eap.common.taglib.DicCheckBoxTag</tag-class>
@@ -112,6 +112,43 @@
         <attribute>
             <name>checkPositions</name>
             <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!-- -->
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <!--======================================================================-->
+    <tag>
+        <name>radioTag</name>
+        <tag-class>com.taiji.eap.common.taglib.DicRadioTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>parentId</name>
+            <!--指定属性是否是必须的或者可选的,如果设置为false为可选。-->
+            <required>true</required>
+            <!--声明在运行表达式时，标签属性是否有效。-->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--样式类-->
+        <attribute>
+            <name>cssClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--内联样式-->
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <!--选中下标-->
+        <attribute>
+            <name>checkPositions</name>
+            <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
         <!-- -->

@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysOrganDao">
-    
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysOrgan">
+        <id column="organ_id" property="organId" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ
+        <where>
+            valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL} AND valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ
+        WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysOrgan">
+        <selectKey resultType="java.lang.Long" keyProperty="organId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS organ_id
+        </selectKey>
+        INSERT INTO t_qx_organ(
+        organ_id,name,icon,parent_id,seq,create_time,update_time,valid,creater)
+        VALUES(
+        #{organId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{icon,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{seq,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysOrgan">
+        UPDATE t_qx_organ SET
+        organ_id=#{organId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},icon=#{icon,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},seq=#{seq,jdbcType=INTEGER},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_organ WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </delete>
+
 </mapper>

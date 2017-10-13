@@ -17,6 +17,8 @@ public abstract class LayuiTree {
 
     public static final String DICTIONARY = "05";
 
+    public static final String MENU = "06";
+
     public static final String OTHER = "255";
 
     protected String name;
@@ -61,7 +63,14 @@ public abstract class LayuiTree {
     }
 
     public List<LayuiTree> getChildren() {
+        if(children==null){
+            children = new ArrayList<LayuiTree>();
+        }
         return children;
+    }
+
+    public void setChildren(List<LayuiTree> children) {
+        this.children = children;
     }
 
     public void addChildren(LayuiTree layuiTree){

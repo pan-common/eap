@@ -192,7 +192,7 @@
                         $breadcrumb.empty();
                         var html = "";
                         for (var i = 0; i < result.length; i++) {
-                            var html = '<li><a class="clickEffect" name="result[i].dicId">'+result[i].value+'</a></li>';
+                            var html = '<li><a class="clickEffect" name="'+result[i].dicId+'">'+result[i].value+'</a></li>';
                             $breadcrumb.append(html);
                             $("a[name=" + result[i].dicId + "]").bind("click", {
                                 index : i

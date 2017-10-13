@@ -2,6 +2,7 @@ package com.taiji.eap.common.shiro.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.http.entity.Response;
 import com.taiji.eap.common.shiro.bean.SysResource;
 import com.taiji.eap.common.shiro.service.SysResourceService;
@@ -107,6 +108,12 @@ public class SysResourceController extends BaseController{
 	@ResponseBody
 	public Response<SysResource> selectOne(Long resourceId){
 		return  renderSuccess(sysResourceService.selectOne(resourceId));
+	}
+
+	@GetMapping(value = "layuiTreeView")
+	@ResponseBody
+	public Response<List<LayuiTree>> layuiTreeView(){
+		return renderSuccess(sysResourceService.treeView());
 	}
 
 }

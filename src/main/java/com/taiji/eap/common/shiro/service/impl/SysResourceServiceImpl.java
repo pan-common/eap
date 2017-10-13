@@ -7,7 +7,9 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.http.entity.Response;
+import javafx.scene.control.TreeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,10 +72,8 @@ public class SysResourceServiceImpl implements SysResourceService{
 
 	private SysResource findChildren(SysResource tree, List<SysResource> resources) {
 		for (SysResource sr : resources) {
+			sr.setType(LayuiTree.MENU);
 			if(tree.getResourceId()==sr.getParentId()){
-				if(tree.getChildren()==null){
-					tree.setChildren(new ArrayList<SysResource>());
-				}
 				tree.getChildren().add(findChildren(sr, resources));
 			}
 		}
@@ -118,6 +118,20 @@ public class SysResourceServiceImpl implements SysResourceService{
 	public int delete(Long resourceId) {
 		return sysResourceDao.delete(resourceId);
 	}
+
+	@Override
+	public List<LayuiTree> treeView() {
+		List<SysResource> resources = sysResourceDao.selectAllMenu();
+		Long pid = 0L;
+		List<LayuiTree> trees = new ArrayList<LayuiTree>();
+		for (SysResource tree : resources) {
+			if(pid==tree.getParentId()){
+				trees.add(findChildren(tree,resources));
+			}
+		}
+		return trees;
+	}
+
 
 	private void disPlay(Long resourceId,List<SysResource> list){
 		SysResource sysResource = sysResourceDao.selectByPrimaryKey(resourceId);

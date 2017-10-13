@@ -174,6 +174,7 @@
                 function (data, status) {
                     if (status == "success") {
                         if (data.body.resultCode == "0") {
+                            layer.close(layer.index);
                             refreshTable();
                         }else {
                             layer.msg(data.body.resultContent);

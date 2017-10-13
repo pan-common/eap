@@ -29,7 +29,7 @@
         <div class="layui-input-inline">
             <label class="layui-form-label">值</label>
             <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-                <input type="text" name="value" required  lay-verify="required" placeholder="请输入值名" autocomplete="off" class="layui-input">
+                <input id="value" type="text" name="value" required  lay-verify="required" placeholder="请输入值名" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>

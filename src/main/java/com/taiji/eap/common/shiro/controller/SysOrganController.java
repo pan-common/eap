@@ -1,9 +1,10 @@
-package com.taiji.eap.biz.organ.controller;
+package com.taiji.eap.common.shiro.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.biz.organ.bean.Organ;
-import com.taiji.eap.biz.organ.service.OrganService;
+import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.shiro.bean.SysOrgan;
+import com.taiji.eap.common.shiro.service.SysOrganService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,18 +17,18 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("organ")
-public class OrganController extends BaseController{
+@RequestMapping("sysOrgan")
+public class SysOrganController extends BaseController{
 
     @Autowired
-    private OrganService organService;
+    private SysOrganService sysOrganService;
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Organ> list(Long parentId,Integer pageNum,Integer pageSize,String searchText){
-        PageInfo<Organ> pageInfo = null;
+    public PageInfo<SysOrgan> list(Long parentId,Integer pageNum,Integer pageSize,String searchText){
+        PageInfo<SysOrgan> pageInfo = null;
         try {
-            pageInfo = organService.listByPid(parentId,pageNum,pageSize,searchText);
+            pageInfo = sysOrganService.listByPid(parentId,pageNum,pageSize,searchText);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,13 +36,13 @@ public class OrganController extends BaseController{
     }
     @PostMapping(value = "add")
     @ResponseBody
-    public Response<String> add(Organ organ){
-        organ.setCreateTime(new Date());
-        organ.setUpdateTime(new Date());
-        organ.setValid("1");
-        organ.setCreater(1L);
+    public Response<String> add(SysOrgan sysOrgan){
+        sysOrgan.setCreateTime(new Date());
+        sysOrgan.setUpdateTime(new Date());
+        sysOrgan.setValid("1");
+        sysOrgan.setCreater(1L);
         try {
-            int k = organService.insert(organ);
+            int k = sysOrganService.insert(sysOrgan);
             if(k>0){
                 return renderSuccess("添加成功");
             }else {
@@ -55,13 +56,13 @@ public class OrganController extends BaseController{
 
     @PostMapping(value = "edit")
     @ResponseBody
-    public Response<String> edit(Organ organ){
-        organ.setCreateTime(new Date());
-        organ.setUpdateTime(new Date());
-        organ.setValid("1");
-        organ.setCreater(1L);
+    public Response<String> edit(SysOrgan sysOrgan){
+        sysOrgan.setCreateTime(new Date());
+        sysOrgan.setUpdateTime(new Date());
+        sysOrgan.setValid("1");
+        sysOrgan.setCreater(1L);
         try {
-            int k = organService.updateByPrimaryKey(organ);
+            int k = sysOrganService.updateByPrimaryKey(sysOrgan);
             if(k>0){
                 return renderSuccess("修改成功");
             }else {
@@ -77,7 +78,7 @@ public class OrganController extends BaseController{
     @ResponseBody
     public Response<String> delete(Long organId){
         try {
-            int k = organService.deleteByPrimaryKey(organId);
+            int k = sysOrganService.deleteByPrimaryKey(organId);
             if(k>0){
                 return renderSuccess("删除成功");
             }else {
@@ -91,9 +92,9 @@ public class OrganController extends BaseController{
 
     @GetMapping(value = "selectOne")
     @ResponseBody
-    public Response<Organ> selectOne(Long organId){
+    public Response<SysOrgan> selectOne(Long organId){
          try {
-            return renderSuccess(organService.selectByPrimaryKey(organId));
+            return renderSuccess(sysOrganService.selectByPrimaryKey(organId));
          } catch (Exception e) {
              e.printStackTrace();
              return renderError(e.getMessage());
@@ -101,9 +102,9 @@ public class OrganController extends BaseController{
     }
     @GetMapping(value = "getPath")
     @ResponseBody
-    public Response<List<Organ>> getPath(Long organId){
+    public Response<List<SysOrgan>> getPath(Long organId){
          try {
-             return renderSuccess(organService.getPath(organId));
+             return renderSuccess(sysOrganService.getPath(organId));
          } catch (Exception e) {
              e.printStackTrace();
              return renderError(e.getMessage());
@@ -112,14 +113,15 @@ public class OrganController extends BaseController{
 
     @GetMapping(value = "listByPid")
     @ResponseBody
-    public Response<List<Organ>> listByPid(Long parentId){
-         List<Organ> list = null;
+    public Response<List<SysOrgan>> listByPid(Long parentId){
+         List<SysOrgan> list = null;
          try {
-             list = organService.listByPid(parentId);
+             list = sysOrganService.listByPid(parentId);
              return renderSuccess(list);
          } catch (Exception e) {
              e.printStackTrace();
              return renderError(e.getMessage());
          }
     }
+
 }

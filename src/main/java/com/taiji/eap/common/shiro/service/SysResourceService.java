@@ -3,8 +3,10 @@ package com.taiji.eap.common.shiro.service;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.http.entity.Response;
 import com.taiji.eap.common.shiro.bean.SysResource;
+import javafx.scene.control.TreeView;
 
 public interface SysResourceService {
 	/**
@@ -63,4 +65,10 @@ public interface SysResourceService {
 	 * @return
 	 */
 	int delete(Long resourceId);
+
+	/**
+	 * 获取资源树结构视图  layui结构
+	 * @return
+	 */
+	List<LayuiTree> treeView();
 }

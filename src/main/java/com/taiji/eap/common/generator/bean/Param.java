@@ -23,6 +23,10 @@ public class Param {
     private String isTree;//是否树
     private String parentField;//父ID字段名
     private String nameField;//名称字段，用于路径显示
+    private String formColumnNum;//form显示列数
+
+    private String menuId;//挂靠的上级菜单ID
+    private String menuName;//挂靠菜单的名称
 
     public Param() {
     }
@@ -169,6 +173,30 @@ public class Param {
 
     public void setNameField(String nameField) {
         this.nameField = nameField;
+    }
+
+    public String getFormColumnNum() {
+        return formColumnNum;
+    }
+
+    public void setFormColumnNum(String formColumnNum) {
+        this.formColumnNum = formColumnNum;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
     }
 
     @Override
