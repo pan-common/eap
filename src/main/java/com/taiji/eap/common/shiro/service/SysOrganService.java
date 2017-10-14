@@ -1,6 +1,7 @@
 package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import java.util.List;
@@ -69,4 +70,5 @@ public interface SysOrganService{
     */
     List<SysOrgan> getPath(Long primaryKey) throws Exception;
 
+    List<LayuiTree> treeView(Long parentId) throws Exception;
 }

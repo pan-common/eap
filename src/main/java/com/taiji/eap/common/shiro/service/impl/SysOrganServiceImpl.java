@@ -2,6 +2,7 @@ package com.taiji.eap.common.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.dao.SysOrganDao;
 import com.taiji.eap.common.shiro.service.SysOrganService;
@@ -77,6 +78,11 @@ public class SysOrganServiceImpl implements SysOrganService{
         list.add(new SysOrgan(0L,"根路径"));
         Collections.reverse(list);
         return list;
+    }
+
+    @Override
+    public List<LayuiTree> treeView(Long parentId) throws Exception {
+        return null;
     }
 
     private void disPlay(Long organId,List<SysOrgan> list){

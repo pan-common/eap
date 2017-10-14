@@ -124,4 +124,16 @@ public class SysOrganController extends BaseController{
          }
     }
 
+    @GetMapping(value = "")
+    @ResponseBody
+    public Response<List<LayuiTree>> treeView(Long parentId){
+        List<LayuiTree> layuiTrees = null;
+        try {
+            layuiTrees = sysOrganService.treeView(parentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return renderSuccess(layuiTrees);
+    }
+
 }
