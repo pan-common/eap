@@ -20,6 +20,7 @@ public class ColumnExtend extends BaseModel implements Comparable<ColumnExtend>{
     private Integer seq;//排序
     private String formShow;//表单显示
     private String listShow;//列表显示
+    private String widthPer;//宽度百分比
     private String inputType;//录入类型
     private String isQuery;//是否查询
     private String param;//参数
@@ -180,6 +181,14 @@ public class ColumnExtend extends BaseModel implements Comparable<ColumnExtend>{
 
     public void setColumnComment(String columnComment) {
         this.columnComment = columnComment;
+    }
+
+    public String getWidthPer() {
+        return widthPer;
+    }
+
+    public void setWidthPer(String widthPer) {
+        this.widthPer = widthPer;
     }
 
     @Override

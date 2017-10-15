@@ -22,7 +22,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">部门图标</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-                            <input type="text" name="icon"  lay-verify="required" placeholder="请输入部门图标" autocomplete="off" class="layui-input">
+                            <input type="text" name="organIcon"  lay-verify="required" placeholder="请输入部门图标" autocomplete="off" class="layui-input">
         </div>
     </div>
         </div>

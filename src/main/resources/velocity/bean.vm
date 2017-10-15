@@ -10,9 +10,17 @@ package ${packageName};
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
+#if(${param.isTree}=="01")
+import com.taiji.eap.common.generator.bean.LayuiTree;
+#else
 import com.taiji.eap.common.base.BaseModel;
-
-public class #toUpperCase(${param.alias}) extends BaseModel{
+#end
+#if(${param.isTree}=="01")
+    #set($extendClass="LayuiTree")
+#else
+    #set($extendClass="BaseModel")
+#end
+public class #toUpperCase(${param.alias}) extends ${extendClass}{
 ## 生成属性
 #foreach($column in $columns)
 #if(${column.dataType}=="datetime")

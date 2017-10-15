@@ -124,7 +124,7 @@ public class SysOrganController extends BaseController{
          }
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "treeView")
     @ResponseBody
     public Response<List<LayuiTree>> treeView(Long parentId){
         List<LayuiTree> layuiTrees = null;
@@ -135,5 +135,4 @@ public class SysOrganController extends BaseController{
         }
         return renderSuccess(layuiTrees);
     }
-
 }

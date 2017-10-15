@@ -25,7 +25,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/layui/css/global.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" media="all">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/ztree/css/metroStyle/metroStyle.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/eap/base/css/base.css" media="all">
+
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
@@ -36,5 +38,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table-editable.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table-locale-all.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.all.min.js"></script>

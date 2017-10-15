@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.taiji.eap.common.shiro.dao.SysResourceDao">
-    
+<mapper namespace="com.taiji.eap.common.shiro.dao.SysRoleDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysRole">
+        <id column="role_id" property="roleId" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_role
+        <where>
+            valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_role
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL} AND valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_role
+        WHERE role_id = #{roleId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysRole">
+        <selectKey resultType="java.lang.Long" keyProperty="roleId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS role_id
+        </selectKey>
+        INSERT INTO t_qx_role(
+        role_id,name,seq,parent_id,create_time,update_time,valid,creater)
+        VALUES(
+        #{roleId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{parentId,jdbcType=DECIMAL},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysRole">
+        UPDATE t_qx_role SET
+        role_id=#{roleId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},parent_id=#{parentId,jdbcType=DECIMAL},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE role_id = #{roleId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_role WHERE role_id = #{roleId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_role
+    </select>
 </mapper>

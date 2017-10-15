@@ -2,10 +2,16 @@ package com.taiji.eap.common.generator.bean;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LayuiTree {
+public abstract class LayuiTree implements Serializable {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
     public static final String CONNECT = "01";
 

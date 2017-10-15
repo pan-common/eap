@@ -37,6 +37,12 @@ public interface SysOrganDao {
     List<SysOrgan> list(@Param("searchText") String searchText);
 
      /**
+     * 查询全部数据
+     * @return
+     */
+    List<SysOrgan> selectAll();
+
+     /**
      * 通过父节点ID搜索数据
      * @param searchText 搜索条件
      * @return

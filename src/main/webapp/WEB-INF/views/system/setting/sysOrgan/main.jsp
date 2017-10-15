@@ -20,6 +20,9 @@ pageEncoding="UTF-8"%>
             <button id='showTreeView' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe62e;</i> 显示树
             </button>
+            <button id='showZTree' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe62e;</i> zTree显示
+            </button>
         </div>
     </div>
     <table id='bootstrapTable'>
@@ -32,17 +35,22 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/form&organId=0");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/form&organId=0","550px","550px");
         });
-
+        $("#showTreeView").click(function () {
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/treeView","550px",$(window).height())
+        });
+        $("#showZTree").click(function () {
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree","550px",$(window).height())
+        });
         //弹出录入框
-        function showModel(title,url) {
+        function showModel(title,url,width,height) {
             layer.open({
                 id:"model",
                 type:2,
                 title:title,
                 content:url,
-                area:["550px","550px"],
+                area:[width,height],
                 offset: '0px',
                 shade:false,
                 maxmin:true,
@@ -96,7 +104,7 @@ pageEncoding="UTF-8"%>
                 },
                 {
                     title:"部门图标",
-                    field:"icon",
+                    field:"organIcon",
                 },
                 {
                     title:"修改时间",

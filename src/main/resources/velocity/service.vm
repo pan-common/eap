@@ -5,6 +5,7 @@ package ${servicePackage};
 
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import java.util.List;
 
@@ -72,6 +73,13 @@ public interface #toUpperCase(${param.alias})Service{
     * @return
     */
     List<#toUpperCase(${param.alias})> getPath(#getPkFieldType($columns) primaryKey) throws Exception;
+    /**
+    * 显示树状视图
+    * @param parentId
+    * @return
+    * @throws Exception
+    */
+    List<LayuiTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception;
 #end
 
 }

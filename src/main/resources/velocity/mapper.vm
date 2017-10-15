@@ -90,4 +90,7 @@
 #end
     </delete>
 
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM ${param.tableName}
+    </select>
 </mapper>

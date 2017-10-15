@@ -127,6 +127,15 @@ ${result}##
 #end
 ${result}##
 #end
+##获取大写主键属性名
+#macro(getPkUpperCaseProperty $columns)
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+#set($result="#camel(${column.columnName})")
+#end
+#end
+#toUpperCase(${result})##
+#end
 ##获取主键类型
 #macro(getPkJdbcType $columns)
 #foreach($column in $columns)

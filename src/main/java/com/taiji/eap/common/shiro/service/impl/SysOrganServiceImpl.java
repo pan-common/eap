@@ -82,7 +82,25 @@ public class SysOrganServiceImpl implements SysOrganService{
 
     @Override
     public List<LayuiTree> treeView(Long parentId) throws Exception {
-        return null;
+        List<SysOrgan> list = sysOrganDao.selectAll();
+        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        for (SysOrgan tree: list) {
+            if(parentId==tree.getParentId()){
+                trees.add(findChildren(tree,list));
+            }
+        }
+        return trees;
+    }
+
+    private SysOrgan findChildren(SysOrgan tree,List<SysOrgan> list){
+        for (SysOrgan sysOrgan:list) {
+            sysOrgan.setName(sysOrgan.getName());
+            sysOrgan.setSpread(true);
+            if(tree.getOrganId()==sysOrgan.getParentId()){
+                tree.getChildren().add(findChildren(sysOrgan,list));
+            }
+        }
+        return tree;
     }
 
     private void disPlay(Long organId,List<SysOrgan> list){

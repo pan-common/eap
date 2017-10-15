@@ -7,6 +7,7 @@ package ${serviceImplPackage};
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${daoPackage}.#toUpperCase(${param.alias})Dao;
 import ${servicePackage}.#toUpperCase(${param.alias})Service;
@@ -83,6 +84,29 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         list.add(new #toUpperCase(${param.alias})(0L,"根路径"));
         Collections.reverse(list);
         return list;
+    }
+
+    @Override
+    public List<LayuiTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception {
+        List<#toUpperCase(${param.alias})> list = ${param.alias}Dao.selectAll();
+        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        for (#toUpperCase(${param.alias}) tree: list) {
+            if(${parentField}==tree.get#toUpperCase(${parentField})()){
+                trees.add(findChildren(tree,list));
+            }
+        }
+        return trees;
+    }
+
+    private #toUpperCase(${param.alias}) findChildren(#toUpperCase(${param.alias}) tree,List<#toUpperCase(${param.alias})> list){
+        for (#toUpperCase(${param.alias}) ${param.alias}:list) {
+            ${param.alias}.setName(${param.alias}.getName());
+            ${param.alias}.setSpread(true);
+            if(tree.get#getPkUpperCaseProperty($columns)()==${param.alias}.get#toUpperCase(${parentField})()){
+                tree.getChildren().add(findChildren(${param.alias},list));
+            }
+        }
+        return tree;
     }
 
     private void disPlay(#getPkFieldType($columns) #getPkProperty($columns),List<#toUpperCase(${param.alias})> list){

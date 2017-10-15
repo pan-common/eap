@@ -1,53 +1,103 @@
 package com.taiji.eap.common.shiro.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
+import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.shiro.bean.SysUser;
+import com.taiji.eap.common.shiro.service.SysUserService;
+import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.common.http.entity.Response;
-import com.taiji.eap.common.shiro.bean.SysUser;
-import com.taiji.eap.common.shiro.helper.PasswordHelper;
+import java.util.Date;
+import java.util.List;
 
 @Controller
-@RequestMapping("sysuser")
+@RequestMapping("sysUser")
 public class SysUserController extends BaseController{
-	
-	@Autowired
-	private PasswordHelper passwordHelper;
-	
-	@PostMapping(value="login")
-	@ResponseBody
-	public Response<String> login(SysUser sysUser){
-		
-		passwordHelper.encryptPassword(sysUser);
-		UsernamePasswordToken token = new UsernamePasswordToken(
-				sysUser.getUserName(),
-				sysUser.getPassword());
-		Subject subject = SecurityUtils.getSubject();
-		try {
-			if(!subject.isAuthenticated()){
-				if(sysUser.getRemember()!=null&&sysUser.getRemember().equals("1")){
-					token.setRememberMe(true);
-				}
-				subject.login(token);
-			}
-		} catch (UnknownAccountException e) {
-			return renderError(e.getMessage());
-		} catch (DisabledAccountException e) {
-			return renderError(e.getMessage());
-		} catch(AuthenticationException e){
-			return renderError("用户名或密码错误");
-		}
-		return renderSuccess("登陆成功");
-	}
 
+    @Autowired
+    private SysUserService sysUserService;
+
+    @GetMapping(value = "list")
+    @ResponseBody
+    public PageInfo<SysUser> list(Integer pageNum,Integer pageSize,String searchText){
+        PageInfo<SysUser> pageInfo = null;
+        try {
+            pageInfo = sysUserService.list(pageNum,pageSize,searchText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pageInfo;
+    }
+    @PostMapping(value = "add")
+    @ResponseBody
+    public Response<String> add(SysUser sysUser){
+        sysUser.setCreateTime(new Date());
+        sysUser.setUpdateTime(new Date());
+        sysUser.setValid("1");
+        sysUser.setCreater(1L);
+        try {
+            int k = sysUserService.insert(sysUser);
+            if(k>0){
+                return renderSuccess("添加成功");
+            }else {
+                return renderError("失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "edit")
+    @ResponseBody
+    public Response<String> edit(SysUser sysUser){
+        sysUser.setCreateTime(new Date());
+        sysUser.setUpdateTime(new Date());
+        sysUser.setValid("1");
+        sysUser.setCreater(1L);
+        try {
+            int k = sysUserService.updateByPrimaryKey(sysUser);
+            if(k>0){
+                return renderSuccess("修改成功");
+            }else {
+                return renderError("失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "delete")
+    @ResponseBody
+    public Response<String> delete(Long userId){
+        try {
+            int k = sysUserService.deleteByPrimaryKey(userId);
+            if(k>0){
+                return renderSuccess("删除成功");
+            }else {
+                return renderError("删除失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "selectOne")
+    @ResponseBody
+    public Response<SysUser> selectOne(Long userId){
+         try {
+            return renderSuccess(sysUserService.selectByPrimaryKey(userId));
+         } catch (Exception e) {
+             e.printStackTrace();
+             return renderError(e.getMessage());
+          }
+    }
 }

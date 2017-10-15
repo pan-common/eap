@@ -6,6 +6,7 @@ package ${controllerPackage};
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${servicePackage}.#toUpperCase(${param.alias})Service;
 import com.taiji.eap.common.http.entity.Response;
@@ -140,6 +141,18 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
              e.printStackTrace();
              return renderError(e.getMessage());
          }
+    }
+
+    @GetMapping(value = "treeView")
+    @ResponseBody
+    public Response<List<LayuiTree>> treeView(#getParentIdFieldType($columns) ${parentField}){
+        List<LayuiTree> layuiTrees = null;
+        try {
+            layuiTrees = ${param.alias}Service.treeView(parentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return renderSuccess(layuiTrees);
     }
 #end
 }

@@ -39,6 +39,12 @@ public interface #toUpperCase(${param.alias})Dao {
      */
     List<#toUpperCase(${param.alias})> list(@Param("searchText") String searchText);
 
+     /**
+     * 查询全部数据
+     * @return
+     */
+    List<#toUpperCase(${param.alias})> selectAll();
+
 #if(${param.isTree}=="01")
      /**
      * 通过父节点ID搜索数据

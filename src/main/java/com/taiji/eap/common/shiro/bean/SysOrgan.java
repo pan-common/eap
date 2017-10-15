@@ -4,12 +4,11 @@ package com.taiji.eap.common.shiro.bean;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.base.BaseModel;
-
-public class SysOrgan extends BaseModel{
+import com.taiji.eap.common.generator.bean.LayuiTree;
+public class SysOrgan extends LayuiTree{
     private Long organId;//部门ID
     private String name;//部门名称
-    private String icon;//部门图标
+    private String organIcon;//部门图标
     private Long parentId;//上级部门ID
     private Integer seq;//排序
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")  //取日期时使用
@@ -47,12 +46,12 @@ public class SysOrgan extends BaseModel{
     }
 
 
-    public String getIcon() {
-        return icon;
+    public String getOrganIcon() {
+        return organIcon;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setOrganIcon(String organIcon) {
+        this.organIcon = organIcon;
     }
 
 

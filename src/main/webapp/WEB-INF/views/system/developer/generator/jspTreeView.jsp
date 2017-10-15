@@ -14,7 +14,7 @@
 <script type="text/javascript">
     layui.use([ 'layer', 'form' ], function(layer, form) {
 
-        $.get("${pageContext.request.contextPath}/generator/jspTreeView",{
+        $.get("${pageContext.request.contextPath}/generator/jspTreeView.vm",{
 
         },function (data,status) {
             if(status=="success"){

@@ -20,6 +20,14 @@ pageEncoding="UTF-8"%>
             <button id='addBtn' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe608;</i> 添加
             </button>
+#if(${param.isTree}=="01")
+            <button id='showTreeView' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe62e;</i> 显示树
+            </button>
+            <button id='showZTree' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe62e;</i> zTree显示
+            </button>
+#end
         </div>
     </div>
     <table id='bootstrapTable'>
@@ -34,21 +42,28 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0");
+#if(${param.formColumnNum}=="1")
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0","550px","550px");
+#else
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0","800px","550px");
+#end
         });
-
+#if(${param.isTree}=="01")
+        $("#showTreeView").click(function () {
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/treeView","550px",$(window).height())
+        });
+        $("#showZTree").click(function () {
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/zTree","550px",$(window).height())
+        });
+#end
         //弹出录入框
-        function showModel(title,url) {
+        function showModel(title,url,width,height) {
             layer.open({
                 id:"model",
                 type:2,
                 title:title,
                 content:url,
-#if(${param.formColumnNum}=="1")
-                area:["550px","550px"],
-#else
-                area:["800px","550px"],
-#end
+                area:[width,height],
                 offset: '0px',
                 shade:false,
                 maxmin:true,

@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysOrgan">
         <id column="organ_id" property="organId" jdbcType="DECIMAL"></id>
         <result column="name" property="name" jdbcType="VARCHAR" />
-        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="organ_icon" property="organIcon" jdbcType="VARCHAR" />
         <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
         <result column="seq" property="seq" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -41,15 +41,15 @@
             SELECT LAST_INSERT_ID() AS organ_id
         </selectKey>
         INSERT INTO t_qx_organ(
-        organ_id,name,icon,parent_id,seq,create_time,update_time,valid,creater)
+        organ_id,name,organ_icon,parent_id,seq,create_time,update_time,valid,creater)
         VALUES(
-        #{organId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{icon,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{seq,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        #{organId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{organIcon,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{seq,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysOrgan">
         UPDATE t_qx_organ SET
-        organ_id=#{organId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},icon=#{icon,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},seq=#{seq,jdbcType=INTEGER},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        organ_id=#{organId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},organ_icon=#{organIcon,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},seq=#{seq,jdbcType=INTEGER},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
         WHERE organ_id = #{organId,jdbcType=DECIMAL}
     </update>
 
@@ -57,4 +57,7 @@
         DELETE FROM t_qx_organ WHERE organ_id = #{organId,jdbcType=DECIMAL}
     </delete>
 
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ
+    </select>
 </mapper>

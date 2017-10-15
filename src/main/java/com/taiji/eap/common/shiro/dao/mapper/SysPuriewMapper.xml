@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysPuriewDao">
-    
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysPuriew">
+        <id column="puriew_id" property="puriewId" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="expression" property="expression" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        <where>
+            valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(name,',',expression) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysPuriew">
+        <selectKey resultType="java.lang.Long" keyProperty="puriewId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS puriew_id
+        </selectKey>
+        INSERT INTO t_qx_puriew(
+        puriew_id,name,seq,expression,create_time,update_time,valid,creater)
+        VALUES(
+        #{puriewId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{expression,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysPuriew">
+        UPDATE t_qx_puriew SET
+        puriew_id=#{puriewId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},expression=#{expression,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_puriew WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+    </select>
 </mapper>

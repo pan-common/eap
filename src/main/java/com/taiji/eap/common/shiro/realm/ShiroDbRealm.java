@@ -29,12 +29,13 @@ public class ShiroDbRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		SysUser sysUser = userService.getUserByName(token.getUsername());
-		if(sysUser==null)
-			throw new UnknownAccountException("账号不存在");
-		if(sysUser.getValid().equals("2"))
-			throw new DisabledAccountException("账号未启用");
-		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(sysUser.getUserName(), sysUser.getPassword(), getName());
+//		SysUser sysUser = userService.getUserByName(token.getUsername());
+//		if(sysUser==null)
+//			throw new UnknownAccountException("账号不存在");
+//		if(sysUser.getValid().equals("2"))
+//			throw new DisabledAccountException("账号未启用");
+//		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(sysUser.getUserName(), sysUser.getPassword(), getName());
+		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo("", "", getName());
 		return authcInfo;
 	}
 

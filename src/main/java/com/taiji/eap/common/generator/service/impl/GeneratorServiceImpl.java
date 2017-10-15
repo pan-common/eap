@@ -100,23 +100,28 @@ public class GeneratorServiceImpl implements GeneratorService{
             generateJspMain(param, columns);
             //生成jsp表单界面
             generateJspForm(param, columns);
+            if(param.getIsTree().equals("01")){
+                generateJspTreeView(param,columns);
+                generateJspZTree(param,columns);
+            }
         }
-
-        //挂靠菜单
-        SysResource sysResource = new SysResource();
-        sysResource.setName(param.getMenuName());
-        sysResource.setParentId(Long.valueOf(param.getMenuId()));
-        sysResource.setTypeCode("01");
-        sysResource.setTypeDesc("菜单");
-        sysResource.setIcon("fa-trademark");
-        sysResource.setLink("resource/link?url="+param.getPagePath().replaceAll("\\\\","/")+"/"+param.getAlias()+"/main");
-        sysResource.setSeq(1);
-        sysResource.setNote("无");
-        sysResource.setValid("1");
-        sysResource.setCreateTime(new Date());
-        sysResource.setUpdateTime(new Date());
-        sysResource.setCreater(0L);
-        sysResourceService.add(sysResource);
+        if(param.getMenuId()!=null&&param.getMenuName()!=null&&!param.getMenuName().equals("")&&!param.getMenuId().equals("")) {
+            //挂靠菜单
+            SysResource sysResource = new SysResource();
+            sysResource.setName(param.getMenuName());
+            sysResource.setParentId(Long.valueOf(param.getMenuId()));
+            sysResource.setTypeCode("01");
+            sysResource.setTypeDesc("菜单");
+            sysResource.setIcon("fa-trademark");
+            sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
+            sysResource.setSeq(1);
+            sysResource.setNote("无");
+            sysResource.setValid("1");
+            sysResource.setCreateTime(new Date());
+            sysResource.setUpdateTime(new Date());
+            sysResource.setCreater(0L);
+            sysResourceService.add(sysResource);
+        }
     }
 
     private String replaceTemplate(Param param,List<ColumnExtend> columns,String templateFilePath){
@@ -215,7 +220,31 @@ public class GeneratorServiceImpl implements GeneratorService{
         FileUtil.writeStrToFile(filePath,fileName,content);
     }
 
+    /**
+     * 生成JSP TreeView页面
+     * @param param
+     * @param columns
+     */
+    private void generateJspTreeView(Param param,List<ColumnExtend> columns){
+        Collections.sort(columns);
+        String content = replaceTemplate(param,columns,"/velocity/jspTreeView.vm");
+        String filePath = param.getPageFilePath();
+        String fileName ="treeView.jsp";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
 
+    /**
+     * 生成JSP TreeView页面
+     * @param param
+     * @param columns
+     */
+    private void generateJspZTree(Param param,List<ColumnExtend> columns){
+        Collections.sort(columns);
+        String content = replaceTemplate(param,columns,"/velocity/jspZTree.vm");
+        String filePath = param.getPageFilePath();
+        String fileName ="zTree.jsp";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
 
     private void generateMybatis(Param param,List<ColumnExtend> columns){
         String content = replaceTemplate(param,columns,"/velocity/generatorConfig.vm");

@@ -21,7 +21,7 @@ public class PasswordHelper {
 		String password = new SimpleHash(
 				algorithmName,
 				sysUser.getPassword(), 
-				ByteSource.Util.bytes(sysUser.getCredentialsSalt()),
+//				ByteSource.Util.bytes(sysUser.getCredentialsSalt()),
 				hashIterations).toHex();
 		sysUser.setPassword(password);
 	}

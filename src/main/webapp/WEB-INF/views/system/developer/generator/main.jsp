@@ -315,36 +315,13 @@
                     field : "isNullAble"
                 },{
                     title : "数据类型",
-                    field : "dateType"
+                    field : "dataType"
                 },{
                     title : "注释",
                     field : "columnComment"
                 },{
                     title : "主键",
                     field : "columnKey"
-                } , {
-                    title : "操作",
-                    align : "center",
-                    events : {
-                        'click .enter': function (e, value, row, index) {
-                            currentId = row.dicId;
-                            refreshTable();
-                            loadPath();
-                        },
-                        'click .edit' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑字典","${pageContext.request.contextPath}/resource/link?url=system/setting/dictionary/form&dicId="+row.dicId);
-                        },
-                        'click .delete' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            del(row.dicId);
-                        }
-                    },
-                    formatter : function () {
-                        return [ '<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
-                    }
                 }],
             onLoadError : function(status) { //加载失败时执行
                 $.messager.show({
@@ -486,6 +463,19 @@
                                 }
                             });
                             return result;
+                        }
+                    }
+                },
+                {
+                    title:"宽度百分百",
+                    field:"widthPer",
+                    editable:{
+                        type: 'text',
+                        title: '宽度百分百',
+                        validate: function (v) {
+                            if (isNaN(v)) return '宽度百分百必须是数字';
+                            var age = parseInt(v);
+                            if (age < 0) return '宽度百分百必须是正整数';
                         }
                     }
                 },
