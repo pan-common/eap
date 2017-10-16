@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50623
 File Encoding         : 65001
 
-Date: 2017-10-15 21:56:33
+Date: 2017-10-16 18:50:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -90,6 +90,7 @@ INSERT INTO `act_ge_bytearray` VALUES ('37502', '1', 'source', null, 0x7B2269642
 INSERT INTO `act_ge_bytearray` VALUES ('40002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('42502', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('45002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
+INSERT INTO `act_ge_bytearray` VALUES ('47502', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('5', '2', 'source', null, 0x7B227265736F757263654964223A2234222C2270726F70657274696573223A7B2270726F636573735F6964223A2270726F63657373222C226E616D65223A22222C22646F63756D656E746174696F6E223A22222C2270726F636573735F617574686F72223A22222C2270726F636573735F76657273696F6E223A22222C2270726F636573735F6E616D657370616365223A22687474703A2F2F7777772E61637469766974692E6F72672F70726F63657373646566222C22657865637574696F6E6C697374656E657273223A22222C226576656E746C697374656E657273223A22222C227369676E616C646566696E6974696F6E73223A22222C226D657373616765646566696E6974696F6E73223A22227D2C227374656E63696C223A7B226964223A2242504D4E4469616772616D227D2C226368696C64536861706573223A5B5D2C22626F756E6473223A7B226C6F7765725269676874223A7B2278223A313230302C2279223A313035307D2C2275707065724C656674223A7B2278223A302C2279223A307D7D2C227374656E63696C736574223A7B2275726C223A227374656E63696C736574732F62706D6E322E302F62706D6E322E302E6A736F6E222C226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D2C227373657874656E73696F6E73223A5B5D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('5002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('6', '1', 'source-extra', null, 0x89504E470D0A1A0A0000000D49484452000000320000003208060000001E3F88B1000000206348524D00007A26000080840000FA00000080E8000075300000EA6000003A98000017709CBA513C0000000467414D410000B18E7CFB5193000000017352474200AECE1CE900000006624B474400FF00FF00FFA0BDA793000000097048597300000EC400000EC401952B0E1B000000204944415478DAEDC101010000008220FFAF6E4840010000000000000000C0A30127420001FCA695FE0000000049454E44AE426082, null);
@@ -109,7 +110,7 @@ CREATE TABLE `act_ge_property` (
 -- ----------------------------
 -- Records of act_ge_property
 -- ----------------------------
-INSERT INTO `act_ge_property` VALUES ('next.dbid', '47501', '20');
+INSERT INTO `act_ge_property` VALUES ('next.dbid', '50001', '21');
 INSERT INTO `act_ge_property` VALUES ('schema.history', 'create(5.17.0.2)', '1');
 INSERT INTO `act_ge_property` VALUES ('schema.version', '5.22.0.0', '1');
 
@@ -500,6 +501,7 @@ INSERT INTO `act_re_model` VALUES ('4', '4', 'lutiannan', '12313123', null, '201
 INSERT INTO `act_re_model` VALUES ('40001', '2', 'hello1111', '12313123', null, '2017-10-14 15:19:46.647', '2017-10-14 15:19:46.735', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '40002', null, '');
 INSERT INTO `act_re_model` VALUES ('42501', '2', 'hello1111', '12313123', null, '2017-10-15 02:46:29.649', '2017-10-15 02:46:29.724', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '42502', null, '');
 INSERT INTO `act_re_model` VALUES ('45001', '2', 'hello1111', '12313123', null, '2017-10-15 03:09:45.115', '2017-10-15 03:09:45.231', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '45002', null, '');
+INSERT INTO `act_re_model` VALUES ('47501', '2', 'hello1111', '12313123', null, '2017-10-16 03:51:46.131', '2017-10-16 03:51:46.166', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '47502', null, '');
 INSERT INTO `act_re_model` VALUES ('5001', '2', 'hello1111', '12313123', null, '2017-10-09 08:53:26.380', '2017-10-09 08:53:26.406', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '5002', null, '');
 INSERT INTO `act_re_model` VALUES ('7501', '2', 'hello1111', '12313123', null, '2017-10-09 08:55:09.008', '2017-10-09 08:55:09.041', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '7502', null, '');
 
@@ -737,7 +739,7 @@ CREATE TABLE `t_qx_organ` (
   `valid` varchar(255) DEFAULT NULL COMMENT '是否有效',
   `creater` bigint(20) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`organ_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_qx_organ
@@ -768,6 +770,9 @@ INSERT INTO `t_qx_organ` VALUES ('24', '2', '2', '20', '2', '2017-10-15 02:57:31
 INSERT INTO `t_qx_organ` VALUES ('25', '3', '3', '20', '3', '2017-10-15 02:57:34', '2017-10-15 02:57:34', '1', '1');
 INSERT INTO `t_qx_organ` VALUES ('26', '4', '4', '20', '4', '2017-10-15 02:57:38', '2017-10-15 02:57:38', '1', '1');
 INSERT INTO `t_qx_organ` VALUES ('27', '5', '5', '20', '5', '2017-10-15 02:57:41', '2017-10-15 02:57:41', '1', '1');
+INSERT INTO `t_qx_organ` VALUES ('28', '1', '1', '7', '1', '2017-10-16 06:22:14', '2017-10-16 06:22:14', '1', '1');
+INSERT INTO `t_qx_organ` VALUES ('29', '2', '2', '7', '2', '2017-10-16 06:22:16', '2017-10-16 06:22:16', '1', '1');
+INSERT INTO `t_qx_organ` VALUES ('30', '3', '3', '7', '3', '2017-10-16 06:22:19', '2017-10-16 06:22:19', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_qx_organ_puriew`
@@ -847,7 +852,7 @@ CREATE TABLE `t_qx_resource` (
   `valid` varchar(255) NOT NULL,
   `creater` bigint(20) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_qx_resource
@@ -862,7 +867,7 @@ INSERT INTO `t_qx_resource` VALUES ('7', '数据字典', '1', '01', '', 'fa-book
 INSERT INTO `t_qx_resource` VALUES ('8', '开发工具', '0', '01', '菜单', 'fa-wrench', '待定', '3', '无', '2017-09-25 01:49:32', '2017-09-25 01:49:59', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('9', '工作流管理', '0', '01', '菜单', 'fa-modx', '待定', '4', '无', '2017-09-25 01:54:55', '2017-09-25 01:54:55', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('10', '报表工具', '0', '01', '菜单', 'fa-file-text-o', '待定', '5', '无', '2017-09-25 01:57:07', '2017-09-25 01:57:15', '1', '1');
-INSERT INTO `t_qx_resource` VALUES ('11', '代码生成器', '8', '01', '', 'fa-file-code-o', 'resource/link?url=system/developer/generator/main', '1', '无', '2017-09-25 02:01:42', '2017-09-25 02:21:29', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('11', '代码生成器', '8', '01', '菜单', 'fa-file-code-o', 'resource/link?url=system/developer/generator/main', '1', '无', '2017-09-25 02:01:42', '2017-10-16 03:14:22', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('12', '日志管理', '0', '01', '菜单', 'fa-bug', '待定', '6', '无', '2017-09-25 02:06:35', '2017-09-25 02:06:46', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('13', '测试管理', '0', '01', '菜单', 'fa-text-width', '待定', '7', '无', '2017-09-25 02:10:09', '2017-09-25 02:16:15', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('14', '用户管理', '3', '01', '菜单', 'fa-users', '待定', '2', '无', '2017-09-25 02:13:44', '2017-09-25 02:13:44', '2', '1');
@@ -880,6 +885,8 @@ INSERT INTO `t_qx_resource` VALUES ('25', '用户管理', '3', '01', '菜单', '
 INSERT INTO `t_qx_resource` VALUES ('26', '部门管理', '3', '01', '菜单', 'fa-sitemap ', 'resource/link?url=system/setting/sysOrgan/main', '1', '无', '2017-10-14 10:23:55', '2017-10-15 02:51:05', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('27', '用户管理', '3', '01', '菜单', 'fa-users', 'resource/link?url=system/setting/sysUser/main', '1', '无', '2017-10-14 15:12:23', '2017-10-15 02:50:30', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('28', '权限管理', '3', '01', '菜单', 'fa-lock', 'resource/link?url=system/setting/sysPuriew/main', '1', '无', '2017-10-15 02:52:18', '2017-10-15 02:53:25', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('29', '代码生成记录', '11', '01', '菜单', 'fa-trademark', 'resource/link?url=system/developer/generateConf/main', '1', '无', '2017-10-16 03:11:36', '2017-10-16 03:11:36', '1', '0');
+INSERT INTO `t_qx_resource` VALUES ('30', '代码生成记录', '8', '01', '菜单', '', 'resource/link?url=system/developer/generateConf/main', '2', '无', '2017-10-16 03:15:01', '2017-10-16 03:15:37', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_qx_role`
@@ -991,7 +998,7 @@ CREATE TABLE `t_sys_column_extend` (
   `verify` varchar(255) DEFAULT NULL COMMENT '校验规则',
   `required` varchar(255) DEFAULT NULL COMMENT '是否必填',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8 COMMENT='列属性扩展表';
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COMMENT='列属性扩展表';
 
 -- ----------------------------
 -- Records of t_sys_column_extend
@@ -1050,6 +1057,29 @@ INSERT INTO `t_sys_column_extend` VALUES ('101', 'eap', 't_qx_user', 'update_tim
 INSERT INTO `t_sys_column_extend` VALUES ('102', 'eap', 't_qx_user', 'valid', '9', '02', '02', null, '', '02', '', '', '');
 INSERT INTO `t_sys_column_extend` VALUES ('103', 'eap', 't_qx_user', 'creater', '10', '02', '02', null, '', '02', '', '', '');
 INSERT INTO `t_sys_column_extend` VALUES ('104', 'eap', 't_qx_user', 'locked', '6', '02', '01', null, '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('105', 'eap', 't_sys_generate_conf', 'config_id', '8', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('106', 'eap', 't_sys_generate_conf', 'driver_class', '9', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('107', 'eap', 't_sys_generate_conf', 'connection_url', '10', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('108', 'eap', 't_sys_generate_conf', 'user_id', '11', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('109', 'eap', 't_sys_generate_conf', 'password', '22', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('110', 'eap', 't_sys_generate_conf', 'table_schema', '13', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('111', 'eap', 't_sys_generate_conf', 'table_name', '1', '02', '01', '', '', '01', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('112', 'eap', 't_sys_generate_conf', 'alias', '2', '02', '01', '', '', '01', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('113', 'eap', 't_sys_generate_conf', 'alias_use', '3', '02', '01', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('114', 'eap', 't_sys_generate_conf', 'package_name', '4', '02', '01', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('115', 'eap', 't_sys_generate_conf', 'project_path', '5', '02', '01', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('116', 'eap', 't_sys_generate_conf', 'file_path', '14', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('117', 'eap', 't_sys_generate_conf', 'delete_way', '15', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('118', 'eap', 't_sys_generate_conf', 'page_path', '6', '02', '01', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('119', 'eap', 't_sys_generate_conf', 'page_file_path', '16', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('120', 'eap', 't_sys_generate_conf', 'generate_items', '17', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('121', 'eap', 't_sys_generate_conf', 'is_tree', '7', '02', '01', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('122', 'eap', 't_sys_generate_conf', 'parent_field', '18', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('123', 'eap', 't_sys_generate_conf', 'name_field', '19', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('124', 'eap', 't_sys_generate_conf', 'form_column_num', '20', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('125', 'eap', 't_sys_generate_conf', 'menu_id', '21', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('126', 'eap', 't_sys_generate_conf', 'menu_name', '22', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('127', 'eap', 't_sys_generate_conf', 'column_extend_id', '23', '02', '02', '', '', '02', '', '', '');
 
 -- ----------------------------
 -- Table structure for `t_sys_dictionary`
@@ -1118,6 +1148,41 @@ INSERT INTO `t_sys_dictionary` VALUES ('56', 'identity', '身份证', '', '', ''
 INSERT INTO `t_sys_dictionary` VALUES ('57', 'EAP_SYSTEM_GENERATE_BDLS', '表单列数', '', '', '', '', '', '', null, '27', '4', '2017-10-13 03:19:39', '2017-10-13 03:19:39', '1', '1');
 INSERT INTO `t_sys_dictionary` VALUES ('58', '1', '1列', '', '', '', '', '', '', null, '57', '1', '2017-10-13 03:19:56', '2017-10-13 03:19:56', '1', '1');
 INSERT INTO `t_sys_dictionary` VALUES ('59', '2', '2列', '', '', '', '', '', '', null, '57', '2', '2017-10-13 03:20:05', '2017-10-13 03:20:05', '1', '1');
+
+-- ----------------------------
+-- Table structure for `t_sys_generate_conf`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_generate_conf`;
+CREATE TABLE `t_sys_generate_conf` (
+  `config_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `driver_class` varchar(255) DEFAULT NULL COMMENT '数据库驱动类',
+  `connection_url` varchar(255) DEFAULT NULL COMMENT '连接地址',
+  `user_id` varchar(255) DEFAULT NULL COMMENT '数据库用户名',
+  `password` varchar(255) DEFAULT NULL COMMENT '数据库密码',
+  `table_schema` varchar(255) DEFAULT NULL COMMENT '数据库名',
+  `table_name` varchar(255) DEFAULT NULL COMMENT '表名',
+  `alias` varchar(255) DEFAULT NULL COMMENT '别名',
+  `alias_use` varchar(255) DEFAULT NULL COMMENT '是否启用别名',
+  `package_name` varchar(255) DEFAULT NULL COMMENT '包名',
+  `project_path` varchar(255) DEFAULT NULL COMMENT '代码路径',
+  `file_path` varchar(255) DEFAULT NULL COMMENT '文件保存路径',
+  `delete_way` varchar(255) DEFAULT NULL COMMENT '删除方式',
+  `page_path` varchar(255) DEFAULT NULL COMMENT '页面路径',
+  `page_file_path` varchar(255) DEFAULT NULL COMMENT '页面文件保存路径',
+  `generate_items` varchar(255) DEFAULT NULL COMMENT '生成项',
+  `is_tree` varchar(255) DEFAULT NULL COMMENT '是否树',
+  `parent_field` varchar(255) DEFAULT NULL COMMENT '父ID字段名',
+  `name_field` varchar(255) DEFAULT NULL COMMENT '名称字段，用于显示路径',
+  `form_column_num` varchar(255) DEFAULT NULL COMMENT 'form显示列数',
+  `menu_id` varchar(255) DEFAULT NULL COMMENT '挂靠的上级菜单',
+  `menu_name` varchar(255) DEFAULT NULL COMMENT '挂靠菜单的名称',
+  `column_extend_id` varchar(255) DEFAULT NULL COMMENT '数据表列扩展信息ID，保存到redis中',
+  PRIMARY KEY (`config_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码生成器配置';
+
+-- ----------------------------
+-- Records of t_sys_generate_conf
+-- ----------------------------
 
 -- ----------------------------
 -- View structure for `v_qx_user`

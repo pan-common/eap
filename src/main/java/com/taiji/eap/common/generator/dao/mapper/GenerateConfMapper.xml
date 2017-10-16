@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.generator.dao.GenerateConfDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.generator.bean.GenerateConf">
+        <id column="config_id" property="configId" jdbcType="DECIMAL"></id>
+        <result column="driver_class" property="driverClass" jdbcType="VARCHAR" />
+        <result column="connection_url" property="connectionUrl" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="table_schema" property="tableSchema" jdbcType="VARCHAR" />
+        <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+        <result column="alias" property="alias" jdbcType="VARCHAR" />
+        <result column="alias_use" property="aliasUse" jdbcType="VARCHAR" />
+        <result column="package_name" property="packageName" jdbcType="VARCHAR" />
+        <result column="project_path" property="projectPath" jdbcType="VARCHAR" />
+        <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+        <result column="delete_way" property="deleteWay" jdbcType="VARCHAR" />
+        <result column="page_path" property="pagePath" jdbcType="VARCHAR" />
+        <result column="page_file_path" property="pageFilePath" jdbcType="VARCHAR" />
+        <result column="generate_items" property="generateItems" jdbcType="VARCHAR" />
+        <result column="is_tree" property="isTree" jdbcType="VARCHAR" />
+        <result column="parent_field" property="parentField" jdbcType="VARCHAR" />
+        <result column="name_field" property="nameField" jdbcType="VARCHAR" />
+        <result column="form_column_num" property="formColumnNum" jdbcType="VARCHAR" />
+        <result column="menu_id" property="menuId" jdbcType="VARCHAR" />
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+        <result column="column_extend_id" property="columnExtendId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_generate_conf
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(table_name,',',alias) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_generate_conf
+        WHERE config_id = #{configId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.generator.bean.GenerateConf">
+        <selectKey resultType="java.lang.Long" keyProperty="configId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS config_id
+        </selectKey>
+        INSERT INTO t_sys_generate_conf(
+        config_id,driver_class,connection_url,user_id,password,table_schema,table_name,alias,alias_use,package_name,project_path,file_path,delete_way,page_path,page_file_path,generate_items,is_tree,parent_field,name_field,form_column_num,menu_id,menu_name,column_extend_id)
+        VALUES(
+        #{configId,jdbcType=DECIMAL},#{driverClass,jdbcType=VARCHAR},#{connectionUrl,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{tableSchema,jdbcType=VARCHAR},#{tableName,jdbcType=VARCHAR},#{alias,jdbcType=VARCHAR},#{aliasUse,jdbcType=VARCHAR},#{packageName,jdbcType=VARCHAR},#{projectPath,jdbcType=VARCHAR},#{filePath,jdbcType=VARCHAR},#{deleteWay,jdbcType=VARCHAR},#{pagePath,jdbcType=VARCHAR},#{pageFilePath,jdbcType=VARCHAR},#{generateItems,jdbcType=VARCHAR},#{isTree,jdbcType=VARCHAR},#{parentField,jdbcType=VARCHAR},#{nameField,jdbcType=VARCHAR},#{formColumnNum,jdbcType=VARCHAR},#{menuId,jdbcType=VARCHAR},#{menuName,jdbcType=VARCHAR},#{columnExtendId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.generator.bean.GenerateConf">
+        UPDATE t_sys_generate_conf SET
+        config_id=#{configId,jdbcType=DECIMAL},driver_class=#{driverClass,jdbcType=VARCHAR},connection_url=#{connectionUrl,jdbcType=VARCHAR},user_id=#{userId,jdbcType=VARCHAR},password=#{password,jdbcType=VARCHAR},table_schema=#{tableSchema,jdbcType=VARCHAR},table_name=#{tableName,jdbcType=VARCHAR},alias=#{alias,jdbcType=VARCHAR},alias_use=#{aliasUse,jdbcType=VARCHAR},package_name=#{packageName,jdbcType=VARCHAR},project_path=#{projectPath,jdbcType=VARCHAR},file_path=#{filePath,jdbcType=VARCHAR},delete_way=#{deleteWay,jdbcType=VARCHAR},page_path=#{pagePath,jdbcType=VARCHAR},page_file_path=#{pageFilePath,jdbcType=VARCHAR},generate_items=#{generateItems,jdbcType=VARCHAR},is_tree=#{isTree,jdbcType=VARCHAR},parent_field=#{parentField,jdbcType=VARCHAR},name_field=#{nameField,jdbcType=VARCHAR},form_column_num=#{formColumnNum,jdbcType=VARCHAR},menu_id=#{menuId,jdbcType=VARCHAR},menu_name=#{menuName,jdbcType=VARCHAR},column_extend_id=#{columnExtendId,jdbcType=VARCHAR}
+        WHERE config_id = #{configId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_sys_generate_conf WHERE config_id = #{configId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_generate_conf
+    </select>
+</mapper>

@@ -18,8 +18,11 @@ pageEncoding="UTF-8"%>
 <ul id="ztree" class="ztree">
 
 </ul>
+<button class="layui-btn">提交</button>
+<button class="layui-btn layui-btn-primary">重置</button>
 </body>
 <script type="text/javascript">
+    $("#ztree").height($(window).height()-100)
     var setting = {
         async:{
             enable: false,
@@ -55,6 +58,11 @@ pageEncoding="UTF-8"%>
                 rootPId: 0//用于修正根节点父节点数据，即 pIdKey 指定的属性值
             }
         },
+        check:{
+            enable: true,
+            chkStyle: "checkbox",
+            chkboxType: { "Y": "s", "N": "s" }
+        },
         callback:{
 
         }
@@ -65,7 +73,8 @@ pageEncoding="UTF-8"%>
         },function (data,status) {
             if(status=="success"){
                 if(data.body.resultCode=="0"){
-                    $.fn.zTree.init($("#ztree"), setting,data.body.entity);
+                    var treeObj = $.fn.zTree.init($("#ztree"), setting,data.body.entity);
+                    treeObj.expandAll(true);
                 }else {
                     layer.msg(data.body.resultContent, {icon: 5});
                 }

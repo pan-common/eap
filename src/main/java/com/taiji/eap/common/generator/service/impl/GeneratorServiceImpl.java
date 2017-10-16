@@ -3,10 +3,12 @@ package com.taiji.eap.common.generator.service.impl;
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
+import com.taiji.eap.common.generator.service.GenerateConfService;
 import com.taiji.eap.common.generator.service.GeneratorService;
 import com.taiji.eap.common.shiro.bean.SysResource;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import com.taiji.eap.common.utils.FileUtil;
+import com.taiji.eap.common.utils.UUIDUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -32,6 +34,9 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Autowired
     private SysResourceService sysResourceService;
+
+    @Autowired
+    private GenerateConfService generateConfService;
 
     @Override
     public List<Table> selectTables(String schema) {
@@ -122,6 +127,31 @@ public class GeneratorServiceImpl implements GeneratorService{
             sysResource.setCreater(0L);
             sysResourceService.add(sysResource);
         }
+
+        GenerateConf generateConf = new GenerateConf();
+        generateConf.setAlias(param.getAlias());
+        generateConf.setAliasUse(param.getAliasUse());
+        generateConf.setColumnExtendId(UUIDUtils.getGUID());
+        generateConf.setConnectionUrl(param.getConnectionURL());
+        generateConf.setDeleteWay(param.getDeleteWay());
+        generateConf.setDriverClass(param.getDriverClass());
+        generateConf.setFilePath(param.getFilePath());
+        generateConf.setFormColumnNum(param.getFormColumnNum());
+        generateConf.setGenerateItems(param.getGenerateItems());
+        generateConf.setIsTree(param.getIsTree());
+        generateConf.setMenuId(param.getMenuId());
+        generateConf.setMenuName(param.getMenuName());
+        generateConf.setNameField(param.getNameField());
+        generateConf.setPackageName(param.getPackageName());
+        generateConf.setPageFilePath(param.getPageFilePath());
+        generateConf.setPagePath(param.getPagePath());
+        generateConf.setParentField(param.getParentField());
+        generateConf.setPassword(param.getPassword());
+        generateConf.setProjectPath(param.getProjectPath());
+        generateConf.setTableSchema(param.getSchema());
+        generateConf.setTableName(param.getTableName());
+        generateConf.setUserId(param.getUserId());
+        generateConfService.insert(generateConf);
     }
 
     private String replaceTemplate(Param param,List<ColumnExtend> columns,String templateFilePath){

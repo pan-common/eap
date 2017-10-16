@@ -24,8 +24,8 @@ public class MemberDaoImpl extends RedisGeneratorDao<String, Member>{
 			public Boolean doInRedis(RedisConnection connection)
 					throws DataAccessException {
 				RedisSerializer<String> serializer = getRedisSerializer();
-				byte[] key  = serializer.serialize(member.getId()); 
-				byte[] name = serializer.serialize(member.getNickname()); 
+				byte[] key  = serializer.serialize(member.getId());
+				byte[] name = serializer.serialize(member.getNickname());
 				return connection.setNX(key, name);
 			}
 		});
@@ -41,8 +41,8 @@ public class MemberDaoImpl extends RedisGeneratorDao<String, Member>{
 					throws DataAccessException {
 				RedisSerializer<String> serializer = getRedisSerializer();
 				for (Member member : list) {
-					byte[] key  = serializer.serialize(member.getId()); 
-					byte[] name = serializer.serialize(member.getNickname()); 
+					byte[] key  = serializer.serialize(member.getId());
+					byte[] name = serializer.serialize(member.getNickname());
 					connection.setNX(key, name);
 				}
 				return true;
@@ -72,9 +72,9 @@ public class MemberDaoImpl extends RedisGeneratorDao<String, Member>{
 			public Boolean doInRedis(RedisConnection connection)
 					throws DataAccessException {
 				RedisSerializer<String> serializer = getRedisSerializer();
-				byte[] key  = serializer.serialize(member.getId()); 
-				byte[] name = serializer.serialize(member.getNickname()); 
-				connection.set(key, name); 
+				byte[] key  = serializer.serialize(member.getId());
+				byte[] name = serializer.serialize(member.getNickname());
+				connection.set(key, name);
 				return true;
 			}
 		});
@@ -87,14 +87,14 @@ public class MemberDaoImpl extends RedisGeneratorDao<String, Member>{
 			@Override
 			public Member doInRedis(RedisConnection connection)
 					throws DataAccessException {
-				RedisSerializer<String> serializer = getRedisSerializer(); 
-				byte[] key = serializer.serialize(keyId); 
-				byte[] value = connection.get(key); 
-				if (value == null) { 
-					return null; 
-				} 
-				String nickname = serializer.deserialize(value); 
-				return new Member(keyId, nickname); 
+				RedisSerializer<String> serializer = getRedisSerializer();
+				byte[] key = serializer.serialize(keyId);
+				byte[] value = connection.get(key);
+				if (value == null) {
+					return null;
+				}
+				String nickname = serializer.deserialize(value);
+				return new Member(keyId, nickname);
 			}
 		});
 		return result;

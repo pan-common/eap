@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
@@ -12,7 +12,7 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		destroy-method="close">
+		  destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
@@ -55,7 +55,7 @@
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDataSource" />
-		<!-- <property name="configLocation" value="classpath:mybatis-config.xml"></property> -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations">
 			<list>
@@ -64,16 +64,16 @@
 			</list>
 		</property>
 		<property name="plugins">
-		    <array>
-		        <bean class="com.github.pagehelper.PageInterceptor">
-		            <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
-		            <property name="properties">
-		                <value>
-		                    helperDialect=mysql
-		                </value>
-		            </property>
-		        </bean>
-		    </array>
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+					<property name="properties">
+						<value>
+							helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
 		</property>
 	</bean>
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
@@ -83,7 +83,7 @@
 	</bean>
 
 	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dynamicDataSource" />
 	</bean>
 

@@ -3,5 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java/com/taiji/eap/common/generator/bean/Column.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/taiji/eap/common/generator/bean/Table.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/taiji/eap/common/redis/dao/impl/MemberDaoImpl.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/taiji/eap/common/redis/dao/impl/RedisStringDaoImpl.java" charset="GBK" />
   </component>
 </project>

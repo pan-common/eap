@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>sysUser</title>
+    <title>generateConf</title>
 </head>
 <body>
 <div style="margin: 15px;">
@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form&userId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/developer/generateConf/form&configId=0","550px","550px");
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
         };
 
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/sysUser/list",
+            url:"${pageContext.request.contextPath}/generateConf/list",
             method:'GET',
             height:$(window).height()-$("#topLayout").height()-30,
             toolbar:"#toolbar",
@@ -69,7 +69,7 @@ pageEncoding="UTF-8"%>
             showPaginationSwitch : false,//是否显示 数据条数选择框
             minimumCountColumns : 2, //最少允许的列数
             clickToSelect : true, //是否启用点击选中行
-            uniqueId : "userId", //每一行的唯一标识，一般为主键列
+            uniqueId : "configId", //每一行的唯一标识，一般为主键列
             singleSelect : true,//设置true禁止多选
             showToggle : false, //是否显示详细视图和列表视图的切换按钮
             cardView : false, //是否显示详细视图
@@ -79,62 +79,45 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
                 {
-                    title:"排序",
-                    field:"seq",
+                    title:"表名",
+                    field:"tableName",
                 },
                 {
-                    title:"用户ID",
-                    field:"userId",
+                    title:"别名",
+                    field:"alias",
                 },
                 {
-                    title:"用户名",
-                    field:"userName",
+                    title:"是否启用别名",
+                    field:"aliasUse",
                 },
                 {
-                    title:"密码",
-                    field:"password",
+                    title:"包名",
+                    field:"packageName",
                 },
                 {
-                    title:"盐值",
-                    field:"salt",
+                    title:"页面路径",
+                    field:"pagePath",
                 },
                 {
-                    title:"是否被锁住  0没有被锁  1被锁",
-                    field:"locked",
-                },
-                {
-                    title:"角色",
-                    field:""
-                },
-                {
-                    title:"部门",
-                    field:""
+                    title:"是否树",
+                    field:"isTree",
                 },
                 {
                     title : "操作",
                     align : "center",
                     events : {
-                        'click .selectRole':function (e, value, row, index) {
-                            showModel("选择角色","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/zTree","750px",$(window).height());
-                        },
-                        'click .selectOrgan':function (e, value, row, index) {
-                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree","750px",$(window).height());
-                        },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form&userId="+row.userId,"550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/developer/generateConf/form&configId="+row.configId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            del(row.userId);
+                            del(row.configId);
                         }
                     },
                     formatter : function () {
-                        return [
-                            '<button type="button" class="selectRole layui-btn layui-btn-small">选角色</button>&nbsp;',
-                            '<button type="button" class="selectOrgan layui-btn layui-btn-small">选部门</button>&nbsp;',
-                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;',].join('');
+                        return ['<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
+                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
                     }
                 }],
             onLoadError : function(status) { //加载失败时执行
@@ -157,13 +140,13 @@ pageEncoding="UTF-8"%>
         }
     });
 
-    function del(userId) {
+    function del(configId) {
         layer.confirm("删除数据不可恢复，请确认？",{
             btn: ['确定','取消'],
             offset: '150px',
         },function () {
-            $.post('${pageContext.request.contextPath}/sysUser/delete',
-                    {userId : userId},
+            $.post('${pageContext.request.contextPath}/generateConf/delete',
+                    {configId : configId},
                     function (data, status) {
                         if (status == "success") {
                             if (data.body.resultCode == "0") {

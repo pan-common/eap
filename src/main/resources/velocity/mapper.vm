@@ -42,7 +42,9 @@
     <select id="list" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
         <where>
+#if(${param.deleteWay}=="01")
             valid = '1'
+#end
             <if test="searchText!=null and searchText!=''">
                 AND CONCAT(${searchColumName}) LIKE CONCAT("%",#{searchText},"%")
             </if>

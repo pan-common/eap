@@ -1,35 +1,43 @@
+
 package com.taiji.eap.common.generator.bean;
 
-public class Param {
-
-    private String driverClass;
-    private String connectionURL;
-    private String userId;
-    private String password;
-
-    private String schema;//数据库名
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.taiji.eap.common.base.BaseModel;
+public class GenerateConf extends BaseModel{
+    private Long configId;//主键
+    private String driverClass;//数据库驱动类
+    private String connectionUrl;//连接地址
+    private String userId;//数据库用户名
+    private String password;//数据库密码
+    private String tableSchema;//数据库名
     private String tableName;//表名
     private String alias;//别名
-    private String aliasUse = "0";//别名启用
+    private String aliasUse;//是否启用别名
     private String packageName;//包名
-    private String projectPath;//项目源码路径
+    private String projectPath;//代码路径
     private String filePath;//文件保存路径
     private String deleteWay;//删除方式
     private String pagePath;//页面路径
-    private String pageFilePath;//页面文件路径
-
+    private String pageFilePath;//页面文件保存路径
     private String generateItems;//生成项
-
     private String isTree;//是否树
     private String parentField;//父ID字段名
-    private String nameField;//名称字段，用于路径显示
+    private String nameField;//名称字段，用于显示路径
     private String formColumnNum;//form显示列数
-
-    private String menuId;//挂靠的上级菜单ID
+    private String menuId;//挂靠的上级菜单
     private String menuName;//挂靠菜单的名称
+    private String columnExtendId;//数据表列扩展信息ID，保存到redis中
 
-    public Param() {
+    public Long getConfigId() {
+        return configId;
     }
+
+    public void setConfigId(Long configId) {
+        this.configId = configId;
+    }
+
 
     public String getDriverClass() {
         return driverClass;
@@ -39,13 +47,15 @@ public class Param {
         this.driverClass = driverClass;
     }
 
-    public String getConnectionURL() {
-        return connectionURL;
+
+    public String getConnectionUrl() {
+        return connectionUrl;
     }
 
-    public void setConnectionURL(String connectionURL) {
-        this.connectionURL = connectionURL;
+    public void setConnectionUrl(String connectionUrl) {
+        this.connectionUrl = connectionUrl;
     }
+
 
     public String getUserId() {
         return userId;
@@ -55,6 +65,7 @@ public class Param {
         this.userId = userId;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -63,13 +74,15 @@ public class Param {
         this.password = password;
     }
 
-    public String getSchema() {
-        return schema;
+
+    public String getTableSchema() {
+        return tableSchema;
     }
 
-    public void setSchema(String schema) {
-        this.schema = schema;
+    public void setTableSchema(String tableSchema) {
+        this.tableSchema = tableSchema;
     }
+
 
     public String getTableName() {
         return tableName;
@@ -79,6 +92,7 @@ public class Param {
         this.tableName = tableName;
     }
 
+
     public String getAlias() {
         return alias;
     }
@@ -86,6 +100,7 @@ public class Param {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+
 
     public String getAliasUse() {
         return aliasUse;
@@ -95,6 +110,7 @@ public class Param {
         this.aliasUse = aliasUse;
     }
 
+
     public String getPackageName() {
         return packageName;
     }
@@ -102,6 +118,7 @@ public class Param {
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
+
 
     public String getProjectPath() {
         return projectPath;
@@ -111,6 +128,7 @@ public class Param {
         this.projectPath = projectPath;
     }
 
+
     public String getFilePath() {
         return filePath;
     }
@@ -118,6 +136,7 @@ public class Param {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
 
     public String getDeleteWay() {
         return deleteWay;
@@ -127,6 +146,7 @@ public class Param {
         this.deleteWay = deleteWay;
     }
 
+
     public String getPagePath() {
         return pagePath;
     }
@@ -134,6 +154,7 @@ public class Param {
     public void setPagePath(String pagePath) {
         this.pagePath = pagePath;
     }
+
 
     public String getPageFilePath() {
         return pageFilePath;
@@ -143,6 +164,7 @@ public class Param {
         this.pageFilePath = pageFilePath;
     }
 
+
     public String getGenerateItems() {
         return generateItems;
     }
@@ -150,6 +172,7 @@ public class Param {
     public void setGenerateItems(String generateItems) {
         this.generateItems = generateItems;
     }
+
 
     public String getIsTree() {
         return isTree;
@@ -159,6 +182,7 @@ public class Param {
         this.isTree = isTree;
     }
 
+
     public String getParentField() {
         return parentField;
     }
@@ -166,6 +190,7 @@ public class Param {
     public void setParentField(String parentField) {
         this.parentField = parentField;
     }
+
 
     public String getNameField() {
         return nameField;
@@ -175,6 +200,7 @@ public class Param {
         this.nameField = nameField;
     }
 
+
     public String getFormColumnNum() {
         return formColumnNum;
     }
@@ -182,6 +208,7 @@ public class Param {
     public void setFormColumnNum(String formColumnNum) {
         this.formColumnNum = formColumnNum;
     }
+
 
     public String getMenuId() {
         return menuId;
@@ -191,6 +218,7 @@ public class Param {
         this.menuId = menuId;
     }
 
+
     public String getMenuName() {
         return menuName;
     }
@@ -199,26 +227,14 @@ public class Param {
         this.menuName = menuName;
     }
 
-    @Override
-    public String toString() {
-        return "Param{" +
-                "driverClass='" + driverClass + '\'' +
-                ", connectionURL='" + connectionURL + '\'' +
-                ", userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", schema='" + schema + '\'' +
-                ", tableName='" + tableName + '\'' +
-                ", alias='" + alias + '\'' +
-                ", aliasUse='" + aliasUse + '\'' +
-                ", packageName='" + packageName + '\'' +
-                ", projectPath='" + projectPath + '\'' +
-                ", filePath='" + filePath + '\'' +
-                ", deleteWay='" + deleteWay + '\'' +
-                ", pagePath='" + pagePath + '\'' +
-                ", pageFilePath='" + pageFilePath + '\'' +
-                ", generateItems='" + generateItems + '\'' +
-                ", isTree='" + isTree + '\'' +
-                ", parentField='" + parentField + '\'' +
-                '}';
+
+    public String getColumnExtendId() {
+        return columnExtendId;
     }
+
+    public void setColumnExtendId(String columnExtendId) {
+        this.columnExtendId = columnExtendId;
+    }
+
+
 }
