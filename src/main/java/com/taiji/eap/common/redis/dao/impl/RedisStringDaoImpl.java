@@ -10,7 +10,7 @@ import com.taiji.eap.common.redis.dao.RedisGeneratorDao;
 public class RedisStringDaoImpl extends RedisGeneratorDao<String, String>{
 
 	/**
-	 * ÉèÖÃ¼üÖµ¶Ô
+	 * è®¾ç½®é”®å€¼å¯¹
 	 * @param key
 	 * @param value
 	 */
@@ -18,7 +18,7 @@ public class RedisStringDaoImpl extends RedisGeneratorDao<String, String>{
 		redisTemplate.opsForValue().set(key, value);
 	}
 	/**
-	 * ÉèÖÃ¼üÖµ¶Ô²¢ÉèÖÃ³¬Ê±Ê±¼ä
+	 * è®¾ç½®é”®å€¼å¯¹å¹¶è®¾ç½®è¶…æ—¶æ—¶é—´
 	 * @param key
 	 * @param value
 	 * @param timeout
@@ -28,7 +28,7 @@ public class RedisStringDaoImpl extends RedisGeneratorDao<String, String>{
 		redisTemplate.opsForValue().set(key, value, timeout, unit);
 	}
 	/**
-	 * ¸ù¾İ¼ü»ñÈ¡Öµ
+	 * æ ¹æ®é”®è·å–å€¼
 	 * @param key
 	 * @return
 	 */
@@ -36,7 +36,7 @@ public class RedisStringDaoImpl extends RedisGeneratorDao<String, String>{
 		return redisTemplate.opsForValue().get(key);
 	}
 	/**
-	 * ÉèÖÃĞÂÖµ²¢·µ»Ø¾ÉÖµ
+	 * è®¾ç½®æ–°å€¼å¹¶è¿”å›æ—§å€¼
 	 * @param key
 	 * @param value
 	 * @return

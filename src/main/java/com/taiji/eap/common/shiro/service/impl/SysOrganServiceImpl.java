@@ -97,9 +97,10 @@ public class SysOrganServiceImpl implements SysOrganService{
     }
 
     @Override
-    public void getOrganTreeByUserId(Long userId) {
+    public List<SysOrgan> getOrganTreeByUserId(Long userId) {
        List<Long> organIds = sysUserOrganDao.getOrganIdsByUserId(userId);
        List<SysOrgan> sysOrgans = sysOrganDao.selectByIds(organIds);
+       return sysOrgans;
     }
 
     private SysOrgan findChildren(SysOrgan tree,List<SysOrgan> list){

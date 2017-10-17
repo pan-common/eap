@@ -62,6 +62,12 @@
     </select>
 
     <select id="selectByIds" resultMap="BaseResultMap">
-
+        SELECT * FROM t_qx_organ
+        <where>
+            organ_id IN
+            <foreach item="item" index="index" collection="organIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </select>
 </mapper>

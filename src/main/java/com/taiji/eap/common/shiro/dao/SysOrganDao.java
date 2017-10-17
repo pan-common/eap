@@ -54,6 +54,6 @@ public interface SysOrganDao {
      * @param organIds
      * @return
      */
-    List<SysOrgan> selectByIds(List<Long> organIds);
+    List<SysOrgan> selectByIds(@Param("organIds") List<Long> organIds);
 
 }

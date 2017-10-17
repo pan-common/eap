@@ -3,6 +3,7 @@ package com.taiji.eap.common.shiro.controller;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.service.SysOrganService;
 import com.taiji.eap.common.shiro.service.SysRoleService;
@@ -116,9 +117,9 @@ public class SysUserController extends BaseController{
      */
     @GetMapping(value = "getOrganTreeByUserId")
     @ResponseBody
-    public Response<LayuiTree> getOrganTreeByUserId(Long userId){
-        sysOrganService.getOrganTreeByUserId(userId);
-        return renderSuccess(null);
+    public Response<List<SysOrgan>> getOrganTreeByUserId(Long userId){
+        List<SysOrgan> sysOrgans = sysOrganService.getOrganTreeByUserId(userId);
+        return renderSuccess(sysOrgans);
     }
 
     /**

@@ -1,14 +1,14 @@
 package com.taiji.eap.common.generator.bean;
 /**
- * Êı¾İ¿â±í¶ÔÓ¦ÊµÌåÀà
+ * æ•°æ®åº“è¡¨å¯¹åº”å®ä½“ç±»
  * @author panho
  *
  */
 public class Table extends DataSourceTree{
-	private String tSchema;//±íËùÊô¿â
-	private String tName;//±íÃû
-	private String tType;//±íÀàĞÍ
-	private String tComment;//±í×¢ÊÍ
+	private String tSchema;//è¡¨æ‰€å±åº“
+	private String tName;//è¡¨å
+	private String tType;//è¡¨ç±»å‹
+	private String tComment;//è¡¨æ³¨é‡Š
 
 	public Table(String tSchema, String tName, String tType, String tComment) {
 		this.tSchema = tSchema;

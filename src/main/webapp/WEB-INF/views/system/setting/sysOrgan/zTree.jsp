@@ -161,7 +161,7 @@ To change this template use File | Settings | File Templates.
         //显示左侧
         mainTree = $.fn.zTree.init($("#mainTree"), mainSetting);
 
-        function showSelectTree(event, treeId, treeNode) {
+        function showSelectTree() {
             $("selectTree").empty();
             var mainNodes = mainTree.getCheckedNodes(true);
             var organIds = "";
