@@ -92,6 +92,11 @@ public class SysRoleServiceImpl implements SysRoleService{
         return trees;
     }
 
+    @Override
+    public void getRoleTreeByUserId(Long userId) {
+
+    }
+
     private SysRole findChildren(SysRole tree,List<SysRole> list){
         for (SysRole sysRole:list) {
             sysRole.setName(sysRole.getName());

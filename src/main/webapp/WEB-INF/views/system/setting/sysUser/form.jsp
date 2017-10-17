@@ -56,7 +56,6 @@
 </form>
 </body>
 <script type="text/javascript">
-    ;
     var userId = ${param.userId};
     var url = "${pageContext.request.contextPath}/sysUser/add";
     layui.use(['form'],function () {

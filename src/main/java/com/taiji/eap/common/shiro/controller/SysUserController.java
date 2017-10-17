@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
+import com.taiji.eap.common.shiro.service.SysOrganService;
+import com.taiji.eap.common.shiro.service.SysRoleService;
 import com.taiji.eap.common.shiro.service.SysUserService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class SysUserController extends BaseController{
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Autowired
+    private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysOrganService sysOrganService;
 
     @GetMapping(value = "list")
     @ResponseBody
@@ -100,4 +108,28 @@ public class SysUserController extends BaseController{
              return renderError(e.getMessage());
           }
     }
+
+    /**
+     * 通过用户ID查询部门树
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "getOrganTreeByUserId")
+    @ResponseBody
+    public Response<LayuiTree> getOrganTreeByUserId(Long userId){
+        sysOrganService.getOrganTreeByUserId(userId);
+        return renderSuccess(null);
+    }
+
+    /**
+     * 通过用户ID查询角色树
+     * @return
+     */
+    @GetMapping(value = "getRoleTreeByUserId")
+    @ResponseBody
+    public Response<LayuiTree> getRoleTreeByUserId(Long userId){
+        sysRoleService.getRoleTreeByUserId(userId);
+        return renderSuccess(null);
+    }
+
 }

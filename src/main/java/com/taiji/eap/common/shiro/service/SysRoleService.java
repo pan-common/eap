@@ -77,4 +77,9 @@ public interface SysRoleService{
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
 
+    /**
+     * 通过用户ID获取角色树
+     * @param userId
+     */
+    void getRoleTreeByUserId(Long userId);
 }

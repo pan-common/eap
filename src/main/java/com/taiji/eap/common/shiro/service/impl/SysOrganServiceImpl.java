@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.dao.SysOrganDao;
+import com.taiji.eap.common.shiro.dao.SysUserOrganDao;
 import com.taiji.eap.common.shiro.service.SysOrganService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class SysOrganServiceImpl implements SysOrganService{
 
     @Autowired
     private SysOrganDao sysOrganDao;
+
+    @Autowired
+    private SysUserOrganDao sysUserOrganDao;
 
     @Transactional
     @Override
@@ -90,6 +94,12 @@ public class SysOrganServiceImpl implements SysOrganService{
             }
         }
         return trees;
+    }
+
+    @Override
+    public void getOrganTreeByUserId(Long userId) {
+       List<Long> organIds = sysUserOrganDao.getOrganIdsByUserId(userId);
+       List<SysOrgan> sysOrgans = sysOrganDao.selectByIds(organIds);
     }
 
     private SysOrgan findChildren(SysOrgan tree,List<SysOrgan> list){

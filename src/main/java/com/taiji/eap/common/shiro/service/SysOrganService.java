@@ -77,4 +77,9 @@ public interface SysOrganService{
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
 
+    /**
+     * 通过用户ID获取部门树
+     * @param userId
+     */
+    void getOrganTreeByUserId(Long userId);
 }

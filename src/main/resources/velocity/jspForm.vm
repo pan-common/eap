@@ -107,7 +107,7 @@ required##
 </form>
 </body>
 <script type="text/javascript">
-    #set($pkparam = "param.");
+    #set($pkparam = "param.")
     var #getPkProperty($columns) = ${${pkparam}#getPkProperty($columns)};
     var url = "${pageContext.request.contextPath}/${param.alias}/add";
     layui.use(['form'],function () {

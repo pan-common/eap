@@ -49,4 +49,11 @@ public interface SysOrganDao {
      */
     List<SysOrgan> listByPid(@Param("parentId") Long parentId,@Param("searchText") String searchText);
 
+    /**
+     * 通过主键集合查询结果
+     * @param organIds
+     * @return
+     */
+    List<SysOrgan> selectByIds(List<Long> organIds);
+
 }

@@ -60,4 +60,8 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_qx_organ
     </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+
+    </select>
 </mapper>
