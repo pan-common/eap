@@ -90,7 +90,7 @@
     var configId = ${param.configId};
     var url = "${pageContext.request.contextPath}/generateConf/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
 
         if(configId){

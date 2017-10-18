@@ -51,7 +51,7 @@
     var roleId = ${param.roleId};
     var url = "${pageContext.request.contextPath}/sysRole/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
 
         if(roleId){

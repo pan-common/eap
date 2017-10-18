@@ -101,7 +101,7 @@
     var dicId = ${param.dicId};
     var url = "${pageContext.request.contextPath}/dictionary/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
         if(dicId){
             url = "${pageContext.request.contextPath}/dictionary/edit";

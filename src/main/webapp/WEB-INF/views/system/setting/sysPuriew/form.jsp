@@ -54,7 +54,7 @@
     var puriewId = ${param.puriewId};
     var url = "${pageContext.request.contextPath}/sysPuriew/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
 
         if(puriewId){

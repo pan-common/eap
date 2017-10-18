@@ -124,6 +124,7 @@ required##
                         if(data.body.resultCode=="0"){
                             $('#form').clearForm();
                             $('#form').form('load',data.body.entity);
+                            form.render('select','form');
                         }else {
                             parent.layer.msg(data.body.resultContent, {icon: 5});
                         }

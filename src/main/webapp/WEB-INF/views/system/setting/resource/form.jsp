@@ -28,7 +28,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">选择资源类型</label>
         <div class="layui-input-block" style="margin-right: 10px">
-            <dic:selectTag parentId="23" id="typeCode" selectedValue="01" selectName="typeCode" layfilter="typeCode"/>
+            <dic:selectTag parentId="23" id="typeCode" nullName="请选择" selectName="typeCode" layfilter="typeCode"/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -64,7 +64,7 @@
     var resourceId = ${param.resourceId};
     var url = "${pageContext.request.contextPath}/resource/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
 
         $("#typeDesc").val($("#typeCode").find("option:selected").text());
@@ -78,6 +78,7 @@
                     if(data.body.resultCode=="0"){
                         $('#form').clearForm();
                         $('#form').form('load',data.body.entity);
+                        form.render('select','form');
                     }else {
                         parent.layer.msg(data.body.resultContent, {icon: 5});
                     }

@@ -57,7 +57,7 @@
     var organId = ${param.organId};
     var url = "${pageContext.request.contextPath}/sysOrgan/add";
     layui.use(['form'],function () {
-        var form = layui.form();
+        var form = layui.form;
         form.render('select','form');
 
         if(organId){
