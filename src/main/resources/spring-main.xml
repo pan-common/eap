@@ -99,4 +99,6 @@
 	<import resource="classpath:spring-activiti.xml" />
 	<import resource="classpath:spring-shiro.xml" />
 
+	<!--责任链相关配置文件-->
+	<import resource="classpath:corp/spring-select-datasource-helper.xml"></import>
 </beans>

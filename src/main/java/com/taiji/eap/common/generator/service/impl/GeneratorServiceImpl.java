@@ -243,8 +243,22 @@ public class GeneratorServiceImpl implements GeneratorService{
      * @param columns
      */
     private void generateJspForm(Param param,List<ColumnExtend> columns){
+        List<ColumnExtend> formColumns = new ArrayList<ColumnExtend>();
+        for (int i = 0; i <columns.size() ; i++) {
+            if(columns.get(i).getFormShow().equals("01")){
+                formColumns.add(columns.get(i));
+            }
+        }
         Collections.sort(columns);
-        String content = replaceTemplate(param,columns,"/velocity/jspForm.vm");
+        Collections.sort(formColumns);
+        Template template = Velocity.getTemplate("/velocity/jspForm.vm");
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("param",param);
+        velocityContext.put("columns",columns);
+        velocityContext.put("formColumns",formColumns);
+        StringWriter sw = new StringWriter();
+        template.merge(velocityContext,sw);
+        String content = sw.toString();
         String filePath = param.getPageFilePath();
         String fileName ="form.jsp";
         FileUtil.writeStrToFile(filePath,fileName,content);

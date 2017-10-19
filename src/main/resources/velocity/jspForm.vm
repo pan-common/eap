@@ -9,14 +9,13 @@
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
 #if(${param.formColumnNum}=="2")
-    <table>
-#foreach($column in $columns)
+    <table class="layui-table">
+#foreach($column in $formColumns)
 #set($temp=$velocityCount)
 #set($temp=$temp - 1)
-#if(${column.formShow}=="01"&&${temp}%2==0)
+#if(${temp}%2==0)
         <tr>
 #end
-#if(${column.formShow}=="01")
 #if(${column.inputType}=="01")
                 ##输入框
             <td><label class="layui-form-label">${column.columnComment}</label></td>
@@ -27,19 +26,19 @@
                 ##下拉选择框
             <td><label class="layui-form-label">${column.columnComment}</label></td>
             <td colspan="2">
-                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
+                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" nullName="请选择" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
             </td>
 #elseif(${column.inputType}=="03")
                 ##复选框
             <td><label class="layui-form-label">${column.columnComment}</label></td>
             <td colspan="2">
-                <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
+                <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" />
             </td>
 #elseif(${column.inputType}=="04")
                 ##开关
             <td><label class="layui-form-label">${column.columnComment}</label></td>
             <td colspan="2">
-                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
+                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开|关">
             </td>
 #elseif(${column.inputType}=="05")
                 ##单选
@@ -48,8 +47,7 @@
                 <dic:radioTag parentId="${column.param}" name="#camel(${column.columnName})"></dic:radioTag>
             </td>
 #end
-#end
-#if(${column.formShow}=="01"&&(${temp}+1)%2==0)
+#if((${temp}+1)%2==0)
         </tr>
 #end
 #end
@@ -59,8 +57,7 @@
         </tr>
     </table>
 #else
-#foreach($column in $columns)
-#if(${column.formShow}=="01")
+#foreach($column in $formColumns)
         <div class="layui-form-item">
             <label class="layui-form-label">${column.columnComment}</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
@@ -69,17 +66,16 @@
                 <input type="text" name="#camel(${column.columnName})" #isRequired(${column.columnName}) lay-verify="${column.verify}" placeholder="请输入${column.columnComment}" autocomplete="off" class="layui-input">
 #elseif(${column.inputType}=="02")
             ##下拉选择框
-                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})" selectedValue="01" selectName="#camel(${column.columnName})" layfilter="#camel(${column.columnName})"/>
+                <dic:selectTag parentId="${column.param}" id="#camel(${column.required})"  selectName="#camel(${column.columnName})" nullName="请选择" layfilter="#camel(${column.columnName})"/>
 #elseif(${column.inputType}=="03")
             ##复选框
                 <dic:checkboxTag name="#camel(${column.columnName})" parentId="${column.param}" checkPositions="all" />
 #elseif(${column.inputType}=="04")
             ##开关
-                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开启|关闭">
+                <input type="checkbox" name="#camel(${column.columnName})" lay-skin="switch" lay-text="开|关">
 #elseif(${column.inputType}=="05")
             ##单选
                 <dic:radioTag parentId="${column.param}" name="#camel(${column.columnName})"></dic:radioTag>
-#end
 #end
         </div>
     </div>
@@ -111,8 +107,8 @@ required##
     var #getPkProperty($columns) = ${${pkparam}#getPkProperty($columns)};
     var url = "${pageContext.request.contextPath}/${param.alias}/add";
     layui.use(['form'],function () {
-        var form = layui.form();
-        form.render('select','form');
+        var form = layui.form;
+        form.render();
 
         if(#getPkProperty($columns)){
             url = "${pageContext.request.contextPath}/${param.alias}/edit";
@@ -124,7 +120,7 @@ required##
                         if(data.body.resultCode=="0"){
                             $('#form').clearForm();
                             $('#form').form('load',data.body.entity);
-                            form.render('select','form');
+                            form.render();
                         }else {
                             parent.layer.msg(data.body.resultContent, {icon: 5});
                         }

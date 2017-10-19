@@ -128,7 +128,7 @@ pageEncoding="UTF-8"%>
 #end
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)="+row.#getPkProperty($columns));
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)="+row.#getPkProperty($columns),"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

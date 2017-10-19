@@ -121,7 +121,7 @@ pageEncoding="UTF-8"%>
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/form&roleId="+row.roleId);
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/form&roleId="+row.roleId,"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

@@ -8,7 +8,7 @@
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="/WEB-INF/tld/dictionary.tld" prefix="dic"%>
+<%@taglib uri="/WEB-INF/tld/eap.tld" prefix="dic"%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="renderer" content="webkit">
@@ -42,4 +42,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.exhide.min.js"></script>
-
+<script type="text/javascript">
+    var baseServerUrl = "${pageContext.request.contextPath}";
+</script>

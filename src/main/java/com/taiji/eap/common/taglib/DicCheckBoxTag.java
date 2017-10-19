@@ -35,15 +35,19 @@ public class DicCheckBoxTag extends TagSupport{
         JspWriter out = pageContext.getOut();
 
         for (int i = 0; i < dictionaries.size(); i++) {
-            if(checkPositions.equals("all")){
-                sb.append("<input id=\""+dictionaries.get(i).getKeystone()+"\" type=\"checkbox\" value=\""+dictionaries.get(i).getValue()+"\" name=\""+getName()+"\" title=\""+dictionaries.get(i).getValue()+"\" lay-skin=\"primary\" checked>");
-            }else {
-                String[] positions = checkPositions.split(",");
-                if(checkPosition(i,positions)){
-                    sb.append("<input id=\""+dictionaries.get(i).getKeystone()+"\" type=\"checkbox\" value=\""+dictionaries.get(i).getValue()+"\" name=\""+getName()+"\" title=\""+dictionaries.get(i).getValue()+"\" lay-skin=\"primary\" checked>");
-                }else {
-                    sb.append("<input id=\""+dictionaries.get(i).getKeystone()+"\" type=\"checkbox\" value=\""+dictionaries.get(i).getValue()+"\" name=\""+getName()+"\" title=\""+dictionaries.get(i).getValue()+"\" lay-skin=\"primary\" >");
+            if(this.getCheckPositions()!=null) {
+                if (checkPositions.equals("all")) {
+                    sb.append("<input id=\"" + dictionaries.get(i).getKeystone() + "\" type=\"checkbox\" value=\"" + dictionaries.get(i).getValue() + "\" name=\"" + getName() + "\" title=\"" + dictionaries.get(i).getValue() + "\" lay-skin=\"primary\" checked>");
+                } else {
+                    String[] positions = checkPositions.split(",");
+                    if (checkPosition(i, positions)) {
+                        sb.append("<input id=\"" + dictionaries.get(i).getKeystone() + "\" type=\"checkbox\" value=\"" + dictionaries.get(i).getValue() + "\" name=\"" + getName() + "\" title=\"" + dictionaries.get(i).getValue() + "\" lay-skin=\"primary\" checked>");
+                    } else {
+                        sb.append("<input id=\"" + dictionaries.get(i).getKeystone() + "\" type=\"checkbox\" value=\"" + dictionaries.get(i).getValue() + "\" name=\"" + getName() + "\" title=\"" + dictionaries.get(i).getValue() + "\" lay-skin=\"primary\" >");
+                    }
                 }
+            }else {
+                sb.append("<input id=\"" + dictionaries.get(i).getKeystone() + "\" type=\"checkbox\" value=\"" + dictionaries.get(i).getValue() + "\" name=\"" + getName() + "\" title=\"" + dictionaries.get(i).getValue() + "\" lay-skin=\"primary\" >");
             }
         }
         try {

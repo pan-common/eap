@@ -33,7 +33,7 @@
         var form =  layui.form;
 
         $("#addBtn").click(function () {
-            showModel("新增资源","${pageContext.request.contextPath}/resource/link?url=system/setting/resource/form&resourceId=0");
+            showModel("新增资源",baseServerUrl+"/resource/link?url=system/setting/resource/form&resourceId=0");
         });
 
         //弹出录入框
@@ -53,7 +53,7 @@
             })
         };
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/resource/list",
+            url:baseServerUrl+"/resource/list",
             height:$(window).height()-$("#topLayout").height()-30,
             method:'GET',
             toolbar:"#toolbar",

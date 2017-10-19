@@ -315,7 +315,7 @@
             totalField: "total",
             searchOnEnterKey: false,
             strictSearch: false,
-            showRefresh: false, //是否显示刷新按钮
+            showRefresh: true, //是否显示刷新按钮
             showColumns: false, //是否显内容列下拉框
             showPaginationSwitch: false,//是否显示 数据条数选择框
             minimumCountColumns: 2, //最少允许的列数
@@ -391,7 +391,7 @@
             totalField: "total",
             searchOnEnterKey: true,
             strictSearch: false,
-            showRefresh: false, //是否显示刷新按钮
+            showRefresh: true, //是否显示刷新按钮
             showColumns: false, //是否显内容列下拉框
             showPaginationSwitch: false,//是否显示 数据条数选择框
             minimumCountColumns: 2, //最少允许的列数

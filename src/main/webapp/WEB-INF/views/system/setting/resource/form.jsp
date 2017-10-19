@@ -31,6 +31,7 @@
             <dic:selectTag parentId="23" id="typeCode" nullName="请选择" selectName="typeCode" layfilter="typeCode"/>
         </div>
     </div>
+
     <div class="layui-form-item">
         <label class="layui-form-label">资源图标</label>
         <div class="layui-input-block" style="margin-right: 10px">
