@@ -1,14 +1,12 @@
-package com.taiji.eap.common.shiro.service;
+package com.taiji.eap.biz.qyjcxx.service;
 
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.shiro.bean.SysUser;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.shiro.bean.SysOrgan;
+import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import java.util.List;
 
-public interface SysOrganService{
+public interface QyjcxxService{
      /**
      * 通过主键删除数据
      * @param primaryKey
@@ -17,28 +15,28 @@ public interface SysOrganService{
     int deleteByPrimaryKey(Long primaryKey) throws Exception;
      /**
      * 插入数据
-     * @param sysOrgan
+     * @param qyjcxx
      * @return
      */
-    int insert(SysOrgan sysOrgan) throws Exception;
+    int insert(Qyjcxx qyjcxx) throws Exception;
      /**
      * 根据主键查询数据
      * @param primaryKey
      * @return
      */
-    SysOrgan selectByPrimaryKey(Long primaryKey) throws Exception;
+    Qyjcxx selectByPrimaryKey(Long primaryKey) throws Exception;
      /**
      * 根据主键修改数据
-     * @param sysOrgan
+     * @param qyjcxx
      * @return
      */
-    int updateByPrimaryKey(SysOrgan sysOrgan) throws Exception;
+    int updateByPrimaryKey(Qyjcxx qyjcxx) throws Exception;
      /**
      * 无分页查询数据
      * @param searchText 搜索条件
      * @return
      */
-    List<SysOrgan> list(String searchText) throws Exception;
+    List<Qyjcxx> list(String searchText) throws Exception;
      /**
      * 分页查询数据
      * @param pageNum 当前页数
@@ -47,14 +45,14 @@ public interface SysOrganService{
      * @return
      * @throws Exception
      */
-    PageInfo<SysOrgan> list(int pageNum, int pageSize, String searchText) throws Exception;
+    PageInfo<Qyjcxx> list(int pageNum, int pageSize, String searchText) throws Exception;
 
      /**
      * 通过父节点查询数据
      * @param parentId
      * @return
      */
-    List<SysOrgan> listByPid(Long parentId) throws Exception;
+    List<Qyjcxx> listByPid(Long parentId) throws Exception;
     /**
     * 通过父节点分页查询数据
     * @param parentId
@@ -64,13 +62,13 @@ public interface SysOrganService{
     * @return
     * @throws Exception
     */
-    PageInfo<SysOrgan> listByPid(Long parentId, int pageNum, int pageSize, String searchText) throws Exception;
+    PageInfo<Qyjcxx> listByPid(Long parentId, int pageNum, int pageSize, String searchText) throws Exception;
     /**
     * 通过当前节点主键获取路径列表
     * @param primaryKey
     * @return
     */
-    List<SysOrgan> getPath(Long primaryKey) throws Exception;
+    List<Qyjcxx> getPath(Long primaryKey) throws Exception;
     /**
     * 显示树状视图
     * @param parentId
@@ -78,11 +76,5 @@ public interface SysOrganService{
     * @throws Exception
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
-
-    /**
-     * 通过用户ID获取部门树
-     * @param userId
-     */
-    List<SysOrgan> getOrganTreeByUserId(Long userId);
 
 }

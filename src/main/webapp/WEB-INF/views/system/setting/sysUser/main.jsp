@@ -99,7 +99,7 @@ pageEncoding="UTF-8"%>
                     field:"salt",
                 },
                 {
-                    title:"是否被锁住  0没有被锁  1被锁",
+                    title:"是否被锁住",
                     field:"locked",
                 },
                 {

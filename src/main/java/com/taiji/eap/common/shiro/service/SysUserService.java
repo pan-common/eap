@@ -1,6 +1,7 @@
 package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
@@ -47,5 +48,12 @@ public interface SysUserService{
      */
     PageInfo<SysUser> list(int pageNum, int pageSize, String searchText) throws Exception;
 
-
+    /**
+     * easyui提交数据
+     * @param inserted
+     * @param deleted
+     * @param updated
+     * @return
+     */
+    int easyuiSubmitData(List<SysUser> inserted, List<SysUser> deleted, List<SysUser> updated);
 }

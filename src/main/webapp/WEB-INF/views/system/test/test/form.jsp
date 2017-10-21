@@ -9,49 +9,69 @@
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
     <table class="layui-table">
         <tr>
-            <td><label class="layui-form-label">测试1</label></td>
+                            <td><label class="layui-form-label">监测点位</label></td>
             <td colspan="2">
-                <input type="text" name="test1"  lay-verify="required" placeholder="请输入测试1" autocomplete="off" class="layui-input">
+                <input type="text" name="jcdw"  lay-verify="" placeholder="请输入监测点位" autocomplete="off" class="layui-input">
             </td>
-            <td><label class="layui-form-label">测试2</label></td>
+                            <td><label class="layui-form-label">是否开展监测</label></td>
             <td colspan="2">
-                <dic:selectTag parentId="43" id="01" nullName="请选择" selectName="test2" layfilter="test2"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label class="layui-form-label">测试3</label></td>
-            <td colspan="2">
-                <dic:checkboxTag name="test3" parentId="43" />
-            </td>
-            <td><label class="layui-form-label">测试4</label></td>
-            <td colspan="2">
-                <input type="checkbox" name="test4" lay-skin="switch" lay-text="开|关">
+                <input type="text" name="sfkzjc"  lay-verify="" placeholder="请输入是否开展监测" autocomplete="off" class="layui-input">
             </td>
         </tr>
         <tr>
-            <td><label class="layui-form-label">测试5</label></td>
+                            <td><label class="layui-form-label">监测平台是否安全</label></td>
             <td colspan="2">
-                <dic:radioTag parentId="23" name="test5"></dic:radioTag>
+                <input type="text" name="jcptsfaq"  lay-verify="" placeholder="请输入监测平台是否安全" autocomplete="off" class="layui-input">
             </td>
-            <td><label class="layui-form-label">测试6</label></td>
+                            <td><label class="layui-form-label">监测点位是否规范</label></td>
             <td colspan="2">
-                <input type="text" name="test6"  lay-verify="required" placeholder="请输入测试6" autocomplete="off" class="layui-input">
-            </td>
-        </tr>
-        <tr>
-            <td><label class="layui-form-label">测试7</label></td>
-            <td colspan="2">
-                <dic:selectTag parentId="43" id="01" nullName="请选择" selectName="test7" layfilter="test7"/>
-            </td>
-            <td><label class="layui-form-label">测试8</label></td>
-            <td colspan="2">
-                <dic:checkboxTag name="test8" parentId="43" checkPositions="all" />
+                <input type="text" name="jcdwsfgf"  lay-verify="" placeholder="请输入监测点位是否规范" autocomplete="off" class="layui-input">
             </td>
         </tr>
         <tr>
-            <td><label class="layui-form-label">测试9</label></td>
+                            <td><label class="layui-form-label">监测因子</label></td>
             <td colspan="2">
-                <dic:radioTag parentId="34" name="test9"></dic:radioTag>
+                <input type="text" name="jcyz"  lay-verify="" placeholder="请输入监测因子" autocomplete="off" class="layui-input">
+            </td>
+                            <td><label class="layui-form-label">手工监测时间</label></td>
+            <td colspan="2">
+                <input type="text" name="sgjcsj"  lay-verify="" placeholder="请输入手工监测时间" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+        <tr>
+                            <td><label class="layui-form-label">手工监测结果</label></td>
+            <td colspan="2">
+                <input type="text" name="sgjcjg"  lay-verify="" placeholder="请输入手工监测结果" autocomplete="off" class="layui-input">
+            </td>
+                            <td><label class="layui-form-label">标准编号</label></td>
+            <td colspan="2">
+                <input type="text" name="bzbh"  lay-verify="" placeholder="请输入标准编号" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+        <tr>
+                            <td><label class="layui-form-label">标准限值</label></td>
+            <td colspan="2">
+                <input type="text" name="bzxz"  lay-verify="" placeholder="请输入标准限值" autocomplete="off" class="layui-input">
+            </td>
+                            <td><label class="layui-form-label">是否超标</label></td>
+            <td colspan="2">
+                <input type="text" name="sfcb"  lay-verify="" placeholder="请输入是否超标" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+        <tr>
+                            <td><label class="layui-form-label">是否安装在线监测</label></td>
+            <td colspan="2">
+                <input type="text" name="sfazzxjc"  lay-verify="" placeholder="请输入是否安装在线监测" autocomplete="off" class="layui-input">
+            </td>
+                            <td><label class="layui-form-label">是否联网</label></td>
+            <td colspan="2">
+                <input type="text" name="sflw"  lay-verify="" placeholder="请输入是否联网" autocomplete="off" class="layui-input">
+            </td>
+        </tr>
+        <tr>
+                            <td><label class="layui-form-label">同步在线监测结果</label></td>
+            <td colspan="2">
+                <input type="text" name="tbzxjcjg"  lay-verify="" placeholder="请输入同步在线监测结果" autocomplete="off" class="layui-input">
             </td>
         <tr>
             <td colspan="3" align="center"><button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button></td>
@@ -63,7 +83,7 @@
 </form>
 </body>
 <script type="text/javascript">
-    var id = ${param.id};
+        var id = ${param.id};
     var url = "${pageContext.request.contextPath}/test/add";
     layui.use(['form'],function () {
         var form = layui.form;
@@ -74,19 +94,19 @@
             $.get("${pageContext.request.contextPath}/test/selectOne",{
                 id:id
             },function (data,status) {
-                if(status=="success"){
-                    if(data.body.resultCode=="0"){
-                        $('#form').clearForm();
-                        $('#form').form('load',data.body.entity);
-                        form.render();
+                    if(status=="success"){
+                        if(data.body.resultCode=="0"){
+                            $('#form').clearForm();
+                            $('#form').form('load',data.body.entity);
+                            form.render();
+                        }else {
+                            parent.layer.msg(data.body.resultContent, {icon: 5});
+                        }
                     }else {
-                        parent.layer.msg(data.body.resultContent, {icon: 5});
+                        parent.layer.msg('网络错误', {icon: 5});
                     }
-                }else {
-                    parent.layer.msg('网络错误', {icon: 5});
-                }
-            })
-        }
+                })
+            }
         form.on("submit(submitBtn)",function (data,status) {
             $.post(url,$("#form").serializeArray(),function (data,status) {
                 if(status=='success'){

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.qyjcxx.dao.QyjcxxDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.qyjcxx.bean.Qyjcxx">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="jcrq" property="jcrq" jdbcType="VARCHAR" />
+        <result column="shen" property="shen" jdbcType="VARCHAR" />
+        <result column="shi" property="shi" jdbcType="VARCHAR" />
+        <result column="xian" property="xian" jdbcType="VARCHAR" />
+        <result column="qymc" property="qymc" jdbcType="VARCHAR" />
+        <result column="hylx" property="hylx" jdbcType="VARCHAR" />
+        <result column="wrfzss" property="wrfzss" jdbcType="VARCHAR" />
+        <result column="yxwtms" property="yxwtms" jdbcType="VARCHAR" />
+        <result column="sfczsjzj" property="sfczsjzj" jdbcType="VARCHAR" />
+        <result column="zjwtms" property="zjwtms" jdbcType="VARCHAR" />
+        <result column="sfczyzpmdl" property="sfczyzpmdl" jdbcType="VARCHAR" />
+        <result column="pmdlwtms" property="pmdlwtms" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_test_qyjcxx
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_test_qyjcxx
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_test_qyjcxx
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.qyjcxx.bean.Qyjcxx">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_test_qyjcxx(
+        id,parent_id,jcrq,shen,shi,xian,qymc,hylx,wrfzss,yxwtms,sfczsjzj,zjwtms,sfczyzpmdl,pmdlwtms)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{parentId,jdbcType=DECIMAL},#{jcrq,jdbcType=VARCHAR},#{shen,jdbcType=VARCHAR},#{shi,jdbcType=VARCHAR},#{xian,jdbcType=VARCHAR},#{qymc,jdbcType=VARCHAR},#{hylx,jdbcType=VARCHAR},#{wrfzss,jdbcType=VARCHAR},#{yxwtms,jdbcType=VARCHAR},#{sfczsjzj,jdbcType=VARCHAR},#{zjwtms,jdbcType=VARCHAR},#{sfczyzpmdl,jdbcType=VARCHAR},#{pmdlwtms,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.qyjcxx.bean.Qyjcxx">
+        UPDATE t_test_qyjcxx SET
+        id=#{id,jdbcType=DECIMAL},parent_id=#{parentId,jdbcType=DECIMAL},jcrq=#{jcrq,jdbcType=VARCHAR},shen=#{shen,jdbcType=VARCHAR},shi=#{shi,jdbcType=VARCHAR},xian=#{xian,jdbcType=VARCHAR},qymc=#{qymc,jdbcType=VARCHAR},hylx=#{hylx,jdbcType=VARCHAR},wrfzss=#{wrfzss,jdbcType=VARCHAR},yxwtms=#{yxwtms,jdbcType=VARCHAR},sfczsjzj=#{sfczsjzj,jdbcType=VARCHAR},zjwtms=#{zjwtms,jdbcType=VARCHAR},sfczyzpmdl=#{sfczyzpmdl,jdbcType=VARCHAR},pmdlwtms=#{pmdlwtms,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_test_qyjcxx WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_test_qyjcxx
+    </select>
+</mapper>

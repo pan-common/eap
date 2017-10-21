@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/test/test/form&id=0","850px","550px");
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/test/test/form&id=0","800px","550px");
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -79,44 +79,56 @@ pageEncoding="UTF-8"%>
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
                 {
-                    title:"主键",
-                    field:"id",
+                    title:"监测点位",
+                    field:"jcdw",
                 },
                 {
-                    title:"测试1",
-                    field:"test1",
+                    title:"是否开展监测",
+                    field:"sfkzjc",
                 },
                 {
-                    title:"测试2",
-                    field:"test2",
+                    title:"监测平台是否安全",
+                    field:"jcptsfaq",
                 },
                 {
-                    title:"测试3",
-                    field:"test3",
+                    title:"监测点位是否规范",
+                    field:"jcdwsfgf",
                 },
                 {
-                    title:"测试4",
-                    field:"test4",
+                    title:"监测因子",
+                    field:"jcyz",
                 },
                 {
-                    title:"测试5",
-                    field:"test5",
+                    title:"手工监测时间",
+                    field:"sgjcsj",
                 },
                 {
-                    title:"测试6",
-                    field:"test6",
+                    title:"手工监测结果",
+                    field:"sgjcjg",
                 },
                 {
-                    title:"测试7",
-                    field:"test7",
+                    title:"标准编号",
+                    field:"bzbh",
                 },
                 {
-                    title:"测试8",
-                    field:"test8",
+                    title:"标准限值",
+                    field:"bzxz",
                 },
                 {
-                    title:"测试9",
-                    field:"test9",
+                    title:"是否超标",
+                    field:"sfcb",
+                },
+                {
+                    title:"是否安装在线监测",
+                    field:"sfazzxjc",
+                },
+                {
+                    title:"是否联网",
+                    field:"sflw",
+                },
+                {
+                    title:"同步在线监测结果",
+                    field:"tbzxjcjg",
                 },
                 {
                     title : "操作",
@@ -124,7 +136,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/test/test/form&id="+row.id,"850px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/test/test/form&id="+row.id,"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

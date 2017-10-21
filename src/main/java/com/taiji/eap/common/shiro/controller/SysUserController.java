@@ -2,6 +2,7 @@ package com.taiji.eap.common.shiro.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.bean.SysUser;
@@ -11,10 +12,7 @@ import com.taiji.eap.common.shiro.service.SysUserService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -131,6 +129,16 @@ public class SysUserController extends BaseController{
     public Response<LayuiTree> getRoleTreeByUserId(Long userId){
         sysRoleService.getRoleTreeByUserId(userId);
         return renderSuccess(null);
+    }
+
+    @PostMapping(value = "easyuiSubmitData")
+    @ResponseBody
+    public Response<String> easyuiSubmitData(List<SysUser> inserted,List<SysUser> deleted,List<SysUser> updated){
+        int i = sysUserService.easyuiSubmitData(inserted,deleted,updated);
+        if(i>0)
+            return renderSuccess("提交成功");
+        else
+            return renderError("提交失败");
     }
 
 }

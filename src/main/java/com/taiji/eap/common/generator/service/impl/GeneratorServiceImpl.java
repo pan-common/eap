@@ -101,13 +101,18 @@ public class GeneratorServiceImpl implements GeneratorService{
             generateController(param, columns);
         }
         if(param.getGenerateItems().contains("jsp")) {
-            //生成jsp主界面
-            generateJspMain(param, columns);
-            //生成jsp表单界面
-            generateJspForm(param, columns);
-            if(param.getIsTree().equals("01")){
-                generateJspTreeView(param,columns);
-                generateJspZTree(param,columns);
+            if(param.getPageStyle().equals("01")) {
+                //生成jsp主界面
+                generateJspMain(param, columns);
+                //生成jsp表单界面
+                generateJspForm(param, columns);
+                if (param.getIsTree().equals("01")) {
+                    generateJspTreeView(param, columns);
+                    generateJspZTree(param, columns);
+                }
+            }else if(param.getPageStyle().equals("02")){
+                //生成easyui风格的界面
+                generateEasyUiJsp(param, columns);
             }
         }
         if(param.getMenuId()!=null&&param.getMenuName()!=null&&!param.getMenuName().equals("")&&!param.getMenuId().equals("")) {
@@ -233,6 +238,19 @@ public class GeneratorServiceImpl implements GeneratorService{
         Collections.sort(columns);
         String content = replaceTemplate(param,columns,"/velocity/jspMain.vm");
         String filePath = param.getPageFilePath();
+        String fileName ="main.jsp";
+        FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成easyui风格的界面
+     * @param param
+     * @param columns
+     */
+    private void generateEasyUiJsp(Param param, List<ColumnExtend> columns) {
+        Collections.sort(columns);
+        String content = replaceTemplate(param,columns,"/velocity/easyuiJsp.vm");
+        String filePath = param.getPageFilePath()+"/easyui";
         String fileName ="main.jsp";
         FileUtil.writeStrToFile(filePath,fileName,content);
     }

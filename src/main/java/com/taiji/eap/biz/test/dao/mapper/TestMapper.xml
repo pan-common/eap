@@ -3,22 +3,26 @@
 <mapper namespace="com.taiji.eap.biz.test.dao.TestDao">
     <resultMap id="BaseResultMap" type="com.taiji.eap.biz.test.bean.Test">
         <id column="id" property="id" jdbcType="DECIMAL"></id>
-        <result column="test1" property="test1" jdbcType="VARCHAR" />
-        <result column="test2" property="test2" jdbcType="VARCHAR" />
-        <result column="test3" property="test3" jdbcType="VARCHAR" />
-        <result column="test4" property="test4" jdbcType="VARCHAR" />
-        <result column="test5" property="test5" jdbcType="VARCHAR" />
-        <result column="test6" property="test6" jdbcType="VARCHAR" />
-        <result column="test7" property="test7" jdbcType="VARCHAR" />
-        <result column="test8" property="test8" jdbcType="VARCHAR" />
-        <result column="test9" property="test9" jdbcType="VARCHAR" />
+        <result column="jcdw" property="jcdw" jdbcType="VARCHAR" />
+        <result column="sfkzjc" property="sfkzjc" jdbcType="VARCHAR" />
+        <result column="jcptsfaq" property="jcptsfaq" jdbcType="VARCHAR" />
+        <result column="jcdwsfgf" property="jcdwsfgf" jdbcType="VARCHAR" />
+        <result column="jcyz" property="jcyz" jdbcType="VARCHAR" />
+        <result column="sgjcsj" property="sgjcsj" jdbcType="VARCHAR" />
+        <result column="sgjcjg" property="sgjcjg" jdbcType="VARCHAR" />
+        <result column="bzbh" property="bzbh" jdbcType="VARCHAR" />
+        <result column="bzxz" property="bzxz" jdbcType="VARCHAR" />
+        <result column="sfcb" property="sfcb" jdbcType="VARCHAR" />
+        <result column="sfazzxjc" property="sfazzxjc" jdbcType="VARCHAR" />
+        <result column="sflw" property="sflw" jdbcType="VARCHAR" />
+        <result column="tbzxjcjg" property="tbzxjcjg" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap">
         SELECT * FROM t_test_test1
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT(test5,',',test6,',',test7,',',test8,',',test9) LIKE CONCAT("%",#{searchText},"%")
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -32,15 +36,15 @@
             SELECT LAST_INSERT_ID() AS id
         </selectKey>
         INSERT INTO t_test_test1(
-        id,test1,test2,test3,test4,test5,test6,test7,test8,test9)
+        id,jcdw,sfkzjc,jcptsfaq,jcdwsfgf,jcyz,sgjcsj,sgjcjg,bzbh,bzxz,sfcb,sfazzxjc,sflw,tbzxjcjg)
         VALUES(
-        #{id,jdbcType=DECIMAL},#{test1,jdbcType=VARCHAR},#{test2,jdbcType=VARCHAR},#{test3,jdbcType=VARCHAR},#{test4,jdbcType=VARCHAR},#{test5,jdbcType=VARCHAR},#{test6,jdbcType=VARCHAR},#{test7,jdbcType=VARCHAR},#{test8,jdbcType=VARCHAR},#{test9,jdbcType=VARCHAR}
+        #{id,jdbcType=DECIMAL},#{jcdw,jdbcType=VARCHAR},#{sfkzjc,jdbcType=VARCHAR},#{jcptsfaq,jdbcType=VARCHAR},#{jcdwsfgf,jdbcType=VARCHAR},#{jcyz,jdbcType=VARCHAR},#{sgjcsj,jdbcType=VARCHAR},#{sgjcjg,jdbcType=VARCHAR},#{bzbh,jdbcType=VARCHAR},#{bzxz,jdbcType=VARCHAR},#{sfcb,jdbcType=VARCHAR},#{sfazzxjc,jdbcType=VARCHAR},#{sflw,jdbcType=VARCHAR},#{tbzxjcjg,jdbcType=VARCHAR}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.test.bean.Test">
         UPDATE t_test_test1 SET
-        id=#{id,jdbcType=DECIMAL},test1=#{test1,jdbcType=VARCHAR},test2=#{test2,jdbcType=VARCHAR},test3=#{test3,jdbcType=VARCHAR},test4=#{test4,jdbcType=VARCHAR},test5=#{test5,jdbcType=VARCHAR},test6=#{test6,jdbcType=VARCHAR},test7=#{test7,jdbcType=VARCHAR},test8=#{test8,jdbcType=VARCHAR},test9=#{test9,jdbcType=VARCHAR}
+        id=#{id,jdbcType=DECIMAL},jcdw=#{jcdw,jdbcType=VARCHAR},sfkzjc=#{sfkzjc,jdbcType=VARCHAR},jcptsfaq=#{jcptsfaq,jdbcType=VARCHAR},jcdwsfgf=#{jcdwsfgf,jdbcType=VARCHAR},jcyz=#{jcyz,jdbcType=VARCHAR},sgjcsj=#{sgjcsj,jdbcType=VARCHAR},sgjcjg=#{sgjcjg,jdbcType=VARCHAR},bzbh=#{bzbh,jdbcType=VARCHAR},bzxz=#{bzxz,jdbcType=VARCHAR},sfcb=#{sfcb,jdbcType=VARCHAR},sfazzxjc=#{sfazzxjc,jdbcType=VARCHAR},sflw=#{sflw,jdbcType=VARCHAR},tbzxjcjg=#{tbzxjcjg,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=DECIMAL}
     </update>
 

@@ -2,6 +2,7 @@ package com.taiji.eap.common.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.dao.SysUserDao;
@@ -54,5 +55,27 @@ public class SysUserServiceImpl implements SysUserService{
         List<SysUser> sysUsers = sysUserDao.list(searchText);
         PageInfo<SysUser> pageInfo = new PageInfo<SysUser>(sysUsers);
         return pageInfo;
+    }
+
+    @Transactional
+    @Override
+    public int easyuiSubmitData(List<SysUser> inserted,List<SysUser> deleted,List<SysUser> updated) {
+        int k = 0;
+        if(inserted!=null&&inserted.isEmpty()) {
+            for (int i = 0; i < inserted.size(); i++) {
+                k += sysUserDao.insert(inserted.get(i));
+            }
+        }
+        if(deleted!=null&&deleted.isEmpty()) {
+            for (int i = 0; i < deleted.size(); i++) {
+                k += sysUserDao.deleteByPrimaryKey(deleted.get(i).getUserId());
+            }
+        }
+        if(updated!=null&&updated.isEmpty()) {
+            for (int i = 0; i < updated.size(); i++) {
+                k += sysUserDao.updateByPrimaryKey(updated.get(i));
+            }
+        }
+        return k;
     }
 }

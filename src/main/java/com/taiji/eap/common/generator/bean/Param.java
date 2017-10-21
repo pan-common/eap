@@ -28,6 +28,8 @@ public class Param {
     private String menuId;//挂靠的上级菜单ID
     private String menuName;//挂靠菜单的名称
 
+    private String pageStyle;//页面风格
+
     public Param() {
     }
 
@@ -197,6 +199,14 @@ public class Param {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
+    }
+
+    public String getPageStyle() {
+        return pageStyle;
+    }
+
+    public void setPageStyle(String pageStyle) {
+        this.pageStyle = pageStyle;
     }
 
     @Override

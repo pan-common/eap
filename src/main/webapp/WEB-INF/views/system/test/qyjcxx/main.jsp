@@ -1,61 +1,50 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/system/common/base.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-#parse("velocity/common.vm" )
 <html>
 <head>
-    <title>${param.alias}</title>
+    <title>qyjcxx</title>
 </head>
 <body>
 <div style="margin: 15px;">
     <div id="topLayout">
-#if(${param.isTree}=="01")
         <div class="span6">
             <ul class="breadcrumb"></ul>
         </div>
-#end
         <div  id="toolbar">
             <button id='addBtn' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe608;</i> 添加
             </button>
-#if(${param.isTree}=="01")
             <button id='showTreeView' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe62e;</i> 显示树
             </button>
             <button id='showZTree' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe62e;</i> zTree显示
             </button>
-#end
         </div>
     </div>
-    <table id='bootstrapTable'>
-    </table>
+    <div class=table-responsive">
+        <table id='bootstrapTable'class="table text-nowrap">
+        </table>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
-#if(${param.isTree}=="01")
     var currentId = 0;
-#end
     layui.use([ 'layer', 'form' ], function(layer, form) {
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-#if(${param.formColumnNum}=="1")
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0","550px","550px");
-#else
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)=0","800px","550px");
-#end
+            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/form&id=0","800px","550px");
         });
-#if(${param.isTree}=="01")
         $("#showTreeView").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/treeView","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/treeView","550px",$(window).height())
         });
         $("#showZTree").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/zTree","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/zTree","550px",$(window).height())
         });
-#end
         //弹出录入框
         function showModel(title,url,width,height) {
             layer.open({
@@ -74,7 +63,7 @@ pageEncoding="UTF-8"%>
         };
 
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/${param.alias}/list",
+            url:"${pageContext.request.contextPath}/qyjcxx/list",
             method:'GET',
             height:$(window).height()-$("#topLayout").height()-30,
             toolbar:"#toolbar",
@@ -98,7 +87,7 @@ pageEncoding="UTF-8"%>
             showPaginationSwitch : false,//是否显示 数据条数选择框
             minimumCountColumns : 2, //最少允许的列数
             clickToSelect : true, //是否启用点击选中行
-            uniqueId : "#getPkProperty($columns)", //每一行的唯一标识，一般为主键列
+            uniqueId : "id", //每一行的唯一标识，一般为主键列
             singleSelect : true,//设置true禁止多选
             showToggle : false, //是否显示详细视图和列表视图的切换按钮
             cardView : false, //是否显示详细视图
@@ -107,43 +96,76 @@ pageEncoding="UTF-8"%>
             showFooter : false,//是否显示列脚
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [{checkbox : true},
-#foreach($column in $columns)
-#if(${column.listShow}=="01")
                 {
-                    title:"${column.columnComment}",
-                    field:"#camel(${column.columnName})",
+                    title:"监测日期",
+                    field:"jcrq",
                 },
-#end
-#end
+                {
+                    title:"省",
+                    field:"shen",
+                },
+                {
+                    title:"市",
+                    field:"shi",
+                },
+                {
+                    title:"县",
+                    field:"xian",
+                },
+                {
+                    title:"企业名称",
+                    field:"qymc",
+                },
+                {
+                    title:"行业类型",
+                    field:"hylx",
+                },
+                {
+                    title:"污染防治设施是否正常运行",
+                    field:"wrfzss",
+                },
+                {
+                    title:"运行问题描述",
+                    field:"yxwtms",
+                },
+                {
+                    title:"是否存在数据造假行为",
+                    field:"sfczsjzj",
+                },
+                {
+                    title:"造假问题描述",
+                    field:"zjwtms",
+                },
+                {
+                    title:"是否存在严重跑冒滴漏",
+                    field:"sfczyzpmdl",
+                },
+                {
+                    title:"跑冒滴漏问题描述",
+                    field:"pmdlwtms",
+                },
                 {
                     title : "操作",
                     align : "center",
                     events : {
-#if(${param.isTree}=="01")
                         'click .enter': function (e, value, row, index) {
-                            currentId = row.#getPkProperty($columns);
+                            currentId = row.id;
                             refreshTable();
                             loadPath();
                         },
-#end
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=${param.pagePath.replace("\","/")}/${param.alias}/form&#getPkProperty($columns)="+row.#getPkProperty($columns),"550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/form&id="+row.id,"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            del(row.#getPkProperty($columns));
+                            del(row.id);
                         }
                     },
                     formatter : function () {
-#if(${param.isTree}=="01")
                         return ['<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
                             '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
                             '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
-#else
-                        return ['<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
-#end
                     }
                 }],
             onLoadError : function(status) { //加载失败时执行
@@ -161,36 +183,36 @@ pageEncoding="UTF-8"%>
                 pageSize : params.limit, //页面大小
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
-#if(${param.isTree}=="01")
-                ${parentField}:currentId
-#end
+                parentId:currentId
             }
             return param;
         }
-#if(${param.isTree}=="01")
+        //窗口发生变化监听
+        $(window).resize(function () {
+            $('#tableId').bootstrapTable('resetView');
+        });
         loadPath();
-#end
     });
 
-    function del(#getPkProperty($columns)) {
+    function del(id) {
         layer.confirm("删除数据不可恢复，请确认？",{
             btn: ['确定','取消'],
             offset: '150px',
         },function () {
-            $.post('${pageContext.request.contextPath}/${param.alias}/delete',
-                    {#getPkProperty($columns) : #getPkProperty($columns)},
-                    function (data, status) {
-                        if (status == "success") {
-                            if (data.body.resultCode == "0") {
-                                layer.close(layer.index);
-                                refreshTable();
-                            }else {
-                                layer.msg(data.body.resultContent);
-                            }
+            $.post('${pageContext.request.contextPath}/qyjcxx/delete',
+                {id : id},
+                function (data, status) {
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            layer.close(layer.index);
+                            refreshTable();
                         }else {
-                            layer.msg("网络错误");
+                            layer.msg(data.body.resultContent);
                         }
-                    }).error(function (e) {
+                    }else {
+                        layer.msg("网络错误");
+                    }
+                }).error(function (e) {
                 layer.msg("网络错误："+e.status);
             })
         },function () {
@@ -198,38 +220,34 @@ pageEncoding="UTF-8"%>
         });
     }
 
-#if(${param.isTree}=="01")
     function loadPath() {
-        $.get('${pageContext.request.contextPath}/${param.alias}/getPath/',
-                {
-        #getPkProperty($columns) : currentId
-                }, function(data, status) {
-                    if (status == "success") {
-                        if (data.body.resultCode == "0") {
-                            var result = data.body.entity;
-                            $(".breadcrumb").empty();
-                            var html = "";
-                            for (var i = 0; i < result.length; i++) {
-#set($breadcrumbName = "result[i]."+"#getPkProperty($columns)")
-#set($breadcrumbTitle = "result[i]."+${param.nameField})
-                                 var html = '<li><a class="clickEffect" name="'
-                                +${breadcrumbName}+'">'+ ${breadcrumbTitle}+'</a></li>';
-                                $(".breadcrumb").append(html);
-                                $("a[name=" + result[i].#getPkProperty($columns) + "]").bind("click", {
-                                    index : i
-                                }, clickHandler);
-                            }
-                            function clickHandler(event) {
-                                var i = event.data.index;
-                                currentId = result[i].#getPkProperty($columns);
-                                refreshTable();
-                                loadPath();
-                            }
+        $.get('${pageContext.request.contextPath}/qyjcxx/getPath/',
+            {
+                id : currentId
+            }, function(data, status) {
+                if (status == "success") {
+                    if (data.body.resultCode == "0") {
+                        var result = data.body.entity;
+                        $(".breadcrumb").empty();
+                        var html = "";
+                        for (var i = 0; i < result.length; i++) {
+                            var html = '<li><a class="clickEffect" name="'
+                                +result[i].id+'">'+ result[i].qymc+'</a></li>';
+                            $(".breadcrumb").append(html);
+                            $("a[name=" + result[i].id + "]").bind("click", {
+                                index : i
+                            }, clickHandler);
+                        }
+                        function clickHandler(event) {
+                            var i = event.data.index;
+                            currentId = result[i].id;
+                            refreshTable();
+                            loadPath();
                         }
                     }
-                });
+                }
+            });
     }
-#end
 
     function refreshTable() {
         $('#bootstrapTable').bootstrapTable('refresh');

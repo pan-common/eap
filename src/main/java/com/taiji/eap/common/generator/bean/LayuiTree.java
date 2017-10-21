@@ -29,11 +29,15 @@ public abstract class LayuiTree implements Serializable {
 
     protected String name;
 
+    protected String text;
+
     protected boolean spread;
 
     protected String type;
 
     protected List<LayuiTree> children;
+
+    protected String iconCls = "icon-add";
 
     public LayuiTree(String name, boolean spread, String type) {
         this.name = name;
@@ -66,6 +70,22 @@ public abstract class LayuiTree implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
     }
 
     public List<LayuiTree> getChildren() {

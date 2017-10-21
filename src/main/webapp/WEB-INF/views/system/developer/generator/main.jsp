@@ -87,6 +87,12 @@
                                             <dic:selectTag parentId="34" id="isTree" selectedValue="02"
                                                            selectName="isTree" layfilter="isTree"/>
                                         </td>
+
+                                        <td><label class="layui-form-label">页面风格</label></td>
+                                        <td colspan="2">
+                                            <dic:selectTag parentId="60" id="pageStyle" selectedValue="01"
+                                                           selectName="pageStyle" layfilter="pageStyle"/>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td id="nameLabel"><label class="layui-form-label">名称字段</label></td>
