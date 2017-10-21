@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50623
 File Encoding         : 65001
 
-Date: 2017-10-16 18:50:05
+Date: 2017-10-21 08:19:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -92,7 +92,10 @@ INSERT INTO `act_ge_bytearray` VALUES ('42502', '1', 'source', null, 0x7B2269642
 INSERT INTO `act_ge_bytearray` VALUES ('45002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('47502', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('5', '2', 'source', null, 0x7B227265736F757263654964223A2234222C2270726F70657274696573223A7B2270726F636573735F6964223A2270726F63657373222C226E616D65223A22222C22646F63756D656E746174696F6E223A22222C2270726F636573735F617574686F72223A22222C2270726F636573735F76657273696F6E223A22222C2270726F636573735F6E616D657370616365223A22687474703A2F2F7777772E61637469766974692E6F72672F70726F63657373646566222C22657865637574696F6E6C697374656E657273223A22222C226576656E746C697374656E657273223A22222C227369676E616C646566696E6974696F6E73223A22222C226D657373616765646566696E6974696F6E73223A22227D2C227374656E63696C223A7B226964223A2242504D4E4469616772616D227D2C226368696C64536861706573223A5B5D2C22626F756E6473223A7B226C6F7765725269676874223A7B2278223A313230302C2279223A313035307D2C2275707065724C656674223A7B2278223A302C2279223A307D7D2C227374656E63696C736574223A7B2275726C223A227374656E63696C736574732F62706D6E322E302F62706D6E322E302E6A736F6E222C226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D2C227373657874656E73696F6E73223A5B5D7D, null);
+INSERT INTO `act_ge_bytearray` VALUES ('50002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('5002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
+INSERT INTO `act_ge_bytearray` VALUES ('52502', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
+INSERT INTO `act_ge_bytearray` VALUES ('55002', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 INSERT INTO `act_ge_bytearray` VALUES ('6', '1', 'source-extra', null, 0x89504E470D0A1A0A0000000D49484452000000320000003208060000001E3F88B1000000206348524D00007A26000080840000FA00000080E8000075300000EA6000003A98000017709CBA513C0000000467414D410000B18E7CFB5193000000017352474200AECE1CE900000006624B474400FF00FF00FFA0BDA793000000097048597300000EC400000EC401952B0E1B000000204944415478DAEDC101010000008220FFAF6E4840010000000000000000C0A30127420001FCA695FE0000000049454E44AE426082, null);
 INSERT INTO `act_ge_bytearray` VALUES ('7502', '1', 'source', null, 0x7B226964223A2263616E766173222C227265736F757263654964223A2263616E766173222C227374656E63696C736574223A7B226E616D657370616365223A22687474703A2F2F62336D6E2E6F72672F7374656E63696C7365742F62706D6E322E3023227D7D, null);
 
@@ -110,7 +113,7 @@ CREATE TABLE `act_ge_property` (
 -- ----------------------------
 -- Records of act_ge_property
 -- ----------------------------
-INSERT INTO `act_ge_property` VALUES ('next.dbid', '50001', '21');
+INSERT INTO `act_ge_property` VALUES ('next.dbid', '57501', '24');
 INSERT INTO `act_ge_property` VALUES ('schema.history', 'create(5.17.0.2)', '1');
 INSERT INTO `act_ge_property` VALUES ('schema.version', '5.22.0.0', '1');
 
@@ -502,7 +505,10 @@ INSERT INTO `act_re_model` VALUES ('40001', '2', 'hello1111', '12313123', null, 
 INSERT INTO `act_re_model` VALUES ('42501', '2', 'hello1111', '12313123', null, '2017-10-15 02:46:29.649', '2017-10-15 02:46:29.724', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '42502', null, '');
 INSERT INTO `act_re_model` VALUES ('45001', '2', 'hello1111', '12313123', null, '2017-10-15 03:09:45.115', '2017-10-15 03:09:45.231', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '45002', null, '');
 INSERT INTO `act_re_model` VALUES ('47501', '2', 'hello1111', '12313123', null, '2017-10-16 03:51:46.131', '2017-10-16 03:51:46.166', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '47502', null, '');
+INSERT INTO `act_re_model` VALUES ('50001', '2', 'hello1111', '12313123', null, '2017-10-19 08:09:59.142', '2017-10-19 08:09:59.177', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '50002', null, '');
 INSERT INTO `act_re_model` VALUES ('5001', '2', 'hello1111', '12313123', null, '2017-10-09 08:53:26.380', '2017-10-09 08:53:26.406', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '5002', null, '');
+INSERT INTO `act_re_model` VALUES ('52501', '2', 'hello1111', '12313123', null, '2017-10-19 09:59:49.484', '2017-10-19 09:59:49.519', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '52502', null, '');
+INSERT INTO `act_re_model` VALUES ('55001', '2', 'hello1111', '12313123', null, '2017-10-20 07:40:00.344', '2017-10-20 07:40:00.386', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '55002', null, '');
 INSERT INTO `act_re_model` VALUES ('7501', '2', 'hello1111', '12313123', null, '2017-10-09 08:55:09.008', '2017-10-09 08:55:09.041', '1', '{\"name\":\"hello1111\",\"revision\":1,\"description\":\"hello1111\"}', null, '7502', null, '');
 
 -- ----------------------------
@@ -852,7 +858,7 @@ CREATE TABLE `t_qx_resource` (
   `valid` varchar(255) NOT NULL,
   `creater` bigint(20) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_qx_resource
@@ -887,6 +893,11 @@ INSERT INTO `t_qx_resource` VALUES ('27', '用户管理', '3', '01', '菜单', '
 INSERT INTO `t_qx_resource` VALUES ('28', '权限管理', '3', '01', '菜单', 'fa-lock', 'resource/link?url=system/setting/sysPuriew/main', '1', '无', '2017-10-15 02:52:18', '2017-10-15 02:53:25', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('29', '代码生成记录', '11', '01', '菜单', 'fa-trademark', 'resource/link?url=system/developer/generateConf/main', '1', '无', '2017-10-16 03:11:36', '2017-10-16 03:11:36', '1', '0');
 INSERT INTO `t_qx_resource` VALUES ('30', '代码生成记录', '8', '01', '菜单', '', 'resource/link?url=system/developer/generateConf/main', '2', '无', '2017-10-16 03:15:01', '2017-10-16 03:15:37', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('31', '环境检测项目功能测试', '13', '01', '菜单', 'fa-trash', 'resource/link?url=system/test/test2', '2', '1', '2017-10-17 05:21:11', '2017-10-17 05:21:34', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('32', '代码生成器测试', '13', '01', '菜单', 'fa-trademark', 'resource/link?url=system/test/test/main', '1', '无', '2017-10-19 08:28:52', '2017-10-19 08:28:52', '1', '0');
+INSERT INTO `t_qx_resource` VALUES ('33', 'easyui使用', '0', '01', '菜单', 'fa-etsy', '待定', '8', '无', '2017-10-19 10:41:08', '2017-10-19 10:45:03', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('34', 'datagrid', '33', '01', '菜单', 'fa-table', 'resource/link?url=learn/easyui/datagrid', '1', '无', '2017-10-19 10:41:56', '2017-10-19 10:45:47', '1', '1');
+INSERT INTO `t_qx_resource` VALUES ('35', '企业监测信息', '13', '01', '菜单', 'fa-trademark', 'resource/link?url=system/test/qyjcxx/main', '1', '无', '2017-10-20 03:14:04', '2017-10-20 03:14:04', '1', '0');
 
 -- ----------------------------
 -- Table structure for `t_qx_role`
@@ -998,7 +1009,7 @@ CREATE TABLE `t_sys_column_extend` (
   `verify` varchar(255) DEFAULT NULL COMMENT '校验规则',
   `required` varchar(255) DEFAULT NULL COMMENT '是否必填',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COMMENT='列属性扩展表';
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8 COMMENT='列属性扩展表';
 
 -- ----------------------------
 -- Records of t_sys_column_extend
@@ -1080,6 +1091,34 @@ INSERT INTO `t_sys_column_extend` VALUES ('124', 'eap', 't_sys_generate_conf', '
 INSERT INTO `t_sys_column_extend` VALUES ('125', 'eap', 't_sys_generate_conf', 'menu_id', '21', '02', '02', '', '', '02', '', '', '');
 INSERT INTO `t_sys_column_extend` VALUES ('126', 'eap', 't_sys_generate_conf', 'menu_name', '22', '02', '02', '', '', '02', '', '', '');
 INSERT INTO `t_sys_column_extend` VALUES ('127', 'eap', 't_sys_generate_conf', 'column_extend_id', '23', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('138', 'eap', 't_test_test1', 'id', '1', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('139', 'eap', 't_test_test1', 'jcdw', '2', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('140', 'eap', 't_test_test1', 'sfkzjc', '3', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('141', 'eap', 't_test_test1', 'jcptsfaq', '4', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('142', 'eap', 't_test_test1', 'jcdwsfgf', '5', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('143', 'eap', 't_test_test1', 'jcyz', '6', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('144', 'eap', 't_test_test1', 'sgjcsj', '7', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('145', 'eap', 't_test_test1', 'sgjcjg', '8', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('146', 'eap', 't_test_test1', 'bzbh', '9', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('147', 'eap', 't_test_test1', 'bzxz', '10', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('148', 'eap', 't_test_test1', 'sfcb', '11', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('149', 'eap', 't_test_test1', 'sfazzxjc', '12', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('150', 'eap', 't_test_test1', 'sflw', '13', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('151', 'eap', 't_test_test1', 'tbzxjcjg', '14', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('152', 'eap', 't_test_qyjcxx', 'id', '1', '02', '02', '', '', '02', '', '', '');
+INSERT INTO `t_sys_column_extend` VALUES ('153', 'eap', 't_test_qyjcxx', 'jcrq', '2', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('154', 'eap', 't_test_qyjcxx', 'shen', '3', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('155', 'eap', 't_test_qyjcxx', 'shi', '4', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('156', 'eap', 't_test_qyjcxx', 'xian', '5', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('157', 'eap', 't_test_qyjcxx', 'qymc', '6', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('158', 'eap', 't_test_qyjcxx', 'hylx', '7', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('159', 'eap', 't_test_qyjcxx', 'wrfzss', '8', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('160', 'eap', 't_test_qyjcxx', 'yxwtms', '9', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('161', 'eap', 't_test_qyjcxx', 'sfczsjzj', '10', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('162', 'eap', 't_test_qyjcxx', 'zjwtms', '11', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('163', 'eap', 't_test_qyjcxx', 'sfczyzpmdl', '12', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('164', 'eap', 't_test_qyjcxx', 'pmdlwtms', '13', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('169', 'eap', 't_test_qyjcxx', 'parent_id', '13', '02', '02', '', '', '02', '', '', '');
 
 -- ----------------------------
 -- Table structure for `t_sys_dictionary`
@@ -1103,7 +1142,7 @@ CREATE TABLE `t_sys_dictionary` (
   `valid` varchar(255) NOT NULL,
   `creater` bigint(20) NOT NULL,
   PRIMARY KEY (`dic_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_sys_dictionary
@@ -1148,6 +1187,9 @@ INSERT INTO `t_sys_dictionary` VALUES ('56', 'identity', '身份证', '', '', ''
 INSERT INTO `t_sys_dictionary` VALUES ('57', 'EAP_SYSTEM_GENERATE_BDLS', '表单列数', '', '', '', '', '', '', null, '27', '4', '2017-10-13 03:19:39', '2017-10-13 03:19:39', '1', '1');
 INSERT INTO `t_sys_dictionary` VALUES ('58', '1', '1列', '', '', '', '', '', '', null, '57', '1', '2017-10-13 03:19:56', '2017-10-13 03:19:56', '1', '1');
 INSERT INTO `t_sys_dictionary` VALUES ('59', '2', '2列', '', '', '', '', '', '', null, '57', '2', '2017-10-13 03:20:05', '2017-10-13 03:20:05', '1', '1');
+INSERT INTO `t_sys_dictionary` VALUES ('60', 'EAP_SYSTEM_GENERATE_YMFG', '页面风格', '', '', '', '', '', '', null, '27', '5', '2017-10-20 07:46:14', '2017-10-20 07:46:14', '1', '1');
+INSERT INTO `t_sys_dictionary` VALUES ('61', '01', 'Layui风格', '', '', '', '', '', '', null, '60', '1', '2017-10-20 07:46:39', '2017-10-20 07:46:39', '1', '1');
+INSERT INTO `t_sys_dictionary` VALUES ('62', '02', 'Easyui风格', '', '', '', '', '', '', null, '60', '2', '2017-10-20 07:47:08', '2017-10-20 07:47:08', '1', '1');
 
 -- ----------------------------
 -- Table structure for `t_sys_generate_conf`
@@ -1178,11 +1220,80 @@ CREATE TABLE `t_sys_generate_conf` (
   `menu_name` varchar(255) DEFAULT NULL COMMENT '挂靠菜单的名称',
   `column_extend_id` varchar(255) DEFAULT NULL COMMENT '数据表列扩展信息ID，保存到redis中',
   PRIMARY KEY (`config_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码生成器配置';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='代码生成器配置';
 
 -- ----------------------------
 -- Records of t_sys_generate_conf
 -- ----------------------------
+INSERT INTO `t_sys_generate_conf` VALUES ('1', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '13', '代码生成器测试', '9decd7b9952c49c3a52bb9a8956dc3f7');
+INSERT INTO `t_sys_generate_conf` VALUES ('2', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '2daf5ac0f6564b1baedd9402bb486e1d');
+INSERT INTO `t_sys_generate_conf` VALUES ('3', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '99dfd598e12342159ab0ff473bd0c11f');
+INSERT INTO `t_sys_generate_conf` VALUES ('4', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', 'f33f3394b9274f5e9053aabc18df29af');
+INSERT INTO `t_sys_generate_conf` VALUES ('5', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', 'c62d0a57dffe4c3cb2802ba216223777');
+INSERT INTO `t_sys_generate_conf` VALUES ('6', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '9201a99bb3aa4519a741a5a236fe0ba2');
+INSERT INTO `t_sys_generate_conf` VALUES ('7', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '13', '企业监测信息', '3fb11e94b4e74c40add410ecfde883af');
+INSERT INTO `t_sys_generate_conf` VALUES ('8', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '01', 'parent_id', 'qymc', '2', '', '', '5620925939b64c43b1c0f875ffdaa064');
+
+-- ----------------------------
+-- Table structure for `t_test_qyjcxx`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_test_qyjcxx`;
+CREATE TABLE `t_test_qyjcxx` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `parent_id` bigint(20) DEFAULT NULL,
+  `jcrq` varchar(255) DEFAULT NULL COMMENT '监测日期',
+  `shen` varchar(255) DEFAULT NULL COMMENT '省',
+  `shi` varchar(255) DEFAULT NULL COMMENT '市',
+  `xian` varchar(255) DEFAULT NULL COMMENT '县',
+  `qymc` varchar(255) DEFAULT NULL COMMENT '企业名称',
+  `hylx` varchar(255) DEFAULT NULL COMMENT '行业类型',
+  `wrfzss` varchar(255) DEFAULT NULL COMMENT '污染防治设施是否正常运行',
+  `yxwtms` varchar(255) DEFAULT NULL COMMENT '运行问题描述',
+  `sfczsjzj` varchar(255) DEFAULT NULL COMMENT '是否存在数据造假行为',
+  `zjwtms` varchar(255) DEFAULT NULL COMMENT '造假问题描述',
+  `sfczyzpmdl` varchar(255) DEFAULT NULL COMMENT '是否存在严重跑冒滴漏',
+  `pmdlwtms` varchar(255) DEFAULT NULL COMMENT '跑冒滴漏问题描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_test_qyjcxx
+-- ----------------------------
+INSERT INTO `t_test_qyjcxx` VALUES ('4', '0', '2017年10月20日', '山西省', '大同市', '阳泉县', '2017年10月20日', '煤矿', '是', '无', '否', '无', '否', '无');
+INSERT INTO `t_test_qyjcxx` VALUES ('5', '4', '2017年10月20日', '山西省', '朔州市', '平鲁区', '平安化肥厂', '化工', '是', '无', '否', '无', '否', '无');
+INSERT INTO `t_test_qyjcxx` VALUES ('6', '0', '2017年10月20日', '', '', '', '2017年10月21日', '', '', '', '', '', '', '');
+INSERT INTO `t_test_qyjcxx` VALUES ('7', '6', '', '', '', '', '山西平朔煤矿', '', '', '', '', '', '', '');
+INSERT INTO `t_test_qyjcxx` VALUES ('8', '4', '', '', '', '', '永安橡胶厂', '化工', '', '', '', '', '', '');
+
+-- ----------------------------
+-- Table structure for `t_test_test1`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_test_test1`;
+CREATE TABLE `t_test_test1` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `jcdw` varchar(255) DEFAULT NULL COMMENT '监测点位',
+  `sfkzjc` varchar(255) DEFAULT NULL COMMENT '是否开展监测',
+  `jcptsfaq` varchar(255) DEFAULT NULL COMMENT '监测平台是否安全',
+  `jcdwsfgf` varchar(255) DEFAULT NULL COMMENT '监测点位是否规范',
+  `jcyz` varchar(255) DEFAULT NULL COMMENT '监测因子',
+  `sgjcsj` varchar(255) DEFAULT NULL COMMENT '手工监测时间',
+  `sgjcjg` varchar(255) DEFAULT NULL COMMENT '手工监测结果',
+  `bzbh` varchar(255) DEFAULT NULL COMMENT '标准编号',
+  `bzxz` varchar(255) DEFAULT NULL COMMENT '标准限值',
+  `sfcb` varchar(255) DEFAULT NULL COMMENT '是否超标',
+  `sfazzxjc` varchar(255) DEFAULT NULL COMMENT '是否安装在线监测',
+  `sflw` varchar(255) DEFAULT NULL COMMENT '是否联网',
+  `tbzxjcjg` varchar(255) DEFAULT NULL COMMENT '同步在线监测结果',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_test_test1
+-- ----------------------------
+INSERT INTO `t_test_test1` VALUES ('3', '点位1', '是', '是', '是', '二氧化硫', '2017-10-20', '1', '12', '22', '否', '是', '是', '23');
+INSERT INTO `t_test_test1` VALUES ('4', '点位2', '是', '是', '是', '颗粒物', '2017-10-20', '2', '2', '46', '是', '是', '是', '34');
+INSERT INTO `t_test_test1` VALUES ('5', '点位2', '是', '是', '是', '二氧化硫', '2017-10-20', '22', '14', '34', '是', '是', '是', '22');
+INSERT INTO `t_test_test1` VALUES ('6', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- View structure for `v_qx_user`
