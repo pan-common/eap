@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50623
 File Encoding         : 65001
 
-Date: 2017-10-21 08:19:21
+Date: 2017-10-22 21:03:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -858,7 +858,7 @@ CREATE TABLE `t_qx_resource` (
   `valid` varchar(255) NOT NULL,
   `creater` bigint(20) DEFAULT NULL COMMENT '创建人',
   PRIMARY KEY (`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_qx_resource
@@ -898,6 +898,8 @@ INSERT INTO `t_qx_resource` VALUES ('32', '代码生成器测试', '13', '01', '
 INSERT INTO `t_qx_resource` VALUES ('33', 'easyui使用', '0', '01', '菜单', 'fa-etsy', '待定', '8', '无', '2017-10-19 10:41:08', '2017-10-19 10:45:03', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('34', 'datagrid', '33', '01', '菜单', 'fa-table', 'resource/link?url=learn/easyui/datagrid', '1', '无', '2017-10-19 10:41:56', '2017-10-19 10:45:47', '1', '1');
 INSERT INTO `t_qx_resource` VALUES ('35', '企业监测信息', '13', '01', '菜单', 'fa-trademark', 'resource/link?url=system/test/qyjcxx/main', '1', '无', '2017-10-20 03:14:04', '2017-10-20 03:14:04', '1', '0');
+INSERT INTO `t_qx_resource` VALUES ('36', '用户管理', '3', '01', '菜单', 'fa-trademark', 'resource/link?url=system/setting/sysUser/easyui/main', '1', '无', '2017-10-22 01:12:11', '2017-10-22 01:12:11', '2', '0');
+INSERT INTO `t_qx_resource` VALUES ('37', '企业检测信息', '13', '01', '菜单', 'fa-trademark', 'resource/link?url=system/test/qyjcxx/easyui/main', '1', '无', '2017-10-22 01:39:25', '2017-10-22 01:39:25', '1', '0');
 
 -- ----------------------------
 -- Table structure for `t_qx_role`
@@ -953,12 +955,18 @@ CREATE TABLE `t_qx_user` (
   `creater` bigint(20) NOT NULL COMMENT '创建人',
   `locked` int(11) DEFAULT '0' COMMENT '是否被锁住  0没有被锁  1被锁',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_qx_user
 -- ----------------------------
-INSERT INTO `t_qx_user` VALUES ('1', 'admin', '1', '', 'admin', '2017-10-15 02:55:56', '2017-10-15 02:55:56', '1', '1', null);
+INSERT INTO `t_qx_user` VALUES ('1', 'admin', '2', '2', 'admin', '2017-10-22 00:00:03', '2017-10-22 00:00:03', '1', '1', '2');
+INSERT INTO `t_qx_user` VALUES ('5', '3', '3', '3', '3', '2017-10-22 00:00:00', '2017-10-22 00:00:00', '1', '1', '3');
+INSERT INTO `t_qx_user` VALUES ('6', '4', '4', '4', '4', '2017-10-22 00:00:00', '2017-10-22 00:00:00', '1', '1', '4');
+INSERT INTO `t_qx_user` VALUES ('7', '4', '4', '4', '4', '2017-10-22 00:00:00', '2017-10-22 00:00:00', '1', '1', '4');
+INSERT INTO `t_qx_user` VALUES ('8', '3', '3', '3', '3', '2017-10-22 00:00:02', '2017-10-22 00:00:02', '1', '1', '3');
+INSERT INTO `t_qx_user` VALUES ('9', '4', '4', '4', '4', '2017-10-22 00:00:03', '2017-10-22 00:00:03', '1', '1', '4');
+INSERT INTO `t_qx_user` VALUES ('10', '4', '4', '4', '4', '2017-10-22 00:00:03', '2017-10-22 00:00:03', '1', '1', '4');
 
 -- ----------------------------
 -- Table structure for `t_qx_user_organ`
@@ -1112,11 +1120,11 @@ INSERT INTO `t_sys_column_extend` VALUES ('155', 'eap', 't_test_qyjcxx', 'shi', 
 INSERT INTO `t_sys_column_extend` VALUES ('156', 'eap', 't_test_qyjcxx', 'xian', '5', '01', '01', '', '01', '02', '', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('157', 'eap', 't_test_qyjcxx', 'qymc', '6', '01', '01', '', '01', '02', '', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('158', 'eap', 't_test_qyjcxx', 'hylx', '7', '01', '01', '', '01', '02', '', '', '02');
-INSERT INTO `t_sys_column_extend` VALUES ('159', 'eap', 't_test_qyjcxx', 'wrfzss', '8', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('159', 'eap', 't_test_qyjcxx', 'wrfzss', '8', '01', '01', '', '02', '02', '34', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('160', 'eap', 't_test_qyjcxx', 'yxwtms', '9', '01', '01', '', '01', '02', '', '', '02');
-INSERT INTO `t_sys_column_extend` VALUES ('161', 'eap', 't_test_qyjcxx', 'sfczsjzj', '10', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('161', 'eap', 't_test_qyjcxx', 'sfczsjzj', '10', '01', '01', '', '02', '02', '34', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('162', 'eap', 't_test_qyjcxx', 'zjwtms', '11', '01', '01', '', '01', '02', '', '', '02');
-INSERT INTO `t_sys_column_extend` VALUES ('163', 'eap', 't_test_qyjcxx', 'sfczyzpmdl', '12', '01', '01', '', '01', '02', '', '', '02');
+INSERT INTO `t_sys_column_extend` VALUES ('163', 'eap', 't_test_qyjcxx', 'sfczyzpmdl', '12', '01', '01', '', '02', '02', '34', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('164', 'eap', 't_test_qyjcxx', 'pmdlwtms', '13', '01', '01', '', '01', '02', '', '', '02');
 INSERT INTO `t_sys_column_extend` VALUES ('169', 'eap', 't_test_qyjcxx', 'parent_id', '13', '02', '02', '', '', '02', '', '', '');
 
@@ -1220,7 +1228,7 @@ CREATE TABLE `t_sys_generate_conf` (
   `menu_name` varchar(255) DEFAULT NULL COMMENT '挂靠菜单的名称',
   `column_extend_id` varchar(255) DEFAULT NULL COMMENT '数据表列扩展信息ID，保存到redis中',
   PRIMARY KEY (`config_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='代码生成器配置';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='代码生成器配置';
 
 -- ----------------------------
 -- Records of t_sys_generate_conf
@@ -1233,6 +1241,11 @@ INSERT INTO `t_sys_generate_conf` VALUES ('5', 'com.mysql.cj.jdbc.Driver', 'jdbc
 INSERT INTO `t_sys_generate_conf` VALUES ('6', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_test1', 'test', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/test', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/test', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '9201a99bb3aa4519a741a5a236fe0ba2');
 INSERT INTO `t_sys_generate_conf` VALUES ('7', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '13', '企业监测信息', '3fb11e94b4e74c40add410ecfde883af');
 INSERT INTO `t_sys_generate_conf` VALUES ('8', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/D:/developer/javaEE/workspace/TaiJiEap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '01', 'parent_id', 'qymc', '2', '', '', '5620925939b64c43b1c0f875ffdaa064');
+INSERT INTO `t_sys_generate_conf` VALUES ('9', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_qx_user', 'sysUser', '0', 'com.taiji.eap.common.shiro', '/F:/developer/javaee/workspace/eap/src/main/java/', '/F:/developer/javaee/workspace/eap/src/main/java/com/taiji/eap/common/shiro', '02', 'system\\setting', '/F:/developer/javaee/workspace/eap/src/main/webapp/WEB-INF/views/system\\setting/sysUser', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '1', '3', '用户管理', '3ee2df33a648483788413d431ce8c933');
+INSERT INTO `t_sys_generate_conf` VALUES ('10', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/F:/developer/javaee/workspace/eap/src/main/java/', '/F:/developer/javaee/workspace/eap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/F:/developer/javaee/workspace/eap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '13', '企业检测信息', 'b839591e861e42d395e2956ee9b03665');
+INSERT INTO `t_sys_generate_conf` VALUES ('11', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/F:/developer/javaee/workspace/eap/src/main/java/', '/F:/developer/javaee/workspace/eap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/F:/developer/javaee/workspace/eap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '81e5879c633a41ccb2be6f549446b6a8');
+INSERT INTO `t_sys_generate_conf` VALUES ('12', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/F:/developer/javaee/workspace/eap/src/main/java/', '/F:/developer/javaee/workspace/eap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/F:/developer/javaee/workspace/eap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', '010ae44971ee4193be9ea4835b8b415d');
+INSERT INTO `t_sys_generate_conf` VALUES ('13', 'com.mysql.cj.jdbc.Driver', 'jdbc:mysql://127.0.0.1:3306/eap?useUnicode=true&amp;characterEncoding=utf8&amp;serverTimezone=UTC&amp;autoReconnect=true', 'eap', '123456', 'eap', 't_test_qyjcxx', 'qyjcxx', '1', 'com.taiji.eap.biz', '/F:/developer/javaee/workspace/eap/src/main/java/', '/F:/developer/javaee/workspace/eap/src/main/java/com/taiji/eap/biz/qyjcxx', '02', 'system\\test', '/F:/developer/javaee/workspace/eap/src/main/webapp/WEB-INF/views/system\\test/qyjcxx', 'controller,dao,service,bean,jsp', '02', 'parent_id', 'name', '2', '', '', 'cbac8d4abefe482a9e6ca87466bfa896');
 
 -- ----------------------------
 -- Table structure for `t_test_qyjcxx`
