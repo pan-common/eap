@@ -2,16 +2,14 @@ package com.taiji.eap.biz.qyjcxx.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import com.taiji.eap.biz.qyjcxx.service.QyjcxxService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -25,10 +23,10 @@ public class QyjcxxController extends BaseController{
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Qyjcxx> list(Long parentId,Integer pageNum,Integer pageSize,String searchText){
+    public PageInfo<Qyjcxx> list(Integer pageNum,Integer pageSize,String searchText){
         PageInfo<Qyjcxx> pageInfo = null;
         try {
-            pageInfo = qyjcxxService.listByPid(parentId,pageNum,pageSize,searchText);
+            pageInfo = qyjcxxService.list(pageNum,pageSize,searchText);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,39 +90,13 @@ public class QyjcxxController extends BaseController{
              return renderError(e.getMessage());
           }
     }
-    @GetMapping(value = "getPath")
+    @PostMapping(value = "easyuiSubmitData")
     @ResponseBody
-    public Response<List<Qyjcxx>> getPath(Long id){
-         try {
-             return renderSuccess(qyjcxxService.getPath(id));
-         } catch (Exception e) {
-             e.printStackTrace();
-             return renderError(e.getMessage());
-         }
-    }
-
-    @GetMapping(value = "listByPid")
-    @ResponseBody
-    public Response<List<Qyjcxx>> listByPid(Long parentId){
-         List<Qyjcxx> list = null;
-         try {
-             list = qyjcxxService.listByPid(parentId);
-             return renderSuccess(list);
-         } catch (Exception e) {
-             e.printStackTrace();
-             return renderError(e.getMessage());
-         }
-    }
-
-    @GetMapping(value = "treeView")
-    @ResponseBody
-    public Response<List<LayuiTree>> treeView(Long parentId){
-        List<LayuiTree> layuiTrees = null;
-        try {
-            layuiTrees = qyjcxxService.treeView(parentId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return renderSuccess(layuiTrees);
+    public Response<String> easyuiSubmitData(@RequestBody EasyUISubmitData<Qyjcxx> easyUISubmitData){
+        int i = qyjcxxService.easyuiSubmitData(easyUISubmitData);
+        if(i>0)
+            return renderSuccess("提交成功");
+        else
+            return renderError("提交失败");
     }
 }

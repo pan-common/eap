@@ -66,6 +66,9 @@ public class GeneratorServiceImpl implements GeneratorService{
         if(columns.isEmpty()){
             throw new Exception("未找到表的扩展属性！");
         }
+
+        param.setIsExtenaField(isExtenaField(columns)?"01":"02");//01是 02 否
+
         boolean isHavePk = false;
         boolean isTree = false;
         for (ColumnExtend column:columns) {
@@ -123,7 +126,11 @@ public class GeneratorServiceImpl implements GeneratorService{
             sysResource.setTypeCode("01");
             sysResource.setTypeDesc("菜单");
             sysResource.setIcon("fa-trademark");
-            sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
+            if(param.getPageStyle().equals("01")) {
+                sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
+            }else if(param.getPageStyle().equals("02")){
+                sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/easyui/main");
+            }
             sysResource.setSeq(1);
             sysResource.setNote("无");
             sysResource.setValid("1");
@@ -157,6 +164,19 @@ public class GeneratorServiceImpl implements GeneratorService{
         generateConf.setTableName(param.getTableName());
         generateConf.setUserId(param.getUserId());
         generateConfService.insert(generateConf);
+    }
+
+    private boolean isExtenaField(List<ColumnExtend> columns) {
+        int k = 0;
+        for (int i = 0; i < columns.size(); i++) {
+            if(columns.get(i).getColumnName().equals("create_time")||
+                    columns.get(i).getColumnName().equals("update_time")||
+                    columns.get(i).getColumnName().equals("valid")||
+                    columns.get(i).getColumnName().equals("creater")){
+                k++;
+            }
+        }
+        return k==4?true:false;
     }
 
     private String replaceTemplate(Param param,List<ColumnExtend> columns,String templateFilePath){

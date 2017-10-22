@@ -6,6 +6,7 @@ package ${servicePackage};
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import java.util.List;
 
@@ -49,7 +50,13 @@ public interface #toUpperCase(${param.alias})Service{
      * @throws Exception
      */
     PageInfo<#toUpperCase(${param.alias})> list(int pageNum, int pageSize, String searchText) throws Exception;
-
+#if(${param.pageStyle}=="02")
+    /**
+    * easyui提交数据
+    * @return
+    */
+    int easyuiSubmitData(EasyUISubmitData<#toUpperCase(${param.alias})> easyUISubmitData);
+#end
 #if(${param.isTree}=="01")
      /**
      * 通过父节点查询数据

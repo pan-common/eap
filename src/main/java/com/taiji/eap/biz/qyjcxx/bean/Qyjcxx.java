@@ -4,8 +4,8 @@ package com.taiji.eap.biz.qyjcxx.bean;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class Qyjcxx extends LayuiTree{
+import com.taiji.eap.common.base.BaseModel;
+public class Qyjcxx extends BaseModel{
     private Long id;//主键ID
     private Long parentId;//
     private String jcrq;//监测日期
@@ -20,14 +20,6 @@ public class Qyjcxx extends LayuiTree{
     private String zjwtms;//造假问题描述
     private String sfczyzpmdl;//是否存在严重跑冒滴漏
     private String pmdlwtms;//跑冒滴漏问题描述
-    public Qyjcxx(Long id,String qymc) {
-        this.id = id;
-        this.qymc = qymc;
-    }
-
-    public Qyjcxx() {
-
-    }
 
     public Long getId() {
         return id;

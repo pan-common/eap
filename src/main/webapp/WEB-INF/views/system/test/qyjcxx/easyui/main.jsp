@@ -5,7 +5,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>sysUser</title>
+    <title>qyjcxx</title>
 </head>
 <body>
 <div id="tbar">
@@ -31,14 +31,14 @@ pageEncoding="UTF-8"%>
         });
     }
     $("#datagrid").datagrid({
-        url:"${pageContext.request.contextPath}/sysUser/list",
+        url:"${pageContext.request.contextPath}/qyjcxx/list",
         method:"GET",
-        fitColumns:true,//设置为true防止水平滚动
+        fitColumns:false,//设置为true防止水平滚动
         autoRowHeight:true,//适应内容高度
         toolbar: '#tbar',
         striped:true,//条文化
         nowrap:false,//设置true单行显示
-        idField:'userId',//设置主键
+        idField:'id',//设置主键
         loadMsg:"数据加载中……",
         pagination:true,//显示底部分页工具栏
         rownumbers:false,//带行号
@@ -64,8 +64,8 @@ pageEncoding="UTF-8"%>
         },
         columns:[[
     {
-        field:'seq',
-        title:'排序',
+        field:'jcrq',
+        title:'监测日期',
         width:150,
         rowspan:1,//一个单元格占行数
         colspan:1,//一个单元格占列数
@@ -88,31 +88,8 @@ pageEncoding="UTF-8"%>
         editor:'textbox'
     },
     {
-        field:'userId',
-        title:'用户ID',
-        width:150,
-        rowspan:1,//一个单元格占行数
-        colspan:1,//一个单元格占列数
-        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
-        halign:'center',//列头对齐方式
-        sortable:true,//是否允许列排序
-        order:'asc',//默认排序顺序
-        resizable:true,//尺寸可调整
-        fixed:false,
-        hidden:false,//隐藏列
-        checkbox:false,//设为true显示checkbox
-        formatter:function (value,rowData,rowIndex) {
-            //格式化单元格
-            return value;
-        },
-        styler:function (value,rowData,rowIndex) {
-            //单元格样式函数
-            return '';
-        },
-    },
-    {
-        field:'userName',
-        title:'用户名',
+        field:'shen',
+        title:'省',
         width:150,
         rowspan:1,//一个单元格占行数
         colspan:1,//一个单元格占列数
@@ -135,8 +112,8 @@ pageEncoding="UTF-8"%>
         editor:'textbox'
     },
     {
-        field:'password',
-        title:'密码',
+        field:'shi',
+        title:'市',
         width:150,
         rowspan:1,//一个单元格占行数
         colspan:1,//一个单元格占列数
@@ -159,8 +136,8 @@ pageEncoding="UTF-8"%>
         editor:'textbox'
     },
     {
-        field:'salt',
-        title:'盐值',
+        field:'xian',
+        title:'县',
         width:150,
         rowspan:1,//一个单元格占行数
         colspan:1,//一个单元格占列数
@@ -180,10 +157,11 @@ pageEncoding="UTF-8"%>
             //单元格样式函数
             return '';
         },
+        editor:'textbox'
     },
     {
-        field:'locked',
-        title:'是否被锁住  0没有被锁  1被锁',
+        field:'qymc',
+        title:'企业名称',
         width:150,
         rowspan:1,//一个单元格占行数
         colspan:1,//一个单元格占列数
@@ -203,6 +181,208 @@ pageEncoding="UTF-8"%>
             //单元格样式函数
             return '';
         },
+        editor:'textbox'
+    },
+    {
+        field:'hylx',
+        title:'行业类型',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+        editor:'textbox'
+    },
+    {
+        field:'wrfzss',
+        title:'污染防治设施是否正常运行',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+        editor:{
+            type:'combobox',
+            options:{
+                valueField:'keystone',
+                textField:'value',
+                method:'get',
+                url:'${pageContext.request.contextPath}/dictionary/listByPid?parentId=34',
+                loadFilter:function (data) {
+                    return data.body.entity;
+                }
+            }
+        }
+    },
+    {
+        field:'yxwtms',
+        title:'运行问题描述',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+        editor:'textbox'
+    },
+    {
+        field:'sfczsjzj',
+        title:'是否存在数据造假行为',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+    editor:{
+        type:'combobox',
+        options:{
+            valueField:'keystone',
+            textField:'value',
+            method:'get',
+            url:'${pageContext.request.contextPath}/dictionary/listByPid?parentId=34',
+            loadFilter:function (data) {
+                return data.body.entity;
+            }
+        }
+    }
+    },
+    {
+        field:'zjwtms',
+        title:'造假问题描述',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+        editor:'textbox'
+    },
+    {
+        field:'sfczyzpmdl',
+        title:'是否存在严重跑冒滴漏',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+    editor:{
+        type:'combobox',
+        options:{
+            valueField:'keystone',
+            textField:'value',
+            method:'get',
+            url:'${pageContext.request.contextPath}/dictionary/listByPid?parentId=34',
+            loadFilter:function (data) {
+                return data.body.entity;
+            }
+        }
+    }
+    },
+    {
+        field:'pmdlwtms',
+        title:'跑冒滴漏问题描述',
+        width:150,
+        rowspan:1,//一个单元格占行数
+        colspan:1,//一个单元格占列数
+        align:'center',//内容对齐方式，可以用 'left'、'right'、'center'
+        halign:'center',//列头对齐方式
+        sortable:true,//是否允许列排序
+        order:'asc',//默认排序顺序
+        resizable:true,//尺寸可调整
+        fixed:false,
+        hidden:false,//隐藏列
+        checkbox:false,//设为true显示checkbox
+        formatter:function (value,rowData,rowIndex) {
+            //格式化单元格
+            return value;
+        },
+        styler:function (value,rowData,rowIndex) {
+            //单元格样式函数
+            return '';
+        },
+        editor:'textbox'
     },
         ]],
         onBeforeLoad:function (param) {
@@ -302,7 +482,7 @@ pageEncoding="UTF-8"%>
                 effectRow.updated = updated;
             }
             $.ajax({
-                url:baseServerUrl+'sysUser/easyuiSubmitData',
+                url:baseServerUrl+'qyjcxx/easyuiSubmitData',
                 data:JSON.stringify(effectRow),
                 type:'post',
                 dataType:'json',

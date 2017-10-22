@@ -30,6 +30,8 @@ public class Param {
 
     private String pageStyle;//页面风格
 
+    private String isExtenaField;//是否包涵创建，修改时间等扩展字段
+
     public Param() {
     }
 
@@ -207,6 +209,14 @@ public class Param {
 
     public void setPageStyle(String pageStyle) {
         this.pageStyle = pageStyle;
+    }
+
+    public String getIsExtenaField() {
+        return isExtenaField;
+    }
+
+    public void setIsExtenaField(String isExtenaField) {
+        this.isExtenaField = isExtenaField;
     }
 
     @Override

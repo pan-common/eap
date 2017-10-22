@@ -6,16 +6,14 @@ package ${controllerPackage};
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${servicePackage}.#toUpperCase(${param.alias})Service;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -55,10 +53,12 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(#toUpperCase(${param.alias}) ${param.alias}){
+#if(${param.isExtenaField}=="01")
         ${param.alias}.setCreateTime(new Date());
         ${param.alias}.setUpdateTime(new Date());
         ${param.alias}.setValid("1");
         ${param.alias}.setCreater(1L);
+#end
         try {
             int k = ${param.alias}Service.insert(${param.alias});
             if(k>0){
@@ -75,10 +75,12 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
     @PostMapping(value = "edit")
     @ResponseBody
     public Response<String> edit(#toUpperCase(${param.alias}) ${param.alias}){
+#if(${param.isExtenaField}=="01")
         ${param.alias}.setCreateTime(new Date());
         ${param.alias}.setUpdateTime(new Date());
         ${param.alias}.setValid("1");
         ${param.alias}.setCreater(1L);
+#end
         try {
             int k = ${param.alias}Service.updateByPrimaryKey(${param.alias});
             if(k>0){
@@ -118,6 +120,17 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
              return renderError(e.getMessage());
           }
     }
+#if(${param.pageStyle}=="02")
+    @PostMapping(value = "easyuiSubmitData")
+    @ResponseBody
+    public Response<String> easyuiSubmitData(@RequestBody EasyUISubmitData<#toUpperCase(${param.alias})> easyUISubmitData){
+        int i = ${param.alias}Service.easyuiSubmitData(easyUISubmitData);
+        if(i>0)
+            return renderSuccess("提交成功");
+        else
+            return renderError("提交失败");
+    }
+#end
 #if(${param.isTree}=="01")
     @GetMapping(value = "getPath")
     @ResponseBody

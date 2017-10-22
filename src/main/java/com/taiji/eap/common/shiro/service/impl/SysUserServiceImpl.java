@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Service("sysUserService")
+@Service
 public class SysUserServiceImpl implements SysUserService{
 
     @Autowired
@@ -57,22 +58,32 @@ public class SysUserServiceImpl implements SysUserService{
         return pageInfo;
     }
 
-    @Transactional
     @Override
-    public int easyuiSubmitData(List<SysUser> inserted,List<SysUser> deleted,List<SysUser> updated) {
+    public int easyuiSubmitData(EasyUISubmitData<SysUser> easyUISubmitData) {
+        List<SysUser> inserted = easyUISubmitData.getInserted();
+        List<SysUser> updated = easyUISubmitData.getUpdated();
+        List<SysUser> deleted = easyUISubmitData.getDeleted();
         int k = 0;
-        if(inserted!=null&&inserted.isEmpty()) {
+        if(inserted!=null&&!inserted.isEmpty()) {
             for (int i = 0; i < inserted.size(); i++) {
+                inserted.get(i).setCreateTime(new Date());
+                inserted.get(i).setUpdateTime(new Date());
+                inserted.get(i).setValid("1");
+                inserted.get(i).setCreater(1L);
                 k += sysUserDao.insert(inserted.get(i));
             }
         }
-        if(deleted!=null&&deleted.isEmpty()) {
+        if(deleted!=null&&!deleted.isEmpty()) {
             for (int i = 0; i < deleted.size(); i++) {
                 k += sysUserDao.deleteByPrimaryKey(deleted.get(i).getUserId());
             }
         }
-        if(updated!=null&&updated.isEmpty()) {
+        if(updated!=null&&!updated.isEmpty()) {
             for (int i = 0; i < updated.size(); i++) {
+                updated.get(i).setCreateTime(new Date());
+                updated.get(i).setUpdateTime(new Date());
+                updated.get(i).setValid("1");
+                updated.get(i).setCreater(1L);
                 k += sysUserDao.updateByPrimaryKey(updated.get(i));
             }
         }

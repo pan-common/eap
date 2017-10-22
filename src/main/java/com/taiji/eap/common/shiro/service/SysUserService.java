@@ -47,13 +47,10 @@ public interface SysUserService{
      * @throws Exception
      */
     PageInfo<SysUser> list(int pageNum, int pageSize, String searchText) throws Exception;
-
     /**
-     * easyui提交数据
-     * @param inserted
-     * @param deleted
-     * @param updated
-     * @return
-     */
-    int easyuiSubmitData(List<SysUser> inserted, List<SysUser> deleted, List<SysUser> updated);
+    * easyui提交数据
+    * @return
+    */
+    int easyuiSubmitData(EasyUISubmitData<SysUser> easyUISubmitData);
+
 }

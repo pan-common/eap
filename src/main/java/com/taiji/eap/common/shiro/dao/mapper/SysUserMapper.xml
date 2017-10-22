@@ -17,7 +17,6 @@
     <select id="list" resultMap="BaseResultMap">
         SELECT * FROM t_qx_user
         <where>
-            valid = '1'
             <if test="searchText!=null and searchText!=''">
                 AND CONCAT(user_name) LIKE CONCAT("%",#{searchText},"%")
             </if>

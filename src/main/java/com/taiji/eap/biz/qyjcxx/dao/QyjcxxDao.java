@@ -42,11 +42,5 @@ public interface QyjcxxDao {
      */
     List<Qyjcxx> selectAll();
 
-     /**
-     * 通过父节点ID搜索数据
-     * @param searchText 搜索条件
-     * @return
-     */
-    List<Qyjcxx> listByPid(@Param("parentId") Long parentId,@Param("searchText") String searchText);
 
 }

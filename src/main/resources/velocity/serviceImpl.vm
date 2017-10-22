@@ -7,6 +7,7 @@ package ${serviceImplPackage};
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${daoPackage}.#toUpperCase(${param.alias})Dao;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +62,44 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         PageInfo<#toUpperCase(${param.alias})> pageInfo = new PageInfo<#toUpperCase(${param.alias})>(${param.alias}s);
         return pageInfo;
     }
+#if(${param.pageStyle}=="02")
+
+    @Override
+    public int easyuiSubmitData(EasyUISubmitData<#toUpperCase(${param.alias})> easyUISubmitData) {
+        List<#toUpperCase(${param.alias})> inserted = easyUISubmitData.getInserted();
+        List<#toUpperCase(${param.alias})> updated = easyUISubmitData.getUpdated();
+        List<#toUpperCase(${param.alias})> deleted = easyUISubmitData.getDeleted();
+        int k = 0;
+        if(inserted!=null&&!inserted.isEmpty()) {
+            for (int i = 0; i < inserted.size(); i++) {
+#if(${param.isExtenaField}=="01")
+                inserted.get(i).setCreateTime(new Date());
+                inserted.get(i).setUpdateTime(new Date());
+                inserted.get(i).setValid("1");
+                inserted.get(i).setCreater(1L);
+#end
+                k += ${param.alias}Dao.insert(inserted.get(i));
+            }
+        }
+        if(deleted!=null&&!deleted.isEmpty()) {
+            for (int i = 0; i < deleted.size(); i++) {
+                k += ${param.alias}Dao.deleteByPrimaryKey(deleted.get(i).get#toUpperCase("#getPkProperty($columns)")());
+            }
+        }
+        if(updated!=null&&!updated.isEmpty()) {
+            for (int i = 0; i < updated.size(); i++) {
+#if(${param.isExtenaField}=="01")
+                updated.get(i).setCreateTime(new Date());
+                updated.get(i).setUpdateTime(new Date());
+                updated.get(i).setValid("1");
+                updated.get(i).setCreater(1L);
+#end
+                k += ${param.alias}Dao.updateByPrimaryKey(updated.get(i));
+            }
+        }
+        return k;
+    }
+#end
 #if(${param.isTree}=="01")
 
     @Override
