@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.area.dao.AreaDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.area.bean.Area">
+        <id column="area_id" property="areaId" jdbcType="INTEGER"></id>
+        <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+        <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+        <result column="lng" property="lng" jdbcType="VARCHAR" />
+        <result column="lat" property="lat" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="position" property="position" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+        ORDER BY sort
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area
+        <where>
+            parent_id = #{parentId,jdbcType=INTEGER}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+        ORDER BY sort
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area
+        WHERE area_id = #{areaId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.area.bean.Area">
+        <selectKey resultType="java.lang.Integer" keyProperty="areaId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS area_id
+        </selectKey>
+        INSERT INTO t_sys_area(
+        area_id,area_name,parent_id,short_name,lng,lat,level,position,sort)
+        VALUES(
+        #{areaId,jdbcType=INTEGER},#{areaName,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},#{shortName,jdbcType=VARCHAR},#{lng,jdbcType=VARCHAR},#{lat,jdbcType=VARCHAR},#{level,jdbcType=INTEGER},#{position,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.area.bean.Area">
+        UPDATE t_sys_area SET
+        area_id=#{areaId,jdbcType=INTEGER},area_name=#{areaName,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=INTEGER},short_name=#{shortName,jdbcType=VARCHAR},lng=#{lng,jdbcType=VARCHAR},lat=#{lat,jdbcType=VARCHAR},level=#{level,jdbcType=INTEGER},position=#{position,jdbcType=VARCHAR},sort=#{sort,jdbcType=INTEGER}
+        WHERE area_id = #{areaId,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM t_sys_area WHERE area_id = #{areaId,jdbcType=INTEGER}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area
+    </select>
+
+    <select id="selectLevel3" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area WHERE level != 4
+    </select>
+</mapper>

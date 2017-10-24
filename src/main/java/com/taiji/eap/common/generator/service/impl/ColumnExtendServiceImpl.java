@@ -63,6 +63,13 @@ public class ColumnExtendServiceImpl implements ColumnExtendService{
         int k = columnExtendDao.deleteByTable(schema,table);
         for (Column column: columns) {
             ColumnExtend columnExtend = new ColumnExtend(schema,table,column.getColumnName());
+            columnExtend.setSeq(Integer.valueOf(column.getOrdinalPosition()));
+            columnExtend.setFormShow("01");//表单显示
+            columnExtend.setListShow("01");//列表显示
+            columnExtend.setWidthPer("100");//宽度
+            columnExtend.setInputType("01");//输入框
+            columnExtend.setIsQuery("02");//不查询
+            columnExtend.setRequired("01");//不必填
             k+=columnExtendDao.insert(columnExtend);
         }
         return k;

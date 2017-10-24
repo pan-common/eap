@@ -47,4 +47,12 @@ public interface DictionaryDao {
      * @return
      */
     List<Dictionary> listByPid(@Param("parentId") Long parentId,@Param("searchText") String searchText);
+
+    /**
+     * 通过key获取value
+     * @param keystone
+     * @param parentId
+     * @return
+     */
+    String getValueByKey(@Param("keystone")String keystone, @Param("parentId") Long parentId);
 }

@@ -31,7 +31,7 @@ public class #toUpperCase(${param.alias}) extends ${extendClass}{
 #end
 ## 生成无参构造方法和包含id name的构造方法
 #if(${param.isTree}=="01")
-    public #toUpperCase(${param.alias})(#getPkFieldType($columns) #getPkProperty($columns),String ${param.nameField}) {
+    public #toUpperCase(${param.alias})(#getPkFieldType($columns) #getPkProperty($columns),String #camel(${param.nameField})) {
         this.#getPkProperty($columns) = #getPkProperty($columns);
         this.#camel(${param.nameField}) = #camel(${param.nameField});
     }

@@ -123,4 +123,22 @@ public class DictionaryController extends BaseController{
             return renderError(e.getMessage());
         }
     }
+
+    /**
+     * 通过key获取值
+     * @param keystone
+     * @param parentId 上级ID
+     * @return
+     */
+    @GetMapping(value = "getValueByKey")
+    @ResponseBody
+    public Response<String> getValueByKey(String keystone,Long parentId){
+        String value = null;
+        try {
+            value = dictionaryService.getValueByKey(keystone,parentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return renderSuccess(value);
+    }
 }

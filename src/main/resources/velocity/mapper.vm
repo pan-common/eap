@@ -54,7 +54,10 @@
     <select id="listByPid" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
         <where>
-            ${param.parentField} = #{${parentField},jdbcType=#getParentIdJdbcType($columns)} AND valid = '1'
+            ${param.parentField} = #{${parentField},jdbcType=#getParentIdJdbcType($columns)}
+#if(${param.deleteWay}=="01")
+                AND valid = '1'
+#end
             <if test="searchText!=null and searchText!=''">
                 AND CONCAT(${searchColumName}) LIKE CONCAT("%",#{searchText},"%")
             </if>

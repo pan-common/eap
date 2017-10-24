@@ -23,6 +23,15 @@
             <button id='showZTree' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe62e;</i> zTree显示
             </button>
+            <button id='echart' class="layui-btn layui-btn-small">
+                <i class="layui-icon">&#xe62e;</i> 查看图表
+            </button>
+            <button class="layui-btn layui-btn-small" onclick="window.open('${pageContext.request.contextPath}/qyjcxx/exportExcle')">
+                <i class="layui-icon">&#xe62e;</i> 导出excle
+            </button>
+            <button class="layui-btn layui-btn-small" onclick="window.open('${pageContext.request.contextPath}/qyjcxx/MapExportExcel')">
+                <i class="layui-icon">&#xe62e;</i> map导出excle
+            </button>
         </div>
     </div>
     <div class=table-responsive">
@@ -44,6 +53,9 @@
         });
         $("#showZTree").click(function () {
             showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/zTree","550px",$(window).height())
+        });
+        $("#echart").click(function () {
+            showModel("显示图表","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/echart/chart",$(window).width(),$(window).height())
         });
         //弹出录入框
         function showModel(title,url,width,height) {

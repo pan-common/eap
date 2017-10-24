@@ -10,7 +10,7 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
 <div style="margin: 15px;">
-    <div id="topLayout">
+        <div id="topLayout">
 #if(${param.isTree}=="01")
         <div class="span6">
             <ul class="breadcrumb"></ul>
@@ -202,7 +202,7 @@ pageEncoding="UTF-8"%>
     function loadPath() {
         $.get('${pageContext.request.contextPath}/${param.alias}/getPath/',
                 {
-        #getPkProperty($columns) : currentId
+                    #getPkProperty($columns) : currentId
                 }, function(data, status) {
                     if (status == "success") {
                         if (data.body.resultCode == "0") {

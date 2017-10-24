@@ -140,7 +140,7 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
 
     private #toUpperCase(${param.alias}) findChildren(#toUpperCase(${param.alias}) tree,List<#toUpperCase(${param.alias})> list){
         for (#toUpperCase(${param.alias}) ${param.alias}:list) {
-            ${param.alias}.setName(${param.alias}.getName());
+            ${param.alias}.setName(${param.alias}.get#camelToUpperCase(${param.nameField})());
             ${param.alias}.setSpread(true);
             if(tree.get#getPkUpperCaseProperty($columns)()==${param.alias}.get#toUpperCase(${parentField})()){
                 tree.getChildren().add(findChildren(${param.alias},list));

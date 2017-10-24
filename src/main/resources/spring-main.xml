@@ -89,9 +89,7 @@
 
 
 	<!-- 配置国际化资源文件,包括动态切换 END -->
-
-
-	<context:component-scan base-package="com.taiji.eap" />
+	<context:component-scan base-package="org.jeecgframework.poi.excel.view,com.taiji.eap" />
 
 	<context:property-placeholder
 		ignore-unresolvable="true"
@@ -102,7 +100,7 @@
 	<import resource="classpath:spring-redis.xml" />
 	<import resource="classpath:spring-activiti.xml" />
 	<import resource="classpath:spring-shiro.xml" />
-
+	<import resource="classpath:spring-easypoi.xml"/>
 	<!--责任链相关配置文件-->
 	<import resource="classpath:corp/spring-select-datasource-helper.xml"></import>
 </beans>

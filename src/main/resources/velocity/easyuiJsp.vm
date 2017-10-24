@@ -9,18 +9,29 @@ pageEncoding="UTF-8"%>
     <title>${param.alias}</title>
 </head>
 <body>
-<div id="tbar">
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="update()">编辑</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="submit()">保存</a>
+<div style="margin: 15px;">
+    <div id="topLayout">
+#if(${param.isTree}=="01")
+        <div class="span6">
+            <ul class="breadcrumb"></ul>
+        </div>
+#end
+        <div id="tbar">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append()">新增</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="update()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="remove()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="submit()">保存</a>
+        </div>
+        <table class="easyui-datagrid" id="datagrid">
+        </table>
+    </div>
 </div>
-<table class="easyui-datagrid" id="datagrid">
-</table>
-
 </body>
 <script type="text/javascript">
-    $("#datagrid").height($(window).height()-30);
+#if(${param.isTree}=="01")
+    var currentId = 0;
+#end
+    $("#datagrid").height($(window).height()-$("#topLayout").height()-30);
     //浏览器窗口大小变化后，表格宽度自适应
     $(window).resize(function(){
         fitCoulms();
@@ -150,7 +161,9 @@ pageEncoding="UTF-8"%>
             delete param.rows;
             param.pageNum = page;
             param.pageSize = rows;
-
+#if(${param.isTree}=="01")
+            param.${parentField}=currentId;
+#end
             endEdit();
         },
         loadFilter:function (data) {
@@ -174,6 +187,17 @@ pageEncoding="UTF-8"%>
 //            });
 //            row.productname = $(ed.target).combobox('getText');
         },
+        onRowContextMenu:function (e, rowIndex, rowData) {
+#if(${param.isTree}=="01")
+            e.preventDefault(); //阻止浏览器捕获右键事件
+            $(this).datagrid("clearSelections"); //取消所有选中项
+            $(this).datagrid("selectRow", rowIndex); //根据索引选中该行
+            $('#menu').menu('show', {//显示右键菜单
+                left: e.pageX,//在鼠标点击处显示菜单
+                top: e.pageY
+            });
+#end
+        },
         onClickCell:function (index, field) {
             if (editIndex != index){
                 if (endEditing()){
@@ -192,6 +216,10 @@ pageEncoding="UTF-8"%>
             }
         }
     });
+
+#if(${param.isTree}=="01")
+    loadPath();
+#end
 
     var editIndex = undefined;//编辑行下标
     function endEditing(){
@@ -293,5 +321,42 @@ pageEncoding="UTF-8"%>
             $('#datagrid').datagrid('endEdit', i);
         }
     }
+
+#if(${param.isTree}=="01")
+    function loadPath() {
+        $.get('${pageContext.request.contextPath}/${param.alias}/getPath/',
+                {
+        #getPkProperty($columns) : currentId
+    }, function(data, status) {
+            if (status == "success") {
+                if (data.body.resultCode == "0") {
+                    var result = data.body.entity;
+                    $(".breadcrumb").empty();
+                    var html = "";
+                    for (var i = 0; i < result.length; i++) {
+                        #set($breadcrumbName = "result[i]."+"#getPkProperty($columns)")
+                        #set($breadcrumbTitle = "result[i]."+${param.nameField})
+                        var html = '<li><a class="clickEffect" name="'
+                        +${breadcrumbName}+'">'+ ${breadcrumbTitle}+'</a></li>';
+                        $(".breadcrumb").append(html);
+                        $("a[name=" + result[i].#getPkProperty($columns) + "]").bind("click", {
+                            index : i
+                        }, clickHandler);
+                    }
+                    function clickHandler(event) {
+                        var i = event.data.index;
+                        currentId = result[i].#getPkProperty($columns);
+                        refreshTable();
+                        loadPath();
+                    }
+                }
+            }
+        });
+    }
+
+    function refreshTable() {
+        $('#datagrid').datagrid('reload');
+    }
+#end
 </script>
 </html>

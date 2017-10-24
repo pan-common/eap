@@ -92,4 +92,9 @@
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
         UPDATE t_sys_dictionary SET valid = '2' WHERE dic_id = #{dicId,jdbcType=DECIMAL}
     </update>
+
+    <select id="getValueByKey" resultType="java.lang.String">
+        select value from t_sys_dictionary where
+        keystone = #{keystone,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=DECIMAL}
+    </select>
 </mapper>

@@ -64,4 +64,6 @@ public interface DictionaryService {
      * @return
      */
     List<Dictionary> getPath(Long dicId) throws Exception;
+
+    String getValueByKey(String keystone, Long parentId) throws Exception;
 }

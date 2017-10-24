@@ -26,6 +26,23 @@
             </if>
         </where>
     </select>
+    <select id="listMap" resultType="java.util.Map">
+        SELECT * FROM t_test_qyjcxx
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_test_qyjcxx
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         SELECT * FROM t_test_qyjcxx
         WHERE id = #{id,jdbcType=DECIMAL}

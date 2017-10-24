@@ -1,6 +1,6 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/system/common/base.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,8 +16,10 @@ pageEncoding="UTF-8"%>
             </button>
         </div>
     </div>
-    <table id='bootstrapTable'>
-    </table>
+    <div class=table-responsive">
+        <table id='bootstrapTable' class="table text-nowrap">
+        </table>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
@@ -174,19 +176,19 @@ pageEncoding="UTF-8"%>
             offset: '150px',
         },function () {
             $.post('${pageContext.request.contextPath}/test/delete',
-                    {id : id},
-                    function (data, status) {
-                        if (status == "success") {
-                            if (data.body.resultCode == "0") {
-                                layer.close(layer.index);
-                                refreshTable();
-                            }else {
-                                layer.msg(data.body.resultContent);
-                            }
+                {id : id},
+                function (data, status) {
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            layer.close(layer.index);
+                            refreshTable();
                         }else {
-                            layer.msg("网络错误");
+                            layer.msg(data.body.resultContent);
                         }
-                    }).error(function (e) {
+                    }else {
+                        layer.msg("网络错误");
+                    }
+                }).error(function (e) {
                 layer.msg("网络错误："+e.status);
             })
         },function () {
