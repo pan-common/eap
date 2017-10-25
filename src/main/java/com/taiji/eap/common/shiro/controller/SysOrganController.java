@@ -6,6 +6,8 @@ import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.service.SysOrganService;
 import com.taiji.eap.common.http.entity.Response;
+import com.taiji.eap.common.utils.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -135,4 +138,24 @@ public class SysOrganController extends BaseController{
         }
         return renderSuccess(layuiTrees);
     }
+
+    @GetMapping(value = "getOrganIdsByUserId")
+    @ResponseBody
+    public Response<List<Long>> getOrganIdsByUserId(Long userId){
+        return renderSuccess(sysOrganService.getOrganIdsByUserId(userId));
+    }
+
+    @GetMapping(value = "getTreeByOrganIds")
+    @ResponseBody
+    public Response<List<SysOrgan>> getListByOrganIds(String organIds){
+        if(!StringUtils.isEmpty(organIds)) {
+            String[] arr = organIds.split(",");
+            List<String> longs = Arrays.asList(arr);
+            List<SysOrgan> sysOrgans = sysOrganService.selectByIds(ListUtils.stringToLongLst(longs));
+            return renderSuccess(sysOrgans);
+        }else {
+            return renderError("没有数据");
+        }
+    }
+
 }

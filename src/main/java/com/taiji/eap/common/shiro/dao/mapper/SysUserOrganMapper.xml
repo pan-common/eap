@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysUserOrganDao">
-    
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysUserOrgan">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="organ_id" property="organId" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_organ
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_organ
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysUserOrgan">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_qx_user_organ(
+        id,user_id,organ_id)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{userId,jdbcType=DECIMAL},#{organId,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysUserOrgan">
+        UPDATE t_qx_user_organ SET
+        id=#{id,jdbcType=DECIMAL},user_id=#{userId,jdbcType=DECIMAL},organ_id=#{organId,jdbcType=DECIMAL}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_user_organ WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_organ
+    </select>
+
+    <select id="getOrganIdsByUserId" resultType="java.lang.Long">
+        SELECT organ_id FROM t_qx_user_organ WHERE user_id = #{userId,jdbcType=DECIMAL}
+    </select>
+
 </mapper>

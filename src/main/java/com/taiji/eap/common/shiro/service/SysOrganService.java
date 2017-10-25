@@ -83,6 +83,7 @@ public interface SysOrganService{
      * 通过用户ID获取部门树
      * @param userId
      */
-    List<SysOrgan> getOrganTreeByUserId(Long userId);
+    List<Long> getOrganIdsByUserId(Long userId);
 
+    List<SysOrgan> selectByIds(List<Long> longs);
 }

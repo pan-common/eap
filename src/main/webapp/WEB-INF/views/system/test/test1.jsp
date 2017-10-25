@@ -39,6 +39,7 @@
             dataType:"json",
             async:false,
             data:{
+                parentId:1
             },
             type:"GET",
             success:function (data) {

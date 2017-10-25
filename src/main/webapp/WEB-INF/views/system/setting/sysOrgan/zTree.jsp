@@ -15,40 +15,44 @@ To change this template use File | Settings | File Templates.
     <title>Title</title>
 </head>
 <body>
-<table class="table table-bordered">
-    <tr>
-        <td align="center" rowspan="4" style="width: 200px">
-            <ul id="mainTree" class="ztree">
-            </ul>
-        </td>
-        <td style="width: 200px;text-align:center;vertical-align:middle;">
-            <button class="layui-btn layui-btn-small" onclick="">全选</button>
-        </td>
-        <td align="center" rowspan="4" style="width: 200px">
-            <ul id="selectTree" class="ztree">
-            </ul>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 200px;text-align:center;vertical-align:middle;">
-            <button class="layui-btn layui-btn-small" onclick="">全选</button>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 200px;text-align:center;vertical-align:middle;">
-            <button class="layui-btn layui-btn-small" onclick="">全选</button>
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 200px;text-align:center;vertical-align:middle;">
-            <button class="layui-btn layui-btn-small" onclick="">全选</button>
-        </td>
-    </tr>
-</table>
+<form class="layui-form" action="">
+    <table class="table table-bordered">
+        <tr>
+            <td align="center" rowspan="2" style="width: 200px">
+                <ul id="mainTree" class="ztree">
+                </ul>
+            </td>
+            <td style="width: 200px;text-align:center;vertical-align:middle;">
+                <input type="checkbox" name="selectAll" title="全选" lay-filter="selectAll">
+            </td>
+            <td align="center" rowspan="2" style="width: 200px">
+                <ul id="selectTree" class="ztree">
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 200px;text-align:center;vertical-align:middle;">
+                <button class="layui-btn layui-btn-small" onclick="">提交</button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 <script type="text/javascript">
     var userId = ${param.userId};
     layui.use([ 'layer', 'form' ], function(layer, form) {
+        var form = layui.form;
+        form.render();
+
+        var mainTree;
+        var selectTree;
+
+        form.on('checkbox(selectAll)', function(data){
+            mainTree.checkAllNodes(data.elem.checked);
+            showSelectTree();
+        }
+
         var mainSetting = {
             async:{
                 enable: true,
@@ -94,25 +98,29 @@ To change this template use File | Settings | File Templates.
                         mainTree = $.fn.zTree.init($("#mainTree"), mainSetting,data.body.entity);
                         mainTree.expandAll(true);
 
-                        $.get("",{
+                        $.get(baseServerUrl+"sysOrgan/getOrganIdsByUserId",{
                             userId:userId
-                        },function (data, state) {
-
+                        },function (data, status) {
+                            if(status=="success"){
+                                if(data.body.resultCode=="0"){
+                                    for (var i = 0; i < data.body.entity.length; i++) {
+                                        var organId = data.body.entity[i];
+                                        var treeNode = mainTree.getNodeByParam("organId",organId);
+                                        mainTree.checkNode(treeNode,true,true);
+                                    }
+                                    showSelectTree();
+                                }else {
+                                    layer.msg(data.body.resultContent, {icon: 5});
+                                }
+                            }else {
+                                layer.msg('网络错误', {icon: 5});
+                            }
                         });
                     }else {
                         layer.msg(data.body.resultContent, {icon: 5});
                     }
                 },
-                onCheck:function (event, treeId, treeNode) {
-                    var nodes = selectTree.getNodesByParam("isHidden", true);
-                    selectTree.showNodes(nodes);
-
-                    $("selectTree").empty();
-                    var mainNodes = mainTree.getCheckedNodes(true);
-                    for (var i = 0;i<mainNodes.length();i++){
-                        var node = mainTree.getNodeByParam("organId",mainNodes[i].organId);
-                    }
-                }
+                onCheck:showSelectTree
             }
         };
 
@@ -145,7 +153,7 @@ To change this template use File | Settings | File Templates.
                     url: ""//zTree 节点数据保存节点链接的目标 URL 的属性名称。
                 },
                 simpleData:{
-                    enable: false,//确定 zTree 初始化时的节点数据为简单array数据
+                    enable: true,//确定 zTree 初始化时的节点数据为简单array数据
                     idKey: "organId",//节点数据中保存唯一标识的属性名称
                     pIdKey: "parentId",//节点数据中保存其父节点唯一标识的属性名称。
                     rootPId: 0//用于修正根节点父节点数据，即 pIdKey 指定的属性值
@@ -155,22 +163,23 @@ To change this template use File | Settings | File Templates.
                 onCheck:showSelectTree
             }
         };
-
-        var mainTree;
-        var selectTree;
         //显示左侧
         mainTree = $.fn.zTree.init($("#mainTree"), mainSetting);
 
         function showSelectTree() {
-            $("selectTree").empty();
+            $("#selectTree").empty();
             var mainNodes = mainTree.getCheckedNodes(true);
             var organIds = "";
-            if(mainNodes>0) {
+            if(mainNodes.length>0) {
                 for (var i = 0; i < mainNodes.length; i++) {
-                    organIds += mainNodes[i].organId;
+                    if(i==0){
+                        organIds+=mainNodes[i].organId;
+                    }else {
+                        organIds+=","+mainNodes[i].organId;
+                    }
                 }
             }
-            $.get("",{
+            $.get(baseServerUrl+"sysOrgan/getTreeByOrganIds",{
                 organIds:organIds
             },function (data,status) {
                 if(status=="success"){
@@ -178,7 +187,7 @@ To change this template use File | Settings | File Templates.
                         selectTree = $.fn.zTree.init($("#selectTree"), selectSetting,data.body.entity);
                         selectTree.expandAll(true);
                     }else {
-                        layer.msg(data.body.resultContent, {icon: 5});
+//                        layer.msg(data.body.resultContent, {icon: 5});
                     }
                 }else {
                     layer.msg('网络错误', {icon: 5});

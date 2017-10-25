@@ -10,6 +10,7 @@ import com.taiji.eap.common.area.dao.AreaDao;
 import com.taiji.eap.common.area.service.AreaService;
 import com.taiji.eap.common.redis.dao.impl.LayuiTreeRedisDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,7 +90,7 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Integer parentId) throws Exception {
+    public List<LayuiTree> treeView(Integer parentId){
         List<LayuiTree> trees = null;
         if(layuiTreeRedisDao.isCache("areaTree")) {
             trees = layuiTreeRedisDao.getAreas("areaTree");
@@ -97,8 +98,10 @@ public class AreaServiceImpl implements AreaService{
             List<Area> list = areaDao.selectLevel3();
             trees = new ArrayList<LayuiTree>();
             for (Area tree : list) {
-                if (parentId.equals(tree.getParentId())) {
-                    trees.add(findChildren(tree, list));
+                if(parentId!=null&&tree!=null&&tree.getParentId()!=null) {
+                    if (parentId.equals(tree.getParentId())) {
+                        trees.add(findChildren(tree, list));
+                    }
                 }
             }
             layuiTreeRedisDao.addList("areaTree",trees);

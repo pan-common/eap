@@ -3,10 +3,10 @@ package com.taiji.eap.common.dictionary.annotation;
 import java.lang.annotation.*;
 
 @Documented
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Dictionary {
+public @interface DictionaryResponse {
 
-    long parentId() default -1;
+
 
 }

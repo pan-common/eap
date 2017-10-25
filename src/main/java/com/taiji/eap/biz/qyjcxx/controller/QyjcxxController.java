@@ -2,6 +2,7 @@ package com.taiji.eap.biz.qyjcxx.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.dictionary.annotation.DictionaryResponse;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
@@ -37,6 +38,7 @@ public class QyjcxxController extends BaseController{
 
     @GetMapping(value = "list")
     @ResponseBody
+    @DictionaryResponse
     public PageInfo<Qyjcxx> list(Long parentId, Integer pageNum, Integer pageSize, String searchName,
                                  String searchText, String filterRules){
 

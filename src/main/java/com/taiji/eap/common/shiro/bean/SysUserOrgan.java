@@ -1,65 +1,40 @@
+
 package com.taiji.eap.common.shiro.bean;
 
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
-/**
- * 用户部门实体类
- * @author panho
- *
- */
 public class SysUserOrgan extends BaseModel{
+    private Long id;//主键
+    private Long userId;//用户ID
+    private Long organId;//部门ID
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4483206562653678994L;
+    public Long getId() {
+        return id;
+    }
 
-	private Long id;//主键Id
-	
-	private Long userId;//用户ID
-	
-	private Long organId;//部门Id
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public SysUserOrgan(Long id, Long userId, Long organId) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.organId = organId;
-	}
 
-	public SysUserOrgan() {
-		super();
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getOrganId() {
+        return organId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setOrganId(Long organId) {
+        this.organId = organId;
+    }
 
-	public Long getOrganId() {
-		return organId;
-	}
 
-	public void setOrganId(Long organId) {
-		this.organId = organId;
-	}
-
-	@Override
-	public String toString() {
-		return "SysUserOrgan [id=" + id + ", userId=" + userId + ", organId="
-				+ organId + "]";
-	}
-	
-	
-	
 }

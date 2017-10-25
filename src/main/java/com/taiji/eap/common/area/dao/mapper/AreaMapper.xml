@@ -63,6 +63,6 @@
     </select>
 
     <select id="selectLevel3" resultMap="BaseResultMap">
-        SELECT * FROM t_sys_area WHERE level != 4
+        SELECT * FROM t_sys_area WHERE level NOT IN (4,0)
     </select>
 </mapper>

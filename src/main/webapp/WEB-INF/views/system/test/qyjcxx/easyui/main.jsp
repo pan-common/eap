@@ -73,7 +73,7 @@
         url:"${pageContext.request.contextPath}/qyjcxx/list",
         method:"GET",
         fitColumns:false,//设置为true防止水平滚动
-        autoRowHeight:true,//适应内容高度
+        autoRowHeight:false,//适应内容高度
         toolbar: '#tbar',
         striped:true,//条文化
         nowrap:false,//设置true单行显示
@@ -194,13 +194,13 @@
                 checkbox:false,//设为true显示checkbox
                 formatter:function (value,rowData,rowIndex) {
                     //格式化单元格
-                    return value;
+                    return value.replace(/\n/g, '<br>');
                 },
                 styler:function (value,rowData,rowIndex) {
                     //单元格样式函数
                     return 'background-color:#4A87CF';
                 },
-                editor:'textbox'
+                editor:'textarea'
             },
             {
                 field:'xian',
@@ -266,8 +266,7 @@
                 checkbox:false,//设为true显示checkbox
                 formatter:function (value,rowData,rowIndex) {
                     //格式化单元格
-                    var btn = '<a class="editcls" onclick="">'+value+'</a>';
-                    return btn;
+                    return value;
                 },
                 styler:function (value,rowData,rowIndex) {
                     //单元格样式函数
@@ -474,7 +473,7 @@
             return data;
         },
         onLoadSuccess:function (data) {
-            $('.editcls').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
+
         },
         onLoadError:function () {
 

@@ -14,12 +14,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/easyui/themes/default/easyui.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/easyui/themes/icon.css" media="all" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/icheck/skins/square/green.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/eap/base/css/base.css" media="all">
+
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/easyui/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/easyui/js/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/easyui/js/datagrid-filter.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/icheck/js/icheck.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/eap/base/js/eap.js"></script>
 
 <script type="text/javascript">

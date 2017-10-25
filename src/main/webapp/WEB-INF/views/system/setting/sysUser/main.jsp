@@ -118,11 +118,11 @@ pageEncoding="UTF-8"%>
                             showModel("选择角色","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/zTree","750px",$(window).height());
                         },
                         'click .selectOrgan':function (e, value, row, index) {
-                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree","750px",$(window).height());
+                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree&userId="+row.userId,"750px",$(window).height());
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form&userId="+row.userId,"550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form","550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
