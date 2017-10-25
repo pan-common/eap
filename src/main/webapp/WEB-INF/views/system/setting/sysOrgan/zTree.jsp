@@ -51,7 +51,7 @@ To change this template use File | Settings | File Templates.
         form.on('checkbox(selectAll)', function(data){
             mainTree.checkAllNodes(data.elem.checked);
             showSelectTree();
-        }
+        });
 
         var mainSetting = {
             async:{
