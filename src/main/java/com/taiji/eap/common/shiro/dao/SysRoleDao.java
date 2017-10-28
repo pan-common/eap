@@ -49,4 +49,5 @@ public interface SysRoleDao {
      */
     List<SysRole> listByPid(@Param("parentId") Long parentId,@Param("searchText") String searchText);
 
+    List<SysRole> selectByIds(@Param("roleIds") List<Long> roleIds);
 }

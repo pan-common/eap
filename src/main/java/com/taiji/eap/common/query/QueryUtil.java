@@ -30,7 +30,7 @@ public class QueryUtil {
         JdbcTemplate jdbcTemplate = (JdbcTemplate) SpringContextUtil.getBean("jdbcTemplate");
 
         String columnSql = "select *  from user_tab_columns where table_name = ?";
-        List<TabColumn> tabColumns = jdbcTemplate.query(columnSql, new Object[]{tableName}, new RowMapper<TabColumn>() {
+        List<TabColumn> tabColumns = jdbcTemplate.query(columnSql, new Object[]{tableName.toUpperCase()}, new RowMapper<TabColumn>() {
             @Override
             public TabColumn mapRow(ResultSet rs, int rowNum) throws SQLException {
                 TabColumn tabColumn = new TabColumn();

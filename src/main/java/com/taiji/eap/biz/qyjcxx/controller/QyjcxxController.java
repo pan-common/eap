@@ -1,13 +1,19 @@
 package com.taiji.eap.biz.qyjcxx.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
+import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
+import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
+import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
+import com.taiji.eap.biz.qyjcxx.service.QyjcxxService;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.dictionary.annotation.DictionaryResponse;
+import com.taiji.eap.common.easypoi.excel.core.ExcelUtil;
+import com.taiji.eap.common.easypoi.excel.core.IExcelUtil;
+import com.taiji.eap.common.easypoi.excel.utils.TestUtil;
+import com.taiji.eap.common.easypoi.excel.utils.TestUtil1;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
-import com.taiji.eap.biz.qyjcxx.service.QyjcxxService;
-import com.taiji.eap.common.http.entity.EasyuiFilter;
 import com.taiji.eap.common.http.entity.Response;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecgframework.poi.excel.ExcelExportUtil;
@@ -19,10 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -191,6 +198,35 @@ public class QyjcxxController extends BaseController{
         Date now = new Date();
         modelMap.put(NormalExcelConstants.PARAMS, new ExportParams("商户利润详情", "创建时间" + now.toLocaleString(), "商户"));
         return MapExcelConstants.JEECG_MAP_EXCEL_VIEW;
+    }
+
+    @PostMapping(value = "importExcel")
+    @ResponseBody
+    public Response<String> importExcel(MultipartHttpServletRequest request,
+                                        String TBRID,String TBRNAME,String SHENG,String SHI,String XIAN,String PCID){
+        try {
+            MultipartFile file = request.getFile("upload");
+            IExcelUtil<ZfjcJcqk> utils = new ExcelUtil<ZfjcJcqk>();
+//            List<ZfjcJcqk> zfjcJcqks =  utils.build(ZfjcJcqk.class).importExcel(2,file.getInputStream());
+//            logger.info(zfjcJcqks.toString());
+            List<ZfjcJcqk> zfjcJcqks = null;
+            try {
+                zfjcJcqks = TestUtil1.importExcel(qyjcxxService,TBRID,TBRNAME,SHENG,SHI,XIAN,PCID,file.getOriginalFilename().split("\\.")[file.getOriginalFilename().split("\\.").length-1],2,file.getInputStream());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return renderError("导入失败\r\n"+e.getMessage());
+            }
+
+            int a = 0;
+            a = qyjcxxService.saveZfjcqks(zfjcJcqks);
+            if(a>0)
+                return renderSuccess("导入成功");
+            else
+                return renderError("导入失败");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError("导入失败\r\n"+e.getMessage());
+        }
     }
 
 }

@@ -49,4 +49,8 @@
         SELECT organ_id FROM t_qx_user_organ WHERE user_id = #{userId,jdbcType=DECIMAL}
     </select>
 
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        DELETE FROM t_qx_user_organ WHERE user_id = #{userId,jdbcType=DECIMAL}
+    </delete>
+
 </mapper>

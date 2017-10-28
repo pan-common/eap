@@ -98,7 +98,7 @@
                 },
                 {
                     title:"监测因子",
-                    field:"jcyz",
+                    field:"Jcyz",
                 },
                 {
                     title:"手工监测时间",

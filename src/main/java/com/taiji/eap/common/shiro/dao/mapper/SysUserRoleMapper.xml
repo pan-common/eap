@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysUserRoleDao">
-    
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysUserRole">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="role_id" property="roleId" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_role
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_role
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysUserRole">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_qx_user_role(
+        id,user_id,role_id)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{userId,jdbcType=DECIMAL},#{roleId,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysUserRole">
+        UPDATE t_qx_user_role SET
+        id=#{id,jdbcType=DECIMAL},user_id=#{userId,jdbcType=DECIMAL},role_id=#{roleId,jdbcType=DECIMAL}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_user_role WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user_role
+    </select>
+
+    <select id="getRoleIdsByUserId" resultType="java.lang.Long">
+        SELECT role_id FROM t_qx_user_role WHERE user_id = #{userId,jdbcType=DECIMAL}
+    </select>
+
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        DELETE FROM t_qx_user_role WHERE user_id = #{userId,jdbcType=DECIMAL}
+    </delete>
+
 </mapper>

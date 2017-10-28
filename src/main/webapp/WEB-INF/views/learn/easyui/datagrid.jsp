@@ -220,7 +220,7 @@
                 }
             },
             {
-                field:'jcyz',
+                field:'Jcyz',
                 title:'监测因子',
                 width:100,
                 rowspan:1,//一个单元格占行数

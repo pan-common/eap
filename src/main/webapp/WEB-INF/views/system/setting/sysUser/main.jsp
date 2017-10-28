@@ -103,22 +103,14 @@ pageEncoding="UTF-8"%>
                     field:"locked",
                 },
                 {
-                    title:"角色",
-                    field:""
-                },
-                {
-                    title:"部门",
-                    field:""
-                },
-                {
                     title : "操作",
                     align : "center",
                     events : {
                         'click .selectRole':function (e, value, row, index) {
-                            showModel("选择角色","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/zTree","750px",$(window).height());
+                            showModel("选择角色","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/roleTree&userId="+row.userId,"750px",$(window).height());
                         },
                         'click .selectOrgan':function (e, value, row, index) {
-                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree&userId="+row.userId,"750px",$(window).height());
+                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/organTree&userId="+row.userId,"750px",$(window).height());
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

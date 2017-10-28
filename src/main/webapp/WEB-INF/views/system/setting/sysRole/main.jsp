@@ -129,7 +129,9 @@ pageEncoding="UTF-8"%>
                         }
                     },
                     formatter : function () {
-                        return ['<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
+                        return [
+                            '<button type="button" class="resource layui-btn layui-btn-small">资源</button>&nbsp;&nbsp;&nbsp;',
+                            '<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
                             '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
                             '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
                     }

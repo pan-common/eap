@@ -16,9 +16,10 @@
 </table>
 </body>
 <script type="text/javascript">
-
     $.get('${pageContext.request.contextPath}/query/queryView',
-        {tableName:'V_BED'},
+        {
+            tableName:'${param.tableName}'
+        },
         function (data, status) {
             if (status == "success") {
 
@@ -42,7 +43,7 @@
                     pageList:[10,15,30,50,100],//每页行数选择
                     queryParams:{
                         //额外参数
-                        tableName:"V_BED"
+                        tableName:'${param.tableName}'
                     },
                     sortName:'',//排序列
                     sortOrder:'asc',//排序列顺序

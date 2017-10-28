@@ -59,4 +59,14 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_qx_role
     </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_role
+        <where>
+            role_id IN
+            <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
 </mapper>

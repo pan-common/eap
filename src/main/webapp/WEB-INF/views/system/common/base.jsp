@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-table/css/bootstrap-table.min.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap3-editable/css/bootstrap-editable.css" media="all" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/layui/css/layui.css" media="all" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/layui/css/global.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css" media="all">
@@ -40,6 +41,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table-editable.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/locales/zh.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.exhide.min.js"></script>
 <script type="text/javascript">

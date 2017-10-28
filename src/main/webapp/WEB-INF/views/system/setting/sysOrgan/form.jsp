@@ -25,18 +25,6 @@
                             <input type="text" name="organIcon"  lay-verify="required" placeholder="请输入部门图标" autocomplete="off" class="layui-input">
         </div>
     </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
     <div class="layui-form-item">
         <div class="layui-input-block" style="margin-right: 10px">
             <button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button>
@@ -53,12 +41,11 @@
 </form>
 </body>
 <script type="text/javascript">
-    ;
-    var organId = ${param.organId};
+        var organId = ${param.organId};
     var url = "${pageContext.request.contextPath}/sysOrgan/add";
     layui.use(['form'],function () {
         var form = layui.form;
-        form.render('select','form');
+        form.render();
 
         if(organId){
             url = "${pageContext.request.contextPath}/sysOrgan/edit";
@@ -69,6 +56,7 @@
                         if(data.body.resultCode=="0"){
                             $('#form').clearForm();
                             $('#form').form('load',data.body.entity);
+                            form.render();
                         }else {
                             parent.layer.msg(data.body.resultContent, {icon: 5});
                         }

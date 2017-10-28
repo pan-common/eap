@@ -158,4 +158,20 @@ public class SysOrganController extends BaseController{
         }
     }
 
+    @PostMapping(value = "saveUserOrgan")
+    @ResponseBody
+    public Response<String> saveUserOrgan(Long userId,String organIds){
+        if(!StringUtils.isEmpty(organIds)) {
+            String[] arr = organIds.split(",");
+            List<String> longs = Arrays.asList(arr);
+            int k = sysOrganService.saveUserOrgan(userId,ListUtils.stringToLongLst(longs));
+            if(k>0)
+                return renderSuccess("保存成功");
+            else
+                return renderError("保存失败");
+        }else {
+            return renderError("没有数据提交");
+        }
+    }
+
 }

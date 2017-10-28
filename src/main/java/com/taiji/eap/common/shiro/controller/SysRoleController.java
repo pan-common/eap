@@ -3,9 +3,12 @@ package com.taiji.eap.common.shiro.controller;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.bean.SysRole;
 import com.taiji.eap.common.shiro.service.SysRoleService;
 import com.taiji.eap.common.http.entity.Response;
+import com.taiji.eap.common.utils.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -135,4 +139,41 @@ public class SysRoleController extends BaseController{
         }
         return renderSuccess(layuiTrees);
     }
+
+    @GetMapping(value = "getRoleIdsByUserId")
+    @ResponseBody
+    public Response<List<Long>> getRoleIdsByUserId(Long userId){
+        return renderSuccess(sysRoleService.getRoleIdsByUserId(userId));
+    }
+
+
+    @GetMapping(value = "getTreeByRoleIds")
+    @ResponseBody
+    public Response<List<SysRole>> getListByRoleIds(String roleIds){
+        if(!StringUtils.isEmpty(roleIds)) {
+            String[] arr = roleIds.split(",");
+            List<String> longs = Arrays.asList(arr);
+            List<SysRole> sysRoles = sysRoleService.selectByIds(ListUtils.stringToLongLst(longs));
+            return renderSuccess(sysRoles);
+        }else {
+            return renderError("没有数据");
+        }
+    }
+
+    @PostMapping(value = "saveUserRole")
+    @ResponseBody
+    public Response<String> saveUserRole(Long userId,String roleIds){
+        if(!StringUtils.isEmpty(roleIds)) {
+            String[] arr = roleIds.split(",");
+            List<String> longs = Arrays.asList(arr);
+            int k = sysRoleService.saveUserRole(userId,ListUtils.stringToLongLst(longs));
+            if(k>0)
+                return renderSuccess("保存成功");
+            else
+                return renderError("保存失败");
+        }else {
+            return renderError("没有数据提交");
+        }
+    }
+
 }

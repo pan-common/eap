@@ -1,6 +1,7 @@
 package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.http.entity.Response;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysRole;
@@ -78,8 +79,13 @@ public interface SysRoleService{
     List<LayuiTree> treeView(Long parentId) throws Exception;
 
     /**
-     * 通过用户ID获取角色树
+     * 通过用户ID获取角色列表
      * @param userId
+     * @return
      */
-    void getRoleTreeByUserId(Long userId);
+    List<Long> getRoleIdsByUserId(Long userId);
+
+    List<SysRole> selectByIds(List<Long> roleIds);
+
+    int saveUserRole(Long userId, List<Long> roleIds);
 }

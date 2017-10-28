@@ -1,64 +1,40 @@
+
 package com.taiji.eap.common.shiro.bean;
 
+import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
-/**
- * 用户角色实体类
- * @author panho
- *
- */
 public class SysUserRole extends BaseModel{
+    private Long id;//主键
+    private Long userId;//用户ID
+    private Long roleId;//角色ID
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -76274252822863383L;
+    public Long getId() {
+        return id;
+    }
 
-	private Long id;//主键ID
-	
-	private Long userId;//用户ID
-	
-	private Long roleId;//角色Id
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public SysUserRole(Long id, Long userId, Long roleId) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.roleId = roleId;
-	}
 
-	public SysUserRole() {
-		super();
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getRoleId() {
+        return roleId;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 
-	public Long getRoleId() {
-		return roleId;
-	}
 
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
-
-	@Override
-	public String toString() {
-		return "SysUserRole [id=" + id + ", userId=" + userId + ", roleId="
-				+ roleId + "]";
-	}
-	
-	
 }

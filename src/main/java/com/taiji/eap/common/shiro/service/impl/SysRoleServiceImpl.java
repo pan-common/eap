@@ -3,8 +3,11 @@ package com.taiji.eap.common.shiro.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.http.entity.Response;
 import com.taiji.eap.common.shiro.bean.SysRole;
+import com.taiji.eap.common.shiro.bean.SysUserRole;
 import com.taiji.eap.common.shiro.dao.SysRoleDao;
+import com.taiji.eap.common.shiro.dao.SysUserRoleDao;
 import com.taiji.eap.common.shiro.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,9 @@ public class SysRoleServiceImpl implements SysRoleService{
 
     @Autowired
     private SysRoleDao sysRoleDao;
+
+    @Autowired
+    private SysUserRoleDao sysUserRoleDao;
 
     @Transactional
     @Override
@@ -93,8 +99,29 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
 
     @Override
-    public void getRoleTreeByUserId(Long userId) {
+    public List<Long> getRoleIdsByUserId(Long userId) {
+        List<Long> roleIds = sysUserRoleDao.getRoleIdsByUserId(userId);
+        return roleIds;
+    }
 
+    @Override
+    public List<SysRole> selectByIds(List<Long> roleIds) {
+        List<SysRole> sysRoles = sysRoleDao.selectByIds(roleIds);
+        return sysRoles;
+    }
+
+    @Transactional
+    @Override
+    public int saveUserRole(Long userId, List<Long> roleIds) {
+        int k = 0;
+        k+=sysUserRoleDao.deleteByUserId(userId);
+        for (int i = 0; i < roleIds.size(); i++) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(userId);
+            sysUserRole.setRoleId(roleIds.get(i));
+            k+=sysUserRoleDao.insert(sysUserRole);
+        }
+        return k;
     }
 
     private SysRole findChildren(SysRole tree,List<SysRole> list){

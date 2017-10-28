@@ -86,4 +86,6 @@ public interface SysOrganService{
     List<Long> getOrganIdsByUserId(Long userId);
 
     List<SysOrgan> selectByIds(List<Long> longs);
+
+    int saveUserOrgan(Long userId, List<Long> organIds);
 }

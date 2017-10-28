@@ -422,6 +422,7 @@
                         valueField:'keystone',
                         textField:'value',
                         method:'get',
+                        editable:"true",
                         url:'${pageContext.request.contextPath}/dictionary/listByPid?parentId=34',
                         loadFilter:function (data) {
                             return data.body.entity;
@@ -473,7 +474,16 @@
             return data;
         },
         onLoadSuccess:function (data) {
-
+            $(this).datagrid('mergeCells',{
+                index: 0,
+                field: 'jcrq',
+                rowspan: 2
+            });
+            $(this).datagrid('mergeCells',{
+                index: 2,
+                field: 'jcrq',
+                rowspan: 4
+            });
         },
         onLoadError:function () {
 

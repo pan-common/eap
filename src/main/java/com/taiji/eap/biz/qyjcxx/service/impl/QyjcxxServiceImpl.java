@@ -2,6 +2,9 @@ package com.taiji.eap.biz.qyjcxx.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
+import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
+import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
@@ -118,6 +121,49 @@ public class QyjcxxServiceImpl implements QyjcxxService{
             }
         }
         return trees;
+    }
+
+    @Override
+    public int saveZfjcqk(ZfjcJcqk zfjcJcqk) {
+        return qyjcxxDao.saveZfjcqk(zfjcJcqk);
+    }
+
+    @Override
+    public int saveJcdw(Jcdw jcdw) {
+        return qyjcxxDao.saveJcdw(jcdw);
+    }
+
+    @Override
+    public int saveJcyz(Jcyz jcyz) {
+        return qyjcxxDao.saveJcyz(jcyz);
+    }
+
+    @Transactional
+    @Override
+    public int saveZfjcqks(List<ZfjcJcqk> zfjcJcqks) {
+        int a = 0;
+        for (int i = 0; i < zfjcJcqks.size(); i++) {
+            a+=qyjcxxDao.saveZfjcqk(zfjcJcqks.get(i));
+            List<Jcdw> jcdws = zfjcJcqks.get(i).getJcdws();
+            for (int j = 0; j < jcdws.size(); j++) {
+                a+=qyjcxxDao.saveJcdw(jcdws.get(j));
+                List<Jcyz> jcyzs = jcdws.get(j).getJcyzs();
+                for (int k = 0; k < jcyzs.size(); k++) {
+                    a+=qyjcxxDao.saveJcyz(jcyzs.get(k));
+                }
+            }
+        }
+        return a;
+    }
+
+    @Override
+    public String getNameByCode(String code) {
+        return qyjcxxDao.getNameByCode(code);
+    }
+
+    @Override
+    public String getCodeByName(String name) {
+        return qyjcxxDao.getCodeByName(name);
     }
 
     private Qyjcxx findChildren(Qyjcxx tree,List<Qyjcxx> list){

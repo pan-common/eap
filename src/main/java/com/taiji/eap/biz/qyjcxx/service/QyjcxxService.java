@@ -1,6 +1,9 @@
 package com.taiji.eap.biz.qyjcxx.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
+import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
+import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
@@ -85,5 +88,27 @@ public interface QyjcxxService{
     * @throws Exception
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
+
+    int saveZfjcqk(ZfjcJcqk zfjcJcqk);
+
+    int saveJcdw(Jcdw jcdw);
+
+    int saveJcyz(Jcyz jcyz);
+
+    int saveZfjcqks(List<ZfjcJcqk> zfjcJcqks);
+
+    /**
+     * 通过名称获取区划代码
+     * @param code
+     * @return
+     */
+    String getNameByCode(String code);
+
+    /**
+     * 通过区划代码获取名称
+     * @param name
+     * @return
+     */
+    String getCodeByName(String name);
 
 }

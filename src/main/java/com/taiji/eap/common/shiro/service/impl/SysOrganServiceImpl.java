@@ -6,6 +6,7 @@ import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.bean.SysUser;
+import com.taiji.eap.common.shiro.bean.SysUserOrgan;
 import com.taiji.eap.common.shiro.dao.SysOrganDao;
 import com.taiji.eap.common.shiro.dao.SysUserOrganDao;
 import com.taiji.eap.common.shiro.service.SysOrganService;
@@ -100,14 +101,28 @@ public class SysOrganServiceImpl implements SysOrganService{
 
     @Override
     public List<Long> getOrganIdsByUserId(Long userId) {
-       List<Long> organIds = sysUserOrganDao.getOrganIdsByUserId(userId);
-       return organIds;
+        List<Long> organIds = sysUserOrganDao.getOrganIdsByUserId(userId);
+        return organIds;
     }
 
     @Override
     public List<SysOrgan> selectByIds(List<Long> organIds) {
         List<SysOrgan> sysOrgans = sysOrganDao.selectByIds(organIds);
         return sysOrgans;
+    }
+
+    @Transactional
+    @Override
+    public int saveUserOrgan(Long userId, List<Long> organIds) {
+        int k = 0;
+        k+=sysUserOrganDao.deleteByUserId(userId);
+        for (int i = 0; i <organIds.size() ; i++) {
+            SysUserOrgan sysUserOrgan = new SysUserOrgan();
+            sysUserOrgan.setUserId(userId);
+            sysUserOrgan.setOrganId(organIds.get(i));
+            k+=sysUserOrganDao.insert(sysUserOrgan);
+        }
+        return k;
     }
 
     private SysOrgan findChildren(SysOrgan tree,List<SysOrgan> list){
@@ -122,7 +137,7 @@ public class SysOrganServiceImpl implements SysOrganService{
     }
 
     private void disPlay(Long organId,List<SysOrgan> list){
-    SysOrgan sysOrgan = sysOrganDao.selectByPrimaryKey(organId);
+        SysOrgan sysOrgan = sysOrganDao.selectByPrimaryKey(organId);
         if(sysOrgan!=null){
             list.add(sysOrgan);
             disPlay(sysOrgan.getParentId(), list);
