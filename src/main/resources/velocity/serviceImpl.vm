@@ -30,7 +30,14 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
     @Transactional
     @Override
     public int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey) {
+#if(${param.isTree}=="01")
+        int k = 0;
+        k+=${param.alias}Dao.deleteByPrimaryKey(primaryKey);
+        recursiveDelete(primaryKey);
+        return k;
+#else
         return ${param.alias}Dao.deleteByPrimaryKey(primaryKey);
+#end
     }
 
     @Transactional
@@ -154,6 +161,20 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         if(${param.alias}!=null){
             list.add(${param.alias});
             disPlay(${param.alias}.get#camelToUpperCase(${parentField})(), list);
+        }
+    }
+
+    /**
+    * 递归删除
+    * @param parentId
+    */
+    private void recursiveDelete(Long parentId){
+        List<#toUpperCase(${param.alias})> ${param.alias}s =${param.alias}Dao.listByPid(parentId,"");
+        if(${param.alias}s!=null&&!${param.alias}s.isEmpty()){
+            for (#toUpperCase(${param.alias}) ${param.alias}: ${param.alias}s) {
+                ${param.alias}Dao.deleteByPrimaryKey(${param.alias}.get#toUpperCase("#getPkProperty($columns)")());
+                recursiveDelete(${param.alias}.get#toUpperCase("#getPkProperty($columns)")());
+            }
         }
     }
 #end

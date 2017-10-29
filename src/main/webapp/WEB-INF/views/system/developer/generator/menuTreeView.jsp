@@ -20,8 +20,8 @@
 </body>
 <script type="text/javascript">
     layui.use([ 'layer', 'form' ], function(layer, form) {
-        $.get("${pageContext.request.contextPath}/resource/layuiTreeView",{
-
+        $.get("${pageContext.request.contextPath}/sysResource/treeView",{
+            parentId:0
         },function (data,status) {
             if(status=="success"){
                 if(data.body.resultCode=="0"){
@@ -29,13 +29,11 @@
                         elem: '#tables', //传入元素选择器
                         nodes:data.body.entity,
                         click: function(node){
-                            if(node.type=="06"){
                                 //关闭录入窗口
                                 parent.menuLabel.val(node.name);
                                 parent.menuId.val(node.resourceId);
                                 var index = parent.layer.getFrameIndex(window.name);
                                 parent.layer.close(index);
-                            }
                         }
                     });
                 }

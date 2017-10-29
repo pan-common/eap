@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.shiro.dao.SysOrganResourceDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysOrganResource">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="organ_id" property="organId" jdbcType="DECIMAL" />
+        <result column="resource_id" property="resourceId" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ_resource
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ_resource
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysOrganResource">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_qx_organ_resource(
+        id,organ_id,resource_id)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{organId,jdbcType=DECIMAL},#{resourceId,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysOrganResource">
+        UPDATE t_qx_organ_resource SET
+        id=#{id,jdbcType=DECIMAL},organ_id=#{organId,jdbcType=DECIMAL},resource_id=#{resourceId,jdbcType=DECIMAL}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_organ_resource WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_organ_resource
+    </select>
+
+    <select id="getResourceIdsByOrganId" resultType="java.lang.Long">
+        SELECT resource_id FROM t_qx_organ_resource WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </select>
+
+    <delete id="deleteByOrganId" parameterType="java.lang.Long">
+        DELETE FROM t_qx_organ_resource WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </delete>
+
+
+</mapper>

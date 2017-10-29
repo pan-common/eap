@@ -30,7 +30,7 @@
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增字典","${pageContext.request.contextPath}/resource/link?url=system/setting/dictionary/form&dicId=0");
+            showModel("新增字典","${pageContext.request.contextPath}/sysResource/link?url=system/setting/dictionary/form&dicId=0");
         });
 
         //弹出录入框
@@ -116,7 +116,7 @@
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑字典","${pageContext.request.contextPath}/resource/link?url=system/setting/dictionary/form&dicId="+row.dicId);
+                            showModel("编辑字典","${pageContext.request.contextPath}/sysResource/link?url=system/setting/dictionary/form&dicId="+row.dicId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

@@ -145,29 +145,29 @@
             });
         }).resize();
 
-        $
-            .get(
-                '${pageContext.request.contextPath}/resource/selectTreeMenu',
-                function (data, status) {
-                    if ("success" == status) {
-                        if (data.body.resultCode == "0") {
-                            var navs = data.body.entity;
-                            //渲染navbar
-                            navbar.set({
-                                spreadOne: true,
-                                elem: '#admin-navbar-side',
-                                cached: false,
-                                data: navs
-                            });
-                            navbar.render();
-                            //监听点击事件
-                            navbar.on('click(side)', function (data) {
-                                tab.tabAdd(data.field);
-                            });
-                        }
+        $.get('${pageContext.request.contextPath}/sysResource/treeView',
+            {
+                parentId:0
+            }, function (data, status) {
+                if ("success" == status) {
+                    if (data.body.resultCode == "0") {
+                        var navs = data.body.entity;
+                        //渲染navbar
+                        navbar.set({
+                            spreadOne: true,
+                            elem: '#admin-navbar-side',
+                            cached: false,
+                            data: navs
+                        });
+                        navbar.render();
+                        //监听点击事件
+                        navbar.on('click(side)', function (data) {
+                            tab.tabAdd(data.field);
+                        });
                     }
+                }
 
-                });
+            });
 
         $('.admin-side-toggle').on('click', function() {
             var sideWidth = $('#admin-side').width();

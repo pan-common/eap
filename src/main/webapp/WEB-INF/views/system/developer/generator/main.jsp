@@ -226,15 +226,15 @@
         })
 
         $("#selectPackage").click(function () {
-            showModel("选择包目录", "${pageContext.request.contextPath}/resource/link?url=system/developer/generator/treeView");
+            showModel("选择包目录", "${pageContext.request.contextPath}/sysResource/link?url=system/developer/generator/treeView");
         });
 
         $("#selectPagePath").click(function () {
-            showModel("选择页面路径", "${pageContext.request.contextPath}/resource/link?url=system/developer/generator/jspTreeView");
+            showModel("选择页面路径", "${pageContext.request.contextPath}/sysResource/link?url=system/developer/generator/jspTreeView");
         })
 
         $("#selectMenu").click(function () {
-            showModel("选择挂靠菜单", "${pageContext.request.contextPath}/resource/link?url=system/developer/generator/menuTreeView")
+            showModel("选择挂靠菜单", "${pageContext.request.contextPath}/sysResource/link?url=system/developer/generator/menuTreeView")
         })
 
         //弹出录入框

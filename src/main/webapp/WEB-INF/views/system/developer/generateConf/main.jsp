@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/developer/generateConf/form&configId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/developer/generateConf/form&configId=0","550px","550px");
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -108,7 +108,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/developer/generateConf/form&configId="+row.configId);
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system/developer/generateConf/form&configId="+row.configId);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

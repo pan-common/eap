@@ -125,7 +125,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             sysResource.setParentId(Long.valueOf(param.getMenuId()));
             sysResource.setTypeCode("01");
             sysResource.setTypeDesc("菜单");
-            sysResource.setIcon("fa-trademark");
+            sysResource.setResIcon("fa-trademark");
             if(param.getPageStyle().equals("01")) {
                 sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
             }else if(param.getPageStyle().equals("02")){
@@ -137,7 +137,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             sysResource.setCreateTime(new Date());
             sysResource.setUpdateTime(new Date());
             sysResource.setCreater(0L);
-            sysResourceService.add(sysResource);
+            sysResourceService.insert(sysResource);
         }
 
         GenerateConf generateConf = new GenerateConf();

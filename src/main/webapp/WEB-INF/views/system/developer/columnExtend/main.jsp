@@ -131,7 +131,7 @@ pageEncoding="UTF-8"%>
                     events : {
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system\developer/form&id="+row.id);
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system\developer/form&id="+row.id);
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

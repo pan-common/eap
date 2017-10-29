@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.registItem.dao.RegistItemDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.registItem.bean.RegistItem">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="quantity" property="quantity" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="register_time" property="registerTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_regist_item
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_regist_item
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.registItem.bean.RegistItem">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_biz_regist_item(
+        id,name,quantity,type,register_time)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{quantity,jdbcType=INTEGER},#{type,jdbcType=VARCHAR},#{registerTime,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.registItem.bean.RegistItem">
+        UPDATE t_biz_regist_item SET
+        id=#{id,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},quantity=#{quantity,jdbcType=INTEGER},type=#{type,jdbcType=VARCHAR},register_time=#{registerTime,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_regist_item WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_regist_item
+    </select>
+</mapper>

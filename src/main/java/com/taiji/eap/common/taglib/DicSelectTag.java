@@ -61,6 +61,9 @@ public class DicSelectTag extends TagSupport{
         if(!StringUtils.isEmpty(this.getLayfilter())){
             sb.append("lay-filter=\"" + this.getLayfilter() + "\"");
         }
+        if(StringUtils.isEmpty(this.getNullName())){
+            sb.append(" lay-search ");
+        }
         sb.append(">");
         if(!StringUtils.isEmpty(this.getNullName())){
             sb.append("<option value=\"\">--"+this.getNullName()+"--</option>");

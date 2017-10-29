@@ -25,7 +25,7 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form&userId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysUser/form&userId=0","550px","550px");
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -107,14 +107,14 @@ pageEncoding="UTF-8"%>
                     align : "center",
                     events : {
                         'click .selectRole':function (e, value, row, index) {
-                            showModel("选择角色","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/roleTree&userId="+row.userId,"750px",$(window).height());
+                            showModel("选择角色","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysUser/roleTree&userId="+row.userId,"750px",$(window).height());
                         },
                         'click .selectOrgan':function (e, value, row, index) {
-                            showModel("选择部门","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/organTree&userId="+row.userId,"750px",$(window).height());
+                            showModel("选择部门","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysUser/organTree&userId="+row.userId,"750px",$(window).height());
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysUser/form","550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysUser/form","550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

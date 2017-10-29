@@ -114,6 +114,9 @@ pageEncoding="UTF-8"%>
                     title : "操作",
                     align : "center",
                     events : {
+                        'click .resource':function (e, value, row, index) {
+                            showModel("选择资源","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/resourceTree&roleId="+row.roleId,"750px",$(window).height()-20);
+                        },
                         'click .enter': function (e, value, row, index) {
                             currentId = row.roleId;
                             refreshTable();
@@ -121,7 +124,7 @@ pageEncoding="UTF-8"%>
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/form&roleId="+row.roleId,"550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/form&roleId="+row.roleId,"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

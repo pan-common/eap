@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="eap@127.0.0.1" uuid="89799e24-470c-4a01-9df0-e8be0e983506">
+    <data-source source="LOCAL" name="eap@localhost" uuid="45c878e6-1f57-4e34-aed5-bdae992bd57f">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://127.0.0.1/eap</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/eap</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
@@ -13,16 +13,6 @@
         <property name="characterEncoding" value="utf8" />
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="@172.16.253.5" uuid="4e5fef3c-3bfb-4762-a716-1ca04aa73c90">
-      <driver-ref>oracle</driver-ref>
-      <synchronize>true</synchronize>
-      <auto-commit>false</auto-commit>
-      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@//172.16.253.5:1521/xxgkdb</jdbc-url>
-      <driver-properties>
-        <property name="v$session.program" value="DataGrip" />
       </driver-properties>
     </data-source>
   </component>

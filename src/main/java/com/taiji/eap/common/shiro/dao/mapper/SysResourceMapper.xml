@@ -1,92 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysResourceDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysResource">
+        <id column="resource_id" property="resourceId" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+        <result column="type_desc" property="typeDesc" jdbcType="VARCHAR" />
+        <result column="res_icon" property="resIcon" jdbcType="VARCHAR" />
+        <result column="link" property="link" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="note" property="note" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
 
-	<resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysResource">
-		<id column="resource_id" property="resourceId" jdbcType="DECIMAL" />
-		<result column="name" property="name" jdbcType="VARCHAR" />
-		<result column="parent_id" property="parentId" jdbcType="DECIMAL" />
-		<result column="type_code" property="typeCode" jdbcType="VARCHAR" />
-		<result column="type_desc" property="typeDesc" jdbcType="VARCHAR" />
-		<result column="icon" property="icon" jdbcType="VARCHAR" />
-		<result column="link" property="link" jdbcType="VARCHAR" />
-		<result column="seq" property="seq" jdbcType="INTEGER" />
-		<result column="note" property="note" jdbcType="VARCHAR" />
-		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-		<result column="valid" property="valid" jdbcType="VARCHAR" />
-		<result column="creater" property="creater" jdbcType="DECIMAL" />
-	</resultMap>
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_resource
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_resource
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_resource
+        WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
+    </select>
 
-	<select id="selectMenuByPuriewIds" resultMap="BaseResultMap">
-		select * from t_qx_resource
-		where resource_id IN
-		(select resource_id
-		from t_qx_puriew_resource
-		<where>
-			<choose>
-				<when test="puriewIds!=null and puriewIds.size()>0">
-					puriew_id in
-					<foreach item="item" index="index" collection="puriewIds"
-							 open="(" separator="," close=")">
-						#{item}
-					</foreach>
-				</when>
-				<otherwise>
-					1=2
-				</otherwise>
-			</choose>
-		</where>
-		)
-	</select>
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
+        <selectKey resultType="java.lang.Long" keyProperty="resourceId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS resource_id
+        </selectKey>
+        INSERT INTO t_qx_resource(
+        resource_id,name,parent_id,type_code,type_desc,res_icon,link,seq,note,create_time,update_time,valid,creater)
+        VALUES(
+        #{resourceId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{typeCode,jdbcType=VARCHAR},#{typeDesc,jdbcType=VARCHAR},#{resIcon,jdbcType=VARCHAR},#{link,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{note,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
 
-	<select id="selectAllMenu" resultMap="BaseResultMap">
-	    select * from t_qx_resource where valid = '1' ORDER BY seq
-	</select>
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
+        UPDATE t_qx_resource SET
+        resource_id=#{resourceId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},type_code=#{typeCode,jdbcType=VARCHAR},type_desc=#{typeDesc,jdbcType=VARCHAR},res_icon=#{resIcon,jdbcType=VARCHAR},link=#{link,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},note=#{note,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
+    </update>
 
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
-	    select * from t_qx_resource where resource_id = #{resourceId,jdbcType=DECIMAL}
-	</select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_resource WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
+    </delete>
 
-	<select id="list" resultMap="BaseResultMap">
-		SELECT * FROM t_qx_resource
-		<where>
-			parent_id = #{parentId,jdbcType=DECIMAL} AND valid = '1'
-			<if test="searchText!=null and searchText!=''">
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_resource
+    </select>
 
-			</if>
-		</where>
-	</select>
-
-	<insert id="add" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
-		<selectKey resultType="java.lang.Long" keyProperty="resourceId" order="AFTER">
-			SELECT LAST_INSERT_ID() AS resource_id
-		</selectKey>
-		INSERT INTO t_qx_resource (resource_id,name,parent_id,type_code,type_desc,
-		icon,link,seq,note,create_time,update_time,valid,creater) VALUES
-		(#{resourceId,jdbcType=DECIMAL},
-		#{name,jdbcType=VARCHAR},
-		#{parentId,jdbcType=DECIMAL},
-		#{typeCode,jdbcType=VARCHAR},
-		#{typeDesc,jdbcType=VARCHAR},
-		#{icon,jdbcType=VARCHAR},
-		#{link,jdbcType=VARCHAR},
-		#{seq,jdbcType=INTEGER},
-		#{note,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP},
-		#{updateTime,jdbcType=TIMESTAMP},
-		#{valid,jdbcType=VARCHAR},
-		#{creater,jdbcType=DECIMAL})
-	</insert>
-	<update id="edit" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
-		UPDATE t_qx_resource SET name = #{name,jdbcType=VARCHAR},parent_id = #{parentId,jdbcType=DECIMAL},
-		type_code = #{typeCode,jdbcType=VARCHAR},type_desc = #{typeDesc,jdbcType=VARCHAR},
-		icon = #{icon,jdbcType=VARCHAR},link = #{link,jdbcType=VARCHAR},seq = #{seq,jdbcType=INTEGER},
-		note = #{note,jdbcType=VARCHAR},update_time = #{updateTime,jdbcType=TIMESTAMP},
-		valid = #{valid,jdbcType=VARCHAR},creater = #{creater,jdbcType=DECIMAL}
-		WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
-	</update>
-	<update id="delete" parameterType="java.lang.Long">
-		UPDATE t_qx_resource SET valid = '2'  WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
-	</update>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_resource
+        <where>
+            resource_id IN
+            <foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
 </mapper>
