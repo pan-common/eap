@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.shiro.bean.SysOrganResource;
-import com.taiji.eap.common.shiro.bean.SysPuriew;
-import com.taiji.eap.common.shiro.bean.SysResource;
-import com.taiji.eap.common.shiro.bean.SysRoleResource;
+import com.taiji.eap.common.shiro.bean.*;
 import com.taiji.eap.common.shiro.dao.*;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +43,22 @@ public class SysResourceServiceImpl implements SysResourceService{
     @Transactional
     @Override
     public int insert(SysResource sysResource) {
+        int k = 0;
         SysPuriew sysPuriew = new SysPuriew();
-
-        return sysResourceDao.insert(sysResource);
+        sysPuriew.setName(sysResource.getName()+"权限");
+        sysPuriew.setExpression(sysResource.getLink());
+        sysPuriew.setSeq(1);
+        sysPuriew.setCreateTime(new Date());
+        sysPuriew.setUpdateTime(new Date());
+        sysPuriew.setCreater(0L);
+        sysPuriew.setValid("1");
+        k+=sysPuriewDao.insert(sysPuriew);
+        k+=sysResourceDao.insert(sysResource);
+        SysPuriewResource sysPuriewResource = new SysPuriewResource();
+        sysPuriewResource.setPuriewId(sysResource.getResourceId());
+        sysPuriewResource.setResourceId(sysPuriew.getPuriewId());
+        k+=sysPuriewResourceDao.insert(sysPuriewResource);
+        return k;
     }
 
     @Override

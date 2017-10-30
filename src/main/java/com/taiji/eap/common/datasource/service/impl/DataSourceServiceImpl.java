@@ -1,19 +1,30 @@
-package com.taiji.eap.common.generator.service.impl;
+package com.taiji.eap.common.datasource.service.impl;
+
 
 import com.taiji.eap.common.datasource.base.DataSourceBeanBuilder;
+import com.taiji.eap.common.datasource.base.DynamicDataSource;
+import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.generator.bean.DataSource;
 import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.generator.service.DataSourceService;
+import com.taiji.eap.common.utils.SpringContextUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class DataSourceServiceImpl implements DataSourceService{
+public class DataSourceServiceImpl implements DataSourceService {
 
     @Override
-    public List<LayuiTree> getDataSources() {
+    public Map<Object, Object> getDataSources() throws NoSuchFieldException, IllegalAccessException {
+        DynamicDataSource dynamicDataSource = (DynamicDataSource) SpringContextUtil.getBean("dynamicDataSource");
+        return dynamicDataSource.getTargetDataSources();
+
+    }
+
+    @Override
+    public List<LayuiTree> getDataSourceTree() {
         List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
         DataSourceBeanBuilder beanBuilder = new DataSourceBeanBuilder(
                 "默认数据库连接",
@@ -30,5 +41,7 @@ public class DataSourceServiceImpl implements DataSourceService{
         dataSource.setType(LayuiTree.CONNECT);
         dataSources.add(dataSource);
         return dataSources;
+
     }
+
 }

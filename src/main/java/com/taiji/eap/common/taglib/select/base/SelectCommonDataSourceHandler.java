@@ -27,7 +27,7 @@ public abstract class SelectCommonDataSourceHandler<T> extends SelectDataSource<
         }
     }
 
-    protected abstract boolean isType(String type);
+    protected abstract boolean isType(String datasource);
 
     public SelectCommonDataSourceHandler getNextHandler() {
         return nextHandler;

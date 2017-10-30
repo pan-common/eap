@@ -6,8 +6,12 @@
     <bean id="selectUserHandler" class="com.taiji.eap.common.taglib.select.handler.SelectUserHandler">
         <property name="nextHandler" ref="selectRoleHandler"></property>
     </bean>
-
+    <!--角色表下拉框处理类-->
     <bean id="selectRoleHandler" class="com.taiji.eap.common.taglib.select.handler.SelectRoleHandler">
+        <property name="nextHandler" ref="selectDataSourceHandler"></property>
+    </bean>
+    <!--数据源下拉框处理类-->
+    <bean id="selectDataSourceHandler" class="com.taiji.eap.common.taglib.select.handler.SelectDataSourceHandler">
     </bean>
 
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">

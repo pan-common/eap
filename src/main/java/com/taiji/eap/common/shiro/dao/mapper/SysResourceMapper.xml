@@ -24,6 +24,7 @@
                 AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
+        ORDER BY seq
     </select>
     <select id="listByPid" resultMap="BaseResultMap">
         SELECT * FROM t_qx_resource
@@ -33,6 +34,7 @@
                 AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
+        ORDER BY seq
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         SELECT * FROM t_qx_resource
@@ -61,7 +63,7 @@
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        SELECT * FROM t_qx_resource
+        SELECT * FROM t_qx_resource ORDER BY seq
     </select>
 
     <select id="selectByIds" resultMap="BaseResultMap">
@@ -72,5 +74,6 @@
                 #{item}
             </foreach>
         </where>
+        ORDER BY seq
     </select>
 </mapper>

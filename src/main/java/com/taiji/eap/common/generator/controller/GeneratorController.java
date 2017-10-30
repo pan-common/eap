@@ -2,30 +2,17 @@ package com.taiji.eap.common.generator.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.generator.bean.*;
-import com.taiji.eap.common.generator.dao.GeneratorDao;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
-import com.taiji.eap.common.generator.service.DataSourceService;
 import com.taiji.eap.common.generator.service.GeneratorService;
 import com.taiji.eap.common.http.entity.Response;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/generator")
@@ -50,7 +37,7 @@ public class GeneratorController extends BaseController{
 		List<LayuiTree> layuiTrees = new ArrayList<LayuiTree>();
 		layuiTrees.add(connect);
 		for (int i = 0; i < layuiTrees.size(); i++) {
-			List<LayuiTree> dataSources = dataSourceService.getDataSources();
+			List<LayuiTree> dataSources = dataSourceService.getDataSourceTree();
 			layuiTrees.get(i).addChildrens(dataSources);
 			for (int j = 0; j < dataSources.size(); j++) {
 				LayuiTree tableTree = new TableType();

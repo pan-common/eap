@@ -74,7 +74,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         return result;
     }
 
-    private Map<Object,Object> getTargetDataSources() throws NoSuchFieldException, IllegalAccessException {
+    public Map<Object,Object> getTargetDataSources() throws NoSuchFieldException, IllegalAccessException {
         Field field = AbstractRoutingDataSource.class.getDeclaredField(DATA_SOURCES_NAME);
         field.setAccessible(true);
         return (Map<Object, Object>) field.get(this);

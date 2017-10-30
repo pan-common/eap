@@ -7,52 +7,6 @@
 </head>
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
     <div class="layui-form-item">
         <div class="layui-input-block" style="margin-right: 10px">
             <button class="layui-btn" lay-submit lay-filter="submitBtn">立即提交</button>

@@ -7,36 +7,30 @@
 </head>
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
-        <div class="layui-form-item">
-            <label class="layui-form-label">排序</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-                            <input type="text" name="seq"  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+            <input type="text" name="seq"  lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
         </div>
     </div>
-        </div>
     </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户名</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-                            <input type="text" name="userName"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <input type="text" name="userName"  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
         </div>
     </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-                            <input type="text" name="password"  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password"  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
         </div>
     </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
-        </div>
-    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-block" style="margin-right: 10px;width: 300px">
+            <input type="password" name="confirmPassword"  lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -67,35 +61,43 @@
             $.get("${pageContext.request.contextPath}/sysUser/selectOne",{
                 userId:userId
             },function (data,status) {
-                    if(status=="success"){
-                        if(data.body.resultCode=="0"){
-                            $('#form').clearForm();
-                            $('#form').form('load',data.body.entity);
-                        }else {
-                            parent.layer.msg(data.body.resultContent, {icon: 5});
-                        }
-                    }else {
-                        parent.layer.msg('网络错误', {icon: 5});
-                    }
-                })
-            }
-        form.on("submit(submitBtn)",function (data,status) {
-            $.post(url,$("#form").serializeArray(),function (data,status) {
-                if(status=='success'){
+                if(status=="success"){
                     if(data.body.resultCode=="0"){
-                        //关闭录入窗口
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(index);
-                        parent.refreshTable();
+                        $('#form').clearForm();
+                        $('#form').form('load',data.body.entity);
                     }else {
                         parent.layer.msg(data.body.resultContent, {icon: 5});
                     }
                 }else {
                     parent.layer.msg('网络错误', {icon: 5});
                 }
-            }).error(function (e) {
-                parent.layer.msg('网络错误'+e.status, {icon: 5});
-            });
+            })
+        }
+        form.on("submit(submitBtn)",function (data,status) {
+            var password = $("input[name='password']").val();
+            var confirmPassword = $("input[name='confirmPassword']").val();
+            if(confirmPassword==password){
+                $.post(url,$("#form").serializeArray(),function (data,status) {
+                    if(status=='success'){
+                        if(data.body.resultCode=="0"){
+                            //关闭录入窗口
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                            parent.refreshTable();
+                        }else {
+                            parent.layer.msg(data.body.resultContent, {icon: 5});
+                        }
+                    }else {
+                        parent.layer.msg('网络错误', {icon: 5});
+                    }
+                }).error(function (e) {
+                    parent.layer.msg('网络错误'+e.status, {icon: 5});
+                });
+            }else {
+                $("#password").val("");
+                $("#confirmPassword").val("");
+                parent.layer.msg('2次输入的密码不一致，请重新输入', {icon: 5});
+            }
             return false;
         });
 

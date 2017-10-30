@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysPuriewResourceDao">
-    
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysPuriewResource">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="puriew_id" property="puriewId" jdbcType="DECIMAL" />
+        <result column="resource_id" property="resourceId" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew_resource
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew_resource
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysPuriewResource">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        INSERT INTO t_qx_puriew_resource(
+        id,puriew_id,resource_id)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{puriewId,jdbcType=DECIMAL},#{resourceId,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysPuriewResource">
+        UPDATE t_qx_puriew_resource SET
+        id=#{id,jdbcType=DECIMAL},puriew_id=#{puriewId,jdbcType=DECIMAL},resource_id=#{resourceId,jdbcType=DECIMAL}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_puriew_resource WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew_resource
+    </select>
 </mapper>
