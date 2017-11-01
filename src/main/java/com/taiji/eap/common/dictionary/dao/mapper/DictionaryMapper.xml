@@ -97,4 +97,9 @@
         select value from t_sys_dictionary where
         keystone = #{keystone,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=DECIMAL}
     </select>
+
+    <select id="getDictionaryByKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_dictionary WHERE
+        keystone = #{keystone,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=DECIMAL}
+    </select>
 </mapper>

@@ -1,8 +1,11 @@
 package com.taiji.eap.common.datasource.base;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.taiji.eap.common.generator.bean.DataSource;
+import com.taiji.eap.common.datasource.bean.DataSource;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -23,18 +26,31 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
 
     private ApplicationContext applicationContext;
 
+    private DruidDataSource druidDataSource;//默认数据源
+
+    @Autowired
+    private VendorDatabaseIdProvider databaseIdProvider;//数据语言标识
+
+    @Autowired
+    private SqlSessionFactoryBean sqlSessionFactoryBean;//数据源会话管理
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     @Override
+    public void setDefaultTargetDataSource(Object defaultTargetDataSource) {
+        super.setDefaultTargetDataSource(defaultTargetDataSource);
+        this.druidDataSource = (DruidDataSource) defaultTargetDataSource;
+    }
+
+    @Override
     protected Object determineCurrentLookupKey() {
-        DataSourceBeanBuilder dataSourceBeanBuilder = DataSourceHolder.getDataSource();
-        if(dataSourceBeanBuilder==null){
+        DataSource dataSource = DataSourceHolder.getDataSource();
+        if(dataSource==null){
             return null;
         }
-        DataSource dataSource = new DataSource(dataSourceBeanBuilder);
         try {
             Map<Object,Object> map = getTargetDataSources();
             synchronized (map){
@@ -48,7 +64,21 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return null;
+
+        updateDatabaseId(dataSource.getBeanName());
+        return dataSource.getBeanName();
+    }
+
+    private void updateDatabaseId(String beanName) {
+        DruidDataSource druidDataSource = null;
+        try {
+            Map<Object,Object> dataSources = getTargetDataSources();
+            druidDataSource = (DruidDataSource) dataSources.get(beanName);
+            sqlSessionFactoryBean.setDataSource(druidDataSource);
+            sqlSessionFactoryBean.getObject().getConfiguration().setDatabaseId(databaseIdProvider.getDatabaseId(druidDataSource));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Object createDataSource(DataSource dataSourceBean) throws IllegalAccessException {
@@ -56,6 +86,9 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         DefaultListableBeanFactory factory = (DefaultListableBeanFactory) context.getBeanFactory();
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DruidDataSource.class);
         Map<String,Object> properties = getPropertyKeyValues(DataSource.class,dataSourceBean);
+        properties.remove("datasourceId");
+        properties.remove("datasourceType");
+        properties.remove("connectName");
         for (Map.Entry<String,Object> entry:properties.entrySet()){
             beanDefinitionBuilder.addPropertyValue(entry.getKey(),entry.getValue());
         }
@@ -78,5 +111,9 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
         Field field = AbstractRoutingDataSource.class.getDeclaredField(DATA_SOURCES_NAME);
         field.setAccessible(true);
         return (Map<Object, Object>) field.get(this);
+    }
+
+    public DruidDataSource getDefaultDataSource() {
+        return druidDataSource;
     }
 }

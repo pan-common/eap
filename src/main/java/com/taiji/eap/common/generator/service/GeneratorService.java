@@ -3,7 +3,7 @@ package com.taiji.eap.common.generator.service;
 import com.taiji.eap.common.generator.bean.Column;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.generator.bean.Param;
-import com.taiji.eap.common.generator.bean.Table;
+import com.taiji.eap.common.datasource.bean.Table;
 
 import java.util.List;
 

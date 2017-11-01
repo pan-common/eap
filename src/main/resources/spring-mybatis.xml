@@ -71,13 +71,26 @@
 	<bean id="dynamicDataSource" class="com.taiji.eap.common.datasource.base.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
-				<entry key="defaultDataSource" value-ref="dataSource"></entry>
+				<entry key="dataSource" value-ref="dataSource"></entry>
 				<entry key="dataSourceOracle" value-ref="dataSourceOracle"></entry>
 			</map>
 		</property>
 		<property name="defaultTargetDataSource" ref="dataSource"></property>
 	</bean>
-
+	<!--支持多类型数据库配置-->
+	<bean id="vendorProperties"
+		  class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="Oracle">oracle</prop>
+				<prop key="MySQL">mysql</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+		<property name="properties" ref="vendorProperties" />
+	</bean>
+	<!--JDBC方式访问数据库-->
 	<bean id="jdbcTemplate"
 		  class="org.springframework.jdbc.core.JdbcTemplate" abstract="false"
 		  lazy-init="false" autowire="default" >
@@ -89,6 +102,7 @@
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDataSource" />
+		<property name="databaseIdProvider" ref="databaseIdProvider" />
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations">

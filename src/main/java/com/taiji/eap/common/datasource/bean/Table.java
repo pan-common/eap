@@ -1,10 +1,13 @@
-package com.taiji.eap.common.generator.bean;
+package com.taiji.eap.common.datasource.bean;
+
+import com.taiji.eap.common.generator.bean.DataSourceTree;
+
 /**
  * 数据库表对应实体类
  * @author panho
  *
  */
-public class Table extends DataSourceTree{
+public class Table extends DataSourceTree {
 	private String tSchema;//表所属库
 	private String tName;//表名
 	private String tType;//表类型

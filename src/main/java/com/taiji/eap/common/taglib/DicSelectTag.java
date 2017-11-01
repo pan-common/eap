@@ -76,8 +76,12 @@ public class DicSelectTag extends TagSupport{
                     sb.append("<option value=\"" + dictionary.getKeystone() + "\">");
                 }
             }else {
-                sb.append("<option value=\"" + dictionary.getKeystone() + "\">");
+                sb.append("<option value=\"" + dictionary.getKeystone() + "\"");
             }
+            sb.append(" param1=\""+dictionary.getParam1()+"\"");
+            sb.append(" param2=\""+dictionary.getParam2()+"\"");
+            sb.append(" param3=\""+dictionary.getParam3()+"\"");
+            sb.append(">");
             sb.append(dictionary.getValue()+"</option>");
         }
         sb.append("</select>");

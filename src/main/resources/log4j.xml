@@ -33,19 +33,19 @@
 	</logger>
 
 	<logger name="com.ibatis" additivity="true">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 
 	<logger name="java.sql.Connection" additivity="true">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 
 	<logger name="java.sql.Statement" additivity="true">
-		<level value="INFO" />
+		<level value="DEBUG" />
 	</logger>
 
 	<logger name="java.sql.PreparedStatement" additivity="true">
-		<level value="INFO" />
+		<level value="DEBUG" />
 		<appender-ref ref="IBatis" />
 	</logger>
 

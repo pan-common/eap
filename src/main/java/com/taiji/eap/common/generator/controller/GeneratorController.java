@@ -2,6 +2,8 @@ package com.taiji.eap.common.generator.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.datasource.bean.DataSource;
+import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
@@ -44,7 +46,7 @@ public class GeneratorController extends BaseController{
 				tableTree.setType(LayuiTree.OTHER);
 				tableTree.setSpread(true);
 				tableTree.setName("表");
-				List<Table> tables = generatorService.selectTables(((DataSource)dataSources.get(i)).getDatabaseName());
+				List<Table> tables = generatorService.selectTables(((DataSource)dataSources.get(i)).getConnectName());
 				for (int k = 0; k < tables.size() ; k++) {
 					tables.get(k).setName(tables.get(k).gettName());
 					tables.get(k).setSpread(true);
@@ -60,7 +62,7 @@ public class GeneratorController extends BaseController{
 				viewTree.setType(LayuiTree.OTHER);
 				viewTree.setSpread(true);
 				viewTree.setName("视图");
-				List<Table> views = generatorService.selectViews(((DataSource)dataSources.get(i)).getDatabaseName());
+				List<Table> views = generatorService.selectViews(((DataSource)dataSources.get(i)).getConnectName());
 				for (int k = 0; k <views.size() ; k++) {
 					views.get(k).setName(views.get(k).gettName());
 					views.get(k).setSpread(true);

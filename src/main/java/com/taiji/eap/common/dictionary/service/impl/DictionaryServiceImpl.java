@@ -77,6 +77,11 @@ public class DictionaryServiceImpl implements DictionaryService{
         return dictionaryDao.getValueByKey(keystone,parentId);
     }
 
+    @Override
+    public Dictionary getDictionaryByKey(String keystone, Long parentId) {
+        return dictionaryDao.getDictionaryByKey(keystone,parentId);
+    }
+
     private void disPlay(Long dicId,List<Dictionary> list){
         Dictionary dictionary = dictionaryDao.selectByPrimaryKey(dicId);
         if(dictionary!=null){

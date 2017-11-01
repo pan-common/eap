@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.datasource.dao.DataSourceDao">
+
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.datasource.bean.DataSource">
+        <id column="datasource_id" property="datasourceId" jdbcType="DECIMAL"></id>
+        <result column="datasource_type" property="datasourceType" jdbcType="VARCHAR" />
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
+        <result column="connect_name" property="connectName" jdbcType="VARCHAR" />
+        <result column="driver_class_name" property="driverClassName" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="TableResultMap" type="com.taiji.eap.common.datasource.bean.Table">
+        <result column="TABLE_SCHEMA" property="tSchema" jdbcType="VARCHAR"/>
+        <result column="TABLE_NAME" property="tName" jdbcType="VARCHAR"/>
+        <result column="TABLE_TYPE" property="tType" jdbcType="VARCHAR"/>
+        <result column="TABLE_COMMENT" property="tComment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectTables" resultMap="TableResultMap">
+        <if test="_databaseId == 'oracle'">
+            select B.TABLE_NAME,B.TABLE_TYPE,B.comments TABLE_COMMENT from　user_objects A　
+            LEFT JOIN user_tab_comments B
+            ON A.object_name = b.table_name
+            where a.object_type = #{type,jdbcType=VARCHAR} and B.TABLE_NAME not like 'ACT_%'
+        </if>
+        <if test="_databaseId == 'mysql'">
+            select TABLE_SCHEMA,TABLE_NAME,TABLE_TYPE,TABLE_COMMENT from information_schema.`TABLES`
+            <where>
+                TABLE_SCHEMA = #{schema,jdbcType=VARCHAR} and TABLE_NAME not like 'ACT_%'
+                <choose>
+                    <when test="type!=null and type!='' and type=='TABLE'">
+                        and TABLE_TYPE = 'BASE TABLE'
+                    </when>
+                    <when test="type!=null and type!='' and type=='VIEW'">
+                        and TABLE_TYPE = 'VIEW'
+                    </when>
+                    <otherwise>
+                        and TABLE_TYPE = #{type,jdbcType=VARCHAR}
+                    </otherwise>
+                </choose>
+            </where>
+        </if>
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_database
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_database
+        WHERE datasource_id = #{datasourceId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.datasource.bean.DataSource">
+        <selectKey resultType="java.lang.Long" keyProperty="datasourceId" order="AFTER">
+            SELECT LAST_INSERT_ID() AS datasource_id
+        </selectKey>
+        INSERT INTO t_formconf_database(
+        datasource_id,datasource_type,bean_name,connect_name,driver_class_name,url,username,password)
+        VALUES(
+        #{datasourceId,jdbcType=DECIMAL},#{datasourceType,jdbcType=VARCHAR},#{beanName,jdbcType=VARCHAR},#{connectName,jdbcType=VARCHAR},#{driverClassName,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.datasource.bean.DataSource">
+        UPDATE t_formconf_database SET
+        datasource_id=#{datasourceId,jdbcType=DECIMAL},datasource_type=#{datasourceType,jdbcType=VARCHAR},bean_name=#{beanName,jdbcType=VARCHAR},connect_name=#{connectName,jdbcType=VARCHAR},driver_class_name=#{driverClassName,jdbcType=VARCHAR},url=#{url,jdbcType=VARCHAR},username=#{username,jdbcType=VARCHAR},password=#{password,jdbcType=VARCHAR}
+        WHERE datasource_id = #{datasourceId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_database WHERE datasource_id = #{datasourceId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_database
+    </select>
+
+</mapper>

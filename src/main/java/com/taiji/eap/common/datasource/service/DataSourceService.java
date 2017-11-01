@@ -1,5 +1,7 @@
 package com.taiji.eap.common.datasource.service;
 
+import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.datasource.bean.DataSource;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 
 import java.util.List;
@@ -7,12 +9,70 @@ import java.util.Map;
 
 public interface DataSourceService {
 
-    public Map<Object,Object> getDataSources() throws NoSuchFieldException, IllegalAccessException;
+    Map<Object,Object> getDataSources() throws NoSuchFieldException, IllegalAccessException;
 
     /**
      * 获取全部数据库连接
      * @return
      */
-    public List<LayuiTree> getDataSourceTree();
+    List<LayuiTree> getDataSourceTree();
 
+    /**
+     *
+     * @return
+     */
+    List<LayuiTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException;
+
+    List<LayuiTree> tableTree(String beanName,String driverClassName,String url,String username,String password);
+
+    void updateDatabaseId(String beanName);
+
+    void resetDatabaseId();
+
+    /**
+     * 通过主键删除数据
+     * @param primaryKey
+     * @return
+     */
+    int deleteByPrimaryKey(Long primaryKey) throws Exception;
+    /**
+     * 插入数据
+     * @param dataSource
+     * @return
+     */
+    int insert(DataSource dataSource) throws Exception;
+    /**
+     * 根据主键查询数据
+     * @param primaryKey
+     * @return
+     */
+    DataSource selectByPrimaryKey(Long primaryKey) throws Exception;
+    /**
+     * 根据主键修改数据
+     * @param dataSource
+     * @return
+     */
+    int updateByPrimaryKey(DataSource dataSource) throws Exception;
+    /**
+     * 无分页查询数据
+     * @param searchText 搜索条件
+     * @return
+     */
+    List<DataSource> list(String searchText) throws Exception;
+    /**
+     * 分页查询数据
+     * @param pageNum 当前页数
+     * @param pageSize 每页行数
+     * @param searchText 搜索条件
+     * @return
+     * @throws Exception
+     */
+    PageInfo<DataSource> list(int pageNum, int pageSize, String searchText) throws Exception;
+
+    /**
+     * 数据源连接测试
+     * @param dataSource
+     * @return
+     */
+    String connectTest(DataSource dataSource) throws Exception;
 }

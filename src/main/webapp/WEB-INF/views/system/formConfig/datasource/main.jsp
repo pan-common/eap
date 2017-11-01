@@ -15,18 +15,47 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <ul id="datasourceTree" class="ztree">
+            <button id='addBtn' class="layui-btn layui-btn-small" style="margin-left: 20px">
+                <i class="fa fa-plus"></i> 新增数据源
+            </button>
+            <div id="datasource_layout" style="overflow:auto;">
+                <ul id="datasourceTree" class="ztree">
 
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
     layui.use([ 'layer', 'form' ], function(layer, form) {
+        var layer = layui.layer;
+        var form =  layui.form;
+
+        $("#datasource_layout").height($(window).height()-40);
+
+        $("#addBtn").click(function () {
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/formConfig/datasource/dbform&datasourceId=0","550px","550px");
+        });
+
+        //弹出录入框
+        function showModel(title,url,width,height) {
+            layer.open({
+                id:"model",
+                type:2,
+                title:title,
+                content:url,
+                area:[width,height],
+                offset: '0px',
+                shade:false,
+                maxmin:true,
+                success:function (layero, index) {
+
+                }
+            })
+        };
 
         var datasourceTree;
-
         var datasourceTreeSetting = {
             async:{
                 enable: false,
@@ -38,6 +67,8 @@
                 }
             },
             view:{
+                addDiyDom:addToolbar,
+                dblClickExpand : false,
                 selectedMulti: false,//是否允许选中多个节点
                 txtSelectedEnable: true,//是否可以选择zTree DOM内的文本
                 nameIsHTML: true,//设置name属性是否支持HTML脚本
@@ -55,7 +86,7 @@
                     url: ""//zTree 节点数据保存节点链接的目标 URL 的属性名称。
                 },
                 simpleData:{
-                    enable: true,//确定 zTree 初始化时的节点数据为简单array数据
+                    enable: false,//确定 zTree 初始化时的节点数据为简单array数据
                     idKey: "roleId",//节点数据中保存唯一标识的属性名称
                     pIdKey: "parentId",//节点数据中保存其父节点唯一标识的属性名称。
                     rootPId: 0//用于修正根节点父节点数据，即 pIdKey 指定的属性值
@@ -72,10 +103,51 @@
             }
         };
 
+        loadDataSource();
+
         function loadDataSource(){
-            $.get(baseServerUrl+"",{},function (data) {
-                $.fn.zTree.init($("#"),datasourceTreeSetting,data.body.entity)
+            $.get(baseServerUrl+"dataSource/dataSourceTree",{},function (data) {
+                $.fn.zTree.init($("#datasourceTree"),datasourceTreeSetting,data.body.entity)
             })
+        }
+
+        function addNode(event,treeId,treeNode,clickFlag) {
+            var zTree = $.fn.zTree.getZTreeObj("datasourceTree");
+            if(treeNode.children.length == 0){
+                var type = treeNode.type;
+                if(type=="01"){
+                    $.post(baseServerUrl+"dataSource/getTablesByDB",{
+                        beanName:treeNode.beanName,
+                        driverClassName:treeNode.driverClassName,
+                        url:treeNode.url,
+                        username:treeNode.username,
+                        password:treeNode.password
+                    },function (data) {
+                        zTree.addNodes(treeNode,data.body.entity)
+                    });
+                }
+            }
+        }
+
+        function addToolbar(treeId, treeNode) {
+            var aObj = $("#" + treeNode.tId + "_a");
+            if(treeNode.type=="01"){
+                var toolbar = "<div class=\"layui-btn-group\">\n" +
+                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
+                    "    <i class=\"layui-icon\">&#xe654;</i>\n" +
+                    "  </button>\n" +
+                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
+                    "    <i class=\"layui-icon\">&#xe642;</i>\n" +
+                    "  </button>\n" +
+                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
+                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
+                    "  </button>\n" +
+                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
+                    "    <i class=\"layui-icon\">&#xe602;</i>\n" +
+                    "  </button>\n" +
+                    "</div>";
+                aObj.append(toolbar);
+            }
         }
 
     });

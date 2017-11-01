@@ -1,5 +1,7 @@
 package com.taiji.eap.common.generator.service.impl;
 
+import com.taiji.eap.common.datasource.bean.Table;
+import com.taiji.eap.common.datasource.dao.DataSourceDao;
 import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.dao.GeneratorDao;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
@@ -15,7 +17,6 @@ import org.apache.velocity.app.Velocity;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ import java.util.*;
 
 @Service
 public class GeneratorServiceImpl implements GeneratorService{
+
+    @Autowired
+    private DataSourceDao dataSourceDao;
 
     @Autowired
     private GeneratorDao generatorDao;
@@ -40,12 +44,12 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Override
     public List<Table> selectTables(String schema) {
-        return generatorDao.selectTables(schema);
+        return dataSourceDao.selectTables(schema,"TABLE");
     }
 
     @Override
     public List<Table> selectViews(String schema) {
-        return generatorDao.selectViews(schema);
+        return dataSourceDao.selectTables(schema,"VIEW");
     }
 
     @Override

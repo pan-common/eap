@@ -55,4 +55,12 @@ public interface DictionaryDao {
      * @return
      */
     String getValueByKey(@Param("keystone")String keystone, @Param("parentId") Long parentId);
+
+    /**
+     * 通过key获取字典数据
+     * @param keystone
+     * @param parentId
+     * @return
+     */
+    Dictionary getDictionaryByKey(@Param("keystone")String keystone, @Param("parentId") Long parentId);
 }

@@ -141,4 +141,17 @@ public class DictionaryController extends BaseController{
         }
         return renderSuccess(value);
     }
+
+    /**
+     * 通过key获取字典
+     * @param keystone
+     * @param parentId
+     * @return
+     */
+    @GetMapping(value = "getDictionaryByKey")
+    @ResponseBody
+    public Response<Dictionary> getDictionaryByKey(String keystone,Long parentId){
+        Dictionary dictionary = dictionaryService.getDictionaryByKey(keystone,parentId);
+        return renderSuccess(dictionary);
+    }
 }
