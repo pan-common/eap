@@ -24,7 +24,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.biz.registItem.bean.RegistItem">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_regist_item_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_biz_regist_item(
         id,name,quantity,type,register_time)

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysPuriew;
 import com.taiji.eap.common.shiro.dao.SysPuriewDao;
+import com.taiji.eap.common.shiro.dao.SysPuriewResourceDao;
 import com.taiji.eap.common.shiro.service.SysPuriewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class SysPuriewServiceImpl implements SysPuriewService{
 
     @Autowired
     private SysPuriewDao sysPuriewDao;
+
+    @Autowired
+    private SysPuriewResourceDao sysPuriewResourceDao;
 
     @Transactional
     @Override
@@ -54,5 +58,12 @@ public class SysPuriewServiceImpl implements SysPuriewService{
         List<SysPuriew> sysPuriews = sysPuriewDao.list(searchText);
         PageInfo<SysPuriew> pageInfo = new PageInfo<SysPuriew>(sysPuriews);
         return pageInfo;
+    }
+
+    @Override
+    public List<SysPuriew> getPuriewByResourceIds(List<Long> resourceIds) {
+        List<Long> puriewIds = sysPuriewResourceDao.getPuriewByResourceIds(resourceIds);
+        List<SysPuriew> sysPuriews = sysPuriewDao.listByIds(puriewIds);
+        return sysPuriews;
     }
 }

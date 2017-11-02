@@ -60,7 +60,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.generator.bean.ColumnExtend">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_column_extend_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_sys_column_extend(
         id,table_schema,table_name,column_name,seq,form_show,list_show,width_per,input_type,is_query,param,verify,required)

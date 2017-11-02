@@ -53,4 +53,10 @@ public interface SysUserService{
     */
     int easyuiSubmitData(EasyUISubmitData<SysUser> easyUISubmitData);
 
+    /**
+     * 通过用户名获取用户
+     * @param username
+     * @return
+     */
+    SysUser getUserByName(String username);
 }

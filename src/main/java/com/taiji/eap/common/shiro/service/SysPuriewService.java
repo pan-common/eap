@@ -47,5 +47,10 @@ public interface SysPuriewService{
      */
     PageInfo<SysPuriew> list(int pageNum, int pageSize, String searchText) throws Exception;
 
-
+    /**
+     * 通过资源ID列表，获取对应权限列表
+     * @param resourceIds
+     * @return
+     */
+    List<SysPuriew> getPuriewByResourceIds(List<Long> resourceIds);
 }

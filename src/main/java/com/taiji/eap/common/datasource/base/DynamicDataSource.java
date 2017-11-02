@@ -59,26 +59,19 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
                     super.afterPropertiesSet();//通知spring有bean更新
                 }
             }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        updateDatabaseId(dataSource.getBeanName());
-        return dataSource.getBeanName();
-    }
-
-    private void updateDatabaseId(String beanName) {
-        DruidDataSource druidDataSource = null;
-        try {
-            Map<Object,Object> dataSources = getTargetDataSources();
-            druidDataSource = (DruidDataSource) dataSources.get(beanName);
-            sqlSessionFactoryBean.setDataSource(druidDataSource);
-            sqlSessionFactoryBean.getObject().getConfiguration().setDatabaseId(databaseIdProvider.getDatabaseId(druidDataSource));
+            updateDatabaseId(dataSource.getBeanName());
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return dataSource.getBeanName();
+    }
+
+    private void updateDatabaseId(String beanName) throws Exception{
+        DruidDataSource druidDataSource = null;
+        Map<Object,Object> dataSources = getTargetDataSources();
+        druidDataSource = (DruidDataSource) dataSources.get(beanName);
+        sqlSessionFactoryBean.setDataSource(druidDataSource);
+        sqlSessionFactoryBean.getObject().getConfiguration().setDatabaseId(databaseIdProvider.getDatabaseId(druidDataSource));
     }
 
     private Object createDataSource(DataSource dataSourceBean) throws IllegalAccessException {

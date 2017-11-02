@@ -22,7 +22,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysRoleResource">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_role_resource_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_role_resource(
         id,role_id,resource_id)
@@ -47,6 +52,16 @@
 
     <select id="getResourceIdsByRoleId" resultType="java.lang.Long">
         SELECT resource_id FROM t_qx_role_resource WHERE role_id = #{roleId,jdbcType=DECIMAL}
+    </select>
+
+    <select id="getResourceIdsByRoleIds" resultType="java.lang.Long">
+        SELECT resource_id FROM t_qx_role_resource
+        <where>
+            role_id IN
+            <foreach item="item" index="index" collection="roleIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </select>
 
     <delete id="deleteByRoleId" parameterType="java.lang.Long">

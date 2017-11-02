@@ -38,7 +38,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysOrgan">
         <selectKey resultType="java.lang.Long" keyProperty="organId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS organ_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS organ_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_organ_organ_id_seq.nextval AS organ_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_organ(
         organ_id,name,organ_icon,parent_id,seq,create_time,update_time,valid,creater)

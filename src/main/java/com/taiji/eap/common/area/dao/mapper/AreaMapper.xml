@@ -38,9 +38,6 @@
     </select>
 
     <insert id="insert" parameterType="com.taiji.eap.common.area.bean.Area">
-        <selectKey resultType="java.lang.Integer" keyProperty="areaId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS area_id
-        </selectKey>
         INSERT INTO t_sys_area(
         area_id,area_name,parent_id,short_name,lng,lat,level,position,sort)
         VALUES(

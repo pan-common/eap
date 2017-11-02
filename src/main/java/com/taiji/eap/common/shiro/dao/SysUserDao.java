@@ -42,5 +42,11 @@ public interface SysUserDao {
      */
     List<SysUser> selectAll();
 
+    /**
+     * 通过用户名获取用户
+     * @param username
+     * @return
+     */
+    SysUser getUserByName(@Param("username") String username);
 
 }

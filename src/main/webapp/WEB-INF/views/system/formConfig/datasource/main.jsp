@@ -15,12 +15,20 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <button id='addBtn' class="layui-btn layui-btn-small" style="margin-left: 20px">
-                <i class="fa fa-plus"></i> 新增数据源
-            </button>
+            <form class="layui-form">
+                <table>
+                    <tr>
+                        <td><input  type="text" name="search" placeholder="输入表名称" class="layui-input"></td>
+                        <td>
+                            <button id='addBtn' class="layui-btn layui-btn-small" style="margin-left: 20px">
+                                <i class="fa fa-plus"></i> 新增数据源
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
             <div id="datasource_layout" style="overflow:auto;">
                 <ul id="datasourceTree" class="ztree">
-
                 </ul>
             </div>
         </div>
@@ -67,7 +75,7 @@
                 }
             },
             view:{
-                addDiyDom:addToolbar,
+                addDiyDom:"",
                 dblClickExpand : false,
                 selectedMulti: false,//是否允许选中多个节点
                 txtSelectedEnable: true,//是否可以选择zTree DOM内的文本
@@ -108,11 +116,11 @@
         function loadDataSource(){
             $.get(baseServerUrl+"dataSource/dataSourceTree",{},function (data) {
                 $.fn.zTree.init($("#datasourceTree"),datasourceTreeSetting,data.body.entity)
+                datasourceTree = $.fn.zTree.getZTreeObj("datasourceTree");
             })
         }
 
         function addNode(event,treeId,treeNode,clickFlag) {
-            var zTree = $.fn.zTree.getZTreeObj("datasourceTree");
             if(treeNode.children.length == 0){
                 var type = treeNode.type;
                 if(type=="01"){
@@ -123,33 +131,11 @@
                         username:treeNode.username,
                         password:treeNode.password
                     },function (data) {
-                        zTree.addNodes(treeNode,data.body.entity)
+                        datasourceTree.addNodes(treeNode,data.body.entity)
                     });
                 }
             }
         }
-
-        function addToolbar(treeId, treeNode) {
-            var aObj = $("#" + treeNode.tId + "_a");
-            if(treeNode.type=="01"){
-                var toolbar = "<div class=\"layui-btn-group\">\n" +
-                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
-                    "    <i class=\"layui-icon\">&#xe654;</i>\n" +
-                    "  </button>\n" +
-                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
-                    "    <i class=\"layui-icon\">&#xe642;</i>\n" +
-                    "  </button>\n" +
-                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
-                    "    <i class=\"layui-icon\">&#xe640;</i>\n" +
-                    "  </button>\n" +
-                    "  <button class=\"layui-btn layui-btn-mini\">\n" +
-                    "    <i class=\"layui-icon\">&#xe602;</i>\n" +
-                    "  </button>\n" +
-                    "</div>";
-                aObj.append(toolbar);
-            }
-        }
-
     });
 </script>
 </html>

@@ -42,5 +42,10 @@ public interface SysPuriewResourceDao {
      */
     List<SysPuriewResource> selectAll();
 
-
+    /**
+     * 通过资源ID列表获取权限列表
+     * @param resourceIds
+     * @return
+     */
+    List<Long> getPuriewByResourceIds(@Param("resourceIds") List<Long> resourceIds);
 }

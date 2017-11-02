@@ -22,7 +22,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysOrganResource">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_organ_resource_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_organ_resource(
         id,organ_id,resource_id)
@@ -47,6 +52,16 @@
 
     <select id="getResourceIdsByOrganId" resultType="java.lang.Long">
         SELECT resource_id FROM t_qx_organ_resource WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </select>
+
+    <select id="getResourceIdsByOrganIds" resultType="java.lang.Long">
+        SELECT resource_id FROM t_qx_organ_resource
+        <where>
+            organ_id IN
+            <foreach item="item" index="index" collection="organIdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </select>
 
     <delete id="deleteByOrganId" parameterType="java.lang.Long">

@@ -46,4 +46,6 @@ public interface SysOrganResourceDao {
     int deleteByOrganId(Long organId);
 
     List<Long> getResourceIdsByOrganId(Long organId);
+
+    List<Long> getResourceIdsByOrganIds(@Param("organIdList") List<Long> organIdList);
 }

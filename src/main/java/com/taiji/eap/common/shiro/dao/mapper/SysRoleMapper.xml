@@ -37,7 +37,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysRole">
         <selectKey resultType="java.lang.Long" keyProperty="roleId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS role_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS role_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_role_role_id_seq.nextval AS role_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_role(
         role_id,name,seq,parent_id,create_time,update_time,valid,creater)

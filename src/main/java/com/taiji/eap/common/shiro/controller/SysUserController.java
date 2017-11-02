@@ -7,6 +7,9 @@ import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.service.SysUserService;
 import com.taiji.eap.common.http.entity.Response;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -107,4 +110,32 @@ public class SysUserController extends BaseController{
         else
             return renderError("提交失败");
     }
+
+    @PostMapping("doLogin")
+    @ResponseBody
+    public Response<String> doLogin(String userName,String password){
+        UsernamePasswordToken token = new UsernamePasswordToken(userName,password);
+        Subject currentUser = SecurityUtils.getSubject();
+        try {
+            if(!currentUser.isAuthenticated()){
+                token.setRememberMe(false);
+                currentUser.login(token);//验证角色和权限
+            }
+        }catch (UnknownAccountException e) {
+            return renderError("未找到用户");
+        }catch (IncorrectCredentialsException e){
+            return renderError("用户名或密码不正确");
+        }catch (LockedAccountException e){
+            return renderError("用户被禁止登陆");
+        } catch (DisabledAccountException e){
+            return renderError("账号未启用");
+        } catch (ExcessiveAttemptsException e){
+            return renderError("登陆失败超过5次账号已被锁住");
+        } catch (AuthenticationException e){
+            e.printStackTrace();
+            return renderError("未知异常");
+        }
+        return renderSuccess("登陆成功");
+    }
+
 }

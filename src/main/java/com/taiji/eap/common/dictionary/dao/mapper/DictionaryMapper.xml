@@ -46,7 +46,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.dictionary.bean.Dictionary">
         <selectKey resultType="java.lang.Long" keyProperty="dicId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS dic_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS dic_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_dictionary_dic_id_seq.nextval AS dic_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_sys_dictionary(dic_id,keystone,value,param1,param2,param3,param4,param5,
         param6,param7,parent_id,seq,create_time,update_time,valid,creater)

@@ -114,4 +114,15 @@ public interface SysResourceService{
      */
     int saveOrganResource(Long organId, List<Long> resourceIds);
 
+    /**
+     * 通过部门ID列表获取资源
+     * @param organIdList
+     */
+    List<Long> getResourceIdsByOrganIds(List<Long> organIdList);
+
+    /**
+     * 通过角色ID列表获取资源
+     * @param roleIdList
+     */
+    List<Long> getResourceIdsByRoleIds(List<Long> roleIdList);
 }

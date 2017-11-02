@@ -1,0 +1,51 @@
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.login-main{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 25%;
+    height: 50%;
+    margin: 0 auto;
+    margin-top: 100px;
+    border:1px solid #ddd;
+    background-color:#fff;
+    padding:20px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.login-main header {
+    margin-top: 50px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 40px;
+    font-weight: 100;
+    text-align: center;
+}
+
+.login-main header, .login-main form, .login-main form .layui-input-inline {
+    margin-bottom: 15px;
+}
+
+.login-main form .layui-input-inline, .login-main form .layui-input-inline input, .login-main form .layui-input-inline button{
+    width: 100%;
+    height: 50px;
+    font-size: large;
+}
+
+.login-main form .login-btn {
+    margin-bottom: 5px;
+}
+
+
+.layui-form-item .layui-input-inline {
+    margin: 0 0 10px 0px
+}

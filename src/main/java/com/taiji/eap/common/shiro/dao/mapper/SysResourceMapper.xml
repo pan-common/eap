@@ -3,18 +3,18 @@
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysResourceDao">
     <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysResource">
         <id column="resource_id" property="resourceId" jdbcType="DECIMAL"></id>
-        <result column="name" property="name" jdbcType="VARCHAR" />
-        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
-        <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
-        <result column="type_desc" property="typeDesc" jdbcType="VARCHAR" />
-        <result column="res_icon" property="resIcon" jdbcType="VARCHAR" />
-        <result column="link" property="link" jdbcType="VARCHAR" />
-        <result column="seq" property="seq" jdbcType="INTEGER" />
-        <result column="note" property="note" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-        <result column="valid" property="valid" jdbcType="VARCHAR" />
-        <result column="creater" property="creater" jdbcType="DECIMAL" />
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL"/>
+        <result column="type_code" property="typeCode" jdbcType="VARCHAR"/>
+        <result column="type_desc" property="typeDesc" jdbcType="VARCHAR"/>
+        <result column="res_icon" property="resIcon" jdbcType="VARCHAR"/>
+        <result column="link" property="link" jdbcType="VARCHAR"/>
+        <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="note" property="note" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="valid" property="valid" jdbcType="VARCHAR"/>
+        <result column="creater" property="creater" jdbcType="DECIMAL"/>
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap">
@@ -43,7 +43,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
         <selectKey resultType="java.lang.Long" keyProperty="resourceId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS resource_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS resource_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_resource_resource_id_seq.nextval AS resource_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_resource(
         resource_id,name,parent_id,type_code,type_desc,res_icon,link,seq,note,create_time,update_time,valid,creater)

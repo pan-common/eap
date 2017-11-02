@@ -50,7 +50,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.biz.qyjcxx.bean.Qyjcxx">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_test_qyjcxx_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_test_qyjcxx(
         id,parent_id,jcrq,shen,shi,xian,qymc,hylx,wrfzss,yxwtms,sfczsjzj,zjwtms,sfczyzpmdl,pmdlwtms)

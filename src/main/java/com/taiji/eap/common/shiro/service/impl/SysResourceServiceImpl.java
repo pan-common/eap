@@ -178,6 +178,16 @@ public class SysResourceServiceImpl implements SysResourceService{
         return k;
     }
 
+    @Override
+    public List<Long> getResourceIdsByOrganIds(List<Long> organIdList) {
+        return sysOrganResourceDao.getResourceIdsByOrganIds(organIdList);
+    }
+
+    @Override
+    public List<Long> getResourceIdsByRoleIds(List<Long> roleIdList) {
+        return sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList);
+    }
+
     private void disPlay(Long resourceId,List<SysResource> list){
         SysResource sysResource = sysResourceDao.selectByPrimaryKey(resourceId);
         if(sysResource!=null){

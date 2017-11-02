@@ -42,5 +42,10 @@ public interface SysPuriewDao {
      */
     List<SysPuriew> selectAll();
 
-
+    /**
+     * 通过权限ID获取权限列表
+     * @param puriewIds
+     * @return
+     */
+    List<SysPuriew> listByIds(@Param("puriewIds") List<Long> puriewIds);
 }

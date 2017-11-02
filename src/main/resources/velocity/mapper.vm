@@ -71,8 +71,12 @@
 
     <insert id="insert" parameterType="${beanPackage}.#toUpperCase(${param.alias})">
         <selectKey resultType="#getPkJavaType($columns)" keyProperty="#getPkProperty($columns)" order="AFTER">
-            SELECT LAST_INSERT_ID() AS #getPkColumn($columns)
-
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS #getPkColumn($columns)
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT ${param.tableName}_#getPkColumn($columns)_SEQ.nextval AS #getPkColumn($columns) FROM dual
+            </if>
         </selectKey>
         INSERT INTO ${param.tableName}(
         ${columnName})

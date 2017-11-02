@@ -3,15 +3,15 @@
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysUserDao">
     <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysUser">
         <id column="user_id" property="userId" jdbcType="DECIMAL"></id>
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="seq" property="seq" jdbcType="INTEGER" />
-        <result column="salt" property="salt" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-        <result column="valid" property="valid" jdbcType="VARCHAR" />
-        <result column="creater" property="creater" jdbcType="DECIMAL" />
-        <result column="locked" property="locked" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="valid" property="valid" jdbcType="VARCHAR"/>
+        <result column="creater" property="creater" jdbcType="DECIMAL"/>
+        <result column="locked" property="locked" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap">
@@ -29,7 +29,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysUser">
         <selectKey resultType="java.lang.Long" keyProperty="userId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS user_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS user_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT T_QX_USER_USER_ID_SEQ.nextval AS user_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_user(
         user_id,user_name,seq,salt,password,create_time,update_time,valid,creater,locked)
@@ -50,5 +55,9 @@
 
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_qx_user
+    </select>
+
+    <select id="getUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_user WHERE user_name = #{username,jdbcType=VARCHAR}
     </select>
 </mapper>

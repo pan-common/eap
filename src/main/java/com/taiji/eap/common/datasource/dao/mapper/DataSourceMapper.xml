@@ -61,7 +61,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.datasource.bean.DataSource">
         <selectKey resultType="java.lang.Long" keyProperty="datasourceId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS datasource_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS datasource_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_database_datasource.nextval AS datasource_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_formconf_database(
         datasource_id,datasource_type,bean_name,connect_name,driver_class_name,url,username,password)

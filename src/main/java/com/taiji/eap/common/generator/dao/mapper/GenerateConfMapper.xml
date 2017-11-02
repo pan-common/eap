@@ -42,7 +42,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.generator.bean.GenerateConf">
         <selectKey resultType="java.lang.Long" keyProperty="configId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS config_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS config_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_generate_conf_config_id_.nextval AS config_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_sys_generate_conf(
         config_id,driver_class,connection_url,user_id,password,table_schema,table_name,alias,alias_use,package_name,project_path,file_path,delete_way,page_path,page_file_path,generate_items,is_tree,parent_field,name_field,form_column_num,menu_id,menu_name,column_extend_id)

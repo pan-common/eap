@@ -6,6 +6,7 @@ import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.dao.SysUserDao;
+import com.taiji.eap.common.shiro.helper.PasswordHelper;
 import com.taiji.eap.common.shiro.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class SysUserServiceImpl implements SysUserService{
     @Autowired
     private SysUserDao sysUserDao;
 
+    @Autowired
+    private PasswordHelper passwordHelper;
+
     @Transactional
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
@@ -31,6 +35,7 @@ public class SysUserServiceImpl implements SysUserService{
     @Transactional
     @Override
     public int insert(SysUser sysUser) {
+        passwordHelper.encryptPassword(sysUser);
         return sysUserDao.insert(sysUser);
     }
 
@@ -88,5 +93,11 @@ public class SysUserServiceImpl implements SysUserService{
             }
         }
         return k;
+    }
+
+    @Override
+    public SysUser getUserByName(String username) {
+        SysUser sysUser =  sysUserDao.getUserByName(username);
+        return sysUser;
     }
 }

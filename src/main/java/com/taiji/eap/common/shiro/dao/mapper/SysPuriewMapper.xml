@@ -28,7 +28,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysPuriew">
         <selectKey resultType="java.lang.Long" keyProperty="puriewId" order="AFTER">
-            SELECT LAST_INSERT_ID() AS puriew_id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS puriew_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_puriew_puriew_id_seq.nextval AS puriew_id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_puriew(
         puriew_id,name,seq,expression,create_time,update_time,valid,creater)
@@ -49,5 +54,15 @@
 
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_qx_puriew
+    </select>
+
+    <select id="listByIds" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        <where>
+            puriew_id IN
+            <foreach item="item" index="index" collection="puriewIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </select>
 </mapper>

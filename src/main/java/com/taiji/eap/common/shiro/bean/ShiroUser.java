@@ -11,7 +11,7 @@ public class ShiroUser extends BaseModel{
 	 */
 	private static final long serialVersionUID = -1662003069095823814L;
 
-	private String userId;
+	private Long userId;
 
 	private String userName;
 
@@ -23,26 +23,11 @@ public class ShiroUser extends BaseModel{
 
 	private List<Long> organs;//部门列表
 
-	public ShiroUser(String userId, String userName, String fullName,
-			List<String> resources, List<Long> roles, List<Long> organs) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.fullName = fullName;
-		this.resources = resources;
-		this.roles = roles;
-		this.organs = organs;
-	}
-
-	public ShiroUser() {
-		super();
-	}
-
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

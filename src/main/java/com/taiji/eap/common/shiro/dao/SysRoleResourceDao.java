@@ -46,4 +46,6 @@ public interface SysRoleResourceDao {
     List<Long> getResourceIdsByRoleId(Long roleId);
 
     int deleteByRoleId(Long roleId);
+
+    List<Long> getResourceIdsByRoleIds(@Param("roleIdList") List<Long> roleIdList);
 }

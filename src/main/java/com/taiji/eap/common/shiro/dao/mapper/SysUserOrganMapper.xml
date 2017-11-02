@@ -22,7 +22,12 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysUserOrgan">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_user_organ_id_seq.nextval AS id FROM dual
+            </if>
         </selectKey>
         INSERT INTO t_qx_user_organ(
         id,user_id,organ_id)

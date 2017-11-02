@@ -74,12 +74,6 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         Map<Object,Object> datasources = getDataSources();
         List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
 
-        List<DataSource> list = dataSourceDao.selectAll();
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setName(list.get(i).getConnectName()+"@"+parseUrl(list.get(i).getUrl())[0]);
-            list.get(i).setType(LayuiTree.CONNECT);
-            dataSources.add(list.get(i));
-        }
         for (Map.Entry entry: datasources.entrySet()) {
             String key = (String) entry.getKey();
             DruidDataSource value = (DruidDataSource) entry.getValue();
@@ -95,6 +89,16 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             dataSource.setType(LayuiTree.CONNECT);
             dataSources.add(dataSource);
         }
+
+        List<DataSource> list = dataSourceDao.selectAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(!datasources.containsKey(list.get(i).getBeanName())) {
+                list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
+                list.get(i).setType(LayuiTree.CONNECT);
+                dataSources.add(list.get(i));
+            }
+        }
+
         return dataSources;
     }
 

@@ -21,6 +21,11 @@ public class SysUser extends BaseModel{
     private Long creater;//创建人
     private Integer locked;//是否被锁住  0没有被锁  1被锁
 
+    //证书凭证
+    public String getCredentialsSalt() {
+        return userName + salt;
+    }
+
     public Long getUserId() {
         return userId;
     }
