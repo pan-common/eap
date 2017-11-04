@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.redis.dao.RedisKeyDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.redis.bean.RedisKey">
+        <id column="key_id" property="keyId" jdbcType="DECIMAL"></id>
+        <result column="key_value" property="keyValue" jdbcType="VARCHAR" />
+        <result column="key_name" property="keyName" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="key_type" property="keyType" jdbcType="VARCHAR" />
+        <result column="key_note" property="keyNote" jdbcType="VARCHAR" />
+        <result column="data_size" property="dataSize" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_redis_keys
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_redis_keys
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_redis_keys
+        WHERE key_id = #{keyId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.redis.bean.RedisKey">
+        <selectKey resultType="java.lang.Long" keyProperty="keyId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS key_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_redis_keys_key_id_SEQ.nextval AS key_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_sys_redis_keys(
+        key_id,key_value,key_name,parent_id,key_type,key_note,data_size)
+        VALUES(
+        #{keyId,jdbcType=DECIMAL},#{keyValue,jdbcType=VARCHAR},#{keyName,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{keyType,jdbcType=VARCHAR},#{keyNote,jdbcType=VARCHAR},#{dataSize,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.redis.bean.RedisKey">
+        UPDATE t_sys_redis_keys SET
+        key_id=#{keyId,jdbcType=DECIMAL},key_value=#{keyValue,jdbcType=VARCHAR},key_name=#{keyName,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},key_type=#{keyType,jdbcType=VARCHAR},key_note=#{keyNote,jdbcType=VARCHAR},data_size=#{dataSize,jdbcType=VARCHAR}
+        WHERE key_id = #{keyId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_sys_redis_keys WHERE key_id = #{keyId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_redis_keys
+    </select>
+</mapper>

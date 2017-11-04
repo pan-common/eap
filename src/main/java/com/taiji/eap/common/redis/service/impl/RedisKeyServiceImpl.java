@@ -1,0 +1,132 @@
+package com.taiji.eap.common.redis.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.generator.bean.EasyUISubmitData;
+import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.redis.bean.RedisKey;
+import com.taiji.eap.common.redis.dao.RedisKeyDao;
+import com.taiji.eap.common.redis.service.RedisKeyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+@Service
+public class RedisKeyServiceImpl implements RedisKeyService{
+
+    @Autowired
+    private RedisKeyDao redisKeyDao;
+
+    @Transactional
+    @Override
+    public int deleteByPrimaryKey(Long primaryKey) {
+        int k = 0;
+        k+=redisKeyDao.deleteByPrimaryKey(primaryKey);
+        recursiveDelete(primaryKey);
+        return k;
+    }
+
+    @Transactional
+    @Override
+    public int insert(RedisKey redisKey) {
+        return redisKeyDao.insert(redisKey);
+    }
+
+    @Override
+    public RedisKey selectByPrimaryKey(Long primaryKey) {
+        return redisKeyDao.selectByPrimaryKey(primaryKey);
+    }
+
+    @Transactional
+    @Override
+    public int updateByPrimaryKey(RedisKey redisKey) {
+        return redisKeyDao.updateByPrimaryKey(redisKey);
+    }
+
+    @Override
+    public List<RedisKey> list(String searchText) {
+        return redisKeyDao.list(searchText);
+    }
+
+    @Override
+    public PageInfo<RedisKey> list(int pageNum, int pageSize, String searchText) throws Exception {
+        PageHelper.startPage(pageNum,pageSize);
+        List<RedisKey> redisKeys = redisKeyDao.list(searchText);
+        PageInfo<RedisKey> pageInfo = new PageInfo<RedisKey>(redisKeys);
+        return pageInfo;
+    }
+
+    @Override
+    public List<RedisKey> listByPid(Long parentId) throws Exception {
+        return redisKeyDao.listByPid(parentId,"");
+    }
+
+    @Override
+    public PageInfo<RedisKey> listByPid(Long parentId, int pageNum, int pageSize, String searchText) throws Exception {
+        PageHelper.startPage(pageNum, pageSize);
+        List<RedisKey> list = redisKeyDao.listByPid(parentId,searchText);
+        PageInfo<RedisKey> pageInfo = new PageInfo<RedisKey>(list);
+        return pageInfo;
+    }
+
+    @Override
+    public List<RedisKey> getPath(Long keyId) throws Exception {
+        List<RedisKey> list = new ArrayList<RedisKey>();
+        if(keyId!=0){
+            disPlay(keyId, list);
+        }
+        list.add(new RedisKey(0L,"根路径"));
+        Collections.reverse(list);
+        return list;
+    }
+
+    @Override
+    public List<LayuiTree> treeView(Long parentId) throws Exception {
+        List<RedisKey> list = redisKeyDao.selectAll();
+        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        for (RedisKey tree: list) {
+            if(parentId==tree.getParentId()){
+                trees.add(findChildren(tree,list));
+            }
+        }
+        return trees;
+    }
+
+    private RedisKey findChildren(RedisKey tree,List<RedisKey> list){
+        for (RedisKey redisKey:list) {
+            redisKey.setName(redisKey.getKeyName());
+            redisKey.setSpread(true);
+            if(tree.getKeyId()==redisKey.getParentId()){
+                tree.getChildren().add(findChildren(redisKey,list));
+            }
+        }
+        return tree;
+    }
+
+    private void disPlay(Long keyId,List<RedisKey> list){
+        RedisKey redisKey = redisKeyDao.selectByPrimaryKey(keyId);
+        if(redisKey!=null){
+            list.add(redisKey);
+            disPlay(redisKey.getParentId(), list);
+        }
+    }
+
+    /**
+    * 递归删除
+    * @param parentId
+    */
+    private void recursiveDelete(Long parentId){
+        List<RedisKey> redisKeys =redisKeyDao.listByPid(parentId,"");
+        if(redisKeys!=null&&!redisKeys.isEmpty()){
+            for (RedisKey redisKey: redisKeys) {
+                redisKeyDao.deleteByPrimaryKey(redisKey.getKeyId());
+                recursiveDelete(redisKey.getKeyId());
+            }
+        }
+    }
+}
