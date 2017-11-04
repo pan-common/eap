@@ -12,6 +12,7 @@ public @interface Excel {
      */
     String name();
 
+
     /**
      * 配置列的名称,对应A,B,C,D....
      */
