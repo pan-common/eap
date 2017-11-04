@@ -50,7 +50,6 @@
         SELECT * FROM t_formconf_database
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>

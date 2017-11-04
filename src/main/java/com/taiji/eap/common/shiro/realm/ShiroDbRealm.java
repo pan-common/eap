@@ -1,5 +1,6 @@
 package com.taiji.eap.common.shiro.realm;
 
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.ShiroUser;
 import com.taiji.eap.common.shiro.bean.SysPuriew;
 import com.taiji.eap.common.shiro.service.*;
@@ -38,6 +39,9 @@ public class ShiroDbRealm extends AuthorizingRealm{
 	@Autowired
 	private SysPuriewService sysPuriewService;
 
+	@Autowired
+	private RedisFactoryDao<String> redisFactoryDao;
+
 	/**
 	 * 验证当前登陆用户
 	 */
@@ -62,28 +66,33 @@ public class ShiroDbRealm extends AuthorizingRealm{
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SysUser sysUser = (SysUser) principals.getPrimaryPrincipal();
-		List<Long> roleIdList = sysRoleService.getRoleIdsByUserId(sysUser.getUserId());
-		List<Long> organIdList = sysOrganService.getOrganIdsByUserId(sysUser.getUserId());
-		ShiroUser shiroUser = new ShiroUser();
-		shiroUser.setUserId(sysUser.getUserId());
-		shiroUser.setFullName(sysUser.getUserName());
-		shiroUser.setUserName(sysUser.getUserName());
-		shiroUser.setOrgans(organIdList);
-		shiroUser.setRoles(roleIdList);
-		List<Long> tempResourceIds = new ArrayList<>();
-		Set<Long> set = new HashSet<>();
-		List<Long> resourceIds = new ArrayList<>();
-		tempResourceIds.addAll(sysResourceService.getResourceIdsByOrganIds(organIdList));
-		tempResourceIds.addAll(sysResourceService.getResourceIdsByRoleIds(roleIdList));
-		for (Long resourceId: tempResourceIds) {
-			if(set.add(resourceId)){
-				resourceIds.add(resourceId);
-			}
-		}
-		List<SysPuriew> sysPuriews = sysPuriewService.getPuriewByResourceIds(resourceIds);
-		Set<String> permissions = new HashSet<>();
-		for (SysPuriew sysPuriew: sysPuriews) {
-			permissions.add(sysPuriew.getExpression());
+		List<String> permissions = null;
+		try {
+			permissions = redisFactoryDao.getDatas("", new RedisFactoryDao.OnRedisSelectListener() {
+                @Override
+                public List fruitless() {
+                	List<String> permissions = new ArrayList<>();
+					List<Long> roleIdList = sysRoleService.getRoleIdsByUserId(sysUser.getUserId());
+					List<Long> organIdList = sysOrganService.getOrganIdsByUserId(sysUser.getUserId());
+					List<Long> tempResourceIds = new ArrayList<>();
+					Set<Long> set = new HashSet<>();
+					List<Long> resourceIds = new ArrayList<>();
+					tempResourceIds.addAll(sysResourceService.getResourceIdsByOrganIds(organIdList));
+					tempResourceIds.addAll(sysResourceService.getResourceIdsByRoleIds(roleIdList));
+					for (Long resourceId: tempResourceIds) {
+						if(set.add(resourceId)){
+							resourceIds.add(resourceId);
+						}
+					}
+					List<SysPuriew> sysPuriews = sysPuriewService.getPuriewByResourceIds(resourceIds);
+					for (SysPuriew sysPuriew: sysPuriews) {
+						permissions.add(sysPuriew.getExpression());
+					}
+                    return permissions;
+                }
+            });
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.addStringPermissions(permissions);

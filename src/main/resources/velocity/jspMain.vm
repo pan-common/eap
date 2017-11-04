@@ -211,7 +211,7 @@ pageEncoding="UTF-8"%>
                             var html = "";
                             for (var i = 0; i < result.length; i++) {
 #set($breadcrumbName = "result[i]."+"#getPkProperty($columns)")
-#set($breadcrumbTitle = "result[i]."+${param.nameField})
+#set($breadcrumbTitle = "result[i]."+"#camel(${param.nameField})")
                                  var html = '<li><a class="clickEffect" name="'
                                 +${breadcrumbName}+'">'+ ${breadcrumbTitle}+'</a></li>';
                                 $(".breadcrumb").append(html);

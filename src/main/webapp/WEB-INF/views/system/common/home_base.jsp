@@ -42,4 +42,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.exhide.min.js"></script>
-
+<script type="text/javascript">
+    var baseServerUrl = "${pageContext.request.contextPath}/";
+</script>

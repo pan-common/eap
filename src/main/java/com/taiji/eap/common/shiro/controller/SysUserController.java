@@ -138,4 +138,12 @@ public class SysUserController extends BaseController{
         return renderSuccess("登陆成功");
     }
 
+    @PostMapping(value = "logout")
+    @ResponseBody
+    public Response<String> logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return renderSuccess("注销成功");
+    }
+
 }

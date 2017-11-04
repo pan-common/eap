@@ -124,7 +124,7 @@ To change this template use File | Settings | File Templates.
             check:{
                 enable: true,
                 chkStyle: "checkbox",
-                chkboxType: { "Y": "s", "N": "s" }
+                chkboxType: { "Y": "p", "N": "s" }
             },
             callback:{
                 onAsyncSuccess:function (event, treeId, treeNode, data) {

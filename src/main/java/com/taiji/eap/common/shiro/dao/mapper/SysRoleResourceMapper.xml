@@ -11,7 +11,6 @@
         SELECT * FROM t_qx_role_resource
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -57,10 +56,12 @@
     <select id="getResourceIdsByRoleIds" resultType="java.lang.Long">
         SELECT resource_id FROM t_qx_role_resource
         <where>
-            role_id IN
-            <foreach item="item" index="index" collection="roleIdList" open="(" separator="," close=")">
-                #{item}
-            </foreach>
+            <if test="roleIdList!=null and roleIdList.size()>0">
+                role_id IN
+                <foreach item="item" index="index" collection="roleIdList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
         </where>
     </select>
 

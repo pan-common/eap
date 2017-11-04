@@ -22,7 +22,6 @@
         SELECT * FROM t_test_test1
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>

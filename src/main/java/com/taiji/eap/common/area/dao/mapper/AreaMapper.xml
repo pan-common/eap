@@ -8,7 +8,7 @@
         <result column="short_name" property="shortName" jdbcType="VARCHAR" />
         <result column="lng" property="lng" jdbcType="VARCHAR" />
         <result column="lat" property="lat" jdbcType="VARCHAR" />
-        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="level_" property="level" jdbcType="INTEGER" />
         <result column="position" property="position" jdbcType="VARCHAR" />
         <result column="sort" property="sort" jdbcType="INTEGER" />
     </resultMap>
@@ -17,7 +17,6 @@
         SELECT * FROM t_sys_area
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
         ORDER BY sort
@@ -27,7 +26,6 @@
         <where>
             parent_id = #{parentId,jdbcType=INTEGER}
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
         ORDER BY sort
@@ -39,7 +37,7 @@
 
     <insert id="insert" parameterType="com.taiji.eap.common.area.bean.Area">
         INSERT INTO t_sys_area(
-        area_id,area_name,parent_id,short_name,lng,lat,level,position,sort)
+        area_id,area_name,parent_id,short_name,lng,lat,level_,position,sort)
         VALUES(
         #{areaId,jdbcType=INTEGER},#{areaName,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER},#{shortName,jdbcType=VARCHAR},#{lng,jdbcType=VARCHAR},#{lat,jdbcType=VARCHAR},#{level,jdbcType=INTEGER},#{position,jdbcType=VARCHAR},#{sort,jdbcType=INTEGER}
         )
@@ -47,7 +45,7 @@
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.area.bean.Area">
         UPDATE t_sys_area SET
-        area_id=#{areaId,jdbcType=INTEGER},area_name=#{areaName,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=INTEGER},short_name=#{shortName,jdbcType=VARCHAR},lng=#{lng,jdbcType=VARCHAR},lat=#{lat,jdbcType=VARCHAR},level=#{level,jdbcType=INTEGER},position=#{position,jdbcType=VARCHAR},sort=#{sort,jdbcType=INTEGER}
+        area_id=#{areaId,jdbcType=INTEGER},area_name=#{areaName,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=INTEGER},short_name=#{shortName,jdbcType=VARCHAR},lng=#{lng,jdbcType=VARCHAR},lat=#{lat,jdbcType=VARCHAR},level_=#{level,jdbcType=INTEGER},position=#{position,jdbcType=VARCHAR},sort=#{sort,jdbcType=INTEGER}
         WHERE area_id = #{areaId,jdbcType=INTEGER}
     </update>
 
@@ -60,6 +58,6 @@
     </select>
 
     <select id="selectLevel3" resultMap="BaseResultMap">
-        SELECT * FROM t_sys_area WHERE level NOT IN (4,0)
+        SELECT * FROM t_sys_area WHERE level_ NOT IN (4,0)
     </select>
 </mapper>

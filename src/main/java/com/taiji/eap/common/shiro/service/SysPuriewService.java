@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysPuriew;
 import java.util.List;
+import java.util.Map;
 
 public interface SysPuriewService{
      /**
@@ -53,4 +54,10 @@ public interface SysPuriewService{
      * @return
      */
     List<SysPuriew> getPuriewByResourceIds(List<Long> resourceIds);
+
+    /***
+     * 获取权限全局配置
+     * @return
+     */
+    List<Map<String,Object>> globalConfig();
 }

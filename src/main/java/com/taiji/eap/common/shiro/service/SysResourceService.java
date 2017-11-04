@@ -77,6 +77,8 @@ public interface SysResourceService{
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
 
+    List<LayuiTree> treeViewByUser(Long parentId) throws Exception;
+
     /**
      * 通过角色ID获取资源ID列表
      * @param roleId

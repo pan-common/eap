@@ -11,7 +11,6 @@
         SELECT * FROM t_qx_puriew_resource
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -44,6 +43,10 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM t_qx_puriew_resource WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <delete id="deleteByResourceId" parameterType="java.lang.Long">
+        DELETE FROM t_qx_puriew_resource WHERE resource_id=#{resourceId,jdbcType=DECIMAL}
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">

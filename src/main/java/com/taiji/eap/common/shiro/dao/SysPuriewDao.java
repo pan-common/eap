@@ -3,6 +3,7 @@ package com.taiji.eap.common.shiro.dao;
 import com.taiji.eap.common.shiro.bean.SysPuriew;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
+import java.util.Map;
 
 public interface SysPuriewDao {
      /**
@@ -48,4 +49,10 @@ public interface SysPuriewDao {
      * @return
      */
     List<SysPuriew> listByIds(@Param("puriewIds") List<Long> puriewIds);
+
+    /**
+     *
+     * @return
+     */
+    List<Map<String,Object>> globalConfig();
 }

@@ -9,7 +9,7 @@
 
 	<description>shiro配置文件</description>
 
-	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroDbRealm"></property>
 		<!--将缓存管理器，交给安全管理器 -->
 		<property name="cacheManager" ref="shiroEhcacheManager" />
@@ -31,10 +31,9 @@
 	<!-- 后台管理系统过滤器 -->
 	<bean id="systemFilter"
 		  class="com.taiji.eap.common.shiro.filter.SystemAuthenticationFilter">
-		<property name="loginUrl" value="/system/login/login" />
-		<property name="successUrl" value="/system/home/home" />
+		<property name="loginUrl" value="/system/login" />
+		<property name="successUrl" value="/system/home" />
 	</bean>
-
 	<bean id="shiroDbRealm" class="com.taiji.eap.common.shiro.realm.ShiroDbRealm">
 		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
 		<property name="cachingEnabled" value="false"></property>
@@ -52,11 +51,11 @@
 		<!-- Shiro的核心安全接口,这个属性是必须的 -->
 		<property name="securityManager" ref="securityManager" />
 		<!-- 用户访问未对其授权的资源时，所显示的连接 -->
-		<property name="unauthorizedUrl" value="/system/login/login" />
+		<property name="unauthorizedUrl" value="/system/login" />
 		<!-- 身份认证失败，则跳转到登录页面的配置 -->
-		<property name="loginUrl" value="/system/login/login" />
+		<property name="loginUrl" value="/system/login" />
 		<!-- 登陆成功后要跳转的连接 -->
-		<property name="successUrl" value="/system/home/home" />
+		<property name="successUrl" value="/system/home" />
 		<property name="filters">
 			<map>
 				<entry key="system" value-ref="systemFilter" />
@@ -65,9 +64,8 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/resources/**=anon<!-- 静态资源 -->
-				/system/login/login/**=anon
-
-				/system/home/home/**=system
+				/system/**=system
+				/=system
 			</value>
 		</property>
 	</bean>
@@ -107,7 +105,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="org.apache.shiro.authz.UnauthorizedException">
-					/system/login/login
+					/system/login
 				</prop>
 			</props>
 		</property>

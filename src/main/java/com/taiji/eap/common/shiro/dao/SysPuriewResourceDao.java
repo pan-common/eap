@@ -48,4 +48,11 @@ public interface SysPuriewResourceDao {
      * @return
      */
     List<Long> getPuriewByResourceIds(@Param("resourceIds") List<Long> resourceIds);
+
+    /**
+     * 通过资源ID删除资源权限关系
+     * @param primaryKey
+     * @return
+     */
+    int deleteByResourceId(@Param("primaryKey") Long primaryKey);
 }

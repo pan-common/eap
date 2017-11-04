@@ -31,7 +31,12 @@
         SELECT * FROM t_sys_generate_conf
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT(table_name,',',alias) LIKE CONCAT("%",#{searchText},"%")
+                <if test="_databaseId == 'mysql'">
+                    AND CONCAT(table_name,',',alias) LIKE CONCAT("%",#{searchText},"%")
+                </if>
+                <if test="_databaseId == 'oracle'">
+                    AND table_name||','||alias LIKE '%'||#{searchText}||'%'
+                </if>
             </if>
         </where>
     </select>

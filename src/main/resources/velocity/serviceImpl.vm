@@ -157,7 +157,7 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
     }
 
     private void disPlay(#getPkFieldType($columns) #getPkProperty($columns),List<#toUpperCase(${param.alias})> list){
-    #toUpperCase(${param.alias}) ${param.alias} = ${param.alias}Dao.selectByPrimaryKey(#getPkProperty($columns));
+        #toUpperCase(${param.alias}) ${param.alias} = ${param.alias}Dao.selectByPrimaryKey(#getPkProperty($columns));
         if(${param.alias}!=null){
             list.add(${param.alias});
             disPlay(${param.alias}.get#camelToUpperCase(${parentField})(), list);

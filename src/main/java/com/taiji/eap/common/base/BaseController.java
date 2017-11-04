@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-public class BaseController {
+public class BaseController extends BaseShiro{
 
 	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);
 
@@ -51,10 +51,7 @@ public class BaseController {
 		return view;
 	}
 	
-	protected ShiroUser getShiroUser(){
-		ShiroUser shiroUser = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return shiroUser;
-	}
+
 	/**
 	 * 返回失败信息
 	 * @param <T>

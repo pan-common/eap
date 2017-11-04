@@ -21,7 +21,7 @@
         SELECT * FROM t_qx_resource
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+
             </if>
         </where>
         ORDER BY seq
@@ -31,7 +31,7 @@
         <where>
             parent_id = #{parentId,jdbcType=DECIMAL}
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+
             </if>
         </where>
         ORDER BY seq
@@ -74,10 +74,12 @@
     <select id="selectByIds" resultMap="BaseResultMap">
         SELECT * FROM t_qx_resource
         <where>
+            <if test="resourceIds!=null and resourceIds.size()>0">
             resource_id IN
             <foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
                 #{item}
             </foreach>
+            </if>
         </where>
         ORDER BY seq
     </select>

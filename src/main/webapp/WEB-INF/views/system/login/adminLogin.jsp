@@ -45,7 +45,7 @@
             $.post(baseServerUrl+"sysUser/doLogin",$("#loginform").serializeArray(),function (data,status) {
                 if(status=='success'){
                     if(data.body.resultCode=="0"){
-                        window.location.href = baseServerUrl+"home";
+                        window.location.href = baseServerUrl+"system/home";
                     }else {
                         layer.msg(data.body.resultContent, {icon: 5});
                     }

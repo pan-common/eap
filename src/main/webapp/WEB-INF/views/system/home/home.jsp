@@ -50,7 +50,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="${pageContext.request.contextPath}/user/logout">
+                            <a onclick="logout()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 <spring:message code="main.logout"></spring:message>
                             </a>
@@ -145,7 +145,7 @@
             });
         }).resize();
 
-        $.get('${pageContext.request.contextPath}/sysResource/treeView',
+        $.get('${pageContext.request.contextPath}/sysResource/treeViewByUser',
             {
                 parentId:0
             }, function (data, status) {
@@ -319,6 +319,29 @@
             }
         });
     });
+
+    function logout() {
+        layer.confirm("确定退出当前用户？",{
+            btn:['确定','取消']
+        },function () {
+            $.post(baseServerUrl+"sysUser/logout",{},function (data,status) {
+                if(status=='success'){
+                    if(data.body.resultCode=="0"){
+                        window.location.href = baseServerUrl;
+                    }else {
+                        layer.msg(data.body.resultContent, {icon: 5});
+                    }
+                }else {
+                    layer.msg('网络错误', {icon: 5});
+                }
+            }).error(function (e) {
+                layer.msg('网络错误'+e.status, {icon: 5});
+            });
+        },function(){
+            layer.close(layer.index);
+        });
+    }
+
     Date.prototype.Format = function (fmt) { //author: meizz
         var o = {
             "M+": this.getMonth() + 1, //月份

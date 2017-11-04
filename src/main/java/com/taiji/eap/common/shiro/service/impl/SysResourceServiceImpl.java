@@ -2,25 +2,29 @@ package com.taiji.eap.common.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.base.BaseServiceImpl;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.*;
 import com.taiji.eap.common.shiro.dao.*;
+import com.taiji.eap.common.shiro.redis.SysResourceRedisDao;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class SysResourceServiceImpl implements SysResourceService{
+public class SysResourceServiceImpl extends BaseServiceImpl implements SysResourceService{
 
     @Autowired
     private SysResourceDao sysResourceDao;
+    @Autowired
+    private SysUserRoleDao sysUserRoleDao;
+    @Autowired
+    private SysUserOrganDao sysUserOrganDao;
     @Autowired
     private SysRoleResourceDao sysRoleResourceDao;//角色资源关系
     @Autowired
@@ -29,12 +33,15 @@ public class SysResourceServiceImpl implements SysResourceService{
     private SysPuriewResourceDao sysPuriewResourceDao;//
     @Autowired
     private SysPuriewDao sysPuriewDao;
+    @Autowired
+    private RedisFactoryDao<LayuiTree> layuiTreeRedisFactoryDao;
 
     @Transactional
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
         int k = 0;
         k+=sysResourceDao.deleteByPrimaryKey(primaryKey);
+        k+=sysPuriewResourceDao.deleteByResourceId(primaryKey);
         recursiveDelete(primaryKey);
         return k;
     }
@@ -112,13 +119,45 @@ public class SysResourceServiceImpl implements SysResourceService{
     @Override
     public List<LayuiTree> treeView(Long parentId) throws Exception {
         List<SysResource> list = sysResourceDao.selectAll();
-        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        List<LayuiTree> trees = new ArrayList<>();
         for (SysResource tree: list) {
             if(parentId==tree.getParentId()){
                 trees.add(findChildren(tree,list));
             }
         }
         return trees;
+    }
+
+    @Override
+    public List<LayuiTree> treeViewByUser(Long parentId) throws Exception {
+        SysUser sysUser = getCurrentUser();
+        List<LayuiTree> list = layuiTreeRedisFactoryDao.getDatas("userId:sysResource:"+sysUser.getUserId(),
+                new RedisFactoryDao.OnRedisSelectListener<LayuiTree>() {
+            @Override
+            public List fruitless() {
+                List<Long> roleIdList = sysUserRoleDao.getRoleIdsByUserId(sysUser.getUserId());
+                List<Long> organIdList = sysUserOrganDao.getOrganIdsByUserId(sysUser.getUserId());
+                List<Long> tempResourceIds = new ArrayList<>();
+                List<Long> resourceIds = new ArrayList<>();
+                Set<Long> set = new HashSet<>();
+                tempResourceIds.addAll(sysOrganResourceDao.getResourceIdsByOrganIds(organIdList));
+                tempResourceIds.addAll(sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList));
+                for (Long resourceId : tempResourceIds) {
+                    if (set.add(resourceId)) {
+                        resourceIds.add(resourceId);
+                    }
+                }
+                List<SysResource> list = sysResourceDao.selectByIds(resourceIds);
+                List<LayuiTree> trees = new ArrayList<>();
+                for (SysResource tree: list) {
+                    if(parentId==tree.getParentId()){
+                        trees.add(findChildren(tree,list));
+                    }
+                }
+                return trees;
+            }
+        });
+        return list;
     }
 
     private SysResource findChildren(SysResource tree,List<SysResource> list){

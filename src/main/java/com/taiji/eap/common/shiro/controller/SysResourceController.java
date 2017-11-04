@@ -154,6 +154,18 @@ public class SysResourceController extends BaseController{
         return renderSuccess(layuiTrees);
     }
 
+    @GetMapping(value = "treeViewByUser")
+    @ResponseBody
+    public Response<List<LayuiTree>> treeViewByUser(Long parentId){
+        List<LayuiTree> layuiTrees = null;
+        try {
+            layuiTrees = sysResourceService.treeViewByUser(parentId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return renderSuccess(layuiTrees);
+    }
+
 
     @GetMapping(value = "getResourceIdsByRoleId")
     @ResponseBody

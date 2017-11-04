@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+@RequestMapping("system")
+public class SystemController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SystemController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping(value = "/login")
 	public String index(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -37,7 +38,7 @@ public class HomeController {
 		return "system/login/adminLogin";
 	}
 
-	@GetMapping("home")
+	@GetMapping("/home")
 	public String home(){
 		return "system/home/home";
 	}

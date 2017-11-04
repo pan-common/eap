@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysPuriewServiceImpl implements SysPuriewService{
@@ -65,5 +66,10 @@ public class SysPuriewServiceImpl implements SysPuriewService{
         List<Long> puriewIds = sysPuriewResourceDao.getPuriewByResourceIds(resourceIds);
         List<SysPuriew> sysPuriews = sysPuriewDao.listByIds(puriewIds);
         return sysPuriews;
+    }
+
+    @Override
+    public List<Map<String, Object>> globalConfig() {
+        return sysPuriewDao.globalConfig();
     }
 }

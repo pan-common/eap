@@ -17,7 +17,12 @@
         <where>
             valid = '1'
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+                <if test="_databaseId == 'mysql'">
+                    AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+                </if>
+                <if test="_databaseId == 'oracle'">
+                    AND name LIKE '%'||#{searchText}||'%'
+                </if>
             </if>
         </where>
     </select>
@@ -26,7 +31,12 @@
         <where>
             parent_id = #{parentId,jdbcType=DECIMAL} AND valid = '1'
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+                <if test="_databaseId == 'mysql'">
+                    AND CONCAT(name) LIKE CONCAT("%",#{searchText},"%")
+                </if>
+                <if test="_databaseId == 'oracle'">
+                    AND name LIKE '%'||#{searchText}||'%'
+                </if>
             </if>
         </where>
     </select>

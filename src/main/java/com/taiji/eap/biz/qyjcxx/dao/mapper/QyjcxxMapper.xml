@@ -22,7 +22,6 @@
         SELECT * FROM t_test_qyjcxx
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -30,7 +29,6 @@
         SELECT * FROM t_test_qyjcxx
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
@@ -39,7 +37,6 @@
         <where>
             parent_id = #{parentId,jdbcType=DECIMAL}
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>

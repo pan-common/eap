@@ -13,7 +13,6 @@
         SELECT * FROM t_biz_regist_item
         <where>
             <if test="searchText!=null and searchText!=''">
-                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
         </where>
     </select>
