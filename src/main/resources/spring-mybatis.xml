@@ -75,8 +75,9 @@
 				<entry key="dataSourceOracle" value-ref="dataSourceOracle"></entry>
 			</map>
 		</property>
-		<property name="defaultTargetDataSource" ref="dataSourceOracle"></property>
+		<property name="defaultTargetDataSource" ref="dataSource"></property>
 	</bean>
+
 	<!--支持多类型数据库配置-->
 	<bean id="vendorProperties"
 		  class="org.springframework.beans.factory.config.PropertiesFactoryBean">

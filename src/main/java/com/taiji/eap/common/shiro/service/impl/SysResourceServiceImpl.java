@@ -34,7 +34,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Autowired
     private SysPuriewDao sysPuriewDao;
     @Autowired
-    private RedisFactoryDao<LayuiTree> layuiTreeRedisFactoryDao;
+    private RedisFactoryDao<LayuiTree> redisFactoryDao;
 
     @Transactional
     @Override
@@ -131,7 +131,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Override
     public List<LayuiTree> treeViewByUser(Long parentId) throws Exception {
         SysUser sysUser = getCurrentUser();
-        List<LayuiTree> list = layuiTreeRedisFactoryDao.getDatas("userId:sysResource:"+sysUser.getUserId(),
+        List<LayuiTree> list = redisFactoryDao.getDatas("userId:sysResource:"+sysUser.getUserId(),
                 new RedisFactoryDao.OnRedisSelectListener<LayuiTree>() {
             @Override
             public List fruitless() {

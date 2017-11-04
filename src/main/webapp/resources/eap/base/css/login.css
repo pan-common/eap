@@ -1,9 +1,13 @@
 .fl {
     float: left;
+    margin-top: 20px;
+    cursor:pointer;
 }
 
 .fr {
     float: right;
+    margin-top: 20px;
+    cursor:pointer;
 }
 
 .login-main{
@@ -13,7 +17,7 @@
     bottom: 0;
     left: 0;
     width: 25%;
-    height: 60%;
+    height: 55%;
     margin: 0 auto;
     margin-top: 100px;
     border:1px solid #ddd;

@@ -1,6 +1,7 @@
 package com.taiji.eap.common.redis.dao.impl;
 
 import com.taiji.eap.common.redis.dao.RedisGeneratorDao;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.stereotype.Repository;
 
@@ -118,17 +119,21 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<S
      * @return
      * @throws Exception 参数不能为空
      */
-    public List<T> getDatas(String key,OnRedisSelectListener listener) throws Exception{
-        if(listener==null){
-            throw new Exception("OnRedisSelectListener参数不能为空");
-        }
+    public List<T> getDatas(String key,OnRedisSelectListener listener){
         ListOperations<String,T> listOperations = redisTemplate.opsForList();
-        boolean flag = listOperations.size(key)>0?true:false;
-        if(flag){
-            return listOperations.range(key,0,listOperations.size(key));
-        }else {
+
+        try {
+            boolean flag = listOperations.size(key)>0?true:false;
+            if(flag){
+                return listOperations.range(key,0,listOperations.size(key));
+            }else {
+                List<T> list = listener.fruitless();
+                addList(key,list);
+                return list;
+            }
+        } catch (RedisConnectionFailureException e) {
+            e.printStackTrace();
             List<T> list = listener.fruitless();
-            addList(key,list);
             return list;
         }
     }
