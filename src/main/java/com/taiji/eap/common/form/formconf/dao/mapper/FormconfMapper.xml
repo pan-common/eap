@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.form.formconf.dao.FormconfDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.form.formconf.bean.Formconf">
+        <id column="form_id" property="formId" jdbcType="DECIMAL"></id>
+        <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="form_name" property="formName" jdbcType="VARCHAR"/>
+        <result column="form_alias" property="formAlias" jdbcType="VARCHAR"/>
+        <result column="form_note" property="formNote" jdbcType="VARCHAR"/>
+        <result column="form_type" property="formType" jdbcType="VARCHAR"/>
+        <result column="form_status" property="formStatus" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_main
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_main
+        WHERE form_id = #{formId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.form.formconf.bean.Formconf">
+        <selectKey resultType="java.lang.Long" keyProperty="formId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS form_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_main_form_id_SEQ.nextval AS form_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_formconf_main(
+        form_id,seq,form_name,form_alias,form_note,form_type,form_status)
+        VALUES(
+        #{formId,jdbcType=DECIMAL},#{seq,jdbcType=INTEGER},#{formName,jdbcType=VARCHAR},#{formAlias,jdbcType=VARCHAR},#{formNote,jdbcType=VARCHAR},#{formType,jdbcType=VARCHAR},#{formStatus,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.form.formconf.bean.Formconf">
+        UPDATE t_formconf_main SET
+        form_id=#{formId,jdbcType=DECIMAL},seq=#{seq,jdbcType=INTEGER},form_name=#{formName,jdbcType=VARCHAR},form_alias=#{formAlias,jdbcType=VARCHAR},form_note=#{formNote,jdbcType=VARCHAR},form_type=#{formType,jdbcType=VARCHAR},form_status=#{formStatus,jdbcType=VARCHAR}
+        WHERE form_id = #{formId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_main WHERE form_id = #{formId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_main
+    </select>
+</mapper>

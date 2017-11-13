@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.form.formconfVersion.dao.FormconfVersionDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.form.formconfVersion.bean.FormconfVersion">
+        <id column="form_version_id" property="formVersionId" jdbcType="DECIMAL"></id>
+        <result column="form_id" property="formId" jdbcType="DECIMAL" />
+        <result column="version_number" property="versionNumber" jdbcType="VARCHAR" />
+        <result column="version_note" property="versionNote" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_version
+        <where>
+            1=1
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+            <if test="formId!=null">
+                AND form_id = #{formId,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_version
+        WHERE form_version_id = #{formVersionId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.form.formconfVersion.bean.FormconfVersion">
+        <selectKey resultType="java.lang.Long" keyProperty="formVersionId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS form_version_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_version_form_version_id_SEQ.nextval AS form_version_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_formconf_version(
+        form_version_id,form_id,version_number,version_note,create_time,update_time,valid,creater)
+        VALUES(
+        #{formVersionId,jdbcType=DECIMAL},#{formId,jdbcType=DECIMAL},#{versionNumber,jdbcType=VARCHAR},#{versionNote,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.form.formconfVersion.bean.FormconfVersion">
+        UPDATE t_formconf_version SET
+        form_version_id=#{formVersionId,jdbcType=DECIMAL},form_id=#{formId,jdbcType=DECIMAL},version_number=#{versionNumber,jdbcType=VARCHAR},version_note=#{versionNote,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE form_version_id = #{formVersionId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_version WHERE form_version_id = #{formVersionId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_version
+    </select>
+
+    <select id="listByFormId" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_version WHERE form_id = #{form_id,jdbcType=DECIMAL}
+    </select>
+</mapper>

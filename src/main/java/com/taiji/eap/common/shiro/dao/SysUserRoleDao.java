@@ -46,4 +46,10 @@ public interface SysUserRoleDao {
 
     int deleteByUserId(@Param("userId") Long userId);
 
+    /**
+     * 通过角色ID获取用户ID
+     * @param roleId
+     * @return
+     */
+    List<Long> getUserIdByRoleId(Long roleId);
 }

@@ -13,5 +13,5 @@ public interface GeneratorDao {
 	 * @param table
 	 * @return
 	 */
-	public List<Column> selectColums(@Param("schema")String schema,@Param("table")String table);
+	public List<Column> selectColums(@Param("schema")String schema,@Param("tableName")String tableName);
 }

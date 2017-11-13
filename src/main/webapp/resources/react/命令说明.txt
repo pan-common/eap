@@ -1,0 +1,2 @@
+babel --plugins transform-react-jsx module/district.js --out-file build/district.js
+npm run build

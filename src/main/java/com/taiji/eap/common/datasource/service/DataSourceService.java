@@ -21,7 +21,7 @@ public interface DataSourceService {
      *
      * @return
      */
-    List<LayuiTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException;
+    List<LayuiTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException, Exception;
 
     List<LayuiTree> tableTree(String beanName,String driverClassName,String url,String username,String password);
 
@@ -75,4 +75,23 @@ public interface DataSourceService {
      * @return
      */
     String connectTest(DataSource dataSource) throws Exception;
+
+    /**
+     * 获取单个数据源的表 树状视图
+     * @param datasource
+     * @return
+     */
+    List<LayuiTree> tableTree(String datasource) throws NoSuchFieldException, IllegalAccessException, Exception;
+
+    /**
+     * 切换数据源
+     * @param datasource
+     */
+    void changeDataSource(String datasource) throws NoSuchFieldException, IllegalAccessException;
+
+    /**
+     * 获取全部数据源
+     * @return
+     */
+    List<DataSource> getAllDataSources() throws NoSuchFieldException, IllegalAccessException, Exception;
 }

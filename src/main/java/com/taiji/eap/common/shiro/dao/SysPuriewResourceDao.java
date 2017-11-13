@@ -51,8 +51,8 @@ public interface SysPuriewResourceDao {
 
     /**
      * 通过资源ID删除资源权限关系
-     * @param primaryKey
+     * @param resourceId
      * @return
      */
-    int deleteByResourceId(@Param("primaryKey") Long primaryKey);
+    int deleteByResourceId(@Param("resourceId") Long resourceId);
 }

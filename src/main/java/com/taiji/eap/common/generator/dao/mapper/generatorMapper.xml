@@ -2,21 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taiji.eap.common.generator.dao.GeneratorDao">
 
-	<resultMap id="ColumResultMap" type="com.taiji.eap.common.generator.bean.Column">
-		<result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR" />
-		<result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
-		<result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
-		<result column="ORDINAL_POSITION" property="ordinalPosition" jdbcType="VARCHAR" />
-		<result column="IS_NULLABLE" property="isNullAble" jdbcType="VARCHAR" />
-		<result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
-		<result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR" />
-		<result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR" />
-	</resultMap>
+    <resultMap id="ColumResultMap" type="com.taiji.eap.common.generator.bean.Column">
+        <result column="TABLE_SCHEMA" property="tableSchema" jdbcType="VARCHAR"/>
+        <result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR"/>
+        <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR"/>
+        <result column="ORDINAL_POSITION" property="ordinalPosition" jdbcType="VARCHAR"/>
+        <result column="IS_NULLABLE" property="isNullAble" jdbcType="VARCHAR"/>
+        <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR"/>
+        <result column="COLUMN_TYPE" property="columnType" jdbcType="VARCHAR"/>
+        <result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR"/>
+        <result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR"/>
+    </resultMap>
 
-	<select id="selectColums" resultMap="ColumResultMap">
-		select TABLE_SCHEMA,TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,IS_NULLABLE,
-		DATA_TYPE,COLUMN_KEY,COLUMN_COMMENT
-		from information_schema.columns
-		where TABLE_SCHEMA = #{schema,jdbcType=VARCHAR} and TABLE_NAME = #{table,jdbcType=VARCHAR}
-	</select>
+    <select id="selectColums" parameterType="java.lang.String" resultMap="ColumResultMap">
+        select
+        <if test="_databaseId == 'mysql'">
+            a.TABLE_SCHEMA,a.TABLE_NAME,a.COLUMN_NAME,a.ORDINAL_POSITION,a.IS_NULLABLE,
+            a.DATA_TYPE,a.COLUMN_TYPE,a.COLUMN_KEY,a.COLUMN_COMMENT
+            from information_schema.columns a
+        </if>
+        <if test="_databaseId == 'oracle'">
+            a.TABLE_NAME,
+            a.COLUMN_NAME,
+            a.column_id ORDINAL_POSITION,
+            a.nullable IS_NULLABLE,
+            a.data_type DATA_TYPE,
+            a.data_type||'('||a.CHAR_LENGTH||')' COLUMN_TYPE,
+            case
+            when c.constraint_name is not null then
+            'PRI'
+            end COLUMN_KEY ,
+            b.COMMENTS COLUMN_COMMENT
+            from user_tab_columns a
+            left join user_col_comments b
+            on a.table_name = b.table_name
+            and a.column_name = b.column_name
+            left join (select cu.*
+            from user_cons_columns cu, user_constraints au
+            where cu.constraint_name = au.constraint_name
+            and au.constraint_type = 'P') c
+            on a.TABLE_NAME = c.TABLE_NAME
+            and a.column_name = c.column_name
+        </if>
+        <where>
+            <if test="schema!=null and schema!=''">
+                TABLE_SCHEMA = #{schema,jdbcType=VARCHAR}
+            </if>
+            <if test=" tableName!=null and tableName!=''">
+                and a.TABLE_NAME = #{tableName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
 </mapper>

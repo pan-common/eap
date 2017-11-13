@@ -56,4 +56,11 @@ public interface SysUserOrganDao {
      * @return
      */
     int deleteByUserId(Long userId);
+
+    /**
+     * 通过部门ID获取用户ID
+     * @param organId
+     * @return
+     */
+    List<Long> getUserIdByOrganId(Long organId);
 }

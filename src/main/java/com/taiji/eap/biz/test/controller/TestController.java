@@ -92,4 +92,15 @@ public class TestController extends BaseController{
              return renderError(e.getMessage());
           }
     }
+
+    @PostMapping(value = "getAddress")
+    @ResponseBody
+    public Response<String> getAddress(String address){
+        try {
+            return renderSuccess("提交成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
 }

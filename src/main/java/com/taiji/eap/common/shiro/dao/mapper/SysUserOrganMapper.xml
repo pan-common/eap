@@ -53,6 +53,10 @@
         SELECT organ_id FROM t_qx_user_organ WHERE user_id = #{userId,jdbcType=DECIMAL}
     </select>
 
+    <select id="getUserIdByOrganId" resultType="java.lang.Long">
+        SELECT user_id FROM t_qx_user_organ WHERE organ_id = #{organId,jdbcType=DECIMAL}
+    </select>
+
     <delete id="deleteByUserId" parameterType="java.lang.Long">
         DELETE FROM t_qx_user_organ WHERE user_id = #{userId,jdbcType=DECIMAL}
     </delete>

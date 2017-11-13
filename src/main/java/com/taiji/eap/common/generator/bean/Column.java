@@ -11,16 +11,18 @@ public class Column {
 	private String isNullAble;//是否为空
 	private String ordinalPosition;//排序
 	private String dataType;//数据类型
+	private String columnType;//列类型
 	private String columnKey;//主键
 	private String columnComment;//注释
 
-	public Column(String tableSchema, String tableName, String columnName, String isNullAble, String ordinalPosition, String dataType, String columnKey, String columnComment) {
+	public Column(String tableSchema, String tableName, String columnName, String isNullAble, String ordinalPosition, String dataType, String columnType, String columnKey, String columnComment) {
 		this.tableSchema = tableSchema;
 		this.tableName = tableName;
 		this.columnName = columnName;
 		this.isNullAble = isNullAble;
 		this.ordinalPosition = ordinalPosition;
 		this.dataType = dataType;
+		this.columnType = columnType;
 		this.columnKey = columnKey;
 		this.columnComment = columnComment;
 	}
@@ -76,6 +78,14 @@ public class Column {
 		this.dataType = dataType;
 	}
 
+	public String getColumnType() {
+		return columnType;
+	}
+
+	public void setColumnType(String columnType) {
+		this.columnType = columnType;
+	}
+
 	public String getColumnKey() {
 		return columnKey;
 	}
@@ -101,6 +111,7 @@ public class Column {
 				", isNullAble='" + isNullAble + '\'' +
 				", ordinalPosition='" + ordinalPosition + '\'' +
 				", dataType='" + dataType + '\'' +
+				", columnType='" + columnType + '\'' +
 				", columnKey='" + columnKey + '\'' +
 				", columnComment='" + columnComment + '\'' +
 				'}';

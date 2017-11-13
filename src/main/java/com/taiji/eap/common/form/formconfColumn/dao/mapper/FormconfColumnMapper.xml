@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.form.formconfColumn.dao.FormconfColumnDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.form.formconfColumn.bean.FormconfColumn">
+        <id column="column_id" property="columnId" jdbcType="DECIMAL"></id>
+        <result column="table_schema" property="tableSchema" jdbcType="VARCHAR" />
+        <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+        <result column="colum_name" property="columName" jdbcType="VARCHAR" />
+        <result column="is_null_able" property="isNullAble" jdbcType="VARCHAR" />
+        <result column="ordinal_position" property="ordinalPosition" jdbcType="VARCHAR" />
+        <result column="data_type" property="dataType" jdbcType="VARCHAR" />
+        <result column="column_key" property="columnKey" jdbcType="VARCHAR" />
+        <result column="column_comment" property="columnComment" jdbcType="VARCHAR" />
+        <result column="column_length" property="columnLength" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_column
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_column
+        WHERE column_id = #{columnId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.form.formconfColumn.bean.FormconfColumn">
+        <selectKey resultType="java.lang.Long" keyProperty="columnId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS column_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_column_column_id_SEQ.nextval AS column_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_formconf_column(
+        column_id,table_schema,table_name,colum_name,is_null_able,ordinal_position,data_type,column_key,column_comment,column_length)
+        VALUES(
+        #{columnId,jdbcType=DECIMAL},#{tableSchema,jdbcType=VARCHAR},#{tableName,jdbcType=VARCHAR},#{columName,jdbcType=VARCHAR},#{isNullAble,jdbcType=VARCHAR},#{ordinalPosition,jdbcType=VARCHAR},#{dataType,jdbcType=VARCHAR},#{columnKey,jdbcType=VARCHAR},#{columnComment,jdbcType=VARCHAR},#{columnLength,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.form.formconfColumn.bean.FormconfColumn">
+        UPDATE t_formconf_column SET
+        column_id=#{columnId,jdbcType=DECIMAL},table_schema=#{tableSchema,jdbcType=VARCHAR},table_name=#{tableName,jdbcType=VARCHAR},colum_name=#{columName,jdbcType=VARCHAR},is_null_able=#{isNullAble,jdbcType=VARCHAR},ordinal_position=#{ordinalPosition,jdbcType=VARCHAR},data_type=#{dataType,jdbcType=VARCHAR},column_key=#{columnKey,jdbcType=VARCHAR},column_comment=#{columnComment,jdbcType=VARCHAR},column_length=#{columnLength,jdbcType=INTEGER}
+        WHERE column_id = #{columnId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_column WHERE column_id = #{columnId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_column
+    </select>
+</mapper>

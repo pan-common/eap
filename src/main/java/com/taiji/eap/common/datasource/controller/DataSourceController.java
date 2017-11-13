@@ -28,16 +28,40 @@ public class DataSourceController extends BaseController{
     @Autowired
     DataSourceService dataSourceService;
 
+    @GetMapping(value = "changeDataSource")
+    @ResponseBody
+    public Response<String> changeDataSource(String datasource){
+        try {
+            dataSourceService.changeDataSource(datasource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            renderSuccess("切换失败");
+        }
+        return renderSuccess("切换成功");
+    }
+
     @GetMapping("dataSourceTree")
     @ResponseBody
     public Response<List<LayuiTree>> dataSourceTree(){
         List<LayuiTree> layuiTrees = null;
         try {
             layuiTrees = dataSourceService.dataSourceTree();
-        } catch (NoSuchFieldException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
+            renderError("切换失败");
+        }
+        return renderSuccess(layuiTrees);
+    }
+
+    @GetMapping("tableTree")
+    @ResponseBody
+    public Response<List<LayuiTree>> tableTree(String datasource){
+        List<LayuiTree> layuiTrees = null;
+        try {
+            layuiTrees = dataSourceService.tableTree(datasource);
+        } catch (Exception e) {
             e.printStackTrace();
+            return renderError("切换失败");
         }
         return renderSuccess(layuiTrees);
     }

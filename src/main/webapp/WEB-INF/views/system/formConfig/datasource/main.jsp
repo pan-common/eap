@@ -20,7 +20,7 @@
                     <tr>
                         <td><input  type="text" name="search" placeholder="输入表名称" class="layui-input"></td>
                         <td>
-                            <button id='addBtn' class="layui-btn layui-btn-small" style="margin-left: 20px">
+                            <button type="button" id='addBtn' class="layui-btn layui-btn-small" style="margin-left: 20px">
                                 <i class="fa fa-plus"></i> 新增数据源
                             </button>
                         </td>

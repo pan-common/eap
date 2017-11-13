@@ -6,6 +6,7 @@ import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.redis.bean.RedisKey;
 import com.taiji.eap.common.redis.dao.RedisKeyDao;
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.redis.service.RedisKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,13 @@ import java.util.List;
 @Service
 public class RedisKeyServiceImpl implements RedisKeyService{
 
+    private static final String REDIS_KEY = "redis:keynames";
+
     @Autowired
     private RedisKeyDao redisKeyDao;
+
+    @Autowired
+    private RedisFactoryDao<String> redisFactoryDao;
 
     @Transactional
     @Override
@@ -28,12 +34,14 @@ public class RedisKeyServiceImpl implements RedisKeyService{
         int k = 0;
         k+=redisKeyDao.deleteByPrimaryKey(primaryKey);
         recursiveDelete(primaryKey);
+        redisFactoryDao.delete(REDIS_KEY);
         return k;
     }
 
     @Transactional
     @Override
     public int insert(RedisKey redisKey) {
+        redisFactoryDao.delete(REDIS_KEY);
         return redisKeyDao.insert(redisKey);
     }
 
@@ -45,6 +53,7 @@ public class RedisKeyServiceImpl implements RedisKeyService{
     @Transactional
     @Override
     public int updateByPrimaryKey(RedisKey redisKey) {
+        redisFactoryDao.delete(REDIS_KEY);
         return redisKeyDao.updateByPrimaryKey(redisKey);
     }
 
@@ -95,6 +104,37 @@ public class RedisKeyServiceImpl implements RedisKeyService{
             }
         }
         return trees;
+    }
+
+    @Override
+    public List<String> getAllKeys() throws Exception{
+        List<String> keys = redisFactoryDao.getDatas(REDIS_KEY,"", new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List fruitless() {
+                List<RedisKey> redisKeys = redisKeyDao.getAllRedisKey();
+                List<String> keys = new ArrayList<>();
+                for (int i = 0; i < redisKeys.size(); i++) {
+                    keys.add(displayKeyName(redisKeys.get(i).getKeyId()));
+                }
+                return keys;
+            }
+        });
+        return keys;
+    }
+
+    private String displayKeyName(Long keyId){
+        List<RedisKey> redisKeys = new ArrayList<>();
+        disPlay(keyId,redisKeys);
+        Collections.reverse(redisKeys);
+        String key = "";
+        for (int i = 0; i < redisKeys.size(); i++) {
+            if(i==0) {
+               key+=redisKeys.get(i).getKeyValue();
+            }else {
+                key += ":" + redisKeys.get(i).getKeyValue();
+            }
+        }
+        return key;
     }
 
     private RedisKey findChildren(RedisKey tree,List<RedisKey> list){

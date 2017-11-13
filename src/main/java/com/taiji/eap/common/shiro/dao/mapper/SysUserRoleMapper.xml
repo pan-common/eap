@@ -53,6 +53,10 @@
         SELECT role_id FROM t_qx_user_role WHERE user_id = #{userId,jdbcType=DECIMAL}
     </select>
 
+    <select id="getUserIdByRoleId" resultType="java.lang.Long">
+        SELECT user_id FROM t_qx_user_role WHERE role_id = #{roleId,jdbcType=DECIMAL}
+    </select>
+
     <delete id="deleteByUserId" parameterType="java.lang.Long">
         DELETE FROM t_qx_user_role WHERE user_id = #{userId,jdbcType=DECIMAL}
     </delete>

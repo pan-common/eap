@@ -4,6 +4,7 @@ import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.ShiroUser;
 import com.taiji.eap.common.shiro.bean.SysPuriew;
 import com.taiji.eap.common.shiro.service.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -68,7 +69,7 @@ public class ShiroDbRealm extends AuthorizingRealm{
 		SysUser sysUser = (SysUser) principals.getPrimaryPrincipal();
 		List<String> permissions = null;
 		try {
-			permissions = redisFactoryDao.getDatas("", new RedisFactoryDao.OnRedisSelectListener() {
+			permissions = redisFactoryDao.getDatas("user:puriew",":"+sysUser.getUserId(), new RedisFactoryDao.OnRedisSelectListener() {
                 @Override
                 public List fruitless() {
                 	List<String> permissions = new ArrayList<>();
@@ -86,7 +87,9 @@ public class ShiroDbRealm extends AuthorizingRealm{
 					}
 					List<SysPuriew> sysPuriews = sysPuriewService.getPuriewByResourceIds(resourceIds);
 					for (SysPuriew sysPuriew: sysPuriews) {
-						permissions.add(sysPuriew.getExpression());
+						if(!StringUtils.isEmpty(sysPuriew.getExpression())) {
+							permissions.add(sysPuriew.getExpression());
+						}
 					}
                     return permissions;
                 }

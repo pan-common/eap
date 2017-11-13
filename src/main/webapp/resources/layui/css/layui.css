@@ -2075,8 +2075,8 @@ a cite {
 
 .layui-table td, .layui-table th {
     position: relative;
-    padding: 9px 15px;
-    min-height: 20px;
+    padding: 2px 15px;
+    min-height: 15px;
     line-height: 20px;
     font-size: 14px
 }

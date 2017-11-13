@@ -10,26 +10,13 @@
 </head>
 <body>
 <form class="layui-form">
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: #cf0000;">*</span>收货地址</label>
-        <div class="layui-input-inline">
-            <select id="province" name="province" class="state" lay-filter="province">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="layui-input-inline">
-            <select id="city" name="city" class="state" lay-filter="city">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="layui-input-inline">
-            <select id="district" name="district" class="state" lay-filter="district">
-                <option value=""></option>
-            </select>
-        </div>
+    <div id="district">
     </div>
 </form>
 </body>
+<script src="${pageContext.request.contextPath}/resources/react/js/react.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/react/js/react-dom.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/react/build/district.js"></script>
 <script type="text/javascript">
     layui.use(['layer','form'],function () {
         var form = layui.form;

@@ -61,4 +61,8 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_sys_redis_keys
     </select>
+
+    <select id="getAllRedisKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_redis_keys WHERE key_type IN ('02','03')
+    </select>
 </mapper>

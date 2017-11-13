@@ -12,8 +12,15 @@
     </bean>
     <!--数据源下拉框处理类-->
     <bean id="selectDataSourceHandler" class="com.taiji.eap.common.taglib.select.handler.SelectDataSourceHandler">
+        <property name="nextHandler" ref="selectFormHandler"></property>
+    </bean>
+    <!--表单管理数据源下拉框处理类-->
+    <bean id="selectFormHandler" class="com.taiji.eap.common.taglib.select.handler.SelectFormHandler">
+        <property name="nextHandler" ref="selectFormVersionHandler"></property>
     </bean>
 
+    <bean id="selectFormVersionHandler" class="com.taiji.eap.common.taglib.select.handler.SelectFormVersionHandler">
+    </bean>
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">
         <property name="handler" ref="selectUserHandler"></property>
     </bean>

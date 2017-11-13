@@ -49,4 +49,9 @@ public interface RedisKeyDao {
      */
     List<RedisKey> listByPid(@Param("parentId") Long parentId,@Param("searchText") String searchText);
 
+    /**
+     * 获取所有可用key名称
+     * @return
+     */
+    List<RedisKey> getAllRedisKey();
 }

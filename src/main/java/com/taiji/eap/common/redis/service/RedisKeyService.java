@@ -77,4 +77,10 @@ public interface RedisKeyService{
     */
     List<LayuiTree> treeView(Long parentId) throws Exception;
 
+    /**
+     * 获取所有可用key名
+     * @return
+     */
+    List<String> getAllKeys() throws Exception;
+
 }

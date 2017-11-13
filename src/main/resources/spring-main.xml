@@ -96,7 +96,7 @@
 		location="classpath:properties/jdbc.properties,classpath:properties/redis.properties,classpath:properties/shiro.properties" />
 
 	<import resource="classpath:spring-mybatis.xml" />
-	<import resource="classpath:spring-velocity.xml" />
+	<!--<import resource="classpath:spring-velocity.xml" />-->
 	<import resource="classpath:spring-redis.xml" />
 	<import resource="classpath:spring-activiti.xml" />
 	<import resource="classpath:spring-shiro.xml" />

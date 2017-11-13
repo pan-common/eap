@@ -15,6 +15,7 @@ import com.taiji.eap.common.datasource.bean.DataSource;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.generator.bean.TableType;
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.utils.SpringContextUtil;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.session.SqlSession;
@@ -46,9 +47,49 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     @Autowired
     private DynamicDataSource dynamicDataSource;
 
+    @Autowired
+    private RedisFactoryDao<DataSource> redisFactoryDao;
+
     @Override
     public Map<Object, Object> getDataSources() throws NoSuchFieldException, IllegalAccessException {
         return dynamicDataSource.getTargetDataSources();
+    }
+
+    @Override
+    public List<DataSource> getAllDataSources() throws Exception {
+        Map<Object,Object> datasources = getDataSources();
+        List<DataSource> dataSources = new ArrayList<>();
+        for (Map.Entry entry: datasources.entrySet()) {
+            String key = (String) entry.getKey();
+            DruidDataSource value = (DruidDataSource) entry.getValue();
+            DataSource dataSource = new DataSource();
+            dataSource.setBeanName(key);
+            dataSource.setConnectName(key);
+            dataSource.setDriverClassName(value.getDriverClassName());
+            dataSource.setUrl(value.getUrl());
+            dataSource.setUsername(value.getUsername());
+            dataSource.setPassword(value.getPassword());
+            dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
+            dataSource.setSpread(false);
+            dataSource.setType(LayuiTree.CONNECT);
+            dataSources.add(dataSource);
+        }
+        List<DataSource> list = redisFactoryDao.getDatas("datasource", "", new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List fruitless() {
+                return new ArrayList();
+            }
+        });
+        if(!list.isEmpty()){
+            for (int i = 0; i < list.size(); i++) {
+                if(!datasources.containsKey(list.get(i).getBeanName())) {
+                    list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
+                    list.get(i).setType(LayuiTree.CONNECT);
+                    dataSources.add(list.get(i));
+                }
+            }
+        }
+        return dataSources;
     }
 
     @Override
@@ -70,7 +111,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     }
 
     @Override
-    public List<LayuiTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException {
+    public List<LayuiTree> dataSourceTree() throws Exception {
         Map<Object,Object> datasources = getDataSources();
         List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
 
@@ -100,6 +141,121 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         }
 
         return dataSources;
+    }
+
+    @Override
+    public List<LayuiTree> tableTree(String datasource) throws Exception {
+        Map<Object,Object> datasources = getDataSources();
+        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+        for (Map.Entry entry: datasources.entrySet()) {
+            String key = (String) entry.getKey();
+            DruidDataSource value = (DruidDataSource) entry.getValue();
+            DataSource dataSource = new DataSource();
+            dataSource.setBeanName(key);
+            dataSource.setConnectName(parseUrl(value.getUrl())[2]);
+            dataSource.setDriverClassName(value.getDriverClassName());
+            dataSource.setUrl(value.getUrl());
+            dataSource.setUsername(value.getUsername());
+            dataSource.setPassword(value.getPassword());
+            dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
+            dataSource.setSpread(false);
+            dataSource.setType(LayuiTree.CONNECT);
+            dataSources.add(dataSource);
+        }
+        List<DataSource> list = dataSourceDao.selectAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(!datasources.containsKey(list.get(i).getBeanName())) {
+                list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
+                list.get(i).setType(LayuiTree.CONNECT);
+                dataSources.add(list.get(i));
+            }
+        }
+        for (int i = 0; i < dataSources.size(); i++) {
+            if(!((DataSource)dataSources.get(i)).getBeanName().equals(datasource)){
+                dataSources.remove(dataSources.get(i));
+                i--;
+            }
+        }
+        if(dataSources.size()==1) {
+            LayuiTree tableTree = new TableType();
+            tableTree.setType(LayuiTree.OTHER);
+            tableTree.setSpread(true);
+            tableTree.setName("表");
+            DataSource dataSource = (DataSource) dataSources.get(0);
+            //获取数据库表
+            List<Table> tables = dataSourceDao.selectTables(parseUrl(dataSource.getUrl())[2], "TABLE");
+            for (int i = 0; i < tables.size(); i++) {
+                String name = tables.get(i).gettComment() == null || tables.get(i).gettComment().equals("") ? tables.get(i).gettName() : tables.get(i).gettName() + "(" + tables.get(i).gettComment() + ")";
+                tables.get(i).setName(name);
+                tables.get(i).setSpread(true);
+                tables.get(i).setType(LayuiTree.TABLE);
+                tables.get(i).setDriverClass(dataSource.getDriverClassName());
+                tables.get(i).setConnectionURL(dataSource.getUrl());
+                tables.get(i).setUserId(dataSource.getUsername());
+                tables.get(i).setPassword(dataSource.getPassword());
+                tableTree.addChildren(tables.get(i));
+            }
+            LayuiTree viewTree = new TableType();
+            viewTree.setType(LayuiTree.OTHER);
+            viewTree.setSpread(true);
+            viewTree.setName("视图");
+            //获取数据库视图
+            List<Table> views = dataSourceDao.selectTables(parseUrl(dataSource.getUrl())[2], "VIEW");
+            for (int i = 0; i < views.size(); i++) {
+                String name = views.get(i).gettComment() == null ? views.get(i).gettName() : views.get(i).gettName() + "(" + views.get(i).gettComment() + ")";
+                views.get(i).setName(name);
+                views.get(i).setSpread(true);
+                views.get(i).setType(LayuiTree.TABLE);
+                views.get(i).setDriverClass(dataSource.getDriverClassName());
+                views.get(i).setConnectionURL(dataSource.getUrl());
+                views.get(i).setUserId(dataSource.getUsername());
+                views.get(i).setPassword(dataSource.getPassword());
+                viewTree.addChildren(views.get(i));
+            }
+            dataSources.add(tableTree);
+            dataSources.add(viewTree);
+        }
+//        DataSourceHolder.clearDataSource();
+//        resetDatabaseId();
+        return dataSources;
+    }
+
+    @Override
+    public void changeDataSource(String datasource) throws NoSuchFieldException, IllegalAccessException {
+        Map<Object,Object> datasources = getDataSources();
+        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+        for (Map.Entry entry: datasources.entrySet()) {
+            String key = (String) entry.getKey();
+            DruidDataSource value = (DruidDataSource) entry.getValue();
+            DataSource dataSource = new DataSource();
+            dataSource.setBeanName(key);
+            dataSource.setConnectName(parseUrl(value.getUrl())[2]);
+            dataSource.setDriverClassName(value.getDriverClassName());
+            dataSource.setUrl(value.getUrl());
+            dataSource.setUsername(value.getUsername());
+            dataSource.setPassword(value.getPassword());
+            dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
+            dataSource.setSpread(false);
+            dataSource.setType(LayuiTree.CONNECT);
+            dataSources.add(dataSource);
+        }
+        List<DataSource> list = dataSourceDao.selectAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(!datasources.containsKey(list.get(i).getBeanName())) {
+                list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
+                list.get(i).setType(LayuiTree.CONNECT);
+                dataSources.add(list.get(i));
+            }
+        }
+        for (int i = 0; i < dataSources.size(); i++) {
+            if(!((DataSource)dataSources.get(i)).getBeanName().equals(datasource)){
+                dataSources.remove(dataSources.get(i));
+                i--;
+            }
+        }
+        if(dataSources.size()==1) {
+            DataSourceHolder.setDataSource((DataSource) dataSources.get(0));
+        }
     }
 
     @Override
@@ -284,4 +440,6 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         }
         return result.equals("x")?"连接成功":"连接失败";
     }
+
+
 }

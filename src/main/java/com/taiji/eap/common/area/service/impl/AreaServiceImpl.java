@@ -2,19 +2,15 @@ package com.taiji.eap.common.area.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.area.redis.AreaRedisDao;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.area.bean.Area;
 import com.taiji.eap.common.area.dao.AreaDao;
 import com.taiji.eap.common.area.service.AreaService;
-import com.taiji.eap.common.redis.dao.impl.LayuiTreeRedisDao;
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +22,7 @@ public class AreaServiceImpl implements AreaService{
     private AreaDao areaDao;
 
     @Autowired
-    private LayuiTreeRedisDao layuiTreeRedisDao;
+    private RedisFactoryDao<LayuiTree> redisFactoryDao;
 
     @Transactional
     @Override
@@ -90,22 +86,22 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Integer parentId){
-        List<LayuiTree> trees = null;
-        if(layuiTreeRedisDao.isCache("areaTree")) {
-            trees = layuiTreeRedisDao.getAreas("areaTree");
-        }else {
-            List<Area> list = areaDao.selectLevel3();
-            trees = new ArrayList<LayuiTree>();
-            for (Area tree : list) {
-                if(parentId!=null&&tree!=null&&tree.getParentId()!=null) {
-                    if (parentId.equals(tree.getParentId())) {
-                        trees.add(findChildren(tree, list));
+    public List<LayuiTree> treeView(Integer parentId) throws Exception {
+        List<LayuiTree> trees = redisFactoryDao.getDatas("areatree", "", new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List fruitless() {
+                List<LayuiTree> trees = new ArrayList<>();
+                List<Area> list = areaDao.selectLevel3();
+                for (Area tree : list) {
+                    if(parentId!=null&&tree!=null&&tree.getParentId()!=null) {
+                        if (parentId.equals(tree.getParentId())) {
+                            trees.add(findChildren(tree, list));
+                        }
                     }
                 }
+                return trees;
             }
-            layuiTreeRedisDao.addList("areaTree",trees);
-        }
+        });
         return trees;
     }
 

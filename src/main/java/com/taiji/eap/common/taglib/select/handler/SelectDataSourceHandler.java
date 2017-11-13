@@ -1,6 +1,7 @@
 package com.taiji.eap.common.taglib.select.handler;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.taiji.eap.common.datasource.bean.DataSource;
 import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import com.taiji.eap.common.taglib.select.base.SelectCommonDataSourceHandler;
@@ -13,7 +14,7 @@ import java.util.Map;
 /**
  * 获取数据源下拉列表
  */
-public class SelectDataSourceHandler extends SelectCommonDataSourceHandler<Dictionary>{
+public class SelectDataSourceHandler extends SelectCommonDataSourceHandler<DataSource>{
 
     @Autowired
     DataSourceService dataSourceService;
@@ -28,34 +29,22 @@ public class SelectDataSourceHandler extends SelectCommonDataSourceHandler<Dicti
 
     @Override
     public String getKeyName() {
-        return "keystone";
+        return "beanName";
     }
 
     @Override
     public String getValueName() {
-        return "value";
+        return "connectName";
     }
 
     @Override
-    public List<Dictionary> getDataSource(String... params) throws Exception {
-        List<Dictionary> dictionaries = new ArrayList<>();
-        try {
-            Map<Object,Object> map = dataSourceService.getDataSources();
-            for (Map.Entry<Object,Object> entry: map.entrySet()) {
-                String key = (String) entry.getKey();
-                DruidDataSource value = (DruidDataSource) entry.getValue();
-                dictionaries.add(new Dictionary(key,key));
-            }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return dictionaries;
+    public List<DataSource> getDataSource(String... params) throws Exception {
+        List<DataSource> dataSources = dataSourceService.getAllDataSources();
+        return dataSources;
     }
 
     @Override
-    public Class<Dictionary> getDataSourceClass() {
-        return Dictionary.class;
+    public Class<DataSource> getDataSourceClass() {
+        return DataSource.class;
     }
 }

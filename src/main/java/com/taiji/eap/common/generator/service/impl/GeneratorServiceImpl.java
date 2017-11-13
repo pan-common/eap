@@ -11,6 +11,7 @@ import com.taiji.eap.common.shiro.bean.SysResource;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import com.taiji.eap.common.utils.FileUtil;
 import com.taiji.eap.common.utils.UUIDUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -54,7 +55,11 @@ public class GeneratorServiceImpl implements GeneratorService{
 
     @Override
     public List<Column> selectColums(String schema, String table) {
-        return generatorDao.selectColums(schema,table);
+        List<Column> list = new ArrayList<>();
+        if(!StringUtils.isEmpty(table)){
+            list.addAll(generatorDao.selectColums(schema,table));
+        }
+        return list;
     }
 
     @Override
@@ -131,9 +136,9 @@ public class GeneratorServiceImpl implements GeneratorService{
             sysResource.setTypeDesc("菜单");
             sysResource.setResIcon("fa-trademark");
             if(param.getPageStyle().equals("01")) {
-                sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
+                sysResource.setLink("sysResource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/main");
             }else if(param.getPageStyle().equals("02")){
-                sysResource.setLink("resource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/easyui/main");
+                sysResource.setLink("sysResource/link?url=" + param.getPagePath().replaceAll("\\\\", "/") + "/" + param.getAlias() + "/easyui/main");
             }
             sysResource.setSeq(1);
             sysResource.setNote("无");

@@ -19,6 +19,10 @@ import java.util.*;
 @Service
 public class SysResourceServiceImpl extends BaseServiceImpl implements SysResourceService{
 
+    private static final String REDIS_KEY_RESOURCE = "user:resource";
+
+    private static final String REDIS_KEY_PURIEW = "user:puriew";
+
     @Autowired
     private SysResourceDao sysResourceDao;
     @Autowired
@@ -43,6 +47,9 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         k+=sysResourceDao.deleteByPrimaryKey(primaryKey);
         k+=sysPuriewResourceDao.deleteByResourceId(primaryKey);
         recursiveDelete(primaryKey);
+        if(k>0)
+            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE+"*");
+        redisFactoryDao.deleteByPattern(REDIS_KEY_PURIEW+"*");
         return k;
     }
 
@@ -62,8 +69,8 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         k+=sysPuriewDao.insert(sysPuriew);
         k+=sysResourceDao.insert(sysResource);
         SysPuriewResource sysPuriewResource = new SysPuriewResource();
-        sysPuriewResource.setPuriewId(sysResource.getResourceId());
-        sysPuriewResource.setResourceId(sysPuriew.getPuriewId());
+        sysPuriewResource.setPuriewId(sysPuriew.getPuriewId());
+        sysPuriewResource.setResourceId(sysResource.getResourceId());
         k+=sysPuriewResourceDao.insert(sysPuriewResource);
         return k;
     }
@@ -76,7 +83,12 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Transactional
     @Override
     public int updateByPrimaryKey(SysResource sysResource) {
-        return sysResourceDao.updateByPrimaryKey(sysResource);
+        int k = sysResourceDao.updateByPrimaryKey(sysResource);
+        if(k>0) {
+            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE + "*");
+            redisFactoryDao.deleteByPattern(REDIS_KEY_PURIEW + "*");
+        }
+        return k;
     }
 
     @Override
@@ -131,32 +143,32 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Override
     public List<LayuiTree> treeViewByUser(Long parentId) throws Exception {
         SysUser sysUser = getCurrentUser();
-        List<LayuiTree> list = redisFactoryDao.getDatas("userId:sysResource:"+sysUser.getUserId(),
+        List<LayuiTree> list = redisFactoryDao.getDatas(REDIS_KEY_RESOURCE,":"+sysUser.getUserId(),
                 new RedisFactoryDao.OnRedisSelectListener<LayuiTree>() {
-            @Override
-            public List fruitless() {
-                List<Long> roleIdList = sysUserRoleDao.getRoleIdsByUserId(sysUser.getUserId());
-                List<Long> organIdList = sysUserOrganDao.getOrganIdsByUserId(sysUser.getUserId());
-                List<Long> tempResourceIds = new ArrayList<>();
-                List<Long> resourceIds = new ArrayList<>();
-                Set<Long> set = new HashSet<>();
-                tempResourceIds.addAll(sysOrganResourceDao.getResourceIdsByOrganIds(organIdList));
-                tempResourceIds.addAll(sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList));
-                for (Long resourceId : tempResourceIds) {
-                    if (set.add(resourceId)) {
-                        resourceIds.add(resourceId);
+                    @Override
+                    public List fruitless() {
+                        List<Long> roleIdList = sysUserRoleDao.getRoleIdsByUserId(sysUser.getUserId());
+                        List<Long> organIdList = sysUserOrganDao.getOrganIdsByUserId(sysUser.getUserId());
+                        List<Long> tempResourceIds = new ArrayList<>();
+                        List<Long> resourceIds = new ArrayList<>();
+                        Set<Long> set = new HashSet<>();
+                        tempResourceIds.addAll(sysOrganResourceDao.getResourceIdsByOrganIds(organIdList));
+                        tempResourceIds.addAll(sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList));
+                        for (Long resourceId : tempResourceIds) {
+                            if (set.add(resourceId)) {
+                                resourceIds.add(resourceId);
+                            }
+                        }
+                        List<SysResource> list = sysResourceDao.selectByIds(resourceIds);
+                        List<LayuiTree> trees = new ArrayList<>();
+                        for (SysResource tree: list) {
+                            if(parentId==tree.getParentId()){
+                                trees.add(findChildren(tree,list));
+                            }
+                        }
+                        return trees;
                     }
-                }
-                List<SysResource> list = sysResourceDao.selectByIds(resourceIds);
-                List<LayuiTree> trees = new ArrayList<>();
-                for (SysResource tree: list) {
-                    if(parentId==tree.getParentId()){
-                        trees.add(findChildren(tree,list));
-                    }
-                }
-                return trees;
-            }
-        });
+                });
         return list;
     }
 
@@ -192,6 +204,13 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Transactional
     @Override
     public int saveRoleResource(Long roleId, List<Long> resourceIds) {
+        //删除所有角色为roleId的用户的  资源和权限 缓存
+        List<Long> userIds =  sysUserRoleDao.getUserIdByRoleId(roleId);
+        for (int i = 0; i < userIds.size(); i++) {
+            redisFactoryDao.delete(REDIS_KEY_RESOURCE+":"+userIds.get(i));
+            redisFactoryDao.delete(REDIS_KEY_PURIEW+":"+userIds.get(i));
+        }
+        //修改角色资源
         int k = 0;
         k+=sysRoleResourceDao.deleteByRoleId(roleId);
         for (int i = 0; i < resourceIds.size(); i++) {
@@ -206,6 +225,13 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     @Transactional
     @Override
     public int saveOrganResource(Long organId, List<Long> resourceIds) {
+        //删除所有部门ID为organId的用户的 资源和权限 缓存
+        List<Long> userIds = sysUserOrganDao.getUserIdByOrganId(organId);
+        for (int i = 0; i < userIds.size(); i++) {
+            redisFactoryDao.delete(REDIS_KEY_RESOURCE+":"+userIds.get(i));
+            redisFactoryDao.delete(REDIS_KEY_PURIEW+":"+userIds.get(i));
+        }
+        //修改部门资源
         int k=0;
         k+=sysOrganResourceDao.deleteByOrganId(organId);
         for (int i = 0; i < resourceIds.size(); i++) {

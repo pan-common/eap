@@ -6,6 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.generator.bean.LayuiTree;
 public class Area extends LayuiTree{
+
+    private static final long serialVersionUID = 4270170570634937361L;
+
     private Integer areaId;//主键
     private String areaName;//区划名称
     private Integer parentId;//上级区划代码
