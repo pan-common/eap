@@ -18,8 +18,11 @@
     <bean id="selectFormHandler" class="com.taiji.eap.common.taglib.select.handler.SelectFormHandler">
         <property name="nextHandler" ref="selectFormVersionHandler"></property>
     </bean>
-
     <bean id="selectFormVersionHandler" class="com.taiji.eap.common.taglib.select.handler.SelectFormVersionHandler">
+        <property name="nextHandler" ref="selectDictionaryHandler"></property>
+    </bean>
+    <bean id="selectDictionaryHandler" class="com.taiji.eap.common.taglib.select.handler.SelectDictionaryHandler">
+
     </bean>
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">
         <property name="handler" ref="selectUserHandler"></property>

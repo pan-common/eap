@@ -112,12 +112,14 @@ pageEncoding="UTF-8"%>
                 {
                     title:"${column.columnComment}",
                     field:"#camel(${column.columnName})",
+                    width:${column.widthPer}
                 },
 #end
 #end
                 {
                     title : "操作",
                     align : "center",
+                    width:${column.widthPer},
                     events : {
 #if(${param.isTree}=="01")
                         'click .enter': function (e, value, row, index) {
@@ -136,14 +138,16 @@ pageEncoding="UTF-8"%>
                         }
                     },
                     formatter : function () {
+                        var buttons=[];
 #if(${param.isTree}=="01")
-                        return ['<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
+                        buttons.push('<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;');
+                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;');
+                        buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;');
 #else
-                        return ['<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
+                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;');
+                        buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;');
 #end
+                        return buttons.join('');
                     }
                 }],
             onLoadError : function(status) { //加载失败时执行

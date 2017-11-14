@@ -21,6 +21,7 @@ var CommonSelect = function (_React$Component) {
         // this.props.dataSource="";//数据源名称
         // this.props.params="";//参数
         // this.props.onSelect="";
+        //this.props.width=150;
 
 
         var _this = _possibleConstructorReturn(this, (CommonSelect.__proto__ || Object.getPrototypeOf(CommonSelect)).call(this, props));
@@ -74,7 +75,7 @@ var CommonSelect = function (_React$Component) {
                 null,
                 React.createElement(
                     "select",
-                    { id: "select", value: this.state.value },
+                    { id: "select", value: this.state.value, style: { width: this.props.width } },
                     React.createElement("option", { value: "" }),
                     this.state.datas.map(function (obj) {
                         return React.createElement(
@@ -126,4 +127,180 @@ var TableList = function (_React$Component2) {
     }]);
 
     return TableList;
+}(React.Component);
+
+/**
+ * 元素扩展属性录入控件
+ */
+
+
+var ElementExtend = function (_React$Component3) {
+    _inherits(ElementExtend, _React$Component3);
+
+    function ElementExtend(props) {
+        _classCallCheck(this, ElementExtend);
+
+        var _this3 = _possibleConstructorReturn(this, (ElementExtend.__proto__ || Object.getPrototypeOf(ElementExtend)).call(this, props));
+
+        _this3.props.layuiForm; //layuiForm对象
+        _this3.props.elementId;
+
+        _this3.state = {
+            layuiForm: _this3.props.layuiForm,
+            elementExtends: [] //元素扩展属性
+
+        };
+
+        return _this3;
+    }
+
+    _createClass(ElementExtend, [{
+        key: "onSelect",
+        value: function onSelect(index) {
+            alert(index);
+        }
+    }, {
+        key: "onChange",
+        value: function onChange(index, event) {
+            alert(event.target.value);
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.serverRequest = $.get(baseServerUrl + "elementExtend/elementExtendList", {
+                elementId: this.props.elementId
+            }, function (data, status) {
+                if (status == "success") {
+                    if (data.body.resultCode == "0") {
+                        this.setState({
+                            elementExtends: data.body.entity
+                        });
+                        this.props.layuiForm.render();
+                    } else {
+                        // parent.layer.msg(data.body.resultContent, {icon: 5});
+                    }
+                } else {
+                        // parent.layer.msg('网络错误', {icon: 5});
+                    }
+            }.bind(this));
+
+            $("#addBtn").click(function () {
+                var elementExtends = this.state.elementExtends;
+                var elementExtend = new Object();
+                elementExtend.elementId = this.props.elementId;
+                elementExtend.extendField = "";
+                elementExtend.extendName = "";
+                elementExtend.extendType = "";
+                elementExtend.note = "";
+                elementExtends.push(elementExtend);
+                this.setState({
+                    elementExtends: elementExtends
+                });
+                this.props.layuiForm.render();
+            }.bind(this));
+        }
+    }, {
+        key: "componentWillUpdate",
+        value: function componentWillUpdate(nextProps, nextState) {}
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            this.serverRequest.abort();
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this4 = this;
+
+            var tbodys = [];
+            this.state.elementExtends.map(function (elementExtend, index) {
+                return tbodys.push(React.createElement(
+                    "tr",
+                    { style: { height: 30 }, key: index },
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendField, className: "layui-input", onChange: _this4.onChange.bind(_this4, index) })
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendName, className: "layui-input" })
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement(CommonSelect, { width: 150, layuiForm: _this4.props.layuiForm, dataSource: "dictionary", params: "97", onSelect: _this4.onSelect.bind(_this4, index) })
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.note, className: "layui-input" })
+                    )
+                ));
+            });
+
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "table",
+                    { className: "layui-table" },
+                    React.createElement(
+                        "thead",
+                        null,
+                        React.createElement(
+                            "tr",
+                            null,
+                            React.createElement(
+                                "td",
+                                { style: { textAlign: 'center' } },
+                                "\u5C5E\u6027\u5B57\u6BB5"
+                            ),
+                            React.createElement(
+                                "td",
+                                { style: { textAlign: 'center' } },
+                                "\u5C5E\u6027\u540D"
+                            ),
+                            React.createElement(
+                                "td",
+                                { style: { textAlign: 'center' } },
+                                "\u5B57\u6BB5\u7C7B\u578B"
+                            ),
+                            React.createElement(
+                                "td",
+                                { style: { textAlign: 'center' } },
+                                "\u5907\u6CE8"
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "tbody",
+                        null,
+                        tbodys
+                    ),
+                    React.createElement(
+                        "tfoot",
+                        null,
+                        React.createElement(
+                            "tr",
+                            null,
+                            React.createElement(
+                                "td",
+                                { colSpan: "4", style: { textAlign: 'center' } },
+                                React.createElement(
+                                    "button",
+                                    { id: "addBtn", type: "button", className: "layui-btn layui-btn-small" },
+                                    React.createElement("i", { className: "fa fa-plus" }),
+                                    "\xA0\xA0\u65B0\u589E"
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return ElementExtend;
 }(React.Component);
