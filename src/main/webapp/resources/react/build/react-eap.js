@@ -57,9 +57,7 @@ var CommonSelect = function (_React$Component) {
                     datas: data.body.entity
                 });
                 this.props.layuiForm.render();
-                this.props.layuiForm.on("select(commonSelect)", function (data) {
-                    this.props.onSelect(data.value);
-                }.bind(this));
+                this.props.layuiForm.on("select(commonSelect)", this.props.onSelect);
             }.bind(this));
         }
     }, {
@@ -155,16 +153,6 @@ var ElementExtend = function (_React$Component3) {
     }
 
     _createClass(ElementExtend, [{
-        key: "onSelect",
-        value: function onSelect(index) {
-            alert(index);
-        }
-    }, {
-        key: "onChange",
-        value: function onChange(index, event) {
-            alert(event.target.value);
-        }
-    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.serverRequest = $.get(baseServerUrl + "elementExtend/elementExtendList", {
@@ -220,22 +208,42 @@ var ElementExtend = function (_React$Component3) {
                     React.createElement(
                         "td",
                         null,
-                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendField, className: "layui-input", onChange: _this4.onChange.bind(_this4, index) })
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendField, className: "layui-input", onChange: function (index, event) {
+                                var temp = this.state.elementExtends;
+                                temp[index].extendField = event.target.value;
+                                this.setState({
+                                    elementExtends: temp
+                                });
+                            }.bind(_this4, index) })
                     ),
                     React.createElement(
                         "td",
                         null,
-                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendName, className: "layui-input" })
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.extendName, className: "layui-input", onChange: function (index, event) {
+                                var temp = this.state.elementExtends;
+                                temp[index].extendName = event.target.value;
+                                this.setState({
+                                    elementExtends: temp
+                                });
+                            }.bind(_this4, index) })
                     ),
                     React.createElement(
                         "td",
                         null,
-                        React.createElement(CommonSelect, { width: 150, layuiForm: _this4.props.layuiForm, dataSource: "dictionary", params: "97", onSelect: _this4.onSelect.bind(_this4, index) })
+                        React.createElement(CommonSelect, { width: 150, layuiForm: _this4.props.layuiForm, dataSource: "dictionary", params: "97", onSelect: function (a, b, c) {
+                                alert(b);
+                            }.bind(_this4, index) })
                     ),
                     React.createElement(
                         "td",
                         null,
-                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.note, className: "layui-input" })
+                        React.createElement("input", { style: { width: 100 }, type: "text", value: elementExtend.note, className: "layui-input", onChange: function (index, event) {
+                                var temp = this.state.elementExtends;
+                                temp[index].note = event.target.value;
+                                this.setState({
+                                    elementExtends: temp
+                                });
+                            }.bind(_this4, index) })
                     )
                 ));
             });

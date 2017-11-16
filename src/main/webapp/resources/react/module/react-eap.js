@@ -39,9 +39,7 @@ class CommonSelect extends React.Component{
                     datas:data.body.entity
                 });
                 this.props.layuiForm.render();
-                this.props.layuiForm.on("select(commonSelect)",function (data) {
-                    this.props.onSelect(data.value);
-                }.bind(this));
+                this.props.layuiForm.on("select(commonSelect)",this.props.onSelect);
             }.bind(this));
     }
 
@@ -119,14 +117,6 @@ class ElementExtend extends React.Component {
 
     }
 
-    onSelect(index){
-        alert(index);
-    }
-
-    onChange(index,event){
-
-    };
-
     componentDidMount() {
         this.serverRequest = $.get(baseServerUrl+"elementExtend/elementExtendList",{
             elementId:this.props.elementId
@@ -175,12 +165,38 @@ class ElementExtend extends React.Component {
         this.state.elementExtends.map(
             (elementExtend,index)=>
              tbodys.push(<tr style={{height:30}} key={index}>
-                <td><input style={{width:100}} type="text" value={elementExtend.extendField} className="layui-input" onChange={this.onChange.bind(this,index)}/></td>
-                <td><input style={{width:100}} type="text" value={elementExtend.extendName} className="layui-input"/></td>
-                <td><CommonSelect width={150} layuiForm={this.props.layuiForm} dataSource="dictionary" params="97" onSelect={this.onSelect.bind(this,index)}/></td>
-                <td><input style={{width:100}} type="text" value={elementExtend.note} className="layui-input"/></td>
+                <td>
+                    <input style={{width:100}} type="text" value={elementExtend.extendField} className="layui-input" onChange={function (index,event) {
+                        var temp = this.state.elementExtends;
+                        temp[index].extendField = event.target.value;
+                        this.setState({
+                            elementExtends:temp
+                        });
+                    }.bind(this,index)}/>
+                </td>
+                <td>
+                    <input style={{width:100}} type="text" value={elementExtend.extendName} className="layui-input" onChange={function (index,event) {
+                        var temp = this.state.elementExtends;
+                        temp[index].extendName = event.target.value;
+                        this.setState({
+                            elementExtends:temp
+                        });
+                    }.bind(this,index)}/>
+                </td>
+                <td><CommonSelect width={150} layuiForm={this.props.layuiForm} dataSource="dictionary" params="97" onSelect={function (a,b,c) {
+                    alert(b);
+                }.bind(this,index)}/></td>
+                <td>
+                    <input style={{width:100}} type="text" value={elementExtend.note} className="layui-input" onChange={function (index,event) {
+                        var temp = this.state.elementExtends;
+                        temp[index].note = event.target.value;
+                        this.setState({
+                            elementExtends:temp
+                        });
+                    }.bind(this,index)}/>
+                </td>
             </tr>)
-        )
+        );
 
         return (
             <div>
