@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import com.taiji.eap.common.dictionary.dao.DictionaryDao;
 import com.taiji.eap.common.dictionary.service.DictionaryService;
+import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
+import com.taiji.eap.common.redis.dao.impl.StringRedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.SysResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,12 @@ public class DictionaryServiceImpl implements DictionaryService{
 
     @Autowired
     private DictionaryDao dictionaryDao;
+
+    @Autowired
+    private RedisFactoryDao<Dictionary> redisFactoryDao;
+
+    @Autowired
+    private StringRedisFactoryDao stringRedisFactoryDao;
 
     @Transactional
     @Override
@@ -57,8 +65,14 @@ public class DictionaryServiceImpl implements DictionaryService{
     }
 
     @Override
-    public List<Dictionary> listByPid(Long parentId) {
-        return dictionaryDao.listByPid(parentId,"");
+    public List<Dictionary> listByPid(Long parentId) throws Exception {
+        List<Dictionary> dictionaries =redisFactoryDao.getDatas("dictionary", String.valueOf(parentId), new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List fruitless() {
+                return dictionaryDao.listByPid(parentId,"");
+            }
+        });
+        return dictionaries;
     }
 
     @Override
@@ -74,7 +88,14 @@ public class DictionaryServiceImpl implements DictionaryService{
 
     @Override
     public String getValueByKey(String keystone, Long parentId) throws Exception {
-        return dictionaryDao.getValueByKey(keystone,parentId);
+        String value = stringRedisFactoryDao.getValue("dictionary", String.valueOf(parentId)+":"+ keystone ,
+                new StringRedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public String fruitless() {
+                return dictionaryDao.getValueByKey(keystone,parentId);
+            }
+        });
+        return value;
     }
 
     @Override

@@ -6,8 +6,8 @@ import java.util.Date;
 import com.taiji.eap.common.dictionary.annotation.Dictionary;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class SysResource extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+public class SysResource extends BaseTree {
     private Long resourceId;//主键
     private String name;//资源名称
     private Long parentId;//上级资源ID

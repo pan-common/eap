@@ -1,9 +1,7 @@
 package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.http.entity.Response;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.shiro.bean.SysRole;
 import java.util.List;
 
@@ -76,7 +74,7 @@ public interface SysRoleService{
     * @return
     * @throws Exception
     */
-    List<LayuiTree> treeView(Long parentId) throws Exception;
+    List<BaseTree> treeView(Long parentId) throws Exception;
 
     /**
      * 通过用户ID获取角色列表

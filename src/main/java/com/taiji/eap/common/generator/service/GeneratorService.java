@@ -1,7 +1,7 @@
 package com.taiji.eap.common.generator.service;
 
 import com.taiji.eap.common.generator.bean.Column;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.generator.bean.Param;
 import com.taiji.eap.common.datasource.bean.Table;
 
@@ -15,9 +15,9 @@ public interface GeneratorService {
 
    public void execute(Param param) throws Exception;
 
-   List<LayuiTree> projectTreeView(String path) throws Exception;
+   List<BaseTree> projectTreeView(String path) throws Exception;
 
-    List<LayuiTree> jspTreeView(String path) throws Exception;
+    List<BaseTree> jspTreeView(String path) throws Exception;
 
     List<Table> selectViews(String databaseName);
 }

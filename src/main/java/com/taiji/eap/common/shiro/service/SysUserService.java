@@ -2,8 +2,6 @@ package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import java.util.List;
 

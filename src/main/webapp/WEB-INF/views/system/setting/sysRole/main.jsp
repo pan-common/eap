@@ -1,6 +1,6 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/views/system/common/base.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,14 +35,17 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/form&roleId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/form&roleId=0","550px","550px");
         });
         $("#showTreeView").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/treeView","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/treeView","550px",$(window).height())
         });
         $("#showZTree").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysRole/zTree","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/zTree","550px",$(window).height())
         });
+
+
+
         //弹出录入框
         function showModel(title,url,width,height) {
             layer.open({
@@ -132,11 +135,12 @@ pageEncoding="UTF-8"%>
                         }
                     },
                     formatter : function () {
-                        return [
-                            '<button type="button" class="resource layui-btn layui-btn-small">资源</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;&nbsp;&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
+                        var buttons = [];
+                        buttons.push('<button type="button" class="resource layui-btn layui-btn-small">资源</button>&nbsp;')
+                        buttons.push('<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;')
+                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;')
+                        buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;')
+                        return buttons.join('');
                     }
                 }],
             onLoadError : function(status) { //加载失败时执行
@@ -154,7 +158,7 @@ pageEncoding="UTF-8"%>
                 pageSize : params.limit, //页面大小
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
-    parentId:currentId
+                parentId:currentId
             }
             return param;
         }
@@ -167,19 +171,19 @@ pageEncoding="UTF-8"%>
             offset: '150px',
         },function () {
             $.post('${pageContext.request.contextPath}/sysRole/delete',
-                    {roleId : roleId},
-                    function (data, status) {
-                        if (status == "success") {
-                            if (data.body.resultCode == "0") {
-                                layer.close(layer.index);
-                                refreshTable();
-                            }else {
-                                layer.msg(data.body.resultContent);
-                            }
+                {roleId : roleId},
+                function (data, status) {
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            layer.close(layer.index);
+                            refreshTable();
                         }else {
-                            layer.msg("网络错误");
+                            layer.msg(data.body.resultContent);
                         }
-                    }).error(function (e) {
+                    }else {
+                        layer.msg("网络错误");
+                    }
+                }).error(function (e) {
                 layer.msg("网络错误："+e.status);
             })
         },function () {
@@ -189,31 +193,31 @@ pageEncoding="UTF-8"%>
 
     function loadPath() {
         $.get('${pageContext.request.contextPath}/sysRole/getPath/',
-                {
-        roleId : currentId
-                }, function(data, status) {
-                    if (status == "success") {
-                        if (data.body.resultCode == "0") {
-                            var result = data.body.entity;
-                            $(".breadcrumb").empty();
-                            var html = "";
-                            for (var i = 0; i < result.length; i++) {
-                                 var html = '<li><a class="clickEffect" name="'
+            {
+                roleId : currentId
+            }, function(data, status) {
+                if (status == "success") {
+                    if (data.body.resultCode == "0") {
+                        var result = data.body.entity;
+                        $(".breadcrumb").empty();
+                        var html = "";
+                        for (var i = 0; i < result.length; i++) {
+                            var html = '<li><a class="clickEffect" name="'
                                 +result[i].roleId+'">'+ result[i].name+'</a></li>';
-                                $(".breadcrumb").append(html);
-                                $("a[name=" + result[i].roleId + "]").bind("click", {
-                                    index : i
-                                }, clickHandler);
-                            }
-                            function clickHandler(event) {
-                                var i = event.data.index;
-                                currentId = result[i].roleId;
-                                refreshTable();
-                                loadPath();
-                            }
+                            $(".breadcrumb").append(html);
+                            $("a[name=" + result[i].roleId + "]").bind("click", {
+                                index : i
+                            }, clickHandler);
+                        }
+                        function clickHandler(event) {
+                            var i = event.data.index;
+                            currentId = result[i].roleId;
+                            refreshTable();
+                            loadPath();
                         }
                     }
-                });
+                }
+            });
     }
 
     function refreshTable() {

@@ -5,7 +5,8 @@ package com.taiji.eap.common.chain.base;
  */
 public abstract class BaseChainHandler {
 
-    protected BaseChainHandler nextHandler;//下一个处理类
+    //下一个处理类
+    protected BaseChainHandler nextHandler;
 
     protected void doHandler(String type) throws Exception{
         if(isType(type)){

@@ -35,7 +35,6 @@
 </form>
 </body>
 <script type="text/javascript">
-    ;
     var roleId = ${param.roleId};
     var url = "${pageContext.request.contextPath}/sysRole/add";
     layui.use(['form'],function () {

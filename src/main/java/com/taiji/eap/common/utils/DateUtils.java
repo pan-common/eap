@@ -70,6 +70,17 @@ public class DateUtils {
 		return time;
 	}
 
+	/**
+	 * 获取当前日期格式的文件路径
+	 * @return
+	 */
+	public static String getDatePath(){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String datePath = sdf.format(date);
+		return datePath;
+	}
+
 	public static long getNowTimeStamp() {
 		long timeInMillis = Calendar.getInstance().getTimeInMillis();
 		return timeInMillis;

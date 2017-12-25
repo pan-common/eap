@@ -1,4 +1,6 @@
 package com.taiji.eap.common.generator.bean;
 
-public class Connect extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+
+public class Connect extends BaseTree {
 }

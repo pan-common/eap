@@ -4,8 +4,8 @@ package com.taiji.eap.common.shiro.bean;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class SysRole extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+public class SysRole extends BaseTree {
     private Long roleId;//角色ID
     private String name;//角色名称
     private Integer seq;//排序

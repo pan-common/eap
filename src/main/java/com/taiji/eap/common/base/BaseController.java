@@ -20,7 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-
+/**
+ *
+ * @author 潘宏智
+ * @date 2017-12-18 13:17
+ */
 public class BaseController extends BaseShiro{
 
 	protected static Logger logger = LoggerFactory.getLogger(BaseController.class);

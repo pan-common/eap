@@ -2,7 +2,7 @@ package com.taiji.eap.common.datasource.service;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.datasource.bean.DataSource;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 
 import java.util.List;
 import java.util.Map;
@@ -15,15 +15,15 @@ public interface DataSourceService {
      * 获取全部数据库连接
      * @return
      */
-    List<LayuiTree> getDataSourceTree();
+    List<BaseTree> getDataSourceTree();
 
     /**
      *
      * @return
      */
-    List<LayuiTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException, Exception;
+    List<BaseTree> dataSourceTree() throws NoSuchFieldException, IllegalAccessException, Exception;
 
-    List<LayuiTree> tableTree(String beanName,String driverClassName,String url,String username,String password);
+    List<BaseTree> tableTree(String beanName, String driverClassName, String url, String username, String password);
 
     void updateDatabaseId(String beanName);
 
@@ -81,7 +81,7 @@ public interface DataSourceService {
      * @param datasource
      * @return
      */
-    List<LayuiTree> tableTree(String datasource) throws NoSuchFieldException, IllegalAccessException, Exception;
+    List<BaseTree> tableTree(String datasource) throws NoSuchFieldException, IllegalAccessException, Exception;
 
     /**
      * 切换数据源

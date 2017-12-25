@@ -5,10 +5,10 @@ import com.taiji.eap.common.redis.service.RedisKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -30,13 +30,7 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
      * @param data 存储数据的值
      */
     private void addList(String key, List<T> data){
-        try {
-            ListOperations<String,T> listOperations = redisTemplate.opsForList();
-            listOperations.rightPushAll(key,data);
-            redisTemplate.expire(key,30, TimeUnit.DAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        addList(key,data,365,null);
     }
 
     /**
@@ -46,13 +40,7 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
      * @param timeout 失效时间
      */
     private void addList(String key, List<T> data,long timeout){
-        try {
-            ListOperations<String,T> listOperations = redisTemplate.opsForList();
-            listOperations.rightPushAll(key,data);
-            redisTemplate.expire(key,timeout, TimeUnit.DAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        addList(key,data,timeout,null);
     }
 
     /**
@@ -65,6 +53,9 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
         try {
             ListOperations<String,T> listOperations = redisTemplate.opsForList();
             listOperations.rightPushAll(key,data);
+            if(unit==null){
+                unit = TimeUnit.DAYS;
+            }
             redisTemplate.expire(key,timeout, unit);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,14 +97,14 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
      */
     public List<T> getDatas(String key,String extraKey,long timeout,TimeUnit unit,OnRedisSelectListener listener) throws Exception{
         boolean isKey = false;
-        if(key.equals("redis:keynames")){
+        if("redis:keynames".equals(key)) {
             isKey = true;
-        }else {
+        } else {
             List<String> allKeys =  redisKeyService.getAllKeys();
             isKey = allKeys.contains(key);
         }
         if(isKey) {
-            String keyName = extraKey!=null&&!extraKey.equals("")?key+extraKey:key;
+            String keyName = extraKey!=null&&!extraKey.equals("")?key+":"+extraKey:key;
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
             try {
                 boolean flag = listOperations.size(keyName) > 0 ? true : false;
@@ -143,7 +134,7 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
     }
 
     /**
-     * 清楚相关key的数据
+     * 清除相关key的数据
      * @param key
      */
     public void delete(String key){
@@ -156,10 +147,11 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
      */
     public void deleteByPattern(String pattern){
        Set<String> set = redisTemplate.keys(pattern);
-       Iterator<String> iterable = set.iterator();
-       while (iterable.hasNext()){
-           redisTemplate.delete(iterable.next());
-       }
+       redisTemplate.delete(set);
+    }
+
+    public long size(String key) {
+       return redisTemplate.opsForList().size(key);
     }
 
     public interface OnRedisSelectListener<T>{
@@ -168,6 +160,7 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
          * @return
          */
         List<T> fruitless();
+
     }
 
 }

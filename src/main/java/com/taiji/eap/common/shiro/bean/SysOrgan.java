@@ -4,8 +4,8 @@ package com.taiji.eap.common.shiro.bean;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class SysOrgan extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+public class SysOrgan extends BaseTree {
     private Long organId;//部门ID
     private String name;//部门名称
     private String organIcon;//部门图标

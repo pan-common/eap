@@ -8,102 +8,92 @@
 <head>
     <title></title>
 </head>
+<style type="text/css">
+    .image-preview{
+        width: auto;
+        height: auto;
+        max-width: 20%;
+        max-height: 20%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+</style>
 <body>
 <form class="layui-form">
-    <div id="district">
-    </div>
+    <table class="layui-table">
+        <tr>
+            <td>
+                <select id="commonSelect" name="select_type" layfilter="select_type">
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="district" class="layui-form-item">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <button id="uploadBtn" type="button" class="layui-btn"><i class="fa fa-image">上传图片</i></button>
+                    <img id="imageview" class="image-preview">
+                </div>
+            </td>
+        </tr>
+    </table>
 </form>
+
 </body>
-<script src="${pageContext.request.contextPath}/resources/react/js/react.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/react/js/react-dom.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/react/build/district.js"></script>
+<script src="${pageContext.request.contextPath}/resources/eap/system/library/CommonSelect.js"></script>
+<script src="${pageContext.request.contextPath}/resources/eap/system/library/District.js"></script>
 <script type="text/javascript">
-    layui.use(['layer','form'],function () {
+    layui.use(['upload','layer','form'],function () {
         var form = layui.form;
-        var areas;
-        $.ajax({
-            url:baseServerUrl+"area/treeView",
-            dataType:"json",
-            async:false,
-            data:{
-                parentId:1
-            },
-            type:"GET",
-            success:function (data) {
-                areas = data.body.entity;
-            },
-            error:function () {
+        var layer = layui.layer;
+        var upload = layui.upload;
 
+        //通用下拉框用法
+        $("#commonSelect").CommonSelect("init",{
+            layuiForm:form,
+            layer:layer,
+            datasource:"dictionary",
+            params:"100",
+            onSelect:function (data) {
+                alert(data.value);
             }
         });
-        $("#province").empty();
-        $("#city").empty();
-        $("#district").empty();
-//        $("#province").append('<option value=""></option>');
-//        $("#city").append('<option value=""></option>');
-//        $("#district").append('<option value=""></option>');
-        var citys = areas[0].children;
-        var districts = citys[0].children;
 
-        for (var i = 0; i < areas.length; i++) {
-            var province = '<option value="'+areas[i].areaId+'">'+areas[i].name+'</option>';
-            $("#province").append(province);
-        }
-        for (var i = 0; i < citys.length; i++) {
-            var city = '<option value="'+citys[i].areaId+'">'+citys[i].name+'</option>';
-            $("#city").append(city);
-        }
-        for (var i = 0; i < districts.length; i++) {
-            var district = '<option value="'+districts[i].areaId+'">'+districts[i].name+'</option>';
-            $("#district").append(district);
-        }
-        form.render();
-        form.on('select(province)', function(data){
-            //监听省选择
-            citys = selectCitysByAreaId(data.value)
-            $("#city").empty();
-            for (var i = 0; i < citys.length; i++) {
-                var city = '<option value="'+citys[i].areaId+'">'+citys[i].name+'</option>';
-                $("#city").append(city);
+        //三级区划
+        $('#district').District('init',{
+            layuiForm:form,
+            layer:layer,
+            onSelect:function (level,value) {
+//                alert("级别:"+level+"   代码:"+value);
             }
-            $("#district").empty();
-            var districts = citys[0].children;
-            for (var i = 0; i < districts.length; i++) {
-                var district = '<option value="'+districts[i].areaId+'">'+districts[i].name+'</option>';
-                $("#district").append(district);
-            }
-            form.render();
-        });
-        form.on('select(city)', function(data){
-            //监听市选择
-            districts = selectDistrictByAreaId(data.value);
-            $("#district").empty();
-            for (var i = 0; i < districts.length; i++) {
-                var district = '<option value="'+districts[i].areaId+'">'+districts[i].name+'</option>';
-                $("#district").append(district);
-            }
-            form.render();
-        });
+        })
 
-        function selectCitysByAreaId(areaId) {
-            var result;
-            for (var i = 0; i < areas.length; i++) {
-                if(areaId==areas[i].areaId){
-                    result = areas[i].children;
+        //弹出录入框
+        function showModel(title,url) {
+            layer.open({
+                id:"model",
+                type:2,
+                title:title,
+                content:url,
+                area:["550px","550px"],
+                offset: '20px',
+                shade:false,
+                maxmin:true,
+                success:function (layero, index) {
+
                 }
-            }
-            return result;
-        }
+            })
+        };
 
-        function selectDistrictByAreaId(areaId) {
-            var result;
-            for (var i = 0; i < citys.length; i++) {
-                if(areaId==citys[i].areaId){
-                    result = citys[i].children;
-                }
-            }
-            return result;
-        }
+        $("#uploadBtn").bind('click',function () {
+            showModel("图片上传","${pageContext.request.contextPath}/sysResource/link?url=system/common/module/ImageUpload");
+        });
 
     });
 </script>

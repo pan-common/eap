@@ -1,13 +1,9 @@
 
 package com.taiji.eap.common.redis.bean;
 
-import java.util.Date;
-
 import com.taiji.eap.common.dictionary.annotation.Dictionary;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class RedisKey extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+public class RedisKey extends BaseTree {
     private Long keyId;//
     private String keyValue;//key值
     private String keyName;//键名称
@@ -15,7 +11,7 @@ public class RedisKey extends LayuiTree{
     @Dictionary(parentId = 83)
     private String keyType;//键类型
     private String keyNote;//键注释
-    private String dataSize;//对应数据大小
+    private Long dataSize;//对应数据大小
     public RedisKey(Long keyId,String keyName) {
         this.keyId = keyId;
         this.keyName = keyName;
@@ -79,11 +75,11 @@ public class RedisKey extends LayuiTree{
     }
 
 
-    public String getDataSize() {
+    public Long getDataSize() {
         return dataSize;
     }
 
-    public void setDataSize(String dataSize) {
+    public void setDataSize(Long dataSize) {
         this.dataSize = dataSize;
     }
 

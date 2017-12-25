@@ -3,7 +3,6 @@ package com.taiji.eap.common.shiro.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.dao.SysUserDao;
 import com.taiji.eap.common.shiro.helper.PasswordHelper;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service

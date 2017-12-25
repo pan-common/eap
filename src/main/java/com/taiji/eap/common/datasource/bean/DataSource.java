@@ -1,13 +1,9 @@
 
 package com.taiji.eap.common.datasource.bean;
 
-import java.util.Date;
+import com.taiji.eap.common.base.BaseTree;
 
-import com.taiji.eap.common.generator.bean.LayuiTree;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.base.BaseModel;
-public class DataSource extends LayuiTree{
+public class DataSource extends BaseTree {
     private Long datasourceId;//主键
     private String datasourceType;//Data Source
     private String beanName;//springBean名称

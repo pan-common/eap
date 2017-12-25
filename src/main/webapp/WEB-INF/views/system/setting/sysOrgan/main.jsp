@@ -35,13 +35,13 @@ pageEncoding="UTF-8"%>
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/form&organId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysOrgan/form&organId=0","550px","550px");
         });
         $("#showTreeView").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/treeView","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysOrgan/treeView","550px",$(window).height())
         });
         $("#showZTree").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/setting/sysOrgan/zTree","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysOrgan/zTree","550px",$(window).height())
         });
         //弹出录入框
         function showModel(title,url,width,height) {

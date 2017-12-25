@@ -1,6 +1,8 @@
 package com.taiji.eap.common.generator.bean;
 
-public class FileTreeView extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+
+public class FileTreeView extends BaseTree {
 
     private String packageName;
 

@@ -4,8 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
 import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
 import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import java.util.List;
@@ -87,7 +86,7 @@ public interface QyjcxxService{
     * @return
     * @throws Exception
     */
-    List<LayuiTree> treeView(Long parentId) throws Exception;
+    List<BaseTree> treeView(Long parentId) throws Exception;
 
     int saveZfjcqk(ZfjcJcqk zfjcJcqk);
 

@@ -6,7 +6,7 @@ import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
 import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
 import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import com.taiji.eap.biz.qyjcxx.dao.QyjcxxDao;
 import com.taiji.eap.biz.qyjcxx.service.QyjcxxService;
@@ -112,9 +112,9 @@ public class QyjcxxServiceImpl implements QyjcxxService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Long parentId) throws Exception {
+    public List<BaseTree> treeView(Long parentId) throws Exception {
         List<Qyjcxx> list = qyjcxxDao.selectAll();
-        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        List<BaseTree> trees = new ArrayList<BaseTree>();
         for (Qyjcxx tree: list) {
             if(parentId==tree.getParentId()){
                 trees.add(findChildren(tree,list));

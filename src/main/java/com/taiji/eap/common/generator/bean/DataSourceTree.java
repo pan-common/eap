@@ -1,6 +1,8 @@
 package com.taiji.eap.common.generator.bean;
 
-public abstract class DataSourceTree extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+
+public abstract class DataSourceTree extends BaseTree {
 
     protected String driverClass;
     protected String connectionURL;

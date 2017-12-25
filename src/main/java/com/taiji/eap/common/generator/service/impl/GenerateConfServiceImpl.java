@@ -2,7 +2,6 @@ package com.taiji.eap.common.generator.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.generator.bean.GenerateConf;
 import com.taiji.eap.common.generator.dao.GenerateConfDao;
 import com.taiji.eap.common.generator.service.GenerateConfService;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service

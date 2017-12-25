@@ -1,1 +1,7 @@
-ReactDOM.render(React.createElement('h1', null, 'hello word'), document.getElementById('example'));
+import React from 'react';
+
+export default class Hello extends React.Component {
+    render() {
+        return <p>Hello, world!</p>;
+    }
+}

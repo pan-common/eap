@@ -32,14 +32,20 @@
 </body>
 <script src="${pageContext.request.contextPath}/resources/react/js/react.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/react/js/react-dom.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/react/build/react-eap.js"></script>
-<script src="${pageContext.request.contextPath}/resources/react/build/TableEdit.js"></script>
+<%--<script src="${pageContext.request.contextPath}/resources/react/build/TableEdit.js"></script>--%>
+<script src="${pageContext.request.contextPath}/resources/react/build/eap-react.js"></script>
+
 <script type="text/javascript">
     var elementId = ${param.elementId};
 
     layui.use(['layer','form'],function () {
         var form = layui.form;
         var layer = layui.layer;
+
+        $("#cancelBtn").click(function () {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
 
         var tableEdit = ReactDOM.render(React.createElement(TableEdit,{
             layuiForm:form,
@@ -79,11 +85,6 @@
                 }
             ]
         }),document.getElementById('element_extend'));
-
-        $("#cancelBtn").click(function () {
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
-        });
 
         form.on("submit(submitBtn)",function (data,status) {
             $.ajax({

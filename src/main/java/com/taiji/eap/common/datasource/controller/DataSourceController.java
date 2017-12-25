@@ -1,13 +1,12 @@
 package com.taiji.eap.common.datasource.controller;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.datasource.bean.DataSource;
 import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,28 +40,28 @@ public class DataSourceController extends BaseController{
 
     @GetMapping("dataSourceTree")
     @ResponseBody
-    public Response<List<LayuiTree>> dataSourceTree(){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> dataSourceTree(){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = dataSourceService.dataSourceTree();
+            baseTrees = dataSourceService.dataSourceTree();
         } catch (Exception e) {
             e.printStackTrace();
             renderError("切换失败");
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping("tableTree")
     @ResponseBody
-    public Response<List<LayuiTree>> tableTree(String datasource){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> tableTree(String datasource){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = dataSourceService.tableTree(datasource);
+            baseTrees = dataSourceService.tableTree(datasource);
         } catch (Exception e) {
             e.printStackTrace();
             return renderError("切换失败");
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping("getDataSources")
@@ -100,9 +98,9 @@ public class DataSourceController extends BaseController{
 
     @PostMapping("getTablesByDB")
     @ResponseBody
-    public Response<List<LayuiTree>> getTablesByDB(String beanName,String driverClassName,String url,String username,String password){
-        List<LayuiTree> layuiTrees = dataSourceService.tableTree(beanName,driverClassName,url,username,password);
-        return renderSuccess(layuiTrees);
+    public Response<List<BaseTree>> getTablesByDB(String beanName, String driverClassName, String url, String username, String password){
+        List<BaseTree> baseTrees = dataSourceService.tableTree(beanName,driverClassName,url,username,password);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping(value = "list")

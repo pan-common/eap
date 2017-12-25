@@ -1,6 +1,6 @@
 package com.taiji.eap.common.shiro.filter;
 
-import com.taiji.eap.common.shiro.service.SysPuriewService;
+import com.taiji.eap.common.shiro.service.SysPurviewService;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.util.AntPathMatcher;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ShiroPermissionFactory extends ShiroFilterFactoryBean implements ShiroChainDefinitionsService{
 
     @Autowired
-    private SysPuriewService sysPuriewService;
+    private SysPurviewService sysPurviewService;
 
     private String definitions;
 
@@ -70,7 +70,7 @@ public class ShiroPermissionFactory extends ShiroFilterFactoryBean implements Sh
         Map<String, String> otherChains = new HashMap<>();
         List<Map<String, Object>> maps = null;
         try {
-            maps = sysPuriewService.globalConfig();
+            maps = sysPurviewService.globalConfig();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,4 +1,10 @@
-class TableEdit extends React.Component {
+import PropTypes from 'prop-types';
+
+TableEdit.PropTypes={
+    url:React.PropTypes.string.isRequired
+};
+
+export default class TableEdit extends React.Component {
 
     constructor(props) {
         super(props);
@@ -71,7 +77,7 @@ class TableEdit extends React.Component {
         this.state.data.map(
             (item,index)=>
                 tbodys.push(
-                    <tr style={{height:30}} key={index}>
+                    <tr style={{height:'30px'}} key={index}>
                         <td style={{textAlign:'center',width:80}}>{index+1}</td>
                         {
                             this.props.columns.map(

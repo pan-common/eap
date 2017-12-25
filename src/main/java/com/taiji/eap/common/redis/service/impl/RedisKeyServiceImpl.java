@@ -2,8 +2,7 @@ package com.taiji.eap.common.redis.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.redis.bean.RedisKey;
 import com.taiji.eap.common.redis.dao.RedisKeyDao;
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,6 +77,13 @@ public class RedisKeyServiceImpl implements RedisKeyService{
     public PageInfo<RedisKey> listByPid(Long parentId, int pageNum, int pageSize, String searchText) throws Exception {
         PageHelper.startPage(pageNum, pageSize);
         List<RedisKey> list = redisKeyDao.listByPid(parentId,searchText);
+
+        for (RedisKey redisKey: list) {
+            if(!redisKey.getKeyType().equals("02")){
+                redisKey.setDataSize(redisFactoryDao.size(redisKey.getKeyValue()));
+            }
+        }
+
         PageInfo<RedisKey> pageInfo = new PageInfo<RedisKey>(list);
         return pageInfo;
     }
@@ -95,9 +100,9 @@ public class RedisKeyServiceImpl implements RedisKeyService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Long parentId) throws Exception {
+    public List<BaseTree> treeView(Long parentId) throws Exception {
         List<RedisKey> list = redisKeyDao.selectAll();
-        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        List<BaseTree> trees = new ArrayList<BaseTree>();
         for (RedisKey tree: list) {
             if(parentId==tree.getParentId()){
                 trees.add(findChildren(tree,list));

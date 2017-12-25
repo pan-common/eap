@@ -22,19 +22,19 @@ import com.taiji.eap.common.activiti.service.ActivitiService;
 public class ActivitiServiceImpl implements ActivitiService{
 
 	@Resource
-	private RepositoryService repositoryService;//ÓÃÓÚ»ñµÃactiviti·şÎñ
+	private RepositoryService repositoryService;//ç”¨äºè·å¾—activitiæœåŠ¡
 	@Resource
-	private RuntimeService runtimeService;//ÓÃÓÚ¹ÜÀíÔËĞĞÊ±Á÷³ÌÊµÀı
+	private RuntimeService runtimeService;//ç”¨äºç®¡ç†è¿è¡Œæ—¶æµç¨‹å®ä¾‹
 	@Resource
-	private TaskService taskService;//ÓÃÓÚ¹ÜÀíÔËĞĞÊ±ÈÎÎñ
+	private TaskService taskService;//ç”¨äºç®¡ç†è¿è¡Œæ—¶ä»»åŠ¡
 	@Resource
-	private FormService formService;//ÓÃÓÚ¹ÜÀíÈÎÎñ±íµ¥
+	private FormService formService;//ç”¨äºç®¡ç†ä»»åŠ¡è¡¨å•
 	@Resource
-	private HistoryService historyService;//¹ÜÀíÁ÷³ÌÊµÀı¡¢ÈÎÎñÊµÀıµÈÀúÊ·Êı¾İ
+	private HistoryService historyService;//ç®¡ç†æµç¨‹å®ä¾‹ã€ä»»åŠ¡å®ä¾‹ç­‰å†å²æ•°æ®
 	@Resource
-	private ManagementService managementService;//ÓÃÓÚ¹ÜÀí¶¨Ê±ÈÎÎñ
+	private ManagementService managementService;//ç”¨äºç®¡ç†å®šæ—¶ä»»åŠ¡
 	@Resource
-	private IdentityService identityService;//ÓÃÓÚ¹ÜÀí×éÖ¯½á¹¹
+	private IdentityService identityService;//ç”¨äºç®¡ç†ç»„ç»‡ç»“æ„
 
 	@Override
 	public Deployment deploymentProcessDefinition(String... xmlPath) {
@@ -44,7 +44,7 @@ public class ActivitiServiceImpl implements ActivitiService{
 				.deploy();
 		return deployment;
 	}
-	
+
 	@Override
 	public List<ProcessDefinition> activitiListByprocesskey(String process_key) {
 		List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()

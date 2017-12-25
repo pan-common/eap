@@ -13,6 +13,8 @@ import java.util.Map;
 
 /**
  * 获取数据源下拉列表
+ * @author 潘宏智
+ * @date 2017-12-18 16:03
  */
 public class SelectDataSourceHandler extends SelectCommonDataSourceHandler<DataSource>{
 
@@ -21,10 +23,11 @@ public class SelectDataSourceHandler extends SelectCommonDataSourceHandler<DataS
 
     @Override
     protected boolean isType(String datasource) {
-        if(datasource.equals("datasource"))
+        if(datasource.equals("datasource")) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     @Override

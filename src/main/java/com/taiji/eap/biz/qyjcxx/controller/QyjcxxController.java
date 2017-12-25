@@ -1,8 +1,6 @@
 package com.taiji.eap.biz.qyjcxx.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
-import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
 import com.taiji.eap.biz.qyjcxx.service.QyjcxxService;
@@ -10,10 +8,9 @@ import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.dictionary.annotation.DictionaryResponse;
 import com.taiji.eap.common.easypoi.excel.core.ExcelUtil;
 import com.taiji.eap.common.easypoi.excel.core.IExcelUtil;
-import com.taiji.eap.common.easypoi.excel.utils.TestUtil;
 import com.taiji.eap.common.easypoi.excel.utils.TestUtil1;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.http.entity.Response;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecgframework.poi.excel.ExcelExportUtil;
@@ -150,14 +147,14 @@ public class QyjcxxController extends BaseController{
 
     @GetMapping(value = "treeView")
     @ResponseBody
-    public Response<List<LayuiTree>> treeView(Long parentId){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> treeView(Long parentId){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = qyjcxxService.treeView(parentId);
+            baseTrees = qyjcxxService.treeView(parentId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping(value = "exportExcle")

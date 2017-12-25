@@ -19,12 +19,14 @@
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<!-- 配置数据源,和系统使用同一个数据源 -->
 		<property name="dataSource" ref="dynamicDataSource" />
-		<!-- 没有表创建表 -->
-		<property name="databaseSchemaUpdate" value="true" />
 		<!-- 是否激活Activiti的任务调度 -->
 		<property name="jobExecutorActivate" value="true" />
 		<!-- 统一的事务管理 -->
 		<property name="transactionManager" ref="transactionManager" />
+		<!--没有表创建表-->
+		<property name="databaseSchema" value="ACT"/>
+		<!-- 没有表创建表 -->
+		<property name="databaseSchemaUpdate" value="true" />
 		<property name="activityFontName" value="宋体" />
 		<property name="labelFontName" value="宋体" />
 	</bean>

@@ -1,9 +1,6 @@
 package com.taiji.eap.common.form.formconfColumn.service;
 
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.form.formconfColumn.bean.FormconfColumn;
 import java.util.List;
 

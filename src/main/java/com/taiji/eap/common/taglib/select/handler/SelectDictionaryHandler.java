@@ -14,10 +14,11 @@ public class SelectDictionaryHandler extends SelectCommonDataSourceHandler<Dicti
 
     @Override
     protected boolean isType(String datasource) {
-        if(datasource.equals("dictionary"))
+        if(datasource.equals("dictionary")) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     @Override

@@ -4,8 +4,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.dictionary.annotation.DictionaryResponse;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.shiro.bean.SysResource;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import com.taiji.eap.common.http.entity.Response;
@@ -144,26 +143,26 @@ public class SysResourceController extends BaseController{
 
     @GetMapping(value = "treeView")
     @ResponseBody
-    public Response<List<LayuiTree>> treeView(Long parentId){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> treeView(Long parentId){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = sysResourceService.treeView(parentId);
+            baseTrees = sysResourceService.treeView(parentId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping(value = "treeViewByUser")
     @ResponseBody
-    public Response<List<LayuiTree>> treeViewByUser(Long parentId){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> treeViewByUser(Long parentId){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = sysResourceService.treeViewByUser(parentId);
+            baseTrees = sysResourceService.treeViewByUser(parentId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
 
@@ -199,10 +198,11 @@ public class SysResourceController extends BaseController{
             String[] arr = resourceIds.split(",");
             List<String> longs = Arrays.asList(arr);
             int k = sysResourceService.saveRoleResource(roleId,ListUtils.stringToLongLst(longs));
-            if(k>0)
+            if(k>0) {
                 return renderSuccess("保存成功");
-            else
+            } else {
                 return renderError("保存失败");
+            }
         }else {
             return renderError("没有数据提交");
         }

@@ -17,114 +17,114 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
 public class ActivitiHelper {
-	@Resource
-	private RepositoryService repositoryService;//ÓÃÓÚ»ñµÃactiviti·şÎñ
-	@Resource
-	private RuntimeService runtimeService;//ÓÃÓÚ¹ÜÀíÔËĞĞÊ±Á÷³ÌÊµÀı
-	@Resource
-	private TaskService taskService;//ÓÃÓÚ¹ÜÀíÔËĞĞÊ±ÈÎÎñ
-	@Resource
-	private FormService formService;//ÓÃÓÚ¹ÜÀíÈÎÎñ±íµ¥
-	@Resource
-	private HistoryService historyService;//¹ÜÀíÁ÷³ÌÊµÀı¡¢ÈÎÎñÊµÀıµÈÀúÊ·Êı¾İ
-	@Resource
-	private ManagementService managementService;//ÓÃÓÚ¹ÜÀí¶¨Ê±ÈÎÎñ
-	@Resource
-	private IdentityService identityService;//ÓÃÓÚ¹ÜÀí×éÖ¯½á¹¹
+    @Resource
+    private RepositoryService repositoryService;//ç”¨äºè·å¾—activitiæœåŠ¡
+    @Resource
+    private RuntimeService runtimeService;//ç”¨äºç®¡ç†è¿è¡Œæ—¶æµç¨‹å®ä¾‹
+    @Resource
+    private TaskService taskService;//ç”¨äºç®¡ç†è¿è¡Œæ—¶ä»»åŠ¡
+    @Resource
+    private FormService formService;//ç”¨äºç®¡ç†ä»»åŠ¡è¡¨å•
+    @Resource
+    private HistoryService historyService;//ç®¡ç†æµç¨‹å®ä¾‹ã€ä»»åŠ¡å®ä¾‹ç­‰å†å²æ•°æ®
+    @Resource
+    private ManagementService managementService;//ç”¨äºç®¡ç†å®šæ—¶ä»»åŠ¡
+    @Resource
+    private IdentityService identityService;//ç”¨äºç®¡ç†ç»„ç»‡ç»“æ„
 
-	public ActivitiHelper() {
-		
-	}
-	/**
-	 * activiti·şÎñÁĞ±í
-	 * @param process_key
-	 * @return
-	 */
-	public List<ProcessDefinition> activitiListByprocesskey(String process_key){
-		List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionKey(process_key)
-				.orderByProcessDefinitionVersion()
-				.desc()
-				.list();
-		return processDefinitions;
-	}
-	/**
-	 * µ±Ç°ÈÎÎñµÄÖ´ĞĞÇé¿ö
-	 * @param pdfid
-	 * @return
-	 */
-	public List<ProcessInstance> listProcInstByPdfid(String pdfid){
-		List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
-				.processDefinitionId(pdfid)
-				.list();
-		return processInstances;
-	}
-	/**
-	 * ²¿ÊğÁ÷³Ì
-	 * @param xmlPath
-	 * @return
-	 */
-	public Deployment deployProcDefByPath(String xmlPath){
-		Deployment deployment = repositoryService.createDeployment()
-				.addClasspathResource(xmlPath)
-				.deploy();
-		return deployment;
-	}
-	/**
-	 * É¾³ı²¿ÊğµÄÁ÷³Ì
-	 * @param process_key
-	 */
-	public void deleteProcDefByprocesskey(String process_key){
-		List<ProcessDefinition> processDefinitions = this.activitiListByprocesskey(process_key);
-		for (ProcessDefinition task : processDefinitions) {
-			List<Task> tasks = taskService.createTaskQuery().processDefinitionId(task.getId()).list();
-			for (Task t : tasks) {
-				taskService.deleteTask(t.getId());
-			}
-			repositoryService.deleteDeployment(task.getDeploymentId());
-		}
-	}
-	public RepositoryService getRepositoryService() {
-		return repositoryService;
-	}
-	public void setRepositoryService(RepositoryService repositoryService) {
-		this.repositoryService = repositoryService;
-	}
-	public RuntimeService getRuntimeService() {
-		return runtimeService;
-	}
-	public void setRuntimeService(RuntimeService runtimeService) {
-		this.runtimeService = runtimeService;
-	}
-	public TaskService getTaskService() {
-		return taskService;
-	}
-	public void setTaskService(TaskService taskService) {
-		this.taskService = taskService;
-	}
-	public FormService getFormService() {
-		return formService;
-	}
-	public void setFormService(FormService formService) {
-		this.formService = formService;
-	}
-	public HistoryService getHistoryService() {
-		return historyService;
-	}
-	public void setHistoryService(HistoryService historyService) {
-		this.historyService = historyService;
-	}
-	public ManagementService getManagementService() {
-		return managementService;
-	}
-	public void setManagementService(ManagementService managementService) {
-		this.managementService = managementService;
-	}
-	public IdentityService getIdentityService() {
-		return identityService;
-	}
-	public void setIdentityService(IdentityService identityService) {
-		this.identityService = identityService;
-	}
-	
+    public ActivitiHelper() {
+
+    }
+    /**
+     * activitiæœåŠ¡åˆ—è¡¨
+     * @param process_key
+     * @return
+     */
+    public List<ProcessDefinition> activitiListByprocesskey(String process_key){
+        List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionKey(process_key)
+                .orderByProcessDefinitionVersion()
+                .desc()
+                .list();
+        return processDefinitions;
+    }
+    /**
+     * å½“å‰ä»»åŠ¡çš„æ‰§è¡Œæƒ…å†µ
+     * @param pdfid
+     * @return
+     */
+    public List<ProcessInstance> listProcInstByPdfid(String pdfid){
+        List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
+                .processDefinitionId(pdfid)
+                .list();
+        return processInstances;
+    }
+    /**
+     * éƒ¨ç½²æµç¨‹
+     * @param xmlPath
+     * @return
+     */
+    public Deployment deployProcDefByPath(String xmlPath){
+        Deployment deployment = repositoryService.createDeployment()
+                .addClasspathResource(xmlPath)
+                .deploy();
+        return deployment;
+    }
+    /**
+     * åˆ é™¤éƒ¨ç½²çš„æµç¨‹
+     * @param process_key
+     */
+    public void deleteProcDefByprocesskey(String process_key){
+        List<ProcessDefinition> processDefinitions = this.activitiListByprocesskey(process_key);
+        for (ProcessDefinition task : processDefinitions) {
+            List<Task> tasks = taskService.createTaskQuery().processDefinitionId(task.getId()).list();
+            for (Task t : tasks) {
+                taskService.deleteTask(t.getId());
+            }
+            repositoryService.deleteDeployment(task.getDeploymentId());
+        }
+    }
+    public RepositoryService getRepositoryService() {
+        return repositoryService;
+    }
+    public void setRepositoryService(RepositoryService repositoryService) {
+        this.repositoryService = repositoryService;
+    }
+    public RuntimeService getRuntimeService() {
+        return runtimeService;
+    }
+    public void setRuntimeService(RuntimeService runtimeService) {
+        this.runtimeService = runtimeService;
+    }
+    public TaskService getTaskService() {
+        return taskService;
+    }
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+    public FormService getFormService() {
+        return formService;
+    }
+    public void setFormService(FormService formService) {
+        this.formService = formService;
+    }
+    public HistoryService getHistoryService() {
+        return historyService;
+    }
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
+    public ManagementService getManagementService() {
+        return managementService;
+    }
+    public void setManagementService(ManagementService managementService) {
+        this.managementService = managementService;
+    }
+    public IdentityService getIdentityService() {
+        return identityService;
+    }
+    public void setIdentityService(IdentityService identityService) {
+        this.identityService = identityService;
+    }
+
 }

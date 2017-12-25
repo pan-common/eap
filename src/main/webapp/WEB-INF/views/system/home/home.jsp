@@ -54,6 +54,10 @@
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 <spring:message code="main.logout"></spring:message>
                             </a>
+                            <a onclick="editHelpDoc()">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                <spring:message code="main.editHelpDoc"></spring:message>
+                            </a>
                         </dd>
                     </dl>
                 </li>
@@ -78,7 +82,7 @@
             <div class="layui-tab-content"
                  style="min-height: 150px; padding: 5px 0 0 0;">
                 <div class="layui-tab-item layui-show">
-                    <iframe id="iframe" src=""></iframe>
+                    <iframe id="iframe" src="${pageContext.request.contextPath}/sysResource/link?url=system/home/main"></iframe>
                 </div>
             </div>
         </div>
@@ -123,7 +127,7 @@
         base: '${pageContext.request.contextPath}/resources/layui/js/',
         version:new Date().getTime()
     }).use(['element', 'layer', 'navbar', 'tab'], function() {
-        var element = layui.element(),
+        var element = layui.element,
             $ = layui.jquery,
             layer = layui.layer,
             navbar = layui.navbar();
@@ -147,7 +151,8 @@
 
         $.get('${pageContext.request.contextPath}/sysResource/treeViewByUser',
             {
-                parentId:0
+                parentId:0,
+                version:new Date().getTime()
             }, function (data, status) {
                 if ("success" == status) {
                     if (data.body.resultCode == "0") {
@@ -340,6 +345,10 @@
         },function(){
             layer.close(layer.index);
         });
+    }
+    
+    function editHelpDoc() {
+        window.open (baseServerUrl+"sysResource/link?url=system/help/helpEdit")
     }
 
     Date.prototype.Format = function (fmt) { //author: meizz

@@ -1,5 +1,6 @@
 package com.taiji.eap.common.generator.service.impl;
 
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.datasource.dao.DataSourceDao;
 import com.taiji.eap.common.generator.bean.*;
@@ -358,8 +359,8 @@ public class GeneratorServiceImpl implements GeneratorService{
     }
 
     @Override
-    public List<LayuiTree> projectTreeView(String path) throws Exception{
-        List<LayuiTree> layuiTrees = new ArrayList<LayuiTree>();
+    public List<BaseTree> projectTreeView(String path) throws Exception{
+        List<BaseTree> baseTrees = new ArrayList<BaseTree>();
         File file = new File(path);
         if(file.exists()){
             FileTreeView fileTreeView = new FileTreeView();
@@ -367,18 +368,18 @@ public class GeneratorServiceImpl implements GeneratorService{
             fileTreeView.setFileName(file.getName());
             fileTreeView.setName("com.taiji.eap");
             fileTreeView.setSpread(true);
-            fileTreeView.setType(LayuiTree.DICTIONARY);
+            fileTreeView.setType(BaseTree.DICTIONARY);
             disPlay(file,fileTreeView);
-            layuiTrees.add(fileTreeView);
+            baseTrees.add(fileTreeView);
         }else{
             throw new Exception("文件夹不存在");
         }
-        return layuiTrees;
+        return baseTrees;
     }
 
     @Override
-    public List<LayuiTree> jspTreeView(String path) throws Exception{
-        List<LayuiTree> layuiTrees = new ArrayList<LayuiTree>();
+    public List<BaseTree> jspTreeView(String path) throws Exception{
+        List<BaseTree> baseTrees = new ArrayList<BaseTree>();
         File file = new File(path);
         if(file.exists()){
             FileTreeView fileTreeView = new FileTreeView();
@@ -386,13 +387,13 @@ public class GeneratorServiceImpl implements GeneratorService{
             fileTreeView.setFileName(file.getName());
             fileTreeView.setName("views");
             fileTreeView.setSpread(true);
-            fileTreeView.setType(LayuiTree.DICTIONARY);
+            fileTreeView.setType(BaseTree.DICTIONARY);
             disPlay(file,fileTreeView);
-            layuiTrees.add(fileTreeView);
+            baseTrees.add(fileTreeView);
         }else{
             throw new Exception("文件夹不存在");
         }
-        return layuiTrees;
+        return baseTrees;
     }
 
     private void disPlay(File file, FileTreeView fileTreeView){
@@ -406,7 +407,7 @@ public class GeneratorServiceImpl implements GeneratorService{
             treeView.setFileName(file.getName());
             treeView.setName(file.getName());
             treeView.setSpread(false);
-            treeView.setType(LayuiTree.DICTIONARY);
+            treeView.setType(BaseTree.DICTIONARY);
             fileTreeView.addChildren(treeView);
             File[] files = file.listFiles();
             if(files.length>0){

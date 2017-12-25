@@ -1,9 +1,7 @@
 package com.taiji.eap.common.shiro.service;
 
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.shiro.bean.SysResource;
 import java.util.List;
 
@@ -75,9 +73,9 @@ public interface SysResourceService{
     * @return
     * @throws Exception
     */
-    List<LayuiTree> treeView(Long parentId) throws Exception;
+    List<BaseTree> treeView(Long parentId) throws Exception;
 
-    List<LayuiTree> treeViewByUser(Long parentId) throws Exception;
+    List<BaseTree> treeViewByUser(Long parentId) throws Exception;
 
     /**
      * 通过角色ID获取资源ID列表

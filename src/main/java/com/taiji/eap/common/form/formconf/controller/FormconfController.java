@@ -2,17 +2,12 @@ package com.taiji.eap.common.form.formconf.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.common.form.formconf.bean.Formconf;
 import com.taiji.eap.common.form.formconf.service.FormconfService;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("formconf")

@@ -42,10 +42,24 @@ public interface SysRoleResourceDao {
      */
     List<SysRoleResource> selectAll();
 
-
+    /**
+     *
+     * @param roleId
+     * @return
+     */
     List<Long> getResourceIdsByRoleId(Long roleId);
 
+    /**
+     *
+     * @param roleId
+     * @return
+     */
     int deleteByRoleId(Long roleId);
 
+    /**
+     *
+     * @param roleIdList
+     * @return
+     */
     List<Long> getResourceIdsByRoleIds(@Param("roleIdList") List<Long> roleIdList);
 }

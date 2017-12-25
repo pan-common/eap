@@ -2,8 +2,7 @@ package com.taiji.eap.common.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.http.entity.Response;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.shiro.bean.SysRole;
 import com.taiji.eap.common.shiro.bean.SysUserRole;
 import com.taiji.eap.common.shiro.dao.SysRoleDao;
@@ -87,9 +86,9 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Long parentId) throws Exception {
+    public List<BaseTree> treeView(Long parentId) throws Exception {
         List<SysRole> list = sysRoleDao.selectAll();
-        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        List<BaseTree> trees = new ArrayList<BaseTree>();
         for (SysRole tree: list) {
             if(parentId==tree.getParentId()){
                 trees.add(findChildren(tree,list));

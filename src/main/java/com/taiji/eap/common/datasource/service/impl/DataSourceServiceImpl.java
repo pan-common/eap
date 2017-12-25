@@ -6,24 +6,19 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseServiceImpl;
-import com.taiji.eap.common.datasource.base.DataSourceContext;
 import com.taiji.eap.common.datasource.base.DataSourceHolder;
 import com.taiji.eap.common.datasource.base.DynamicDataSource;
 import com.taiji.eap.common.datasource.dao.DataSourceDao;
 import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.datasource.bean.DataSource;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.generator.bean.TableType;
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
-import com.taiji.eap.common.utils.SpringContextUtil;
 import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
@@ -71,7 +66,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             dataSource.setPassword(value.getPassword());
             dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
             dataSource.setSpread(false);
-            dataSource.setType(LayuiTree.CONNECT);
+            dataSource.setType(BaseTree.CONNECT);
             dataSources.add(dataSource);
         }
         List<DataSource> list = redisFactoryDao.getDatas("datasource", "", new RedisFactoryDao.OnRedisSelectListener() {
@@ -84,7 +79,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             for (int i = 0; i < list.size(); i++) {
                 if(!datasources.containsKey(list.get(i).getBeanName())) {
                     list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
-                    list.get(i).setType(LayuiTree.CONNECT);
+                    list.get(i).setType(BaseTree.CONNECT);
                     dataSources.add(list.get(i));
                 }
             }
@@ -93,8 +88,8 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     }
 
     @Override
-    public List<LayuiTree> getDataSourceTree() {
-        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+    public List<BaseTree> getDataSourceTree() {
+        List<BaseTree> dataSources = new ArrayList<BaseTree>();
         DataSource dataSource = new DataSource();
         dataSource.setBeanName("dataSource");
         dataSource.setConnectName("eap");
@@ -104,16 +99,16 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         dataSource.setPassword("123456");
         dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(dataSource.getUrl())[0]);
         dataSource.setSpread(true);
-        dataSource.setType(LayuiTree.CONNECT);
+        dataSource.setType(BaseTree.CONNECT);
         dataSources.add(dataSource);
         return dataSources;
 
     }
 
     @Override
-    public List<LayuiTree> dataSourceTree() throws Exception {
+    public List<BaseTree> dataSourceTree() throws Exception {
         Map<Object,Object> datasources = getDataSources();
-        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+        List<BaseTree> dataSources = new ArrayList<BaseTree>();
 
         for (Map.Entry entry: datasources.entrySet()) {
             String key = (String) entry.getKey();
@@ -127,7 +122,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             dataSource.setPassword(value.getPassword());
             dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
             dataSource.setSpread(false);
-            dataSource.setType(LayuiTree.CONNECT);
+            dataSource.setType(BaseTree.CONNECT);
             dataSources.add(dataSource);
         }
 
@@ -135,7 +130,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         for (int i = 0; i < list.size(); i++) {
             if(!datasources.containsKey(list.get(i).getBeanName())) {
                 list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
-                list.get(i).setType(LayuiTree.CONNECT);
+                list.get(i).setType(BaseTree.CONNECT);
                 dataSources.add(list.get(i));
             }
         }
@@ -144,9 +139,9 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     }
 
     @Override
-    public List<LayuiTree> tableTree(String datasource) throws Exception {
+    public List<BaseTree> tableTree(String datasource) throws Exception {
         Map<Object,Object> datasources = getDataSources();
-        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+        List<BaseTree> dataSources = new ArrayList<BaseTree>();
         for (Map.Entry entry: datasources.entrySet()) {
             String key = (String) entry.getKey();
             DruidDataSource value = (DruidDataSource) entry.getValue();
@@ -159,14 +154,14 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             dataSource.setPassword(value.getPassword());
             dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
             dataSource.setSpread(false);
-            dataSource.setType(LayuiTree.CONNECT);
+            dataSource.setType(BaseTree.CONNECT);
             dataSources.add(dataSource);
         }
         List<DataSource> list = dataSourceDao.selectAll();
         for (int i = 0; i < list.size(); i++) {
             if(!datasources.containsKey(list.get(i).getBeanName())) {
                 list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
-                list.get(i).setType(LayuiTree.CONNECT);
+                list.get(i).setType(BaseTree.CONNECT);
                 dataSources.add(list.get(i));
             }
         }
@@ -177,8 +172,8 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             }
         }
         if(dataSources.size()==1) {
-            LayuiTree tableTree = new TableType();
-            tableTree.setType(LayuiTree.OTHER);
+            BaseTree tableTree = new TableType();
+            tableTree.setType(BaseTree.OTHER);
             tableTree.setSpread(true);
             tableTree.setName("表");
             DataSource dataSource = (DataSource) dataSources.get(0);
@@ -188,15 +183,15 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
                 String name = tables.get(i).gettComment() == null || tables.get(i).gettComment().equals("") ? tables.get(i).gettName() : tables.get(i).gettName() + "(" + tables.get(i).gettComment() + ")";
                 tables.get(i).setName(name);
                 tables.get(i).setSpread(true);
-                tables.get(i).setType(LayuiTree.TABLE);
+                tables.get(i).setType(BaseTree.TABLE);
                 tables.get(i).setDriverClass(dataSource.getDriverClassName());
                 tables.get(i).setConnectionURL(dataSource.getUrl());
                 tables.get(i).setUserId(dataSource.getUsername());
                 tables.get(i).setPassword(dataSource.getPassword());
                 tableTree.addChildren(tables.get(i));
             }
-            LayuiTree viewTree = new TableType();
-            viewTree.setType(LayuiTree.OTHER);
+            BaseTree viewTree = new TableType();
+            viewTree.setType(BaseTree.OTHER);
             viewTree.setSpread(true);
             viewTree.setName("视图");
             //获取数据库视图
@@ -205,7 +200,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
                 String name = views.get(i).gettComment() == null ? views.get(i).gettName() : views.get(i).gettName() + "(" + views.get(i).gettComment() + ")";
                 views.get(i).setName(name);
                 views.get(i).setSpread(true);
-                views.get(i).setType(LayuiTree.TABLE);
+                views.get(i).setType(BaseTree.TABLE);
                 views.get(i).setDriverClass(dataSource.getDriverClassName());
                 views.get(i).setConnectionURL(dataSource.getUrl());
                 views.get(i).setUserId(dataSource.getUsername());
@@ -223,7 +218,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     @Override
     public void changeDataSource(String datasource) throws NoSuchFieldException, IllegalAccessException {
         Map<Object,Object> datasources = getDataSources();
-        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
+        List<BaseTree> dataSources = new ArrayList<BaseTree>();
         for (Map.Entry entry: datasources.entrySet()) {
             String key = (String) entry.getKey();
             DruidDataSource value = (DruidDataSource) entry.getValue();
@@ -236,14 +231,14 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             dataSource.setPassword(value.getPassword());
             dataSource.setName(dataSource.getConnectName()+"@"+parseUrl(value.getUrl())[0]);
             dataSource.setSpread(false);
-            dataSource.setType(LayuiTree.CONNECT);
+            dataSource.setType(BaseTree.CONNECT);
             dataSources.add(dataSource);
         }
         List<DataSource> list = dataSourceDao.selectAll();
         for (int i = 0; i < list.size(); i++) {
             if(!datasources.containsKey(list.get(i).getBeanName())) {
                 list.get(i).setName(list.get(i).getConnectName() + "@" + parseUrl(list.get(i).getUrl())[0]);
-                list.get(i).setType(LayuiTree.CONNECT);
+                list.get(i).setType(BaseTree.CONNECT);
                 dataSources.add(list.get(i));
             }
         }
@@ -260,7 +255,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
 
     @Override
     @Transactional
-    public List<LayuiTree> tableTree(String beanName,String driverClassName,String url,String username,String password) {
+    public List<BaseTree> tableTree(String beanName, String driverClassName, String url, String username, String password) {
         DataSource dataSource = new DataSource();
         dataSource.setBeanName(beanName);
         dataSource.setDriverClassName(driverClassName);
@@ -270,9 +265,9 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         //切换数据源
         DataSourceHolder.setDataSource(dataSource);
 
-        List<LayuiTree> dataSources = new ArrayList<LayuiTree>();
-        LayuiTree tableTree = new TableType();
-        tableTree.setType(LayuiTree.OTHER);
+        List<BaseTree> dataSources = new ArrayList<BaseTree>();
+        BaseTree tableTree = new TableType();
+        tableTree.setType(BaseTree.OTHER);
         tableTree.setSpread(true);
         tableTree.setName("表");
         //获取数据库表
@@ -281,15 +276,15 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             String name = tables.get(i).gettComment()==null||tables.get(i).gettComment().equals("")?tables.get(i).gettName():tables.get(i).gettName()+"("+tables.get(i).gettComment()+")";
             tables.get(i).setName(name);
             tables.get(i).setSpread(true);
-            tables.get(i).setType(LayuiTree.TABLE);
+            tables.get(i).setType(BaseTree.TABLE);
             tables.get(i).setDriverClass(driverClassName);
             tables.get(i).setConnectionURL(url);
             tables.get(i).setUserId(username);
             tables.get(i).setPassword(password);
             tableTree.addChildren(tables.get(i));
         }
-        LayuiTree viewTree = new TableType();
-        viewTree.setType(LayuiTree.OTHER);
+        BaseTree viewTree = new TableType();
+        viewTree.setType(BaseTree.OTHER);
         viewTree.setSpread(true);
         viewTree.setName("视图");
         //获取数据库视图
@@ -298,7 +293,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             String name = views.get(i).gettComment()==null?views.get(i).gettName():views.get(i).gettName()+"("+views.get(i).gettComment()+")";
             views.get(i).setName(name);
             views.get(i).setSpread(true);
-            views.get(i).setType(LayuiTree.TABLE);
+            views.get(i).setType(BaseTree.TABLE);
             views.get(i).setDriverClass(driverClassName);
             views.get(i).setConnectionURL(url);
             views.get(i).setUserId(username);

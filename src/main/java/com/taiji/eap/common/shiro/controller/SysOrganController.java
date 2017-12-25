@@ -2,7 +2,7 @@ package com.taiji.eap.common.shiro.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.shiro.bean.SysOrgan;
 import com.taiji.eap.common.shiro.service.SysOrganService;
 import com.taiji.eap.common.http.entity.Response;
@@ -129,14 +129,14 @@ public class SysOrganController extends BaseController{
 
     @GetMapping(value = "treeView")
     @ResponseBody
-    public Response<List<LayuiTree>> treeView(Long parentId){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> treeView(Long parentId){
+        List<BaseTree> baseTrees = null;
         try {
-            layuiTrees = sysOrganService.treeView(parentId);
+            baseTrees = sysOrganService.treeView(parentId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return renderSuccess(layuiTrees);
+        return renderSuccess(baseTrees);
     }
 
     @GetMapping(value = "getOrganIdsByUserId")

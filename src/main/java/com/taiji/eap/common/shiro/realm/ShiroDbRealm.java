@@ -1,8 +1,8 @@
 package com.taiji.eap.common.shiro.realm;
 
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
-import com.taiji.eap.common.shiro.bean.ShiroUser;
-import com.taiji.eap.common.shiro.bean.SysPuriew;
+import com.taiji.eap.common.shiro.bean.SysPurview;
+import com.taiji.eap.common.shiro.bean.SysUser;
 import com.taiji.eap.common.shiro.service.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
@@ -14,8 +14,6 @@ import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.taiji.eap.common.shiro.bean.SysUser;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +36,7 @@ public class ShiroDbRealm extends AuthorizingRealm{
 	private SysResourceService sysResourceService;
 
 	@Autowired
-	private SysPuriewService sysPuriewService;
+	private SysPurviewService sysPurviewService;
 
 	@Autowired
 	private RedisFactoryDao<String> redisFactoryDao;
@@ -51,10 +49,12 @@ public class ShiroDbRealm extends AuthorizingRealm{
 			AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		SysUser sysUser = userService.getUserByName(token.getUsername());
-		if(sysUser==null)
+		if(sysUser==null) {
 			throw new UnknownAccountException("账号不存在");
-		if(sysUser.getValid().equals("2"))
+		}
+		if(sysUser.getValid().equals("2")) {
 			throw new DisabledAccountException("账号未启用");
+		}
 		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
 				sysUser,
 				sysUser.getPassword(),
@@ -69,7 +69,7 @@ public class ShiroDbRealm extends AuthorizingRealm{
 		SysUser sysUser = (SysUser) principals.getPrimaryPrincipal();
 		List<String> permissions = null;
 		try {
-			permissions = redisFactoryDao.getDatas("user:puriew",":"+sysUser.getUserId(), new RedisFactoryDao.OnRedisSelectListener() {
+			permissions = redisFactoryDao.getDatas("user:puriew",String.valueOf(sysUser.getUserId()), new RedisFactoryDao.OnRedisSelectListener() {
                 @Override
                 public List fruitless() {
                 	List<String> permissions = new ArrayList<>();
@@ -85,10 +85,10 @@ public class ShiroDbRealm extends AuthorizingRealm{
 							resourceIds.add(resourceId);
 						}
 					}
-					List<SysPuriew> sysPuriews = sysPuriewService.getPuriewByResourceIds(resourceIds);
-					for (SysPuriew sysPuriew: sysPuriews) {
-						if(!StringUtils.isEmpty(sysPuriew.getExpression())) {
-							permissions.add(sysPuriew.getExpression());
+					List<SysPurview> sysPurviews = sysPurviewService.getPuriewByResourceIds(resourceIds);
+					for (SysPurview sysPurview : sysPurviews) {
+						if(!StringUtils.isEmpty(sysPurview.getExpression())) {
+							permissions.add(sysPurview.getExpression());
 						}
 					}
                     return permissions;

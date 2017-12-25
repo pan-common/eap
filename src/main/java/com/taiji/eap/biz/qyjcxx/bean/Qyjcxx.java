@@ -1,18 +1,13 @@
 
 package com.taiji.eap.biz.qyjcxx.bean;
 
-import java.util.Date;
-
 import com.taiji.eap.common.dictionary.annotation.Dictionary;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelEntity;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 
 @ExcelTarget("qyjcxx")
-public class Qyjcxx extends LayuiTree{
+public class Qyjcxx extends BaseTree {
     @Excel(name = "编号",orderNum = "1",isImportField = "id",width = 20)
     private Long id;//主键ID
     private Long parentId;//

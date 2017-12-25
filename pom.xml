@@ -307,6 +307,22 @@
 			<artifactId>easypoi-base</artifactId>
 			<version>2.4.0</version>
 		</dependency>
+		<!--WebMagic-->
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-core</artifactId>
+			<version>0.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-extension</artifactId>
+			<version>0.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>us.codecraft</groupId>
+			<artifactId>webmagic-selenium</artifactId>
+			<version>0.7.2</version>
+		</dependency>
 
 	</dependencies>
 	<build>
@@ -358,44 +374,43 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
-
+			<!--webpack-->
 			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.3.5</version>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<configuration>
+					<installDirectory>target</installDirectory>  <!-- 该插件的安装位置 -->
+					<!-- webpack的工作目录，所有的配置文件/package.json/component/js及all所有和react有关的文件都在这个目录里存放 -->
+					<workingDirectory>src/main/webapp/resources/react</workingDirectory>
+				</configuration>
 				<executions>
 					<execution>
-						<id>Generate MyBatis Artifacts</id>
+						<id>install node and npm</id> <!-- webpack必须有node支持 -->
 						<goals>
-							<goal>generate</goal>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v8.0.0</nodeVersion>
+							<npmVersion>5.5.1</npmVersion>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>webpack build</id>
+						<goals>
+							<goal>webpack</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<verbose>true</verbose>
-					<overwrite>true</overwrite>
-					<!-- <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver> -->
-					<!-- <jdbcURL>jdbc:mysql://127.0.0.1:3306/test</jdbcURL> -->
-					<!-- <jdbcUserId>test</jdbcUserId> -->
-					<!-- <jdbcPassword>test</jdbcPassword> -->
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>6.0.6</version>
-					</dependency>
-					<dependency>
-						<groupId>org.mybatis.generator</groupId>
-						<artifactId>mybatis-generator-core</artifactId>
-						<version>1.3.5</version>
-					</dependency>
-					<dependency>
-						<groupId>org.mybatis</groupId>
-						<artifactId>mybatis</artifactId>
-						<version>3.4.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

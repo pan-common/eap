@@ -1,9 +1,7 @@
 package com.taiji.eap.common.redis.service;
 
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.Param;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.redis.bean.RedisKey;
 import java.util.List;
 
@@ -75,7 +73,7 @@ public interface RedisKeyService{
     * @return
     * @throws Exception
     */
-    List<LayuiTree> treeView(Long parentId) throws Exception;
+    List<BaseTree> treeView(Long parentId) throws Exception;
 
     /**
      * 获取所有可用key名

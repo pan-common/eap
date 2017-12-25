@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.shiro.dao.SysPurviewDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysPurview">
+        <id column="puriew_id" property="puriewId" jdbcType="DECIMAL"></id>
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+        <result column="expression" property="expression" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        <where>
+            valid = '1'
+            <if test="searchText!=null and searchText!=''">
+                <if test="_databaseId == 'mysql'">
+                    AND CONCAT(name,',',expression) LIKE CONCAT("%",#{searchText},"%")
+                </if>
+                <if test="_databaseId == 'oracle'">
+                    AND name||','||expression LIKE '%'||#{searchText}||'%'
+                </if>
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.shiro.bean.SysPurview">
+        <selectKey resultType="java.lang.Long" keyProperty="puriewId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS puriew_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_qx_puriew_puriew_id_seq.nextval AS puriew_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_qx_puriew(
+        puriew_id,name,seq,expression,create_time,update_time,valid,creater)
+        VALUES(
+        #{puriewId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{expression,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysPurview">
+        UPDATE t_qx_puriew SET
+        puriew_id=#{puriewId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},expression=#{expression,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_qx_puriew WHERE puriew_id = #{puriewId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+    </select>
+
+    <select id="listByIds" resultMap="BaseResultMap">
+        SELECT * FROM t_qx_puriew
+        <where>
+            puriew_id IN
+            <foreach item="item" index="index" collection="puriewIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <select id="globalConfig" resultType="java.util.Map">
+        select a.expression as expression,
+        <if test="_databaseId == 'mysql'">
+            GROUP_CONCAT(c.link)
+        </if>
+        <if test="_databaseId == 'oracle'">
+            wmsys.wm_concat(c.link)
+        </if>
+        urls from t_qx_puriew a
+        left join t_qx_puriew_resource b
+        on a.puriew_id = b.puriew_id
+        left join t_qx_resource c
+        on b.resource_id = c.resource_id
+        group by
+        a.expression
+    </select>
+</mapper>

@@ -2,6 +2,7 @@ package com.taiji.eap.common.generator.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.datasource.bean.DataSource;
 import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.datasource.service.DataSourceService;
@@ -31,26 +32,26 @@ public class GeneratorController extends BaseController{
 
 	@GetMapping(value = "getTables")
 	@ResponseBody
-	public Response<List<LayuiTree>> getTables(){
-		LayuiTree connect = new Connect();
+	public Response<List<BaseTree>> getTables(){
+		BaseTree connect = new Connect();
 		connect.setName("默认数据库连接");
 		connect.setSpread(true);
-		connect.setType(LayuiTree.CONNECT);
-		List<LayuiTree> layuiTrees = new ArrayList<LayuiTree>();
-		layuiTrees.add(connect);
-		for (int i = 0; i < layuiTrees.size(); i++) {
-			List<LayuiTree> dataSources = dataSourceService.getDataSourceTree();
-			layuiTrees.get(i).addChildrens(dataSources);
+		connect.setType(BaseTree.CONNECT);
+		List<BaseTree> baseTrees = new ArrayList<BaseTree>();
+		baseTrees.add(connect);
+		for (int i = 0; i < baseTrees.size(); i++) {
+			List<BaseTree> dataSources = dataSourceService.getDataSourceTree();
+			baseTrees.get(i).addChildrens(dataSources);
 			for (int j = 0; j < dataSources.size(); j++) {
-				LayuiTree tableTree = new TableType();
-				tableTree.setType(LayuiTree.OTHER);
+				BaseTree tableTree = new TableType();
+				tableTree.setType(BaseTree.OTHER);
 				tableTree.setSpread(true);
 				tableTree.setName("表");
 				List<Table> tables = generatorService.selectTables(((DataSource)dataSources.get(i)).getConnectName());
 				for (int k = 0; k < tables.size() ; k++) {
 					tables.get(k).setName(tables.get(k).gettName());
 					tables.get(k).setSpread(true);
-					tables.get(k).setType(LayuiTree.TABLE);
+					tables.get(k).setType(BaseTree.TABLE);
 					tables.get(k).setDriverClass(((DataSource)dataSources.get(i)).getDriverClassName());
 					tables.get(k).setConnectionURL(((DataSource)dataSources.get(i)).getUrl());
 					tables.get(k).setUserId(((DataSource)dataSources.get(i)).getUsername());
@@ -58,15 +59,15 @@ public class GeneratorController extends BaseController{
 					tableTree.addChildren(tables.get(k));
 				}
 				dataSources.get(j).addChildren(tableTree);
-				LayuiTree viewTree = new TableType();
-				viewTree.setType(LayuiTree.OTHER);
+				BaseTree viewTree = new TableType();
+				viewTree.setType(BaseTree.OTHER);
 				viewTree.setSpread(true);
 				viewTree.setName("视图");
 				List<Table> views = generatorService.selectViews(((DataSource)dataSources.get(i)).getConnectName());
 				for (int k = 0; k <views.size() ; k++) {
 					views.get(k).setName(views.get(k).gettName());
 					views.get(k).setSpread(true);
-					views.get(k).setType(LayuiTree.TABLE);
+					views.get(k).setType(BaseTree.TABLE);
 					views.get(k).setDriverClass(((DataSource)dataSources.get(i)).getDriverClassName());
 					views.get(k).setConnectionURL(((DataSource)dataSources.get(i)).getUrl());
 					views.get(k).setUserId(((DataSource)dataSources.get(i)).getUsername());
@@ -76,7 +77,7 @@ public class GeneratorController extends BaseController{
 				dataSources.get(j).addChildren(viewTree);
 			}
 		}
-		return renderSuccess(layuiTrees);
+		return renderSuccess(baseTrees);
 	}
 
 	@GetMapping(value = "getColumns")
@@ -148,17 +149,17 @@ public class GeneratorController extends BaseController{
 	 */
 	@GetMapping(value = "projectTreeView")
 	@ResponseBody
-	public Response<List<LayuiTree>> projectTreeView(){
+	public Response<List<BaseTree>> projectTreeView(){
 		String path = this.getClass().getClassLoader().getResource("").getPath().split("target/")[0]+"src/main/java/com/taiji/eap";
 		path = path.substring(1,path.length());
-		List<LayuiTree> layuiTrees = null;
+		List<BaseTree> baseTrees = null;
 		try {
-			layuiTrees = generatorService.projectTreeView(path);
+			baseTrees = generatorService.projectTreeView(path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return renderError(e.getMessage());
 		}
-		return renderSuccess(layuiTrees);
+		return renderSuccess(baseTrees);
 	}
 
 	/**
@@ -167,17 +168,17 @@ public class GeneratorController extends BaseController{
 	 */
 	@GetMapping(value = "jspTreeView")
 	@ResponseBody
-	public Response<List<LayuiTree>> jspTreeView(){
+	public Response<List<BaseTree>> jspTreeView(){
 		String path = this.getClass().getClassLoader().getResource("").getPath().split("target/")[0]+"src/main/webapp/WEB-INF/views";
 		path = path.substring(1,path.length());
-		List<LayuiTree> layuiTrees = null;
+		List<BaseTree> baseTrees = null;
 		try {
-			layuiTrees = generatorService.jspTreeView(path);
+			baseTrees = generatorService.jspTreeView(path);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return renderError(e.getMessage());
 		}
-		return renderSuccess(layuiTrees);
+		return renderSuccess(baseTrees);
 	}
 
 }

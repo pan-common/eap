@@ -1,7 +1,7 @@
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
+<%@include file="/WEB-INF/views/system/common/base.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/views/system/common/base.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,6 +25,9 @@
             <button id='showZTree' class="layui-btn layui-btn-small">
                 <i class="layui-icon">&#xe62e;</i> zTree显示
             </button>
+            <button id='tableTree' class="layui-btn layui-btn-small">
+                <i class="fa fa-table"></i> 表格显示
+            </button>
         </div>
     </div>
     <table id='bootstrapTable'>
@@ -45,6 +48,9 @@
         $("#showZTree").click(function () {
             showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysResource/zTree","550px",$(window).height())
         });
+        $("#tableTree").click(function () {
+            showModel("显示表格","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysResource/tableTree",$(window).width(),$(window).height())
+        });
         //弹出录入框
         function showModel(title,url,width,height) {
             layer.open({
@@ -59,7 +65,7 @@
                 success:function (layero, index) {
 
                 }
-            })
+            });
         };
 
         $('#bootstrapTable').bootstrapTable({
@@ -158,6 +164,9 @@
                             '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;&nbsp;&nbsp;',].join('');
                     }
                 }],
+            onLoadSuccess:function (data) {
+
+            },
             onLoadError : function(status) { //加载失败时执行
                 $.messager.show({
                     title : 'Error',
@@ -178,6 +187,36 @@
             return param;
         }
         loadPath();
+        function loadPath() {
+            var index = layer.msg('加载中', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false, time:100000});
+            $.get('${pageContext.request.contextPath}/sysResource/getPath/',
+                {
+                    resourceId : currentId
+                }, function(data, status) {
+                    layer.close(index);
+                    if (status == "success") {
+                        if (data.body.resultCode == "0") {
+                            var result = data.body.entity;
+                            $(".breadcrumb").empty();
+                            var html = "";
+                            for (var i = 0; i < result.length; i++) {
+                                var html = '<li><a class="clickEffect" name="'
+                                    +result[i].resourceId+'">'+ result[i].name+'</a></li>';
+                                $(".breadcrumb").append(html);
+                                $("a[name=" + result[i].resourceId + "]").bind("click", {
+                                    index : i
+                                }, clickHandler);
+                            }
+                            function clickHandler(event) {
+                                var i = event.data.index;
+                                currentId = result[i].resourceId;
+                                refreshTable();
+                                loadPath();
+                            }
+                        }
+                    }
+                });
+        }
     });
 
     function del(resourceId) {
@@ -204,35 +243,6 @@
         },function () {
 
         });
-    }
-
-    function loadPath() {
-        $.get('${pageContext.request.contextPath}/sysResource/getPath/',
-            {
-                resourceId : currentId
-            }, function(data, status) {
-                if (status == "success") {
-                    if (data.body.resultCode == "0") {
-                        var result = data.body.entity;
-                        $(".breadcrumb").empty();
-                        var html = "";
-                        for (var i = 0; i < result.length; i++) {
-                            var html = '<li><a class="clickEffect" name="'
-                                +result[i].resourceId+'">'+ result[i].name+'</a></li>';
-                            $(".breadcrumb").append(html);
-                            $("a[name=" + result[i].resourceId + "]").bind("click", {
-                                index : i
-                            }, clickHandler);
-                        }
-                        function clickHandler(event) {
-                            var i = event.data.index;
-                            currentId = result[i].resourceId;
-                            refreshTable();
-                            loadPath();
-                        }
-                    }
-                }
-            });
     }
 
     function refreshTable() {

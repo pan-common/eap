@@ -2,7 +2,6 @@ package com.taiji.eap.biz.test.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import com.taiji.eap.biz.test.bean.Test;
 import com.taiji.eap.biz.test.service.TestService;
 import com.taiji.eap.common.http.entity.Response;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("test")

@@ -46,16 +46,16 @@
         var layer = layui.layer;
         var form =  layui.form;
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/form&id=0","800px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/test/qyjcxx/form&id=0","800px","550px");
         });
         $("#showTreeView").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/treeView","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/test/qyjcxx/treeView","550px",$(window).height())
         });
         $("#showZTree").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/zTree","550px",$(window).height())
+            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/test/qyjcxx/zTree","550px",$(window).height())
         });
         $("#echart").click(function () {
-            showModel("显示图表","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/echart/chart",$(window).width(),$(window).height())
+            showModel("显示图表","${pageContext.request.contextPath}/sysResource/link?url=system/test/qyjcxx/echart/chart",$(window).width(),$(window).height())
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -167,7 +167,7 @@
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/resource/link?url=system/test/qyjcxx/form&id="+row.id,"550px","550px");
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system/test/qyjcxx/form&id="+row.id,"550px","550px");
                         },
                         'click .delete' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);

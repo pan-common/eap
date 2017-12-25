@@ -1,11 +1,8 @@
 
 package com.taiji.eap.common.area.bean;
 
-import java.util.Date;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.taiji.eap.common.generator.bean.LayuiTree;
-public class Area extends LayuiTree{
+import com.taiji.eap.common.base.BaseTree;
+public class Area extends BaseTree {
 
     private static final long serialVersionUID = 4270170570634937361L;
 

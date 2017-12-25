@@ -2,7 +2,7 @@ package com.taiji.eap.common.area.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.area.bean.Area;
 import com.taiji.eap.common.area.dao.AreaDao;
 import com.taiji.eap.common.area.service.AreaService;
@@ -22,7 +22,7 @@ public class AreaServiceImpl implements AreaService{
     private AreaDao areaDao;
 
     @Autowired
-    private RedisFactoryDao<LayuiTree> redisFactoryDao;
+    private RedisFactoryDao<BaseTree> redisFactoryDao;
 
     @Transactional
     @Override
@@ -86,11 +86,11 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public List<LayuiTree> treeView(Integer parentId) throws Exception {
-        List<LayuiTree> trees = redisFactoryDao.getDatas("areatree", "", new RedisFactoryDao.OnRedisSelectListener() {
+    public List<BaseTree> treeView(Integer parentId) throws Exception {
+        List<BaseTree> trees = redisFactoryDao.getDatas("areatree", "", new RedisFactoryDao.OnRedisSelectListener() {
             @Override
             public List fruitless() {
-                List<LayuiTree> trees = new ArrayList<>();
+                List<BaseTree> trees = new ArrayList<>();
                 List<Area> list = areaDao.selectLevel3();
                 for (Area tree : list) {
                     if(parentId!=null&&tree!=null&&tree.getParentId()!=null) {

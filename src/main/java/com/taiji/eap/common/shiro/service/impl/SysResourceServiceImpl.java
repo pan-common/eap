@@ -3,12 +3,10 @@ package com.taiji.eap.common.shiro.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseServiceImpl;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.*;
 import com.taiji.eap.common.shiro.dao.*;
-import com.taiji.eap.common.shiro.redis.SysResourceRedisDao;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,49 +27,65 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     private SysUserRoleDao sysUserRoleDao;
     @Autowired
     private SysUserOrganDao sysUserOrganDao;
+    /**
+     * 角色资源关系
+     */
     @Autowired
-    private SysRoleResourceDao sysRoleResourceDao;//角色资源关系
+    private SysRoleResourceDao sysRoleResourceDao;
+    /**
+     * 部门资源关系
+     */
     @Autowired
-    private SysOrganResourceDao sysOrganResourceDao;//部门资源关系
+    private SysOrganResourceDao sysOrganResourceDao;
+    /**
+     *
+     */
     @Autowired
-    private SysPuriewResourceDao sysPuriewResourceDao;//
+    private SysPurviewResourceDao sysPurviewResourceDao;
+    /**
+     *
+     */
     @Autowired
-    private SysPuriewDao sysPuriewDao;
+    private SysPurviewDao sysPurviewDao;
+    /**
+     *
+     */
     @Autowired
-    private RedisFactoryDao<LayuiTree> redisFactoryDao;
+    private RedisFactoryDao<BaseTree> redisFactoryDao;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
         int k = 0;
         k+=sysResourceDao.deleteByPrimaryKey(primaryKey);
-        k+=sysPuriewResourceDao.deleteByResourceId(primaryKey);
+        k+= sysPurviewResourceDao.deleteByResourceId(primaryKey);
         recursiveDelete(primaryKey);
-        if(k>0)
-            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE+"*");
+        if(k>0) {
+            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE + "*");
+        }
         redisFactoryDao.deleteByPattern(REDIS_KEY_PURIEW+"*");
         return k;
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int insert(SysResource sysResource) {
         int k = 0;
-        SysPuriew sysPuriew = new SysPuriew();
-        sysPuriew.setName(sysResource.getName()+"权限");
-        sysPuriew.setExpression(sysResource.getLink());
-        sysPuriew.setSeq(1);
-        sysPuriew.setCreateTime(new Date());
-        sysPuriew.setUpdateTime(new Date());
-        sysPuriew.setCreater(0L);
-        sysPuriew.setValid("1");
-        k+=sysPuriewDao.insert(sysPuriew);
+        SysPurview sysPurview = new SysPurview();
+        sysPurview.setName(sysResource.getName()+"权限");
+        sysPurview.setExpression(sysResource.getLink());
+        sysPurview.setSeq(1);
+        sysPurview.setCreateTime(new Date());
+        sysPurview.setUpdateTime(new Date());
+        sysPurview.setCreater(0L);
+        sysPurview.setValid("1");
+        k+= sysPurviewDao.insert(sysPurview);
         k+=sysResourceDao.insert(sysResource);
-        SysPuriewResource sysPuriewResource = new SysPuriewResource();
-        sysPuriewResource.setPuriewId(sysPuriew.getPuriewId());
-        sysPuriewResource.setResourceId(sysResource.getResourceId());
-        k+=sysPuriewResourceDao.insert(sysPuriewResource);
+        SysPurviewResource sysPurviewResource = new SysPurviewResource();
+        sysPurviewResource.setPuriewId(sysPurview.getPuriewId());
+        sysPurviewResource.setResourceId(sysResource.getResourceId());
+        k+= sysPurviewResourceDao.insert(sysPurviewResource);
         return k;
     }
 
@@ -80,7 +94,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         return sysResourceDao.selectByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateByPrimaryKey(SysResource sysResource) {
         int k = sysResourceDao.updateByPrimaryKey(sysResource);
@@ -129,11 +143,11 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     }
 
     @Override
-    public List<LayuiTree> treeView(Long parentId) throws Exception {
+    public List<BaseTree> treeView(Long parentId) throws Exception {
         List<SysResource> list = sysResourceDao.selectAll();
-        List<LayuiTree> trees = new ArrayList<>();
+        List<BaseTree> trees = new ArrayList<>();
         for (SysResource tree: list) {
-            if(parentId==tree.getParentId()){
+            if(Objects.equals(parentId, tree.getParentId())){
                 trees.add(findChildren(tree,list));
             }
         }
@@ -141,10 +155,10 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     }
 
     @Override
-    public List<LayuiTree> treeViewByUser(Long parentId) throws Exception {
+    public List<BaseTree> treeViewByUser(Long parentId) throws Exception {
         SysUser sysUser = getCurrentUser();
-        List<LayuiTree> list = redisFactoryDao.getDatas(REDIS_KEY_RESOURCE,":"+sysUser.getUserId(),
-                new RedisFactoryDao.OnRedisSelectListener<LayuiTree>() {
+        List<BaseTree> list = redisFactoryDao.getDatas(REDIS_KEY_RESOURCE,String.valueOf(sysUser.getUserId()),
+                new RedisFactoryDao.OnRedisSelectListener<BaseTree>() {
                     @Override
                     public List fruitless() {
                         List<Long> roleIdList = sysUserRoleDao.getRoleIdsByUserId(sysUser.getUserId());
@@ -152,18 +166,27 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
                         List<Long> tempResourceIds = new ArrayList<>();
                         List<Long> resourceIds = new ArrayList<>();
                         Set<Long> set = new HashSet<>();
-                        tempResourceIds.addAll(sysOrganResourceDao.getResourceIdsByOrganIds(organIdList));
-                        tempResourceIds.addAll(sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList));
+                        if(!organIdList.isEmpty()) {
+                            tempResourceIds.addAll(sysOrganResourceDao.getResourceIdsByOrganIds(organIdList));
+                        }
+                        if(!roleIdList.isEmpty()) {
+                            tempResourceIds.addAll(sysRoleResourceDao.getResourceIdsByRoleIds(roleIdList));
+                        }
                         for (Long resourceId : tempResourceIds) {
                             if (set.add(resourceId)) {
                                 resourceIds.add(resourceId);
                             }
                         }
-                        List<SysResource> list = sysResourceDao.selectByIds(resourceIds);
-                        List<LayuiTree> trees = new ArrayList<>();
-                        for (SysResource tree: list) {
-                            if(parentId==tree.getParentId()){
-                                trees.add(findChildren(tree,list));
+                        List<SysResource> list = null;
+                        if(!resourceIds.isEmpty()){
+                            list = sysResourceDao.selectByIds(resourceIds);
+                        }
+                        List<BaseTree> trees = new ArrayList<>();
+                        if(list!=null) {
+                            for (SysResource tree : list) {
+                                if (Objects.equals(parentId, tree.getParentId())) {
+                                    trees.add(findChildren(tree, list));
+                                }
                             }
                         }
                         return trees;
@@ -176,7 +199,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         for (SysResource sysResource:list) {
             sysResource.setName(sysResource.getName());
             sysResource.setSpread(false);
-            if(tree.getResourceId()==sysResource.getParentId()){
+            if(Objects.equals(tree.getResourceId(), sysResource.getParentId())){
                 tree.getChildren().add(findChildren(sysResource,list));
             }
         }
@@ -201,7 +224,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         return sysResources;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int saveRoleResource(Long roleId, List<Long> resourceIds) {
         //删除所有角色为roleId的用户的  资源和权限 缓存
@@ -222,7 +245,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
         return k;
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int saveOrganResource(Long organId, List<Long> resourceIds) {
         //删除所有部门ID为organId的用户的 资源和权限 缓存
