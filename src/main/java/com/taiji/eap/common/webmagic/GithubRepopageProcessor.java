@@ -1,15 +1,20 @@
 package com.taiji.eap.common.webmagic;
 
+import com.google.gson.JsonArray;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +23,7 @@ import java.util.Set;
  */
 public class GithubRepopageProcessor implements PageProcessor{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GithubRepopageProcessor.class);
     /**
      * 抓取网站相关配置  抓取间隔  重试次数
      */
@@ -27,9 +33,19 @@ public class GithubRepopageProcessor implements PageProcessor{
 
     @Override
     public void process(Page page) {
-        List<String> urls = page.getHtml().css("a.x-tree-node-anchor").links().regex(".*/bbgl_jksj.aspx/\\?siteid.*").all();
-        page.addTargetRequests(urls);
+//        List<String> urls = page.getHtml().css("a.x-tree-node-anchor").links().regex(".*/bbgl_jksj.aspx/\\?siteid.*").all();
+//        page.addTargetRequests(urls);
+        String name = page.getHtml().xpath("//span[@class='hoverUeser']/text()").replace("▼","").get().trim();
+        LOGGER.debug("企业名称："+name);
+        String json = page.getHtml().regex("x_state: (([\\s\\S]*)})",1).get();
+        LOGGER.debug(json);
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray("X_Nodes");
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void login(){
