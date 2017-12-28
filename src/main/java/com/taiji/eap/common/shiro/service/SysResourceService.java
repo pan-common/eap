@@ -108,8 +108,8 @@ public interface SysResourceService{
 
     /**
      * 保持部门资源
-     * @param organId
-     * @param longs
+     * @param organId 部门ID
+     * @param resourceIds 资源ID
      * @return
      */
     int saveOrganResource(Long organId, List<Long> resourceIds);

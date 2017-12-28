@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseTree;
 public class SysRole extends BaseTree {
     private Long roleId;//角色ID
-    private String name;//角色名称
+    private String roleName;//角色名称
     private Integer seq;//排序
     private Long parentId;//父节点
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")  //取日期时使用
@@ -36,12 +36,12 @@ public class SysRole extends BaseTree {
     }
 
 
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
 

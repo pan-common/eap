@@ -45,10 +45,12 @@ public class DictionaryServiceImpl implements DictionaryService{
         return dictionaryDao.selectByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateByPrimaryKey(Dictionary dictionary) {
-        return dictionaryDao.updateByPrimaryKey(dictionary);
+        int k = dictionaryDao.updateByPrimaryKey(dictionary);
+        redisFactoryDao.deleteByPattern("dictionary:"+dictionary.getParentId());
+        return k;
     }
 
     @Override
@@ -90,11 +92,11 @@ public class DictionaryServiceImpl implements DictionaryService{
     public String getValueByKey(String keystone, Long parentId) throws Exception {
         String value = stringRedisFactoryDao.getValue("dictionary", String.valueOf(parentId)+":"+ keystone ,
                 new StringRedisFactoryDao.OnRedisSelectListener() {
-            @Override
-            public String fruitless() {
-                return dictionaryDao.getValueByKey(keystone,parentId);
-            }
-        });
+                    @Override
+                    public String fruitless() {
+                        return dictionaryDao.getValueByKey(keystone,parentId);
+                    }
+                });
         return value;
     }
 

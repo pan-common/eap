@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SysRoleServiceImpl implements SysRoleService{
@@ -90,7 +91,7 @@ public class SysRoleServiceImpl implements SysRoleService{
         List<SysRole> list = sysRoleDao.selectAll();
         List<BaseTree> trees = new ArrayList<BaseTree>();
         for (SysRole tree: list) {
-            if(parentId==tree.getParentId()){
+            if(Objects.equals(parentId, tree.getParentId())){
                 trees.add(findChildren(tree,list));
             }
         }
@@ -125,9 +126,9 @@ public class SysRoleServiceImpl implements SysRoleService{
 
     private SysRole findChildren(SysRole tree,List<SysRole> list){
         for (SysRole sysRole:list) {
-            sysRole.setName(sysRole.getName());
+            sysRole.setName(sysRole.getRoleName());
             sysRole.setSpread(true);
-            if(tree.getRoleId()==sysRole.getParentId()){
+            if(Objects.equals(tree.getRoleId(), sysRole.getParentId())){
                 tree.getChildren().add(findChildren(sysRole,list));
             }
         }
@@ -135,8 +136,9 @@ public class SysRoleServiceImpl implements SysRoleService{
     }
 
     private void disPlay(Long roleId,List<SysRole> list){
-    SysRole sysRole = sysRoleDao.selectByPrimaryKey(roleId);
+        SysRole sysRole = sysRoleDao.selectByPrimaryKey(roleId);
         if(sysRole!=null){
+            sysRole.setName(sysRole.getRoleName());
             list.add(sysRole);
             disPlay(sysRole.getParentId(), list);
         }

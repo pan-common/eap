@@ -82,17 +82,21 @@ public class GeneratorServiceImpl implements GeneratorService{
         boolean isHavePk = false;
         boolean isTree = false;
         for (ColumnExtend column:columns) {
-            if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI"))
+            if(column.getColumnKey()!=null&&column.getColumnKey().equals("PRI")) {
                 isHavePk = true;
+            }
             if(param.getIsTree().equals("01")) {
-                if (column.getColumnName() != null && column.getColumnName().equals(param.getParentField()))
+                if (column.getColumnName() != null && column.getColumnName().equals(param.getParentField())) {
                     isTree = true;
+                }
             }
         }
-        if(!isHavePk)
+        if(!isHavePk) {
             throw new Exception("未找到主键！");
-        if(param.getIsTree().equals("01")&&!isTree)
-            throw new Exception("未找到名为"+param.getParentField()+"的字段，表非树结构或字段名录入错误！");
+        }
+        if(param.getIsTree().equals("01")&&!isTree) {
+            throw new Exception("未找到名为" + param.getParentField() + "的字段，表非树结构或字段名录入错误！");
+        }
         //生成实体类
         if(param.getGenerateItems().contains("bean")) {
             generateBean(param, columns);
@@ -131,7 +135,7 @@ public class GeneratorServiceImpl implements GeneratorService{
         if(param.getMenuId()!=null&&param.getMenuName()!=null&&!param.getMenuName().equals("")&&!param.getMenuId().equals("")) {
             //挂靠菜单
             SysResource sysResource = new SysResource();
-            sysResource.setName(param.getMenuName());
+            sysResource.setResourceName(param.getMenuName());
             sysResource.setParentId(Long.valueOf(param.getMenuId()));
             sysResource.setTypeCode("01");
             sysResource.setTypeDesc("菜单");

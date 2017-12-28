@@ -7,8 +7,6 @@ package ${serviceImplPackage};
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.taiji.eap.common.generator.bean.EasyUISubmitData;
-import com.taiji.eap.common.generator.bean.LayuiTree;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${daoPackage}.#toUpperCase(${param.alias})Dao;
 import ${servicePackage}.#toUpperCase(${param.alias})Service;

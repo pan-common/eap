@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseTree;
 public class SysResource extends BaseTree {
     private Long resourceId;//主键
-    private String name;//资源名称
+    private String resourceName;//资源名称
     private Long parentId;//上级资源ID
     @Dictionary(parentId = 23)
     private String typeCode;//资源类型代码
@@ -44,12 +44,12 @@ public class SysResource extends BaseTree {
     }
 
 
-    public String getName() {
-        return name;
+    public String getResourceName() {
+        return resourceName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
 

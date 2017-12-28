@@ -110,7 +110,7 @@ To change this template use File | Settings | File Templates.
                 key:{
                     checked: "checked",//zTree 节点数据中保存 check 状态的属性名称。
                     children: "children",//zTree 节点数据中保存子节点数据的属性名称。
-                    name: "name",//zTree 节点数据保存节点名称的属性名称。
+                    name: "resourceName",//zTree 节点数据保存节点名称的属性名称。
                     title: "",//zTree 节点数据保存节点提示信息的属性名称。
                     url: ""//zTree 节点数据保存节点链接的目标 URL 的属性名称。
                 },
@@ -182,7 +182,7 @@ To change this template use File | Settings | File Templates.
                 key:{
                     checked: "checked",//zTree 节点数据中保存 check 状态的属性名称。
                     children: "children",//zTree 节点数据中保存子节点数据的属性名称。
-                    name: "name",//zTree 节点数据保存节点名称的属性名称。
+                    name: "resourceName",//zTree 节点数据保存节点名称的属性名称。
                     title: "",//zTree 节点数据保存节点提示信息的属性名称。
                     url: "",//zTree 节点数据保存节点链接的目标 URL 的属性名称。
                     icon:"zIcon"

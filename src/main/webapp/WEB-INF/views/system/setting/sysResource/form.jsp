@@ -16,7 +16,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">资源名称</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-            <input type="text" name="name"  lay-verify="required" placeholder="请输入资源名称" autocomplete="off" class="layui-input">
+            <input type="text" name="resourceName"  lay-verify="required" placeholder="请输入资源名称" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">

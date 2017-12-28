@@ -197,7 +197,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
 
     private SysResource findChildren(SysResource tree,List<SysResource> list){
         for (SysResource sysResource:list) {
-            sysResource.setName(sysResource.getName());
+            sysResource.setName(sysResource.getResourceName());
             sysResource.setSpread(false);
             if(Objects.equals(tree.getResourceId(), sysResource.getParentId())){
                 tree.getChildren().add(findChildren(sysResource,list));
@@ -279,6 +279,7 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     private void disPlay(Long resourceId,List<SysResource> list){
         SysResource sysResource = sysResourceDao.selectByPrimaryKey(resourceId);
         if(sysResource!=null){
+            sysResource.setName(sysResource.getResourceName());
             list.add(sysResource);
             disPlay(sysResource.getParentId(), list);
         }

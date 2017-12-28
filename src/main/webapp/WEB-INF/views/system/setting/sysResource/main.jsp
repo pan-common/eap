@@ -108,7 +108,7 @@
                 },
                 {
                     title:"资源名称",
-                    field:"name",
+                    field:"resourceName",
                 },
                 {
                     title:"资源类型代码",

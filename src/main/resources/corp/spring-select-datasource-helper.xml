@@ -22,10 +22,14 @@
         <property name="nextHandler" ref="selectDictionaryHandler"></property>
     </bean>
     <bean id="selectDictionaryHandler" class="com.taiji.eap.common.taglib.select.handler.SelectDictionaryHandler">
-
+        <property name="nextHandler" ref="spiderSelectHandler"></property>
+    </bean>
+    <bean id="spiderSelectHandler" class="com.taiji.eap.biz.spider.select.SpiderSelectHandler">
+        <property name="nextHandler" ref="qyjbxxSelectHandler"></property>
+    </bean>
+    <bean id="qyjbxxSelectHandler" class="com.taiji.eap.biz.qyjbxx.select.QyjbxxSelectHandler">
     </bean>
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">
         <property name="handler" ref="selectUserHandler"></property>
     </bean>
-
 </beans>

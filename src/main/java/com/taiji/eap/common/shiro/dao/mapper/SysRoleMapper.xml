@@ -3,7 +3,7 @@
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysRoleDao">
     <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysRole">
         <id column="role_id" property="roleId" jdbcType="DECIMAL"></id>
-        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="name" property="roleName" jdbcType="VARCHAR" />
         <result column="seq" property="seq" jdbcType="INTEGER" />
         <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -57,13 +57,13 @@
         INSERT INTO t_qx_role(
         role_id,name,seq,parent_id,create_time,update_time,valid,creater)
         VALUES(
-        #{roleId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{parentId,jdbcType=DECIMAL},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        #{roleId,jdbcType=DECIMAL},#{roleName,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{parentId,jdbcType=DECIMAL},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysRole">
         UPDATE t_qx_role SET
-        role_id=#{roleId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},parent_id=#{parentId,jdbcType=DECIMAL},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        role_id=#{roleId,jdbcType=DECIMAL},name=#{roleName,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},parent_id=#{parentId,jdbcType=DECIMAL},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
         WHERE role_id = #{roleId,jdbcType=DECIMAL}
     </update>
 

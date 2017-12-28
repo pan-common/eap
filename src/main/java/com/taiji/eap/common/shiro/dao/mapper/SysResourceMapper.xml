@@ -3,7 +3,7 @@
 <mapper namespace="com.taiji.eap.common.shiro.dao.SysResourceDao">
     <resultMap id="BaseResultMap" type="com.taiji.eap.common.shiro.bean.SysResource">
         <id column="resource_id" property="resourceId" jdbcType="DECIMAL"></id>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="name" property="resourceName" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="DECIMAL"/>
         <result column="type_code" property="typeCode" jdbcType="VARCHAR"/>
         <result column="type_desc" property="typeDesc" jdbcType="VARCHAR"/>
@@ -53,13 +53,13 @@
         INSERT INTO t_qx_resource(
         resource_id,name,parent_id,type_code,type_desc,res_icon,link,seq,note,create_time,update_time,valid,creater)
         VALUES(
-        #{resourceId,jdbcType=DECIMAL},#{name,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{typeCode,jdbcType=VARCHAR},#{typeDesc,jdbcType=VARCHAR},#{resIcon,jdbcType=VARCHAR},#{link,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{note,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
+        #{resourceId,jdbcType=DECIMAL},#{resourceName,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{typeCode,jdbcType=VARCHAR},#{typeDesc,jdbcType=VARCHAR},#{resIcon,jdbcType=VARCHAR},#{link,jdbcType=VARCHAR},#{seq,jdbcType=INTEGER},#{note,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{creater,jdbcType=DECIMAL}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.shiro.bean.SysResource">
         UPDATE t_qx_resource SET
-        resource_id=#{resourceId,jdbcType=DECIMAL},name=#{name,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},type_code=#{typeCode,jdbcType=VARCHAR},type_desc=#{typeDesc,jdbcType=VARCHAR},res_icon=#{resIcon,jdbcType=VARCHAR},link=#{link,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},note=#{note,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
+        resource_id=#{resourceId,jdbcType=DECIMAL},name=#{resourceName,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},type_code=#{typeCode,jdbcType=VARCHAR},type_desc=#{typeDesc,jdbcType=VARCHAR},res_icon=#{resIcon,jdbcType=VARCHAR},link=#{link,jdbcType=VARCHAR},seq=#{seq,jdbcType=INTEGER},note=#{note,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},creater=#{creater,jdbcType=DECIMAL}
         WHERE resource_id = #{resourceId,jdbcType=DECIMAL}
     </update>
 

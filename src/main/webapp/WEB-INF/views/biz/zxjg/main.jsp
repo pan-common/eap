@@ -5,24 +5,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>sysRole</title>
+    <title>zxjg</title>
 </head>
 <body>
 <div style="margin: 15px;">
     <div id="topLayout">
-        <div class="span6">
-            <ul class="breadcrumb"></ul>
-        </div>
         <div  id="toolbar">
-            <button id='addBtn' class="layui-btn layui-btn-small">
-                <i class="layui-icon">&#xe608;</i> 添加
-            </button>
-            <button id='showTreeView' class="layui-btn layui-btn-small">
-                <i class="layui-icon">&#xe62e;</i> 显示树
-            </button>
-            <button id='showZTree' class="layui-btn layui-btn-small">
-                <i class="layui-icon">&#xe62e;</i> zTree显示
-            </button>
+            <form class="layui-form">
+                <table class="layui-table" lay-skin="line">
+                    <tr>
+                        <td>
+                            <button id='addBtn' class="layui-btn layui-btn-small">
+                                <i class="layui-icon">&#xe608;</i> 添加
+                            </button>
+                        </td>
+                        <td width="70px">
+                            <label>企业</label>
+                        </td>
+                        <td width="250px">
+                            <dic:commonSelectTag id="selectQy" dataSource="qyjbxx" nullName="请选择"
+                                                 name="qybh" param="" layfilter="selectQy"/>
+                        </td>
+                        <td width="80px">
+                            <label>监测点</label>
+                        </td>
+                        <td width="200px">
+                            <dic:selectTag parentId="110" id="01"  selectName="jcdfl" layfilter="selectJcdfl" nullName="请选择" />
+                        </td>
+                        <td width="100px">
+                            <label>日期范围</label>
+                        </td>
+                        <td width="200">
+                            <input type="text" class="layui-input" name="" id="selectDate">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+
         </div>
     </div>
     <table id='bootstrapTable'>
@@ -30,22 +50,20 @@
 </div>
 </body>
 <script type="text/javascript">
-    var currentId = 0;
-    layui.use([ 'layer', 'form' ], function(layer, form) {
+    layui.use([ 'layer', 'form','laydate' ], function(layer, form) {
         var layer = layui.layer;
         var form =  layui.form;
+        var laydate = layui.laydate;
+
+        laydate.render({
+            elem:'#selectDate',
+            range:true
+        });
+        form.render();
+
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/form&roleId=0","550px","550px");
+            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId=0","800px","550px");
         });
-        $("#showTreeView").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/treeView","550px",$(window).height())
-        });
-        $("#showZTree").click(function () {
-            showModel("显示树","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/zTree","550px",$(window).height())
-        });
-
-
-
         //弹出录入框
         function showModel(title,url,width,height) {
             layer.open({
@@ -64,7 +82,7 @@
         };
 
         $('#bootstrapTable').bootstrapTable({
-            url:"${pageContext.request.contextPath}/sysRole/list",
+            url:"${pageContext.request.contextPath}/zxjg/list",
             method:'GET',
             height:$(window).height()-$("#topLayout").height()-30,
             toolbar:"#toolbar",
@@ -88,7 +106,7 @@
             showPaginationSwitch : false,//是否显示 数据条数选择框
             minimumCountColumns : 2, //最少允许的列数
             clickToSelect : true, //是否启用点击选中行
-            uniqueId : "roleId", //每一行的唯一标识，一般为主键列
+            uniqueId : "zxjgId", //每一行的唯一标识，一般为主键列
             singleSelect : true,//设置true禁止多选
             showToggle : false, //是否显示详细视图和列表视图的切换按钮
             cardView : false, //是否显示详细视图
@@ -96,50 +114,94 @@
             showHeader : true,//是否显示列头
             showFooter : false,//是否显示列脚
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
-            columns : [{checkbox : true},
+            columns : [
                 {
-                    title:"排序",
-                    field:"seq",
+                    title:"监测点名称",
+                    field:"jcdmc",
+                    width:160
                 },
                 {
-                    title:"角色ID",
-                    field:"roleId",
+                    title:"时间",
+                    field:"sj",
+                    width:140
                 },
                 {
-                    title:"角色名称",
-                    field:"roleName",
+                    title:"浓度",
+                    field:"klwnd",
+                    width:50
                 },
                 {
-                    title:"更新时间",
-                    field:"updateTime",
+                    title:"折算浓度",
+                    field:"klwzsnd",
+                    width:50
+                },
+                {
+                    title:"总量",
+                    field:"klwzl",
+                    width:50
+                },
+                {
+                    title:"浓度",
+                    field:"eyhlnd",
+                    width:50
+                },
+                {
+                    title:"折算浓度",
+                    field:"eyhlzsnd",
+                    width:50
+                },
+                {
+                    title:"总量",
+                    field:"eyhlzl",
+                    width:50
+                },
+                {
+                    title:"浓度",
+                    field:"dyhwnd",
+                    width:50
+                },
+                {
+                    title:"折算浓度",
+                    field:"dyhwzsnd",
+                    width:50
+                },
+                {
+                    title:"总量",
+                    field:"dyhwzl",
+                    width:50
+                },
+                {
+                    title:"标杆流量",
+                    field:"bgll",
+                    width:50
+                },
+                {
+                    title:"氧量",
+                    field:"yl",
+                    width:50
+                },
+                {
+                    title:"烟温",
+                    field:"yw",
+                    width:50
+                },
+                {
+                    title:"含湿量",
+                    field:"hsl",
+                    width:50
                 },
                 {
                     title : "操作",
                     align : "center",
                     events : {
-                        'click .resource':function (e, value, row, index) {
-                            showModel("选择资源","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/resourceTree&roleId="+row.roleId,"750px",$(window).height()-20);
-                        },
-                        'click .enter': function (e, value, row, index) {
-                            currentId = row.roleId;
-                            refreshTable();
-                            loadPath();
-                        },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=system/setting/sysRole/form&roleId="+row.roleId,"550px","550px");
-                        },
-                        'click .delete' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            del(row.roleId);
+                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId="+row.zxjgId,"550px","550px");
                         }
                     },
                     formatter : function () {
-                        var buttons = [];
-                        buttons.push('<button type="button" class="resource layui-btn layui-btn-small">资源</button>&nbsp;')
-                        buttons.push('<button type="button" class="enter layui-btn layui-btn-small">进入</button>&nbsp;')
-                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;')
-                        buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;')
+                        var buttons=[];
+                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small"><i class="fa fa-edit"></i></button>&nbsp;');
                         return buttons.join('');
                     }
                 }],
@@ -158,20 +220,18 @@
                 pageSize : params.limit, //页面大小
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
-                parentId:currentId
             }
             return param;
         }
-        loadPath();
     });
 
-    function del(roleId) {
+    function del(zxjgId) {
         layer.confirm("删除数据不可恢复，请确认？",{
             btn: ['确定','取消'],
             offset: '150px',
         },function () {
-            $.post('${pageContext.request.contextPath}/sysRole/delete',
-                {roleId : roleId},
+            $.post('${pageContext.request.contextPath}/zxjg/delete',
+                {zxjgId : zxjgId},
                 function (data, status) {
                     if (status == "success") {
                         if (data.body.resultCode == "0") {
@@ -191,34 +251,6 @@
         });
     }
 
-    function loadPath() {
-        $.get('${pageContext.request.contextPath}/sysRole/getPath/',
-            {
-                roleId : currentId
-            }, function(data, status) {
-                if (status == "success") {
-                    if (data.body.resultCode == "0") {
-                        var result = data.body.entity;
-                        $(".breadcrumb").empty();
-                        var html = "";
-                        for (var i = 0; i < result.length; i++) {
-                            var html = '<li><a class="clickEffect" name="'
-                                +result[i].roleId+'">'+ result[i].name+'</a></li>';
-                            $(".breadcrumb").append(html);
-                            $("a[name=" + result[i].roleId + "]").bind("click", {
-                                index : i
-                            }, clickHandler);
-                        }
-                        function clickHandler(event) {
-                            var i = event.data.index;
-                            currentId = result[i].roleId;
-                            refreshTable();
-                            loadPath();
-                        }
-                    }
-                }
-            });
-    }
 
     function refreshTable() {
         $('#bootstrapTable').bootstrapTable('refresh');
