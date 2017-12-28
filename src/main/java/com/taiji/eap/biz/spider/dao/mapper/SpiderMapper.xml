@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.spider.dao.SpiderDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.spider.bean.Spider">
+        <id column="spider_id" property="spiderId" jdbcType="DECIMAL"></id>
+        <result column="spider_name" property="spiderName" jdbcType="VARCHAR" />
+        <result column="landing_page" property="landingPage" jdbcType="VARCHAR" />
+        <result column="spider_class" property="spiderClass" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_spider
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_spider
+        WHERE spider_id = #{spiderId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.spider.bean.Spider">
+        <selectKey resultType="java.lang.Long" keyProperty="spiderId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS spider_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_spider_spider_id_SEQ.nextval AS spider_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_spider(
+        spider_id,spider_name,landing_page,spider_class)
+        VALUES(
+        #{spiderId,jdbcType=DECIMAL},#{spiderName,jdbcType=VARCHAR},#{landingPage,jdbcType=VARCHAR},#{spiderClass,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.spider.bean.Spider">
+        UPDATE t_biz_spider SET
+        spider_id=#{spiderId,jdbcType=DECIMAL},spider_name=#{spiderName,jdbcType=VARCHAR},landing_page=#{landingPage,jdbcType=VARCHAR},spider_class=#{spiderClass,jdbcType=VARCHAR}
+        WHERE spider_id = #{spiderId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_spider WHERE spider_id = #{spiderId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_spider
+    </select>
+</mapper>

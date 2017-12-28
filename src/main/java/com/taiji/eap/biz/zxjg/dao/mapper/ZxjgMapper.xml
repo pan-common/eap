@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.zxjg.dao.ZxjgDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.zxjg.bean.Zxjg">
+        <id column="zxjg_id" property="zxjgId" jdbcType="DECIMAL"></id>
+        <result column="qybh" property="qybh" jdbcType="VARCHAR" />
+        <result column="qymc" property="qymc" jdbcType="VARCHAR" />
+        <result column="jcdbh" property="jcdbh" jdbcType="VARCHAR" />
+        <result column="jcdmc" property="jcdmc" jdbcType="VARCHAR" />
+        <result column="sj" property="sj" jdbcType="VARCHAR" />
+        <result column="klwnd" property="klwnd" jdbcType="VARCHAR" />
+        <result column="klwzsnd" property="klwzsnd" jdbcType="VARCHAR" />
+        <result column="klwzl" property="klwzl" jdbcType="VARCHAR" />
+        <result column="eyhlnd" property="eyhlnd" jdbcType="VARCHAR" />
+        <result column="eyhlzsnd" property="eyhlzsnd" jdbcType="VARCHAR" />
+        <result column="eyhlzl" property="eyhlzl" jdbcType="VARCHAR" />
+        <result column="dyhwnd" property="dyhwnd" jdbcType="VARCHAR" />
+        <result column="dyhwzsnd" property="dyhwzsnd" jdbcType="VARCHAR" />
+        <result column="dyhwzl" property="dyhwzl" jdbcType="VARCHAR" />
+        <result column="bgll" property="bgll" jdbcType="VARCHAR" />
+        <result column="yl" property="yl" jdbcType="VARCHAR" />
+        <result column="yw" property="yw" jdbcType="VARCHAR" />
+        <result column="hsl" property="hsl" jdbcType="VARCHAR" />
+        <result column="gzxx" property="gzxx" jdbcType="VARCHAR" />
+        <result column="bz" property="bz" jdbcType="VARCHAR" />
+        <result column="sfyz" property="sfyz" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg
+        WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
+        <selectKey resultType="java.lang.Long" keyProperty="zxjgId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS zxjg_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_zxjg_zxjg_id_SEQ.nextval AS zxjg_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_zxjg(
+        zxjg_id,qybh,qymc,jcdbh,jcdmc,sj,klwnd,klwzsnd,klwzl,eyhlnd,eyhlzsnd,eyhlzl,dyhwnd,dyhwzsnd,dyhwzl,bgll,yl,yw,hsl,gzxx,bz,sfyz)
+        VALUES(
+        #{zxjgId,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{qymc,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcdmc,jdbcType=VARCHAR},#{sj,jdbcType=VARCHAR},#{klwnd,jdbcType=VARCHAR},#{klwzsnd,jdbcType=VARCHAR},#{klwzl,jdbcType=VARCHAR},#{eyhlnd,jdbcType=VARCHAR},#{eyhlzsnd,jdbcType=VARCHAR},#{eyhlzl,jdbcType=VARCHAR},#{dyhwnd,jdbcType=VARCHAR},#{dyhwzsnd,jdbcType=VARCHAR},#{dyhwzl,jdbcType=VARCHAR},#{bgll,jdbcType=VARCHAR},#{yl,jdbcType=VARCHAR},#{yw,jdbcType=VARCHAR},#{hsl,jdbcType=VARCHAR},#{gzxx,jdbcType=VARCHAR},#{bz,jdbcType=VARCHAR},#{sfyz,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
+        UPDATE t_biz_zxjg SET
+        zxjg_id=#{zxjgId,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},qymc=#{qymc,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcdmc=#{jcdmc,jdbcType=VARCHAR},sj=#{sj,jdbcType=VARCHAR},klwnd=#{klwnd,jdbcType=VARCHAR},klwzsnd=#{klwzsnd,jdbcType=VARCHAR},klwzl=#{klwzl,jdbcType=VARCHAR},eyhlnd=#{eyhlnd,jdbcType=VARCHAR},eyhlzsnd=#{eyhlzsnd,jdbcType=VARCHAR},eyhlzl=#{eyhlzl,jdbcType=VARCHAR},dyhwnd=#{dyhwnd,jdbcType=VARCHAR},dyhwzsnd=#{dyhwzsnd,jdbcType=VARCHAR},dyhwzl=#{dyhwzl,jdbcType=VARCHAR},bgll=#{bgll,jdbcType=VARCHAR},yl=#{yl,jdbcType=VARCHAR},yw=#{yw,jdbcType=VARCHAR},hsl=#{hsl,jdbcType=VARCHAR},gzxx=#{gzxx,jdbcType=VARCHAR},bz=#{bz,jdbcType=VARCHAR},sfyz=#{sfyz,jdbcType=VARCHAR}
+        WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_zxjg WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg
+    </select>
+</mapper>

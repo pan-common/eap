@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.form.element.dao.ElementDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.form.element.bean.Element">
+        <id column="element_id" property="elementId" jdbcType="DECIMAL"></id>
+        <result column="element_name" property="elementName" jdbcType="VARCHAR" />
+        <result column="element_type" property="elementType" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="js_template_path" property="jsTemplatePath" jdbcType="VARCHAR" />
+        <result column="html_template_path" property="htmlTemplatePath" jdbcType="VARCHAR" />
+        <result column="element_class" property="elementClass" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element
+        WHERE element_id = #{elementId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.form.element.bean.Element">
+        <selectKey resultType="java.lang.Long" keyProperty="elementId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS element_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_element_element_id_SEQ.nextval AS element_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_formconf_element(
+        element_id,element_name,element_type,parent_id,js_template_path,html_template_path,element_class,create_time,update_time,creater,valid)
+        VALUES(
+        #{elementId,jdbcType=DECIMAL},#{elementName,jdbcType=VARCHAR},#{elementType,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{jsTemplatePath,jdbcType=VARCHAR},#{htmlTemplatePath,jdbcType=VARCHAR},#{elementClass,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{creater,jdbcType=DECIMAL},#{valid,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.form.element.bean.Element">
+        UPDATE t_formconf_element SET
+        element_id=#{elementId,jdbcType=DECIMAL},element_name=#{elementName,jdbcType=VARCHAR},element_type=#{elementType,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},js_template_path=#{jsTemplatePath,jdbcType=VARCHAR},html_template_path=#{htmlTemplatePath,jdbcType=VARCHAR},element_class=#{elementClass,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},creater=#{creater,jdbcType=DECIMAL},valid=#{valid,jdbcType=VARCHAR}
+        WHERE element_id = #{elementId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_element WHERE element_id = #{elementId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element
+    </select>
+</mapper>

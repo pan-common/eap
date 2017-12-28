@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.form.elementExtend.dao.ElementExtendDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.form.elementExtend.bean.ElementExtend">
+        <id column="element_extend_id" property="elementExtendId" jdbcType="DECIMAL"></id>
+        <result column="element_id" property="elementId" jdbcType="DECIMAL" />
+        <result column="extend_field" property="extendField" jdbcType="VARCHAR" />
+        <result column="extend_name" property="extendName" jdbcType="VARCHAR" />
+        <result column="extend_type" property="extendType" jdbcType="VARCHAR" />
+        <result column="note" property="note" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element_extend
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element_extend
+        WHERE element_extend_id = #{elementExtendId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.form.elementExtend.bean.ElementExtend">
+        <selectKey resultType="java.lang.Long" keyProperty="elementExtendId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS element_extend_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_formconf_element_extend_element_extend_id_SEQ.nextval AS element_extend_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_formconf_element_extend(
+        element_extend_id,element_id,extend_field,extend_name,extend_type,note)
+        VALUES(
+        #{elementExtendId,jdbcType=DECIMAL},#{elementId,jdbcType=DECIMAL},#{extendField,jdbcType=VARCHAR},#{extendName,jdbcType=VARCHAR},#{extendType,jdbcType=VARCHAR},#{note,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.form.elementExtend.bean.ElementExtend">
+        UPDATE t_formconf_element_extend SET
+        element_extend_id=#{elementExtendId,jdbcType=DECIMAL},element_id=#{elementId,jdbcType=DECIMAL},extend_field=#{extendField,jdbcType=VARCHAR},extend_name=#{extendName,jdbcType=VARCHAR},extend_type=#{extendType,jdbcType=VARCHAR},note=#{note,jdbcType=VARCHAR}
+        WHERE element_extend_id = #{elementExtendId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_formconf_element_extend WHERE element_extend_id = #{elementExtendId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element_extend
+    </select>
+
+    <select id="listByElementId" resultMap="BaseResultMap">
+        SELECT * FROM t_formconf_element_extend WHERE element_id = #{elementId,jdbcType=DECIMAL}
+    </select>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.jcdxx.dao.JcdxxDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
+        <id column="id" property="id" jdbcType="DECIMAL"/>
+        <result column="qybh" property="qybh" jdbcType="VARCHAR" />
+        <result column="jcdbh" property="jcdbh" jdbcType="VARCHAR" />
+        <result column="jcdmc" property="jcdmc" jdbcType="VARCHAR" />
+        <result column="jcdfl" property="jcdfl" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" parameterType="string" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcdxx
+        <where>
+            1=1
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+            <if test="qybh!=null">
+                AND qybh = #{qybh,jdbcType=VARCHAR}
+            </if>
+            <if test="jcdfl!=null">
+                AND jcdfl = #{jcdfl,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcdxx
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_jcdxx_id_SEQ.nextval AS id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_jcdxx(
+        id,qybh,jcdbh,jcdmc,jcdfl)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcdmc,jdbcType=VARCHAR},#{jcdfl,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
+        UPDATE t_biz_jcdxx SET
+        id=#{id,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcdmc=#{jcdmc,jdbcType=VARCHAR},jcdfl=#{jcdfl,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_jcdxx WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcdxx
+    </select>
+</mapper>

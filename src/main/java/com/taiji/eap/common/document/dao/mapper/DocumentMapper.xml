@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.document.dao.DocumentDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.document.bean.Document">
+        <id column="document_id" property="documentId" jdbcType="DECIMAL"></id>
+        <result column="document_title" property="documentTitle" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="DECIMAL" />
+        <result column="document_type" property="documentType" jdbcType="VARCHAR" />
+        <result column="document_md_content" property="documentMdContent" jdbcType="CLOB" />
+        <result column="document_htnl_content" property="documentHtnlContent" jdbcType="CLOB" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="creater" property="creater" jdbcType="DECIMAL" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_document
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_document
+        <where>
+            parent_id = #{parentId,jdbcType=DECIMAL}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_document
+        WHERE document_id = #{documentId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.document.bean.Document">
+        <selectKey resultType="java.lang.Long" keyProperty="documentId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS document_id            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_document_document_id_SEQ.nextval AS document_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_sys_document(
+        document_id,document_title,parent_id,document_type,document_md_content,document_htnl_content,create_time,update_time,creater,valid)
+        VALUES(
+        #{documentId,jdbcType=DECIMAL},#{documentTitle,jdbcType=VARCHAR},#{parentId,jdbcType=DECIMAL},#{documentType,jdbcType=VARCHAR},#{documentMdContent,jdbcType=CLOB},#{documentHtnlContent,jdbcType=CLOB},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{creater,jdbcType=DECIMAL},#{valid,jdbcType=VARCHAR}
+        )
+    </insert>
+    <!--选择性插入数据-->
+    <insert id="insertSelective" parameterType="com.taiji.eap.common.document.bean.Document">
+        <selectKey resultType="java.lang.Long" keyProperty="documentId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS document_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_sys_document_document_id_SEQ.nextval AS document_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_sys_document
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="documentId!=null">
+                document_id,
+            </if>
+            <if test="documentTitle!=null">
+                document_title,
+            </if>
+            <if test="parentId!=null">
+                parent_id,
+            </if>
+            <if test="documentType!=null">
+                document_type,
+            </if>
+            <if test="documentMdContent!=null">
+                document_md_content,
+            </if>
+            <if test="documentHtnlContent!=null">
+                document_htnl_content,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+            <if test="creater!=null">
+                creater,
+            </if>
+            <if test="valid!=null">
+                valid
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="documentId!=null">
+                #{documentId,jdbcType=DECIMAL},
+            </if>
+            <if test="documentTitle!=null">
+                #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId!=null">
+                #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="documentType!=null">
+                #{documentType,jdbcType=VARCHAR},
+            </if>
+            <if test="documentMdContent!=null">
+                #{documentMdContent,jdbcType=CLOB},
+            </if>
+            <if test="documentHtnlContent!=null">
+                #{documentHtnlContent,jdbcType=CLOB},
+            </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater!=null">
+                #{creater,jdbcType=DECIMAL},
+            </if>
+            <if test="valid!=null">
+                #{valid,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.document.bean.Document">
+        UPDATE t_sys_document SET
+        document_id=#{documentId,jdbcType=DECIMAL},document_title=#{documentTitle,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=DECIMAL},document_type=#{documentType,jdbcType=VARCHAR},document_md_content=#{documentMdContent,jdbcType=CLOB},document_htnl_content=#{documentHtnlContent,jdbcType=CLOB},create_time=#{createTime,jdbcType=TIMESTAMP},update_time=#{updateTime,jdbcType=TIMESTAMP},creater=#{creater,jdbcType=DECIMAL},valid=#{valid,jdbcType=VARCHAR}
+        WHERE document_id = #{documentId,jdbcType=DECIMAL}
+    </update>
+    <!--选择性修改数据-->
+    <update id="updateSelectiveByPrimaryKey" parameterType="com.taiji.eap.common.document.bean.Document">
+        UPDATE t_sys_document
+        <set>
+            <if test="documentTitle!=null">
+                document_title = #{documentTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId!=null">
+                parent_id = #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="documentType!=null">
+                document_type = #{documentType,jdbcType=VARCHAR},
+            </if>
+            <if test="documentMdContent!=null">
+                document_md_content = #{documentMdContent,jdbcType=CLOB},
+            </if>
+            <if test="documentHtnlContent!=null">
+                document_htnl_content = #{documentHtnlContent,jdbcType=CLOB},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater!=null">
+                creater = #{creater,jdbcType=DECIMAL},
+            </if>
+            <if test="valid!=null">
+                valid = #{valid,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE document_id = #{documentId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_sys_document WHERE document_id = #{documentId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_document
+    </select>
+</mapper>
