@@ -14,6 +14,7 @@ import com.taiji.eap.biz.zxjg.service.impl.ZxjgServiceImpl;
 import com.taiji.eap.biz.zxjg.spider.CyswryzxxtPipeline;
 import com.taiji.eap.biz.zxjg.spider.CyswryzxxtProcessor;
 import com.taiji.eap.biz.zxjg.spider.CyswryzxxtSpider;
+import com.taiji.eap.common.datasource.annotation.DataSource;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@DataSource("oracle")
 public class QyjbxxServiceImpl implements QyjbxxService{
 
     @Autowired

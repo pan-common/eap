@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.biz.qyjcxx.bean.Jcdw;
 import com.taiji.eap.biz.qyjcxx.bean.Jcyz;
 import com.taiji.eap.biz.qyjcxx.bean.ZfjcJcqk;
+import com.taiji.eap.common.datasource.annotation.DataSource;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@DataSource("oracle")
 public class QyjcxxServiceImpl implements QyjcxxService{
 
     @Autowired

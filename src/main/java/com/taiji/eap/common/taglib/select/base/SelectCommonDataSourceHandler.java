@@ -51,6 +51,6 @@ public abstract class SelectCommonDataSourceHandler<T> extends SelectDataSource<
     }
 
     public void setList(List<Map<String, Object>> list) {
-        this.list = list;
+        SelectCommonDataSourceHandler.list = list;
     }
 }

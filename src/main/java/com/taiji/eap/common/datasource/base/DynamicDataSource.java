@@ -47,23 +47,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource implements Appl
 
     @Override
     protected Object determineCurrentLookupKey() {
-        DataSource dataSource = DataSourceHolder.getDataSource();
-        if(dataSource==null){
-            return null;
-        }
-        try {
-            Map<Object,Object> map = getTargetDataSources();
-            synchronized (map){
-                if(!map.containsKey(dataSource.getBeanName())){
-                    map.put(dataSource.getBeanName(),createDataSource(dataSource));
-                    super.afterPropertiesSet();//通知spring有bean更新
-                }
-            }
-            updateDatabaseId(dataSource.getBeanName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dataSource.getBeanName();
+        return DataSourceHolder.getDataSource();
     }
 
     private void updateDatabaseId(String beanName) throws Exception{

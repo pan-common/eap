@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+	<bean id="mysql" class="com.alibaba.druid.pool.DruidDataSource"
 		  destroy-method="close">
 		<property name="driverClassName" value="${jdbc.mysql.driver}" />
 		<property name="url" value="${jdbc.mysql.url}" />
@@ -43,7 +43,7 @@
 		<property name="logAbandoned" value="${logAbandoned}" />
 	</bean>
 
-	<bean id="dataSourceOracle" class="com.alibaba.druid.pool.DruidDataSource"
+	<bean id="oracle" class="com.alibaba.druid.pool.DruidDataSource"
 		  destroy-method="close">
 		<property name="driverClassName" value="${jdbc.oracle.driver}" />
 		<property name="url" value="${jdbc.oracle.url}" />
@@ -68,14 +68,14 @@
 		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
 	</bean>
 
-	<bean id="dynamicDataSource" class="com.taiji.eap.common.datasource.base.DynamicDataSource">
+	<bean id="dynamicDataSource" class="com.taiji.eap.common.datasource.base.DataSourceRouter">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
-				<entry key="dataSource" value-ref="dataSource"></entry>
-				<entry key="dataSourceOracle" value-ref="dataSourceOracle"></entry>
+				<entry key="mysql" value-ref="mysql"></entry>
+				<entry key="oracle" value-ref="oracle"></entry>
 			</map>
 		</property>
-		<property name="defaultTargetDataSource" ref="dataSource"></property>
+		<property name="defaultTargetDataSource" ref="mysql"></property>
 	</bean>
 
 	<!--支持多类型数据库配置-->
@@ -125,6 +125,6 @@
 	</bean>
 
 	<!-- 开启事务控制的注解支持 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="2" />
 
 </beans>

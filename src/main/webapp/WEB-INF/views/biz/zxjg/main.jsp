@@ -41,8 +41,6 @@
                     </tr>
                 </table>
             </form>
-
-
         </div>
     </div>
     <table id='bootstrapTable'>

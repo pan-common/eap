@@ -7,7 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseServiceImpl;
 import com.taiji.eap.common.datasource.base.DataSourceHolder;
-import com.taiji.eap.common.datasource.base.DynamicDataSource;
+import com.taiji.eap.common.datasource.base.DataSourceRouter;
 import com.taiji.eap.common.datasource.dao.DataSourceDao;
 import com.taiji.eap.common.datasource.service.DataSourceService;
 import com.taiji.eap.common.datasource.bean.DataSource;
@@ -40,14 +40,14 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     private SqlSessionFactoryBean sqlSessionFactoryBean;
 
     @Autowired
-    private DynamicDataSource dynamicDataSource;
+    private DataSourceRouter dataSourceRouter;
 
     @Autowired
     private RedisFactoryDao<DataSource> redisFactoryDao;
 
     @Override
     public Map<Object, Object> getDataSources() throws NoSuchFieldException, IllegalAccessException {
-        return dynamicDataSource.getTargetDataSources();
+        return null;
     }
 
     @Override
@@ -249,7 +249,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
             }
         }
         if(dataSources.size()==1) {
-            DataSourceHolder.setDataSource((DataSource) dataSources.get(0));
+            DataSourceHolder.setDataSource(dataSources.get(0).getName());
         }
     }
 
@@ -263,7 +263,7 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         dataSource.setUsername(username);
         dataSource.setPassword(password);
         //切换数据源
-        DataSourceHolder.setDataSource(dataSource);
+        DataSourceHolder.setDataSource(dataSource.getBeanName());
 
         List<BaseTree> dataSources = new ArrayList<BaseTree>();
         BaseTree tableTree = new TableType();
@@ -312,8 +312,8 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
     public void updateDatabaseId(String beanName) {
         DruidDataSource druidDataSource = null;
         try {
-            Map<Object,Object> dataSources = dynamicDataSource.getTargetDataSources();
-            druidDataSource = (DruidDataSource) dataSources.get(beanName);
+//            Map<Object,Object> dataSources = dynamicDataSource.getTargetDataSources();
+//            druidDataSource = (DruidDataSource) dataSources.get(beanName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -327,11 +327,11 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
 
     @Override
     public void resetDatabaseId() {
-        DruidDataSource druidDataSource = null;
-        druidDataSource = dynamicDataSource.getDefaultDataSource();
-        sqlSessionFactoryBean.setDataSource(druidDataSource);
+//        DruidDataSource druidDataSource = null;
+//        druidDataSource = dynamicDataSource.getDefaultDataSource();
+//        sqlSessionFactoryBean.setDataSource(druidDataSource);
         try {
-            sqlSessionFactoryBean.getObject().getConfiguration().setDatabaseId(databaseIdProvider.getDatabaseId(druidDataSource));
+//            sqlSessionFactoryBean.getObject().getConfiguration().setDatabaseId(databaseIdProvider.getDatabaseId(druidDataSource));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -8,18 +8,13 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 
 public class DataSourceHolder {
 
-    private static ThreadLocal<DataSource> threadLocal=new ThreadLocal<DataSource>(){
-        @Override
-        protected DataSource initialValue() {
-            return null;
-        }
-    };
+    private static ThreadLocal<String> threadLocal=new ThreadLocal<String>();
 
-    static DataSource getDataSource(){
+    public static String getDataSource(){
         return threadLocal.get();
     }
 
-    public static void setDataSource(DataSource dataSource){
+    public static void setDataSource(String dataSource){
         threadLocal.set(dataSource);
     }
 
