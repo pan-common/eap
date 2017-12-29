@@ -14,11 +14,6 @@
             <form class="layui-form">
                 <table class="layui-table" lay-skin="line">
                     <tr>
-                        <td>
-                            <button id='addBtn' class="layui-btn layui-btn-small">
-                                <i class="layui-icon">&#xe608;</i> 添加
-                            </button>
-                        </td>
                         <td width="70px">
                             <label>企业</label>
                         </td>
@@ -30,13 +25,18 @@
                             <label>监测点</label>
                         </td>
                         <td width="200px">
-                            <dic:selectTag parentId="110" id="01"  selectName="jcdfl" layfilter="selectJcdfl" nullName="请选择" />
+                            <select id="jcdId" name="jcdId" layfilter="select_jcdId"></select>
                         </td>
                         <td width="100px">
                             <label>日期范围</label>
                         </td>
                         <td width="200">
                             <input type="text" class="layui-input" name="" id="selectDate">
+                        </td>
+                        <td>
+                            <button type="button" id='addBtn' class="layui-btn layui-btn-small">
+                                <i class="layui-icon">&#xe608;</i> 爬取数据
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -47,20 +47,63 @@
     </table>
 </div>
 </body>
+<script src="${pageContext.request.contextPath}/resources/eap/system/library/CommonSelect.js"></script>
 <script type="text/javascript">
+
+    var qybh = null;
+    var jcdid = null;
+    var startDate = null;
+    var endDate = null;
+
     layui.use([ 'layer', 'form','laydate' ], function(layer, form) {
         var layer = layui.layer;
         var form =  layui.form;
         var laydate = layui.laydate;
 
+        form.on("select(selectQy)",function (data) {
+            if(data.value){
+                qybh = data.value;
+            }else {
+                qybh = null;
+            }
+            initJcdId(qybh);
+        });
+
+        function initJcdId(qybh) {
+            $("#jcdId").CommonSelect("init",{
+                layuiForm:form,
+                layer:layer,
+                datasource:"jcdxx",
+                params:qybh,
+                onSelect:function (data) {
+                    if(data.value){
+                        jcdid = data.value;
+                    }else {
+                        jcdid = null;
+                    }
+                }
+            });
+        }
+
         laydate.render({
             elem:'#selectDate',
-            range:true
+            range:true,
+            value:moment().format('YYYY-MM-DD')+" - "+moment().format('YYYY-MM-DD'),
+            theme: 'grid',
+            done:function (value,date,endValue) {
+                startDate = value.split(" - ")[0];
+                endDate = value.split(" - ")[1];
+            }
         });
         form.render();
 
         $("#addBtn").click(function () {
-            showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId=0","800px","550px");
+            <%--showModel("新增","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId=0","800px","550px");--%>
+            if(qybh&&startDate&&endDate){
+                spider(qybh,startDate,endDate);
+            }else {
+                layer.msg("请先选择企业和日期", {icon: 5});
+            }
         });
         //弹出录入框
         function showModel(title,url,width,height) {
@@ -113,96 +156,134 @@
             showFooter : false,//是否显示列脚
             contentType : "application/x-www-form-urlencoded", //解决POST提交问题
             columns : [
-                {
-                    title:"监测点名称",
-                    field:"jcdmc",
-                    width:160
-                },
-                {
-                    title:"时间",
-                    field:"sj",
-                    width:140
-                },
-                {
-                    title:"浓度",
-                    field:"klwnd",
-                    width:50
-                },
-                {
-                    title:"折算浓度",
-                    field:"klwzsnd",
-                    width:50
-                },
-                {
-                    title:"总量",
-                    field:"klwzl",
-                    width:50
-                },
-                {
-                    title:"浓度",
-                    field:"eyhlnd",
-                    width:50
-                },
-                {
-                    title:"折算浓度",
-                    field:"eyhlzsnd",
-                    width:50
-                },
-                {
-                    title:"总量",
-                    field:"eyhlzl",
-                    width:50
-                },
-                {
-                    title:"浓度",
-                    field:"dyhwnd",
-                    width:50
-                },
-                {
-                    title:"折算浓度",
-                    field:"dyhwzsnd",
-                    width:50
-                },
-                {
-                    title:"总量",
-                    field:"dyhwzl",
-                    width:50
-                },
-                {
-                    title:"标杆流量",
-                    field:"bgll",
-                    width:50
-                },
-                {
-                    title:"氧量",
-                    field:"yl",
-                    width:50
-                },
-                {
-                    title:"烟温",
-                    field:"yw",
-                    width:50
-                },
-                {
-                    title:"含湿量",
-                    field:"hsl",
-                    width:50
-                },
-                {
-                    title : "操作",
-                    align : "center",
-                    events : {
-                        'click .edit' : function(e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId="+row.zxjgId,"550px","550px");
-                        }
+                [
+                    {
+                        title:"监测点名称",
+                        field:"jcdmc",
+                        width:160,
+                        colspan:1,
+                        rowspan: 2
                     },
-                    formatter : function () {
-                        var buttons=[];
-                        buttons.push('<button type="button" class="edit layui-btn layui-btn-small"><i class="fa fa-edit"></i></button>&nbsp;');
-                        return buttons.join('');
+                    {
+                        title:"时间",
+                        field:"sj",
+                        width:140,
+                        rowspan: 2
+                    },
+                    {
+                        title:"颗粒物",
+                        valign:"middle",
+                        align:"center",
+                        colspan: 3,
+                        rowspan: 1
+                    },
+                    {
+                        title:"SO2",
+                        valign:"middle",
+                        align:"center",
+                        colspan: 3,
+                        rowspan: 1
+                    },
+                    {
+                        title:"NOx",
+                        valign:"middle",
+                        align:"center",
+                        colspan: 3,
+                        rowspan: 1
+                    },
+                    {
+                        title:"标杆流量",
+                        field:"bgll",
+                        width:50,
+                        colspan:1,
+                        rowspan: 2
+                    },
+                    {
+                        title:"氧量",
+                        field:"yl",
+                        width:50,
+                        colspan:1,
+                        rowspan: 2
+                    },
+                    {
+                        title:"烟温",
+                        field:"yw",
+                        width:50,
+                        colspan:1,
+                        rowspan: 2
+                    },
+                    {
+                        title:"含湿量",
+                        field:"hsl",
+                        width:50,
+                        colspan:1,
+                        rowspan: 2
                     }
-                }],
+                ],
+                [
+                    {
+                        title:"浓度",
+                        field:"klwnd",
+                        width:50
+                    },
+                    {
+                        title:"折算浓度",
+                        field:"klwzsnd",
+                        width:50
+                    },
+                    {
+                        title:"总量",
+                        field:"klwzl",
+                        width:50
+                    },
+                    {
+                        title:"浓度",
+                        field:"eyhlnd",
+                        width:50
+                    },
+                    {
+                        title:"折算浓度",
+                        field:"eyhlzsnd",
+                        width:50
+                    },
+                    {
+                        title:"总量",
+                        field:"eyhlzl",
+                        width:50
+                    },
+                    {
+                        title:"浓度",
+                        field:"dyhwnd",
+                        width:50
+                    },
+                    {
+                        title:"折算浓度",
+                        field:"dyhwzsnd",
+                        width:50
+                    },
+                    {
+                        title:"总量",
+                        field:"dyhwzl",
+                        width:50
+                    }
+                ]
+                <%--,--%>
+                <%--{--%>
+                    <%--title : "操作",--%>
+                    <%--align : "center",--%>
+                    <%--events : {--%>
+                        <%--'click .edit' : function(e, value, row, index) {--%>
+                            <%--$('#bootstrapTable').bootstrapTable('check',index);--%>
+                            <%--showModel("编辑","${pageContext.request.contextPath}/sysResource/link?url=biz/zxjg/form&zxjgId="+row.zxjgId,"550px","550px");--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--formatter : function () {--%>
+                        <%--var buttons=[];--%>
+                        <%--buttons.push('<button type="button" class="edit layui-btn layui-btn-small"><i class="fa fa-edit"></i></button>&nbsp;');--%>
+                        <%--return buttons.join('');--%>
+                    <%--}--%>
+                <%--}--%>
+                ],
             onLoadError : function(status) { //加载失败时执行
                 $.messager.show({
                     title : 'Error',
@@ -249,6 +330,30 @@
         });
     }
 
+    /**
+     * 爬取企业数据
+     * @param qybh 企业编号
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     */
+    function spider(qybh,startDate,endDate) {
+        $.post('${pageContext.request.contextPath}/qyjbxx/spider',
+            {qybh:qybh, startDate:startDate, endDate:endDate},
+        function (data,status) {
+            if (status == "success") {
+                if (data.body.resultCode == "0") {
+                    layer.close(layer.index);
+                    refreshTable();
+                }else {
+                    layer.msg(data.body.resultContent);
+                }
+            }else {
+                layer.msg("网络错误");
+            }
+        }).error(function (e) {
+            layer.msg("网络错误："+e.status);
+        });
+    }
 
     function refreshTable() {
         $('#bootstrapTable').bootstrapTable('refresh');

@@ -26,10 +26,16 @@ public abstract class BaseProcessor implements PageProcessor{
 
     protected List<Jcdxx> jcdxxes;
 
-    public BaseProcessor(List<Jcdxx> jcdxxes) {
+    protected String startDate;
+
+    protected String endDate;
+
+    public BaseProcessor(List<Jcdxx> jcdxxes,String startDate,String endDate) {
         this.jcdxxes = jcdxxes;
         chromeDriver = new ChromeDriver();
         site = Site.me().setRetryTimes(3).setSleepTime(0).setTimeOut(3000);
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     @Override

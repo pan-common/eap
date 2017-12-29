@@ -42,5 +42,12 @@ public interface ZxjgDao{
      */
     List<Zxjg> selectAll();
 
-
+    /**
+     *
+     * @param qybh 企业编号
+     * @param jcdbh 监测点编号
+     * @param sj 时间
+     * @return
+     */
+    int deleteByZxjg(@Param("qybh") String qybh,@Param("jcdbh") String jcdbh,@Param("sj") String sj);
 }

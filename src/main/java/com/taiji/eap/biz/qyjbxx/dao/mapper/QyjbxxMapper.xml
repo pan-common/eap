@@ -23,6 +23,10 @@
         WHERE id = #{id,jdbcType=DECIMAL}
     </select>
 
+    <select id="selectByQybh" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_qyjbxx WHERE qybh = #{jdbcType=VARCHAR}
+    </select>
+
     <insert id="insert" parameterType="com.taiji.eap.biz.qyjbxx.bean.Qyjbxx">
         <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
             <if test="_databaseId == 'mysql'">

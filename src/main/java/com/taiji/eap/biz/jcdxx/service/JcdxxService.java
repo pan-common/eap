@@ -24,6 +24,15 @@ public interface JcdxxService{
      * @return
      */
     Jcdxx selectByPrimaryKey(Long primaryKey) throws Exception;
+
+    /**
+     * 根据企业编号查询监测点
+     * @param qybh
+     * @return
+     * @throws Exception
+     */
+    List<Jcdxx> selectByQybh(String qybh) throws Exception;
+
      /**
      * 根据主键修改数据
      * @param jcdxx

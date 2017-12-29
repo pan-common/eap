@@ -23,6 +23,14 @@ public interface QyjbxxDao {
      * @return
      */
     Qyjbxx selectByPrimaryKey(Long primaryKey);
+
+    /**
+     * 通过企业编号查询企业数据
+     * @param qybh
+     * @return
+     */
+    Qyjbxx selectByQybh(String qybh);
+
      /**
      * 修改数据
      * @param qyjbxx

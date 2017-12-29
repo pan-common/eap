@@ -45,6 +45,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/locales/zh.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.exhide.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/js/locales.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/js/moment.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/eap/system/library/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/eap/base/js/eap.js"></script>
 <script type="text/javascript">

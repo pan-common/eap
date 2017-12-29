@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,6 +32,11 @@ public class JcdxxServiceImpl implements JcdxxService{
     @Override
     public Jcdxx selectByPrimaryKey(Long primaryKey) {
         return jcdxxDao.selectByPrimaryKey(primaryKey);
+    }
+
+    @Override
+    public List<Jcdxx> selectByQybh(String qybh) throws Exception {
+        return jcdxxDao.selectByQybh(qybh);
     }
 
     @Transactional(rollbackFor = Exception.class)

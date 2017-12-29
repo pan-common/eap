@@ -78,13 +78,15 @@ public class QyjbxxServiceImpl implements QyjbxxService{
     }
 
     @Override
-    public void spider(Long id) {
-        Qyjbxx qyjbxx = qyjbxxDao.selectByPrimaryKey(id);
+    public void spider(String qybh, String startDate, String endDate) {
+        Qyjbxx qyjbxx = qyjbxxDao.selectByQybh(qybh);
         Spider s = spiderDao.selectByPrimaryKey(qyjbxx.getSpiderId());
         List<Jcdxx> jcdxxes = jcdxxDao.list(null,qyjbxx.getQybh(),null);
-        CyswryzxxtProcessor processor = new CyswryzxxtProcessor(jcdxxes);
+        CyswryzxxtProcessor processor = new CyswryzxxtProcessor(jcdxxes,startDate,endDate);
         pipeline.setJcdxxes(jcdxxes);
         CyswryzxxtSpider spider = new CyswryzxxtSpider(processor,pipeline);
         spider.start(s.getLandingPage(),qyjbxx.getLoginName(),qyjbxx.getLoginPw());
     }
+
+
 }

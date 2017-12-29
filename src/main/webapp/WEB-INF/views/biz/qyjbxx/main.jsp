@@ -123,7 +123,6 @@ pageEncoding="UTF-8"%>
                     },
                     formatter : function () {
                         var buttons=[];
-                        buttons.push('<button type="button" class="spider layui-btn layui-btn-small">爬取数据</button>&nbsp;');
                         buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;');
                         buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;');
                         return buttons.join('');

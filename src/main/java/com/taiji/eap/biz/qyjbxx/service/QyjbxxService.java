@@ -46,5 +46,11 @@ public interface QyjbxxService{
      */
     PageInfo<Qyjbxx> list(int pageNum, int pageSize, String searchText) throws Exception;
 
-    void spider(Long id);
+    /**
+     * 爬取企业数据
+     * @param qybh
+     * @param startDate
+     * @param endDate
+     */
+    void spider(String qybh,String startDate,String endDate);
 }

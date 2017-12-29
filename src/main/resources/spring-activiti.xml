@@ -20,13 +20,13 @@
 		<!-- 配置数据源,和系统使用同一个数据源 -->
 		<property name="dataSource" ref="dynamicDataSource" />
 		<!-- 是否激活Activiti的任务调度 -->
-		<property name="jobExecutorActivate" value="true" />
+		<property name="jobExecutorActivate" value="false" />
 		<!-- 统一的事务管理 -->
 		<property name="transactionManager" ref="transactionManager" />
 		<!--没有表创建表-->
-		<property name="databaseSchema" value="ACT"/>
+		<!--<property name="databaseSchema" value="ACT"/>-->
 		<!-- 没有表创建表 -->
-		<property name="databaseSchemaUpdate" value="true" />
+		<property name="databaseSchemaUpdate" value="false" />
 		<property name="activityFontName" value="宋体" />
 		<property name="labelFontName" value="宋体" />
 	</bean>

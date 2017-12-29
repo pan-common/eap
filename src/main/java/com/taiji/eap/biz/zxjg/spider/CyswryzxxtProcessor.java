@@ -22,8 +22,8 @@ public class CyswryzxxtProcessor extends BaseProcessor{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CyswryzxxtProcessor.class);
 
-    public CyswryzxxtProcessor(List<Jcdxx> jcdxxes) {
-        super(jcdxxes);
+    public CyswryzxxtProcessor(List<Jcdxx> jcdxxes, String startDate, String endDate) {
+        super(jcdxxes, startDate, endDate);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class CyswryzxxtProcessor extends BaseProcessor{
         chromeDriver.get(url+"#parentHorizontalTab1");
         chromeDriver.manage().window().maximize();
         chromeDriver.findElement(By.id("date1")).clear();
-        chromeDriver.findElement(By.id("date1")).sendKeys("2017-12-25");
+        chromeDriver.findElement(By.id("date1")).sendKeys(startDate);
         chromeDriver.findElement(By.id("date2")).clear();
-        chromeDriver.findElement(By.id("date2")).sendKeys("2017-12-25");
+        chromeDriver.findElement(By.id("date2")).sendKeys(endDate);
         chromeDriver.findElement(By.id("Button5")).click();
 
         try {
@@ -62,8 +62,40 @@ public class CyswryzxxtProcessor extends BaseProcessor{
             e.printStackTrace();
         }
         chromeDriver.get("http://218.61.71.244:55555/data_hour1.aspx?p=1");
-        List<WebElement> rows = chromeDriver.findElements(By.xpath("//tr[@class='gradeX']"));
         List<Zxjg> zxjgs = new ArrayList<>();
+        getData(zxjgs);
+        int total =  Integer.valueOf(chromeDriver.findElement(By.id("GridView1_ctl28_lblPageCount")).getText());
+        if(total>1){
+            getNextPageData(total-1,zxjgs,page);
+        }else {
+            if(!zxjgs.isEmpty()) {
+                page.putField(zxjgs.get(0).getJcdbh(), zxjgs);
+            }
+        }
+    }
+
+    /**
+     * 获取下一页数据
+     * @param pageNum
+     * @param zxjgs
+     * @param page
+     */
+    public void getNextPageData(int pageNum,List<Zxjg> zxjgs,Page page){
+        for (int i = 0; i < pageNum; i++) {
+            chromeDriver.findElement(By.id("GridView1_ctl28_btnNext")).click();
+            getData(zxjgs);
+        }
+        if(!zxjgs.isEmpty()) {
+            page.putField(zxjgs.get(0).getJcdbh(), zxjgs);
+        }
+    }
+
+    /**
+     * 获取数据
+     * @param zxjgs
+     */
+    public void getData(List<Zxjg> zxjgs){
+        List<WebElement> rows = chromeDriver.findElements(By.xpath("//tr[@class='gradeX']"));
         for (WebElement row: rows) {
             List<WebElement> cols = row.findElements(By.tagName("td"));
             for (int i = 0; i < jcdxxes.size(); i++) {
@@ -92,9 +124,6 @@ public class CyswryzxxtProcessor extends BaseProcessor{
                     zxjgs.add(zxjg);
                 }
             }
-        }
-        if(!zxjgs.isEmpty()) {
-            page.putField(zxjgs.get(0).getJcdbh(), zxjgs);
         }
     }
 }

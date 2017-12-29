@@ -80,9 +80,9 @@ public class QyjbxxController extends BaseController{
 
     @PostMapping(value = "spider")
     @ResponseBody
-    public Response<String> spider(Long id){
+    public Response<String> spider(String qybh,String startDate,String endDate){
         try {
-            qyjbxxService.spider(id);
+            qyjbxxService.spider(qybh,startDate,endDate);
             return renderSuccess("爬取成功");
         }catch (Exception e){
             e.printStackTrace();

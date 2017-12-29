@@ -17,19 +17,19 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 import java.util.List;
 
 @Service
-@DataSource("oracle")
+@DataSource("jcpt")
 public class ZxjgServiceImpl implements ZxjgService,Pipeline {
 
     @Autowired
     private ZxjgDao zxjgDao;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
         return zxjgDao.deleteByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int insert(Zxjg zxjg) {
         return zxjgDao.insert(zxjg);
@@ -40,6 +40,7 @@ public class ZxjgServiceImpl implements ZxjgService,Pipeline {
     public int plInser(List<Zxjg> zxjgs) throws Exception {
         int k = 0;
         for (int i = 0; i < zxjgs.size(); i++) {
+            k+=zxjgDao.deleteByZxjg(zxjgs.get(i).getQybh(),zxjgs.get(i).getJcdbh(),zxjgs.get(i).getSj());
             k+=zxjgDao.insert(zxjgs.get(i));
         }
         return k;
@@ -51,7 +52,7 @@ public class ZxjgServiceImpl implements ZxjgService,Pipeline {
         return zxjgDao.selectByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateByPrimaryKey(Zxjg zxjg) {
         return zxjgDao.updateByPrimaryKey(zxjg);

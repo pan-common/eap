@@ -44,5 +44,10 @@ public interface JcdxxDao {
      */
     List<Jcdxx> selectAll();
 
-
+    /**
+     * 通过企业编号查询监测点信息
+     * @param qybh
+     * @return
+     */
+    List<Jcdxx> selectByQybh(@Param("qybh") String qybh);
 }

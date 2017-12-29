@@ -28,7 +28,11 @@
         <property name="nextHandler" ref="qyjbxxSelectHandler"></property>
     </bean>
     <bean id="qyjbxxSelectHandler" class="com.taiji.eap.biz.qyjbxx.select.QyjbxxSelectHandler">
+        <property name="nextHandler" ref="jcdxxSelectHandler"></property>
     </bean>
+    <bean id="jcdxxSelectHandler" class="com.taiji.eap.biz.jcdxx.select.JcdxxSelectHandler">
+    </bean>
+
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">
         <property name="handler" ref="selectUserHandler"></property>
     </bean>

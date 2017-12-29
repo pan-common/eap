@@ -42,7 +42,8 @@
     <insert id="insert" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
         <selectKey resultType="java.lang.Long" keyProperty="zxjgId" order="AFTER">
             <if test="_databaseId == 'mysql'">
-                SELECT LAST_INSERT_ID() AS zxjg_id            </if>
+                SELECT LAST_INSERT_ID() AS zxjg_id
+            </if>
             <if test="_databaseId == 'oracle'">
                 SELECT t_biz_zxjg_zxjg_id_SEQ.nextval AS zxjg_id FROM dual
             </if>
@@ -62,6 +63,10 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         DELETE FROM t_biz_zxjg WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
+    </delete>
+
+    <delete id="deleteByZxjg" parameterType="java.lang.String">
+        DELETE FROM t_biz_zxjg WHERE qybh=#{qybh,jdbcType=VARCHAR} AND jcdbh=#{jcdbh,jdbcType=VARCHAR} AND sj=#{sj,jdbcType=VARCHAR}
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">
