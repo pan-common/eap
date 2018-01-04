@@ -118,7 +118,7 @@ public class QyjcxxServiceImpl implements QyjcxxService{
         List<Qyjcxx> list = qyjcxxDao.selectAll();
         List<BaseTree> trees = new ArrayList<BaseTree>();
         for (Qyjcxx tree: list) {
-            if(parentId==tree.getParentId()){
+            if(Objects.equals(parentId, tree.getParentId())){
                 trees.add(findChildren(tree,list));
             }
         }
@@ -172,7 +172,7 @@ public class QyjcxxServiceImpl implements QyjcxxService{
         for (Qyjcxx qyjcxx:list) {
             qyjcxx.setName(qyjcxx.getName());
             qyjcxx.setSpread(true);
-            if(tree.getId()==qyjcxx.getParentId()){
+            if(Objects.equals(tree.getId(), qyjcxx.getParentId())){
                 tree.getChildren().add(findChildren(qyjcxx,list));
             }
         }

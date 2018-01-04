@@ -30,8 +30,7 @@
             <property name="autoRuntimeDialect" value="true"/>
 		</plugin>
 		
-		<plugin interceptor="com.taiji.eap.common.mybatis.intercept.PrintSqlIntercept">
-			<property name="isPrint" value="true"></property>
+		<plugin interceptor="com.taiji.eap.common.mybatis.intercept.SqlInterceptor">
 		</plugin>
 		
 	</plugins>

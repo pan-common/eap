@@ -15,6 +15,7 @@ import com.taiji.eap.biz.zxjg.spider.CyswryzxxtPipeline;
 import com.taiji.eap.biz.zxjg.spider.CyswryzxxtProcessor;
 import com.taiji.eap.biz.zxjg.spider.CyswryzxxtSpider;
 import com.taiji.eap.common.datasource.annotation.DataSource;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,12 @@ public class QyjbxxServiceImpl implements QyjbxxService{
         pipeline.setJcdxxes(jcdxxes);
         CyswryzxxtSpider spider = new CyswryzxxtSpider(processor,pipeline);
         spider.start(s.getLandingPage(),qyjbxx.getLoginName(),qyjbxx.getLoginPw());
+    }
+
+    @Override
+    @DataSource(value = "jcpt")
+    public List<Dictionary> getQybhByQymc(String qymc) {
+        return qyjbxxDao.getQybhByQymc(qymc);
     }
 
 

@@ -1,6 +1,7 @@
 package com.taiji.eap.biz.jcdxx.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.biz.jcdxx.bean.Jcdxx;
 import java.util.List;
@@ -56,5 +57,13 @@ public interface JcdxxService{
      * @throws Exception
      */
     PageInfo<Jcdxx> list(int pageNum, int pageSize, String searchText,String qyhb,String jcdfl) throws Exception;
+
+    /**
+     *  根据企业编号和监测点分类查询监测点
+     * @param qybh 企业编号
+     * @param jcdfl 监测点分类
+     * @return
+     */
+    List<Dictionary> getJcdbhByQybh(String qybh,String jcdfl);
 
 }

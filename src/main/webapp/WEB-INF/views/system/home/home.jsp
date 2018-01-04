@@ -54,6 +54,8 @@
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 <spring:message code="main.logout"></spring:message>
                             </a>
+                        </dd>
+                        <dd>
                             <a onclick="editHelpDoc()">
                                 <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 <spring:message code="main.editHelpDoc"></spring:message>

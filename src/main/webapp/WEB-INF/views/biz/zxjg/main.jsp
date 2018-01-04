@@ -67,6 +67,7 @@
                 qybh = null;
             }
             initJcdId(qybh);
+            refreshTable();
         });
 
         function initJcdId(qybh) {
@@ -81,6 +82,7 @@
                     }else {
                         jcdid = null;
                     }
+                    refreshTable();
                 }
             });
         }
@@ -93,6 +95,7 @@
             done:function (value,date,endValue) {
                 startDate = value.split(" - ")[0];
                 endDate = value.split(" - ")[1];
+                refreshTable();
             }
         });
         form.render();
@@ -125,7 +128,7 @@
         $('#bootstrapTable').bootstrapTable({
             url:"${pageContext.request.contextPath}/zxjg/list",
             method:'GET',
-            height:$(window).height()-$("#topLayout").height()-30,
+            height:$(window).height()-$("#topLayout").height(),
             toolbar:"#toolbar",
             striped : true, //是否显示行间隔色
             cache : true, //是否使用缓存
@@ -299,6 +302,10 @@
                 pageSize : params.limit, //页面大小
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
+                qybh:qybh,
+                jcdid:jcdid,
+                startDate:startDate,
+                endDate:endDate
             }
             return param;
         }

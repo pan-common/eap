@@ -1,6 +1,7 @@
 package com.taiji.eap.biz.jcdxx.dao;
 
 import com.taiji.eap.biz.jcdxx.bean.Jcdxx;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -50,4 +51,12 @@ public interface JcdxxDao {
      * @return
      */
     List<Jcdxx> selectByQybh(@Param("qybh") String qybh);
+
+    /**
+     * 通过企业编号和监测点分类查询监测点
+     * @param qybh 企业编号
+     * @param jcdfl 监测点分类
+     * @return
+     */
+    List<Dictionary> getJcdbhByQybh(@Param("qybh") String qybh,@Param("jcdfl") String jcdfl);
 }

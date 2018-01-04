@@ -1,6 +1,10 @@
 package com.taiji.eap.biz.zxjg.spider;
 
 import com.taiji.eap.biz.jcdxx.bean.Jcdxx;
+import com.taiji.eap.biz.jcxm.service.JcxmService;
+import com.taiji.eap.biz.jcxm.service.impl.JcxmServiceImpl;
+import com.taiji.eap.biz.jcxmjg.service.JcxmjgService;
+import com.taiji.eap.common.utils.SpringContextUtil;
 import javafx.beans.value.ObservableObjectValue;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -30,12 +34,15 @@ public abstract class BaseProcessor implements PageProcessor{
 
     protected String endDate;
 
+    protected JcxmService jcxmService;
+
     public BaseProcessor(List<Jcdxx> jcdxxes,String startDate,String endDate) {
         this.jcdxxes = jcdxxes;
         chromeDriver = new ChromeDriver();
         site = Site.me().setRetryTimes(3).setSleepTime(0).setTimeOut(3000);
         this.startDate = startDate;
         this.endDate = endDate;
+        jcxmService = (JcxmService) SpringContextUtil.getBean("JcxmService");
     }
 
     @Override

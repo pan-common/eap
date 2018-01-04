@@ -84,4 +84,15 @@ public class PrintSqlIntercept implements Interceptor{
         this.properties = properties;
     }
 
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public String getIsPrint() {
+        return isPrint;
+    }
+
+    public void setIsPrint(String isPrint) {
+        this.isPrint = isPrint;
+    }
 }

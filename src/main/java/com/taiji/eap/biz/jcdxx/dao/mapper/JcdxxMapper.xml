@@ -63,4 +63,30 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_biz_jcdxx
     </select>
+
+    <select id="getJcdbhByQybh" resultType="com.taiji.eap.common.dictionary.bean.Dictionary">
+        <if test="jcdfl!=null and jcdfl!=''">
+            <choose>
+                <when test="jcdfl='A'">
+                    select JCD_ID keystone,JCDMC value
+                    from hb_sjcj_qy_jcxx_fq_dian_v a
+                    left join hb_sjcj_qy_jcxx_v b
+                    on a.v_id = b.v_id
+                    where b.QYBH = #{qybh,jdbcType=VARCHAR}
+                    and b.zt = '5'
+                </when>
+                <when test="jcdfl='B'">
+                    select JCD_ID keystone,JCDMC value
+                    from hb_sjcj_qy_jcxx_fs_dian_v a
+                    left join hb_sjcj_qy_jcxx_v b
+                    on a.v_id = b.v_id
+                    where b.QYBH = #{qybh,jdbcType=VARCHAR}
+                    and b.zt = '5'
+                </when>
+                <otherwise>
+
+                </otherwise>
+            </choose>
+        </if>
+    </select>
 </mapper>

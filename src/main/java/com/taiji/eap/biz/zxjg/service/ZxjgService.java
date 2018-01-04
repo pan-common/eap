@@ -54,6 +54,9 @@ public interface ZxjgService{
      * @return
      * @throws Exception
      */
-    PageInfo<Zxjg> list(int pageNum, int pageSize, String searchText) throws Exception;
+    PageInfo<Zxjg> list(int pageNum, int pageSize, String searchText,String qybh,
+                        String jcdid,
+                        String startDate,
+                        String endDate) throws Exception;
 
 }

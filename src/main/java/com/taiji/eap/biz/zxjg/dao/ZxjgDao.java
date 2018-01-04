@@ -32,9 +32,17 @@ public interface ZxjgDao{
      /**
      * 搜索数据
      * @param searchText 搜索条件
-     * @return
+     * @param qybh 企业编号
+      *@param jcdid 监测点ID
+      * @param startDate 开始时间
+      * @param endDate 结束时间
+      * @return
      */
-    List<Zxjg> list(@Param("searchText") String searchText);
+    List<Zxjg> list(@Param("searchText") String searchText,
+                    @Param("qybh") String qybh,
+                    @Param("jcdid") String jcdid,
+                    @Param("startDate") String startDate,
+                    @Param("endDate") String endDate);
 
      /**
      * 查询全部数据

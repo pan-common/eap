@@ -16,7 +16,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">对应系统监测点编号</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-            <input type="text" name="jcdbh"  lay-verify="required" placeholder="请输入对应系统监测点编号" autocomplete="off" class="layui-input">
+            <select id="jcdbh" name="jcdbh" layfilter="select_jcdbh"></select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -35,12 +35,28 @@
     <input id="jcdfl" type="hidden" name="jcdfl">
 </form>
 </body>
+
+<script src="${pageContext.request.contextPath}/resources/eap/system/library/CommonSelect.js"></script>
 <script type="text/javascript">
     var id = ${param.id};
     var url = "${pageContext.request.contextPath}/jcdxx/add";
-    layui.use(['form'],function () {
+    layui.use(['layer','form'],function () {
         var form = layui.form;
+        var layer = layui.layer;
+
         form.render();
+
+        $("#jcdbh").CommonSelect("init",{
+            layuiForm:form,
+            layer:layer,
+            datasource:"jcdbh",
+            params:parent.qyhb+","+parent.jcdfl,
+            onSelect:function (data) {
+
+            }
+        });
+
+
 
         if(id){
             url = "${pageContext.request.contextPath}/jcdxx/edit";

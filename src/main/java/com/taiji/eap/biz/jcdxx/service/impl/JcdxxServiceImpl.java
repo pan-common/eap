@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.taiji.eap.biz.jcdxx.bean.Jcdxx;
 import com.taiji.eap.biz.jcdxx.dao.JcdxxDao;
 import com.taiji.eap.biz.jcdxx.service.JcdxxService;
+import com.taiji.eap.common.datasource.annotation.DataSource;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@DataSource(value = "oracle")
 public class JcdxxServiceImpl implements JcdxxService{
 
     @Autowired
@@ -56,6 +59,12 @@ public class JcdxxServiceImpl implements JcdxxService{
         List<Jcdxx> jcdxxs = jcdxxDao.list(searchText,qyhb,jcdfl);
         PageInfo<Jcdxx> pageInfo = new PageInfo<Jcdxx>(jcdxxs);
         return pageInfo;
+    }
+
+    @Override
+    @DataSource(value = "jcpt")
+    public List<Dictionary> getJcdbhByQybh(String qybh, String jcdfl) {
+        return jcdxxDao.getJcdbhByQybh(qybh,jcdfl);
     }
 
 }

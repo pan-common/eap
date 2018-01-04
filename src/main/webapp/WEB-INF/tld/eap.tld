@@ -70,6 +70,12 @@
             <required>false</required>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
+        <!--开启搜索-->
+        <attribute>
+            <name>laySearch</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
         <!--额外的一些显示层的参数-->
         <!--样式类-->
         <attribute>

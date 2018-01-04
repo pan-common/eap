@@ -11,7 +11,7 @@ public class RedisKey extends BaseTree {
     @Dictionary(parentId = 83)
     private String keyType;//键类型
     private String keyNote;//键注释
-    private Long dataSize;//对应数据大小
+    private String dataSize;//对应数据大小
     public RedisKey(Long keyId,String keyName) {
         this.keyId = keyId;
         this.keyName = keyName;
@@ -75,11 +75,11 @@ public class RedisKey extends BaseTree {
     }
 
 
-    public Long getDataSize() {
+    public String getDataSize() {
         return dataSize;
     }
 
-    public void setDataSize(Long dataSize) {
+    public void setDataSize(String dataSize) {
         this.dataSize = dataSize;
     }
 

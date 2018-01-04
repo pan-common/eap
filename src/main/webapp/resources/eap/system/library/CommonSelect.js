@@ -40,6 +40,7 @@
                             for (var i in data.body.entity) {
                                 items.push('<option value="'+data.body.entity[i].key+'">'+data.body.entity[i].value+'</option>')
                             }
+                            $this.empty();
                             $this.append(items.join(''));
                             settings.layuiForm.render();
                             settings.layuiForm.on('select('+this.name+')',function (data) {

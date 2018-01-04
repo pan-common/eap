@@ -1,6 +1,7 @@
 package com.taiji.eap.biz.qyjbxx.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
 import java.util.List;
@@ -53,4 +54,12 @@ public interface QyjbxxService{
      * @param endDate
      */
     void spider(String qybh,String startDate,String endDate);
+
+    /**
+     * 通过企业名称查询正式库企业编号
+     * @param qymc
+     * @return
+     */
+    List<Dictionary> getQybhByQymc(@Param("qymc") String qymc);
+
 }

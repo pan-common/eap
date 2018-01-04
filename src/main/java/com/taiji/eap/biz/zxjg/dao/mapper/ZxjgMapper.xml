@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.taiji.eap.biz.zxjg.bean.Zxjg">
         <id column="zxjg_id" property="zxjgId" jdbcType="DECIMAL"></id>
         <result column="qybh" property="qybh" jdbcType="VARCHAR" />
-        <result column="qymc" property="qymc" jdbcType="VARCHAR" />
+        <result column="jcdfl" property="jcdfl" jdbcType="VARCHAR" />
         <result column="jcdbh" property="jcdbh" jdbcType="VARCHAR" />
         <result column="jcdmc" property="jcdmc" jdbcType="VARCHAR" />
         <result column="sj" property="sj" jdbcType="VARCHAR" />
@@ -32,8 +32,21 @@
             <if test="searchText!=null and searchText!=''">
                 AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
             </if>
+            <if test="qybh!=null">
+                AND qybh = #{qybh,jdbcType=VARCHAR}
+            </if>
+            <if test="jcdid!=null">
+                AND jcdbh = #{jcdid,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate!=null">
+                AND to_char(to_date(sj, 'yyyy-MM-dd HH24'), 'yyyy-MM-dd') >= #{startDate,jdbcType=VARCHAR}
+            </if>
+            <if test="endDate!=null">
+                AND to_char(to_date(sj, 'yyyy-MM-dd HH24'), 'yyyy-MM-dd') <![CDATA[<=]]> #{endDate,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         SELECT * FROM t_biz_zxjg
         WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
@@ -41,23 +54,18 @@
 
     <insert id="insert" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
         <selectKey resultType="java.lang.Long" keyProperty="zxjgId" order="AFTER">
-            <if test="_databaseId == 'mysql'">
-                SELECT LAST_INSERT_ID() AS zxjg_id
-            </if>
-            <if test="_databaseId == 'oracle'">
                 SELECT t_biz_zxjg_zxjg_id_SEQ.nextval AS zxjg_id FROM dual
-            </if>
         </selectKey>
         INSERT INTO t_biz_zxjg(
-        zxjg_id,qybh,qymc,jcdbh,jcdmc,sj,klwnd,klwzsnd,klwzl,eyhlnd,eyhlzsnd,eyhlzl,dyhwnd,dyhwzsnd,dyhwzl,bgll,yl,yw,hsl,gzxx,bz,sfyz)
+        zxjg_id,qybh,jcdfl,jcdbh,jcdmc,sj,klwnd,klwzsnd,klwzl,eyhlnd,eyhlzsnd,eyhlzl,dyhwnd,dyhwzsnd,dyhwzl,bgll,yl,yw,hsl,gzxx,bz,sfyz)
         VALUES(
-        #{zxjgId,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{qymc,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcdmc,jdbcType=VARCHAR},#{sj,jdbcType=VARCHAR},#{klwnd,jdbcType=VARCHAR},#{klwzsnd,jdbcType=VARCHAR},#{klwzl,jdbcType=VARCHAR},#{eyhlnd,jdbcType=VARCHAR},#{eyhlzsnd,jdbcType=VARCHAR},#{eyhlzl,jdbcType=VARCHAR},#{dyhwnd,jdbcType=VARCHAR},#{dyhwzsnd,jdbcType=VARCHAR},#{dyhwzl,jdbcType=VARCHAR},#{bgll,jdbcType=VARCHAR},#{yl,jdbcType=VARCHAR},#{yw,jdbcType=VARCHAR},#{hsl,jdbcType=VARCHAR},#{gzxx,jdbcType=VARCHAR},#{bz,jdbcType=VARCHAR},#{sfyz,jdbcType=VARCHAR}
+        #{zxjgId,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{jcdfl,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcdmc,jdbcType=VARCHAR},#{sj,jdbcType=VARCHAR},#{klwnd,jdbcType=VARCHAR},#{klwzsnd,jdbcType=VARCHAR},#{klwzl,jdbcType=VARCHAR},#{eyhlnd,jdbcType=VARCHAR},#{eyhlzsnd,jdbcType=VARCHAR},#{eyhlzl,jdbcType=VARCHAR},#{dyhwnd,jdbcType=VARCHAR},#{dyhwzsnd,jdbcType=VARCHAR},#{dyhwzl,jdbcType=VARCHAR},#{bgll,jdbcType=VARCHAR},#{yl,jdbcType=VARCHAR},#{yw,jdbcType=VARCHAR},#{hsl,jdbcType=VARCHAR},#{gzxx,jdbcType=VARCHAR},#{bz,jdbcType=VARCHAR},#{sfyz,jdbcType=VARCHAR}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
         UPDATE t_biz_zxjg SET
-        zxjg_id=#{zxjgId,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},qymc=#{qymc,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcdmc=#{jcdmc,jdbcType=VARCHAR},sj=#{sj,jdbcType=VARCHAR},klwnd=#{klwnd,jdbcType=VARCHAR},klwzsnd=#{klwzsnd,jdbcType=VARCHAR},klwzl=#{klwzl,jdbcType=VARCHAR},eyhlnd=#{eyhlnd,jdbcType=VARCHAR},eyhlzsnd=#{eyhlzsnd,jdbcType=VARCHAR},eyhlzl=#{eyhlzl,jdbcType=VARCHAR},dyhwnd=#{dyhwnd,jdbcType=VARCHAR},dyhwzsnd=#{dyhwzsnd,jdbcType=VARCHAR},dyhwzl=#{dyhwzl,jdbcType=VARCHAR},bgll=#{bgll,jdbcType=VARCHAR},yl=#{yl,jdbcType=VARCHAR},yw=#{yw,jdbcType=VARCHAR},hsl=#{hsl,jdbcType=VARCHAR},gzxx=#{gzxx,jdbcType=VARCHAR},bz=#{bz,jdbcType=VARCHAR},sfyz=#{sfyz,jdbcType=VARCHAR}
+        zxjg_id=#{zxjgId,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},jcdfl=#{jcdfl,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcdmc=#{jcdmc,jdbcType=VARCHAR},sj=#{sj,jdbcType=VARCHAR},klwnd=#{klwnd,jdbcType=VARCHAR},klwzsnd=#{klwzsnd,jdbcType=VARCHAR},klwzl=#{klwzl,jdbcType=VARCHAR},eyhlnd=#{eyhlnd,jdbcType=VARCHAR},eyhlzsnd=#{eyhlzsnd,jdbcType=VARCHAR},eyhlzl=#{eyhlzl,jdbcType=VARCHAR},dyhwnd=#{dyhwnd,jdbcType=VARCHAR},dyhwzsnd=#{dyhwzsnd,jdbcType=VARCHAR},dyhwzl=#{dyhwzl,jdbcType=VARCHAR},bgll=#{bgll,jdbcType=VARCHAR},yl=#{yl,jdbcType=VARCHAR},yw=#{yw,jdbcType=VARCHAR},hsl=#{hsl,jdbcType=VARCHAR},gzxx=#{gzxx,jdbcType=VARCHAR},bz=#{bz,jdbcType=VARCHAR},sfyz=#{sfyz,jdbcType=VARCHAR}
         WHERE zxjg_id = #{zxjgId,jdbcType=DECIMAL}
     </update>
 

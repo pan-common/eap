@@ -28,6 +28,7 @@ public class DicSelectTag extends TagSupport{
     private String onChange;//改变时调用的方法
     private String multiple;//选择方式 单选 多选
     private String layfilter;//layui过滤器
+    private String laySearch;//支持搜索
 
     @Override
     public int doEndTag() throws JspException {
@@ -41,27 +42,27 @@ public class DicSelectTag extends TagSupport{
         StringBuffer sb = new StringBuffer();
         JspWriter out = pageContext.getOut();
 
-        sb.append("<select name=\""+this.getSelectName()+"\"");
-        sb.append("id=\"" + this.getId() + "\"");
+        sb.append("<select name=\""+this.getSelectName()+"\" ");
+        sb.append(" id=\"" + this.getId() + "\" ");
         if (!StringUtils.isEmpty(this.getCssClass())){
-            sb.append("class=\"" + this.getCssClass() + "\"");
+            sb.append(" class=\"" + this.getCssClass() + "\" ");
         }
         if(!StringUtils.isEmpty(this.getValue())){
-            sb.append("value=\"" + this.getValue() + "\"");
+            sb.append(" value=\"" + this.getValue() + "\" ");
         }
         if(!StringUtils.isEmpty(this.getStyleClass())){
-            sb.append("style=\"" + this.getStyleClass() + "\"");
+            sb.append(" style=\"" + this.getStyleClass() + "\" ");
         }
         if(!StringUtils.isEmpty(this.getMultiple())){
-            sb.append("multiple=\"" + this.getMultiple() + "\"");
+            sb.append(" multiple=\"" + this.getMultiple() + "\" ");
         }
         if(!StringUtils.isEmpty(this.getOnChange())){
-            sb.append("onchange=\"" + this.getOnChange() + "\"");
+            sb.append(" onchange=\"" + this.getOnChange() + "\" ");
         }
         if(!StringUtils.isEmpty(this.getLayfilter())){
-            sb.append("lay-filter=\"" + this.getLayfilter() + "\"");
+            sb.append(" lay-filter=\"" + this.getLayfilter() + "\" ");
         }
-        if(StringUtils.isEmpty(this.getNullName())){
+        if(!StringUtils.isEmpty(this.getLaySearch())){
             sb.append(" lay-search ");
         }
         sb.append(">");
@@ -190,6 +191,14 @@ public class DicSelectTag extends TagSupport{
 
     public void setLayfilter(String layfilter) {
         this.layfilter = layfilter;
+    }
+
+    public String getLaySearch() {
+        return laySearch;
+    }
+
+    public void setLaySearch(String laySearch) {
+        this.laySearch = laySearch;
     }
 
     @Override

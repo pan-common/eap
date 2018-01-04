@@ -1,11 +1,15 @@
 
 package com.taiji.eap.biz.zxjg.bean;
 
+import com.taiji.eap.biz.jcxmjg.bean.Jcxmjg;
 import com.taiji.eap.common.base.BaseModel;
+
+import java.util.List;
+
 public class Zxjg extends BaseModel{
     private Long zxjgId;//主键
     private String qybh;//企业编号
-    private String qymc;//企业名称
+    private String jcdfl;//监测点分类
     private String jcdbh;//监测点编号
     private String jcdmc;//监测点名称
     private String sj;//时间
@@ -26,6 +30,8 @@ public class Zxjg extends BaseModel{
     private String bz;//备注
     private String sfyz;//是否运行
 
+    private List<Jcxmjg> jcxmjgs;//监测项目结果
+
     public Long getZxjgId() {
         return zxjgId;
     }
@@ -44,12 +50,12 @@ public class Zxjg extends BaseModel{
     }
 
 
-    public String getQymc() {
-        return qymc;
+    public String getJcdfl() {
+        return jcdfl;
     }
 
-    public void setQymc(String qymc) {
-        this.qymc = qymc;
+    public void setJcdfl(String jcdfl) {
+        this.jcdfl = jcdfl;
     }
 
 
@@ -223,5 +229,11 @@ public class Zxjg extends BaseModel{
         this.sfyz = sfyz;
     }
 
+    public List<Jcxmjg> getJcxmjgs() {
+        return jcxmjgs;
+    }
 
+    public void setJcxmjgs(List<Jcxmjg> jcxmjgs) {
+        this.jcxmjgs = jcxmjgs;
+    }
 }

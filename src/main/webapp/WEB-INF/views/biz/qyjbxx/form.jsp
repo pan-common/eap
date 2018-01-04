@@ -8,15 +8,16 @@
 <body>
 <form id="form" class="layui-form" style="margin-top: 20px" lay-filter="form">
     <div class="layui-form-item">
-        <label class="layui-form-label">企业编号</label>
+        <label class="layui-form-label">企业名称</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-            <input type="text" name="qybh"  lay-verify="required" placeholder="请输入企业编号" autocomplete="off" class="layui-input">
+            <input id="qymc" type="text" name="qymc"  lay-verify="required" placeholder="请输入企业名称"
+                   autocomplete="off" class="layui-input" onblur="">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">企业名称</label>
+        <label class="layui-form-label">企业编号</label>
         <div class="layui-input-block" style="margin-right: 10px;width: 300px">
-            <input type="text" name="qymc"  lay-verify="required" placeholder="请输入企业名称" autocomplete="off" class="layui-input">
+            <select id="qybh" name="qybh" layfilter="select_qybh"></select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -47,12 +48,26 @@
     <input id="id" type="hidden" name="id">
 </form>
 </body>
+<script src="${pageContext.request.contextPath}/resources/eap/system/library/CommonSelect.js"></script>
 <script type="text/javascript">
     var id = ${param.id};
     var url = "${pageContext.request.contextPath}/qyjbxx/add";
-    layui.use(['form'],function () {
+    layui.use(['layer','form'],function () {
         var form = layui.form;
         form.render();
+
+        $("#qymc").blur(function () {
+            var qymc = $(this).val();
+            $("#qybh").CommonSelect("init",{
+                layuiForm:form,
+                layer:layer,
+                datasource:"qybh",
+                params:qymc,
+                onSelect:function (data) {
+
+                }
+            });
+        });
 
         if(id){
             url = "${pageContext.request.contextPath}/qyjbxx/edit";

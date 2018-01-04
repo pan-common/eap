@@ -21,10 +21,18 @@ public class ZxjgController extends BaseController{
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Zxjg> list(Integer pageNum,Integer pageSize,String searchText){
+    public PageInfo<Zxjg> list(
+            Integer pageNum,
+            Integer pageSize,
+            String searchText,
+            String qybh,
+            String jcdid,
+            String startDate,
+            String endDate){
+
         PageInfo<Zxjg> pageInfo = null;
         try {
-            pageInfo = zxjgService.list(pageNum,pageSize,searchText);
+            pageInfo = zxjgService.list(pageNum,pageSize,searchText,qybh,jcdid,startDate,endDate);
         } catch (Exception e) {
             e.printStackTrace();
         }

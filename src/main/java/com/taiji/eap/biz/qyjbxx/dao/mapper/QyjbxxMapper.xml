@@ -55,4 +55,8 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_biz_qyjbxx
     </select>
+
+    <select id="getQybhByQymc" resultType="com.taiji.eap.common.dictionary.bean.Dictionary">
+           select id keystone,qymc value from hb_sjcj_qy_jbxx where qymc like concat(concat('%',#{qymc}),'%')
+    </select>
 </mapper>

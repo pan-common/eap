@@ -1,6 +1,7 @@
 package com.taiji.eap.biz.qyjbxx.dao;
 
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -50,5 +51,10 @@ public interface QyjbxxDao {
      */
     List<Qyjbxx> selectAll();
 
-
+    /**
+     * 在正式库中查询企业基本信息
+     * @param qymc
+     * @return
+     */
+    List<Dictionary> getQybhByQymc(@Param("qymc") String qymc);
 }

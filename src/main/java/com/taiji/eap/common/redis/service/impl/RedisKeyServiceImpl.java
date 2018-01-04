@@ -80,7 +80,7 @@ public class RedisKeyServiceImpl implements RedisKeyService{
 
         for (RedisKey redisKey: list) {
             if(!redisKey.getKeyType().equals("02")){
-                redisKey.setDataSize(redisFactoryDao.size(redisKey.getKeyValue()));
+                redisKey.setDataSize(String.valueOf(redisFactoryDao.size(redisKey.getKeyValue())));
             }
         }
 
