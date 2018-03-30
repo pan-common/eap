@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 public class RegistItem extends BaseModel{
     private Long id;//主键
-    @Dictionary(parentId = 69)
+    @Dictionary(dataSource = "dictionary",params = "69")
     private String name;//名称
     private Integer quantity;//数量
-    @Dictionary(parentId = 74)
+    @Dictionary(dataSource = "dictionary",params = "74")
     private String type;//登记类型
     private String registerTime;//登记时间
 

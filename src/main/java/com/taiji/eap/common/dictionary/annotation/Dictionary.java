@@ -6,7 +6,16 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dictionary {
+    /**
+     * 数据源名称
+     * @return
+     */
+    String dataSource();
 
-    long parentId() default -1;
+    /**
+     * 参数 多个参数使用逗号隔开
+     * @return
+     */
+    String params();
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -104,7 +105,7 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
             isKey = allKeys.contains(key);
         }
         if(isKey) {
-            String keyName = extraKey!=null&&!extraKey.equals("")?key+":"+extraKey:key;
+            String keyName = StringUtils.isEmpty(extraKey)?key:key+":"+extraKey;
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
             try {
                 boolean flag = listOperations.size(keyName) > 0 ? true : false;

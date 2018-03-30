@@ -35,9 +35,10 @@ public interface JcdxxDao {
      * @param searchText 搜索条件
      * @param qybh 企业编号
      * @param jcdfl 监测点分类
+      *@param qyfa 企业当前在用方案编号
      * @return
      */
-    List<Jcdxx> list(@Param("searchText") String searchText,@Param("qybh")String qybh,@Param("jcdfl")String jcdfl);
+    List<Jcdxx> list(@Param("searchText") String searchText,@Param("qybh")String qybh,@Param("jcdfl")String jcdfl,@Param("qyfa")String qyfa);
 
      /**
      * 查询全部数据
@@ -50,7 +51,7 @@ public interface JcdxxDao {
      * @param qybh
      * @return
      */
-    List<Jcdxx> selectByQybh(@Param("qybh") String qybh);
+    List<Jcdxx> selectByQybh(@Param("qybh") String qybh,@Param("vid")String vid);
 
     /**
      * 通过企业编号和监测点分类查询监测点
@@ -58,5 +59,5 @@ public interface JcdxxDao {
      * @param jcdfl 监测点分类
      * @return
      */
-    List<Dictionary> getJcdbhByQybh(@Param("qybh") String qybh,@Param("jcdfl") String jcdfl);
+    List<Dictionary> getJcdbhByQybh(@Param("qybh") String qybh,@Param("jcdfl") String jcdfl,@Param("vid")String vid);
 }

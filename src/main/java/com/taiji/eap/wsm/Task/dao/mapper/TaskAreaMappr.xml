@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.Task.dao.TaskAreaDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.Task.bean.TaskArea">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+        <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        id,task_id,area_id
+    </sql>
+
+    <insert id="insert" parameterType="com.taiji.eap.wsm.Task.bean.TaskArea">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT wsm_task_area_id_seq.nextval AS id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO wsm_task_area(id,task_id,area_id)
+        VALUES (
+        #{id,jdbcType=DECIMAL},#{taskId,jdbcType=VARCHAR},#{areaId,jdbcType=INTEGER})
+    </insert>
+
+    <delete id="deleteAreaByTaskId" parameterType="java.lang.String">
+        DELETE FROM wsm_task_area WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="getAreaIdsByTaskId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT area_id FROM wsm_task_area WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAreaByTaskId" parameterType="java.lang.String" resultType="com.taiji.eap.common.area.bean.Area">
+        select a.* from t_sys_area a
+        LEFT JOIN wsm_task_area b
+        on a.area_id = b.area_id
+        where b.task_id = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getTaskAreasByTaskId" parameterType="java.lang.String" resultType="com.taiji.eap.wsm.Task.bean.TaskArea">
+        SELECT * FROM wsm_task_area WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

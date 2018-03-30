@@ -1291,7 +1291,7 @@ ProcessDiagramCanvas.prototype = {
 			
 			//var t = this.g.text(x + width/2 + realWidth*0/2 + paddingX*0, y + height/2, truncated).attr(fontAttr);
 			*/
-			//console.log("draw task name: " + name);
+			//console.log("draw Task name: " + name);
 			var boxWidth = width - (2 * TEXT_PADDING);
 			var boxHeight = height - ICON_SIZE - ICON_PADDING - ICON_PADDING - MARKER_WIDTH - 2 - 2;
 			var boxX = x + width/2 - boxWidth/2;
@@ -1615,7 +1615,7 @@ ProcessDiagramCanvas.prototype = {
 		
 		var set = this.g.setFinish();
 		// TODO: Expanded Sub Process may has specific handlers
-		//this.addHandlers(set, x, y, width, height, "task");
+		//this.addHandlers(set, x, y, width, height, "Task");
 	},
 	
 	drawCollapsedSubProcess: function(name, x, y, width, height, isTriggeredByEvent) {

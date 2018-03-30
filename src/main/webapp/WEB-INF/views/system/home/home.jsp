@@ -331,7 +331,9 @@
         layer.confirm("确定退出当前用户？",{
             btn:['确定','取消']
         },function () {
-            $.post(baseServerUrl+"sysUser/logout",{},function (data,status) {
+            $.post(baseServerUrl+"sysUser/logout",{
+                deviceType:'1'
+            },function (data,status) {
                 if(status=='success'){
                     if(data.body.resultCode=="0"){
                         window.location.href = baseServerUrl;

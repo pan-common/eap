@@ -83,10 +83,12 @@ public class StringRedisFactoryDao extends RedisFactoryDao<String>{
     }
 
 
+    @Override
     public void delete(String key){
         stringRedisTemplate.delete(key);
     }
 
+    @Override
     public void deleteByPattern(String pattern){
         Set<String> set = stringRedisTemplate.keys(pattern);
         stringRedisTemplate.delete(set);

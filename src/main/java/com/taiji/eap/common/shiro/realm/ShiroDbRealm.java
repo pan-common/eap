@@ -3,7 +3,10 @@ package com.taiji.eap.common.shiro.realm;
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
 import com.taiji.eap.common.shiro.bean.SysPurview;
 import com.taiji.eap.common.shiro.bean.SysUser;
+import com.taiji.eap.common.shiro.bean.SysUserToken;
+import com.taiji.eap.common.shiro.exception.HaveLandedException;
 import com.taiji.eap.common.shiro.service.*;
+import com.taiji.eap.common.shiro.token.DeviceToken;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -40,14 +43,13 @@ public class ShiroDbRealm extends AuthorizingRealm{
 
 	@Autowired
 	private RedisFactoryDao<String> redisFactoryDao;
-
 	/**
 	 * 验证当前登陆用户
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
-		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+		DeviceToken token = (DeviceToken) authcToken;
 		SysUser sysUser = userService.getUserByName(token.getUsername());
 		if(sysUser==null) {
 			throw new UnknownAccountException("账号不存在");
@@ -55,6 +57,14 @@ public class ShiroDbRealm extends AuthorizingRealm{
 		if(sysUser.getValid().equals("2")) {
 			throw new DisabledAccountException("账号未启用");
 		}
+
+		//验证账号是否已经登陆
+		SysUserToken userToken = userService.selectUserTokenByUserName(token.getUsername(),token.getDeviceType());
+		if(userToken!=null){
+			//用户已登陆
+			throw new HaveLandedException("用户已登陆");
+		}
+
 		AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(
 				sysUser,
 				sysUser.getPassword(),
@@ -87,7 +97,7 @@ public class ShiroDbRealm extends AuthorizingRealm{
 					}
 					List<SysPurview> sysPurviews = sysPurviewService.getPuriewByResourceIds(resourceIds);
 					for (SysPurview sysPurview : sysPurviews) {
-						if(!StringUtils.isEmpty(sysPurview.getExpression())) {
+						if(!StringUtils.isEmpty(sysPurview.getExpression().trim())) {
 							permissions.add(sysPurview.getExpression());
 						}
 					}

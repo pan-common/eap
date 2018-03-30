@@ -2,6 +2,8 @@
 package com.taiji.eap.biz.qyjbxx.bean;
 
 import java.util.Date;
+
+import com.taiji.eap.common.dictionary.annotation.Dictionary;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
@@ -12,6 +14,7 @@ public class Qyjbxx extends BaseModel{
     private Long spiderId;//调用爬虫模块ID
     private String loginName;//登陆名
     private String loginPw;//密码
+    private String vId;//当前在用方案ID
 
     public Long getId() {
         return id;
@@ -66,5 +69,11 @@ public class Qyjbxx extends BaseModel{
         this.loginPw = loginPw;
     }
 
+    public String getvId() {
+        return vId;
+    }
 
+    public void setvId(String vId) {
+        this.vId = vId;
+    }
 }

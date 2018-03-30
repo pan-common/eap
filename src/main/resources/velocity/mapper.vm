@@ -3,16 +3,6 @@
 #parse("velocity/common.vm" )
 #set ($beanPackage = "#getBeanPackage(${param.packageName}${param.alias}${param.aliasUse})")
 #set ($daoPackage = "#getDaoPackage(${param.packageName}${param.alias}${param.aliasUse})")
-<mapper namespace="${daoPackage}.#toUpperCase(${param.alias})Dao">
-    <resultMap id="BaseResultMap" type="${beanPackage}.#toUpperCase(${param.alias})">
-#foreach($column in $columns)
-#if(${column.columnKey}=="PRI")
-        <id column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})"></id>
-#else
-        <result column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})" />
-#end
-#end
-    </resultMap>
 ##循环生成列
 #set($searchCount="1")
 #set($columnName="")
@@ -20,7 +10,7 @@
 #set($excludePKProperty="")
 #set($searchColumName="")
 #foreach($column in $columns)
-#if($!{velocityCount}>1||$!{velocityCount}<$!{list.size()})
+#if($!{velocityCount}>1)
 #set($columnName=${columnName}+",")
 #set($columnProperty=${columnProperty}+",")
 #set($excludePKProperty=${excludePKProperty}+",")
@@ -38,6 +28,35 @@
 #set($searchColumName=${searchColumName}+${column.columnName})
 #end
 #end
+<mapper namespace="${daoPackage}.#toUpperCase(${param.alias})Dao">
+    <resultMap id="BaseResultMap" type="${beanPackage}.#toUpperCase(${param.alias})">
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+        <id column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})"></id>
+#else
+        <result column="${column.columnName}" property="#camel(${column.columnName})" jdbcType="#toJdbcType(${column.dataType})" />
+#end
+#end
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        ${columnName}
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+#foreach($column in $columns)
+            <if test="#camel(${column.columnName})!=null and #camel(${column.columnName})!=''">
+#if($!{velocityCount}==1)
+                AND ${column.columnName} = #{#camel(${column.columnName}),jdbcType=#toJdbcType(${column.dataType})}
+#else
+                ,AND ${column.columnName} = #{#camel(${column.columnName}),jdbcType=#toJdbcType(${column.dataType})}
+#end
+            </if>
+#end
+        </where>
+    </sql>
 
     <select id="list" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
@@ -72,7 +91,8 @@
     <insert id="insert" parameterType="${beanPackage}.#toUpperCase(${param.alias})">
         <selectKey resultType="#getPkJavaType($columns)" keyProperty="#getPkProperty($columns)" order="AFTER">
             <if test="_databaseId == 'mysql'">
-                SELECT LAST_INSERT_ID() AS #getPkColumn($columns)
+                SELECT LAST_INSERT_ID() AS #getPkColumn($columns)##
+
             </if>
             <if test="_databaseId == 'oracle'">
                 SELECT ${param.tableName}_#getPkColumn($columns)_SEQ.nextval AS #getPkColumn($columns) FROM dual
@@ -84,6 +104,53 @@
         ${columnProperty}
         )
     </insert>
+
+    <insert id="insertSelective" parameterType="${beanPackage}.#toUpperCase(${param.alias})">
+        <selectKey resultType="#getPkJavaType($columns)" keyProperty="#getPkProperty($columns)" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS #getPkColumn($columns)##
+
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT ${param.tableName}_#getPkColumn($columns)_SEQ.nextval AS #getPkColumn($columns) FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO ${param.tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+                ${column.columnName},
+#else
+            <if test="#camel(${column.columnName})!=null">
+                ${column.columnName},
+            </if>
+#end
+#end
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+#foreach($column in $columns)
+#if(${column.columnKey}=="PRI")
+                #{#camel(${column.columnName}),jdbcType=#toJdbcType(${column.dataType})},
+#else
+            <if test="#camel(${column.columnName})!=null">
+                #{#camel(${column.columnName}),jdbcType=#toJdbcType(${column.dataType})},
+            </if>
+#end
+#end
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="#getPkJavaType($columns)">
+        UPDATE ${param.tableName}
+        <set>
+#foreach($column in $columns)
+            <if test="#camel(${column.columnName})!=null">
+                ${column.columnName} = #{#camel(${column.columnName}),jdbcType=#toJdbcType(${column.dataType})},
+            </if>
+#end
+        </set>
+        WHERE #getPkColumn($columns) = #{#getPkProperty($columns),jdbcType=#getPkJdbcType($columns)}
+    </update>
 
     <update id="updateByPrimaryKey" parameterType="${beanPackage}.#toUpperCase(${param.alias})">
         UPDATE ${param.tableName} SET
@@ -102,4 +169,12 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM ${param.tableName}
     </select>
+
+    <select id="queryAll" parameterType="${beanPackage}.#toUpperCase(${param.alias})" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM ${param.tableName}
+        <include refid="condition"/>
+    </select>
+
 </mapper>

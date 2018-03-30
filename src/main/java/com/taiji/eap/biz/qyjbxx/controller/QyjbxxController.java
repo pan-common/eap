@@ -1,9 +1,12 @@
 package com.taiji.eap.biz.qyjbxx.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.biz.qyjbxx.bean.Qyfaxx;
+import com.taiji.eap.biz.qyjcxx.bean.Qyjcxx;
 import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
 import com.taiji.eap.biz.qyjbxx.service.QyjbxxService;
+import com.taiji.eap.common.dictionary.annotation.DictionaryResponse;
 import com.taiji.eap.common.http.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -99,5 +102,33 @@ public class QyjbxxController extends BaseController{
              e.printStackTrace();
              return renderError(e.getMessage());
           }
+    }
+
+    @GetMapping(value = "selectOneByQybh")
+    @ResponseBody
+    public Response<Qyjbxx> selectOneByQybh(String qybh){
+        try {
+            return renderSuccess(qyjbxxService.selectOneByQybh(qybh));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @GetMapping(value = "selectQyfaxx")
+    @ResponseBody
+    public Response<List<Qyfaxx>> selectQyfaxx(String qybh){
+        return renderSuccess(qyjbxxService.getQyfaxxs(qybh));
+    }
+
+    @PostMapping(value = "updateQyfaxx")
+    @ResponseBody
+    public Response<String> updateQyfaxx(String qybh,String vid){
+        int k = qyjbxxService.updateQyfaxx(qybh,vid);
+        if(k>0){
+           return renderSuccess("修改成功");
+        }else {
+            return renderError("修改失败");
+        }
     }
 }

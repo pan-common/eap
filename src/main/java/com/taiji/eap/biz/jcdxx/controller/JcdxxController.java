@@ -21,10 +21,10 @@ public class JcdxxController extends BaseController{
 
     @GetMapping(value = "list")
     @ResponseBody
-    public PageInfo<Jcdxx> list(Integer pageNum,Integer pageSize,String searchText,String qyhb,String jcdfl){
+    public PageInfo<Jcdxx> list(Integer pageNum,Integer pageSize,String searchText,String qyhb,String jcdfl,String qyfa){
         PageInfo<Jcdxx> pageInfo = null;
         try {
-            pageInfo = jcdxxService.list(pageNum,pageSize,searchText,qyhb,jcdfl);
+            pageInfo = jcdxxService.list(pageNum,pageSize,searchText,qyhb,jcdfl,qyfa);
         } catch (Exception e) {
             e.printStackTrace();
         }

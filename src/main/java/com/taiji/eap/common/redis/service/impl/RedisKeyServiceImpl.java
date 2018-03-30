@@ -3,6 +3,7 @@ package com.taiji.eap.common.redis.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseTree;
+import com.taiji.eap.common.datasource.annotation.DataSource;
 import com.taiji.eap.common.redis.bean.RedisKey;
 import com.taiji.eap.common.redis.dao.RedisKeyDao;
 import com.taiji.eap.common.redis.dao.impl.RedisFactoryDao;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RedisKeyServiceImpl implements RedisKeyService{
@@ -104,7 +106,7 @@ public class RedisKeyServiceImpl implements RedisKeyService{
         List<RedisKey> list = redisKeyDao.selectAll();
         List<BaseTree> trees = new ArrayList<BaseTree>();
         for (RedisKey tree: list) {
-            if(parentId==tree.getParentId()){
+            if(Objects.equals(parentId, tree.getParentId())){
                 trees.add(findChildren(tree,list));
             }
         }

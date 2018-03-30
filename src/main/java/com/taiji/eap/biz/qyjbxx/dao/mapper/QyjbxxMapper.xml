@@ -8,6 +8,7 @@
         <result column="spider_id" property="spiderId" jdbcType="DECIMAL" />
         <result column="login_name" property="loginName" jdbcType="VARCHAR" />
         <result column="login_pw" property="loginPw" jdbcType="VARCHAR" />
+        <result column="v_id" property="vId" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="list" resultMap="BaseResultMap">
@@ -36,15 +37,26 @@
             </if>
         </selectKey>
         INSERT INTO t_biz_qyjbxx(
-        id,qybh,qymc,spider_id,login_name,login_pw)
+        id,qybh,qymc,spider_id,login_name,login_pw,v_id)
         VALUES(
-        #{id,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{qymc,jdbcType=VARCHAR},#{spiderId,jdbcType=DECIMAL},#{loginName,jdbcType=VARCHAR},#{loginPw,jdbcType=VARCHAR}
-        )
+        #{id,jdbcType=DECIMAL},
+        #{qybh,jdbcType=VARCHAR},
+        #{qymc,jdbcType=VARCHAR},
+        #{spiderId,jdbcType=DECIMAL},
+        #{loginName,jdbcType=VARCHAR},
+        #{loginPw,jdbcType=VARCHAR},
+        #{vId,jdbcType=VARCHAR})
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.qyjbxx.bean.Qyjbxx">
         UPDATE t_biz_qyjbxx SET
-        id=#{id,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},qymc=#{qymc,jdbcType=VARCHAR},spider_id=#{spiderId,jdbcType=DECIMAL},login_name=#{loginName,jdbcType=VARCHAR},login_pw=#{loginPw,jdbcType=VARCHAR}
+        id=#{id,jdbcType=DECIMAL},
+        qybh=#{qybh,jdbcType=VARCHAR},
+        qymc=#{qymc,jdbcType=VARCHAR},
+        spider_id=#{spiderId,jdbcType=DECIMAL},
+        login_name=#{loginName,jdbcType=VARCHAR},
+        login_pw=#{loginPw,jdbcType=VARCHAR},
+        v_id=#{vId,jdbcType=VARCHAR},
         WHERE id = #{id,jdbcType=DECIMAL}
     </update>
 
@@ -59,4 +71,13 @@
     <select id="getQybhByQymc" resultType="com.taiji.eap.common.dictionary.bean.Dictionary">
            select id keystone,qymc value from hb_sjcj_qy_jbxx where qymc like concat(concat('%',#{qymc}),'%')
     </select>
+
+    <select id="getQyfaxxs" resultType="com.taiji.eap.biz.qyjbxx.bean.Qyfaxx">
+        SELECT V_ID,FAMC,VERSION,FAKSSJ,ZT FROM hb_sjcj_qy_jcxx_v where (zt = '6' or zt = '5') and qybh = #{qybh,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateQyfaxx" parameterType="string">
+        UPDATE t_biz_qyjbxx SET v_id = #{vid,jdbcType=VARCHAR} WHERE qybh = #{qybh,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

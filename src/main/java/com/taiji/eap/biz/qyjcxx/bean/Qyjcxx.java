@@ -23,17 +23,17 @@ public class Qyjcxx extends BaseTree {
     private String qymc;//企业名称
     @Excel(name = "行业类型",orderNum = "7",isImportField = "hylx",width = 20)
     private String hylx;//行业类型
-    @Dictionary(parentId = 34)
+    @Dictionary(dataSource = "dictionary",params = "34")
     @Excel(name = "污染防治设施是否正常运行",orderNum = "8",isImportField = "wrfzss",width = 20,replace = {"是_01","否_02"})
     private String wrfzss;//污染防治设施是否正常运行
     @Excel(name = "运行问题描述",orderNum = "9",isImportField = "yxwtms",width = 20)
     private String yxwtms;//运行问题描述
-    @Dictionary(parentId = 34)
+    @Dictionary(dataSource = "dictionary",params = "34")
     @Excel(name = "是否存在数据造假行为",orderNum = "10",isImportField = "sfczsjzj",width = 20,replace = {"是_01","否_02"})
     private String sfczsjzj;//是否存在数据造假行为
     @Excel(name = "造假问题描述",orderNum = "11",isImportField = "zjwtms",width = 20)
     private String zjwtms;//造假问题描述
-    @Dictionary(parentId = 34)
+    @Dictionary(dataSource = "dictionary",params = "34")
     @Excel(name = "是否存在严重跑冒滴漏",orderNum = "12",isImportField = "sfczyzpmdl",width = 20,replace = {"是_01","否_02"})
     private String sfczyzpmdl;//是否存在严重跑冒滴漏
     @Excel(name = "跑冒滴漏问题描述",orderNum = "13",isImportField = "pmdlwtms",width = 20)

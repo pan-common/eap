@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
         <id column="id" property="id" jdbcType="DECIMAL"/>
         <result column="qybh" property="qybh" jdbcType="VARCHAR" />
+        <result column="qyfa" property="qyfa" jdbcType="VARCHAR" />
         <result column="jcdbh" property="jcdbh" jdbcType="VARCHAR" />
         <result column="jcdmc" property="jcdmc" jdbcType="VARCHAR" />
         <result column="jcdfl" property="jcdfl" jdbcType="VARCHAR" />
@@ -22,6 +23,9 @@
             <if test="jcdfl!=null">
                 AND jcdfl = #{jcdfl,jdbcType=VARCHAR}
             </if>
+            <if test="qyfa!=null">
+                AND qyfa = #{qyfa,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
 
@@ -32,7 +36,7 @@
 
     <select id="selectByQybh" resultMap="BaseResultMap">
         SELECT * FROM t_biz_jcdxx
-        WHERE qybh = #{qybh,jdbcType=DECIMAL}
+        WHERE qybh = #{qybh,jdbcType=DECIMAL} AND qyfa = #{vid,jdbcType=DECIMAL}
     </select>
 
     <insert id="insert" parameterType="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
@@ -44,15 +48,25 @@
             </if>
         </selectKey>
         INSERT INTO t_biz_jcdxx(
-        id,qybh,jcdbh,jcdmc,jcdfl)
+        id,qybh,qyfa,jcdbh,jcdmc,jcdfl)
         VALUES(
-        #{id,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcdmc,jdbcType=VARCHAR},#{jcdfl,jdbcType=VARCHAR}
+        #{id,jdbcType=DECIMAL},
+        #{qybh,jdbcType=VARCHAR},
+        #{qyfa,jdbcType=VARCHAR},
+        #{jcdbh,jdbcType=VARCHAR},
+        #{jcdmc,jdbcType=VARCHAR},
+        #{jcdfl,jdbcType=VARCHAR}
         )
     </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.jcdxx.bean.Jcdxx">
         UPDATE t_biz_jcdxx SET
-        id=#{id,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcdmc=#{jcdmc,jdbcType=VARCHAR},jcdfl=#{jcdfl,jdbcType=VARCHAR}
+        id=#{id,jdbcType=DECIMAL},
+        qybh=#{qybh,jdbcType=VARCHAR},
+        qyfa=#{qyfa,jdbcType=VARCHAR},
+        jcdbh=#{jcdbh,jdbcType=VARCHAR},
+        jcdmc=#{jcdmc,jdbcType=VARCHAR},
+        jcdfl=#{jcdfl,jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=DECIMAL}
     </update>
 
@@ -73,7 +87,7 @@
                     left join hb_sjcj_qy_jcxx_v b
                     on a.v_id = b.v_id
                     where b.QYBH = #{qybh,jdbcType=VARCHAR}
-                    and b.zt = '5'
+                    and b.v_id = #{vid,jdbcType=VARCHAR}
                 </when>
                 <when test="jcdfl='B'">
                     select JCD_ID keystone,JCDMC value
@@ -81,7 +95,7 @@
                     left join hb_sjcj_qy_jcxx_v b
                     on a.v_id = b.v_id
                     where b.QYBH = #{qybh,jdbcType=VARCHAR}
-                    and b.zt = '5'
+                    and b.v_id = #{vid,jdbcType=VARCHAR}
                 </when>
                 <otherwise>
 

@@ -40,6 +40,8 @@ Integer##
 Date##
 #elseif($!fieldType=="mediumtext")
 String##
+#elseif($!fieldType=="double")
+Double##
 #end
 #end
 ##数据库字段类型转java字段类型
@@ -54,6 +56,8 @@ java.lang.Integer##
 java.util.Date##
 #elseif($!fieldType=="mediumtext")
 java.lang.String##
+#elseif($!fieldType=="double")
+java.lang.Double##
 #end
 #end
 ##数据库字段类型转JDBCTYPE
@@ -68,6 +72,8 @@ INTEGER##
 TIMESTAMP##
 #elseif($!fieldType=="mediumtext")
 CLOB##
+#elseif($!fieldType=="double")
+DOUBLE##
 #end
 #end
 ##获取实体类包名

@@ -1,6 +1,7 @@
 package com.taiji.eap.biz.qyjbxx.service;
 
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.biz.qyjbxx.bean.Qyfaxx;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
@@ -62,4 +63,25 @@ public interface QyjbxxService{
      */
     List<Dictionary> getQybhByQymc(@Param("qymc") String qymc);
 
+    /**
+     * 通过企业编号查询企业再在方案和历史方案
+     * @param qybh
+     * @return
+     */
+    List<Qyfaxx> getQyfaxxs(String qybh);
+
+    /**
+     * 修改企业方案信息
+     * @param qybh
+     * @param vid
+     * @return
+     */
+    int updateQyfaxx(String qybh, String vid);
+
+    /**
+     * 通过企业编号查询企业信息
+     * @param qybh
+     * @return
+     */
+    Qyjbxx selectOneByQybh(String qybh);
 }

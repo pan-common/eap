@@ -20,4 +20,12 @@ public interface GeneratorService {
     List<BaseTree> jspTreeView(String path) throws Exception;
 
     List<Table> selectViews(String databaseName);
+
+    /**
+     * 生成表同步的SQL语句
+     * @param schema
+     * @param table
+     * @return
+     */
+    String syncSql(String schema, String table);
 }

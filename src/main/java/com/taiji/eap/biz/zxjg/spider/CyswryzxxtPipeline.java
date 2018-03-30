@@ -37,6 +37,7 @@ public class CyswryzxxtPipeline extends BasePipeline{
                     e.printStackTrace();
                 }
             }
+            zxjgService.syncData();
         }
     }
 }

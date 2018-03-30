@@ -25,7 +25,7 @@ var KisBpmTaskListenersCtrl = [ '$scope', '$modal', '$timeout', '$translate', fu
 
     // Config for the modal window
     var opts = {
-        template:  'editor-app/configuration/properties/task-listeners-popup.html?version=' + Date.now(),
+        template:  'editor-app/configuration/properties/Task-listeners-popup.html?version=' + Date.now(),
         scope: $scope
     };
 

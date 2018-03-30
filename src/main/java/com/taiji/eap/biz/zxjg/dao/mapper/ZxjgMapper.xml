@@ -53,7 +53,7 @@
     </select>
 
     <insert id="insert" parameterType="com.taiji.eap.biz.zxjg.bean.Zxjg">
-        <selectKey resultType="java.lang.Long" keyProperty="zxjgId" order="AFTER">
+        <selectKey resultType="java.lang.Long" keyProperty="zxjgId" order="BEFORE">
                 SELECT t_biz_zxjg_zxjg_id_SEQ.nextval AS zxjg_id FROM dual
         </selectKey>
         INSERT INTO t_biz_zxjg(
@@ -80,4 +80,9 @@
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_biz_zxjg
     </select>
+
+    <insert id="syncData" statementType="CALLABLE">
+           {CALL hb_sjtb_pc_zx_zs}
+    </insert>
+
 </mapper>

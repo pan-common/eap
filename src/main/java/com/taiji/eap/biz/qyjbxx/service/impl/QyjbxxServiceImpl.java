@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.biz.jcdxx.bean.Jcdxx;
 import com.taiji.eap.biz.jcdxx.dao.JcdxxDao;
+import com.taiji.eap.biz.qyjbxx.bean.Qyfaxx;
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
 import com.taiji.eap.biz.qyjbxx.dao.QyjbxxDao;
 import com.taiji.eap.biz.qyjbxx.service.QyjbxxService;
@@ -82,7 +83,7 @@ public class QyjbxxServiceImpl implements QyjbxxService{
     public void spider(String qybh, String startDate, String endDate) {
         Qyjbxx qyjbxx = qyjbxxDao.selectByQybh(qybh);
         Spider s = spiderDao.selectByPrimaryKey(qyjbxx.getSpiderId());
-        List<Jcdxx> jcdxxes = jcdxxDao.list(null,qyjbxx.getQybh(),null);
+        List<Jcdxx> jcdxxes = jcdxxDao.list(null,qyjbxx.getQybh(),null,qyjbxx.getvId());
         CyswryzxxtProcessor processor = new CyswryzxxtProcessor(jcdxxes,startDate,endDate);
         pipeline.setJcdxxes(jcdxxes);
         CyswryzxxtSpider spider = new CyswryzxxtSpider(processor,pipeline);
@@ -93,6 +94,22 @@ public class QyjbxxServiceImpl implements QyjbxxService{
     @DataSource(value = "jcpt")
     public List<Dictionary> getQybhByQymc(String qymc) {
         return qyjbxxDao.getQybhByQymc(qymc);
+    }
+
+    @Override
+    @DataSource(value = "jcpt")
+    public List<Qyfaxx> getQyfaxxs(String qybh) {
+        return qyjbxxDao.getQyfaxxs(qybh);
+    }
+
+    @Override
+    public int updateQyfaxx(String qybh, String vid) {
+        return qyjbxxDao.updateQyfaxx(qybh,vid);
+    }
+
+    @Override
+    public Qyjbxx selectOneByQybh(String qybh) {
+        return qyjbxxDao.selectByQybh(qybh);
     }
 
 

@@ -40,6 +40,9 @@
         <property name="nextHandler" ref="jcxmSelectHandler"></property>
     </bean>
     <bean id="jcxmSelectHandler" class="com.taiji.eap.biz.jcxm.select.JcxmSelectHandler">
+        <property name="nextHandler" ref="selectAreaHandler"></property>
+    </bean>
+    <bean id="selectAreaHandler" class="com.taiji.eap.common.taglib.select.handler.SelectAreaHandler">
     </bean>
     <bean id="selectDataSourceHelper" class="com.taiji.eap.common.taglib.select.helper.SelectDataSourceHelper">
         <property name="handler" ref="selectUserHandler"></property>

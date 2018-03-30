@@ -16,8 +16,15 @@
 		p:pool-config-ref="poolConfig">
 	</bean>
 
+	<bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer">
+	</bean>
+	<bean id="valueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer">
+	</bean>
+
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="keySerializer" ref="keySerializer"></property>
+		<property name="valueSerializer" ref="valueSerializer"></property>
 	</bean>
 
 	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">

@@ -38,8 +38,8 @@ public class JcdxxServiceImpl implements JcdxxService{
     }
 
     @Override
-    public List<Jcdxx> selectByQybh(String qybh) throws Exception {
-        return jcdxxDao.selectByQybh(qybh);
+    public List<Jcdxx> selectByQybh(String qybh, String vid) throws Exception {
+        return jcdxxDao.selectByQybh(qybh,vid);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -50,21 +50,22 @@ public class JcdxxServiceImpl implements JcdxxService{
 
     @Override
     public List<Jcdxx> list(String searchText) {
-        return jcdxxDao.list(searchText,null,null);
+        return jcdxxDao.list(searchText,null,null,null);
     }
 
     @Override
-    public PageInfo<Jcdxx> list(int pageNum, int pageSize, String searchText, String qyhb, String jcdfl) throws Exception {
+    public PageInfo<Jcdxx> list(int pageNum, int pageSize, String searchText, String qyhb, String jcdfl, String qyfa) throws Exception {
         PageHelper.startPage(pageNum,pageSize);
-        List<Jcdxx> jcdxxs = jcdxxDao.list(searchText,qyhb,jcdfl);
+        List<Jcdxx> jcdxxs = jcdxxDao.list(searchText,qyhb,jcdfl,qyfa);
         PageInfo<Jcdxx> pageInfo = new PageInfo<Jcdxx>(jcdxxs);
         return pageInfo;
     }
 
     @Override
     @DataSource(value = "jcpt")
-    public List<Dictionary> getJcdbhByQybh(String qybh, String jcdfl) {
-        return jcdxxDao.getJcdbhByQybh(qybh,jcdfl);
+    public List<Dictionary> getJcdbhByQybh(String qybh, String jcdfl, String vid) {
+        return jcdxxDao.getJcdbhByQybh(qybh,jcdfl,vid);
     }
+
 
 }

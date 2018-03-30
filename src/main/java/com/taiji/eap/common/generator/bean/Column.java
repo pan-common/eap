@@ -1,9 +1,12 @@
 package com.taiji.eap.common.generator.bean;
+
+import com.taiji.eap.common.base.BaseModel;
+
 /**
  * @author panho
  *
  */
-public class Column {
+public class Column extends BaseModel implements Comparable<Column>{
 	
 	private String tableSchema;//数据库名
 	private String tableName;//表名
@@ -115,5 +118,11 @@ public class Column {
 				", columnKey='" + columnKey + '\'' +
 				", columnComment='" + columnComment + '\'' +
 				'}';
+	}
+	
+
+	@Override
+	public int compareTo(Column o) {
+		return this.getOrdinalPosition().compareTo(o.getOrdinalPosition());
 	}
 }

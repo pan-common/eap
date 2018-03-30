@@ -6,10 +6,14 @@ import com.taiji.eap.common.base.BaseTree;
 import com.taiji.eap.common.area.bean.Area;
 import com.taiji.eap.common.area.service.AreaService;
 import com.taiji.eap.common.http.entity.Response;
+import com.taiji.eap.common.utils.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -30,6 +34,23 @@ public class AreaController extends BaseController{
         }
         return pageInfo;
     }
+
+    /**
+     * 查询全部区划数据
+     * @return
+     */
+    @GetMapping(value = "selectAll")
+    @ResponseBody
+    public List<Area> selectAll(){
+        List<Area> areas = new ArrayList<>();
+        try {
+            areas = areaService.selectAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return areas;
+    }
+
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(Area area){
@@ -123,4 +144,20 @@ public class AreaController extends BaseController{
         }
         return renderSuccess(baseTrees);
     }
+
+    @GetMapping(value = "getTreeByAreaIds")
+    @ResponseBody
+    public Response<List<Area>> getTreeByAreaIds(String areaIds){
+        if(!StringUtils.isEmpty(areaIds)){
+            String[] arr = areaIds.split(",");
+            List<String> longs = Arrays.asList(arr);
+            List<Area> areas = areaService.selectByIds(ListUtils.stringToIntegerLst(longs));
+            return renderSuccess(areas);
+        }else {
+            return renderError("没有数据");
+        }
+    }
+
+
+
 }

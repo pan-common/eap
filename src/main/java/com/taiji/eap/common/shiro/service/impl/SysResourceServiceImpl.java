@@ -99,8 +99,8 @@ public class SysResourceServiceImpl extends BaseServiceImpl implements SysResour
     public int updateByPrimaryKey(SysResource sysResource) {
         int k = sysResourceDao.updateByPrimaryKey(sysResource);
         if(k>0) {
-            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE + "*");
-            redisFactoryDao.deleteByPattern(REDIS_KEY_PURIEW + "*");
+            redisFactoryDao.deleteByPattern(REDIS_KEY_RESOURCE + ":*");
+            redisFactoryDao.deleteByPattern(REDIS_KEY_PURIEW + ":*");
         }
         return k;
     }

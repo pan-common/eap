@@ -60,4 +60,18 @@
     <select id="selectLevel3" resultMap="BaseResultMap">
         SELECT * FROM t_sys_area WHERE level_ NOT IN (4,0)
     </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_area
+        <where>
+            <if test="areaIds!=null and areaIds.size()>0">
+                area_id IN
+                <foreach item="item" index="index" collection="areaIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY sort
+    </select>
+
 </mapper>

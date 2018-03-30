@@ -161,7 +161,7 @@
         pageBreak            : true,           // Enable parse page break [========]
         atLink               : true,           // for @link
         emailLink            : true,           // for email address auto link
-        taskList             : false,          // Enable Github Flavored Markdown task lists
+        taskList             : false,          // Enable Github Flavored Markdown Task lists
         emoji                : false,          // :emoji: , Support Github emoji, Twitter Emoji (Twemoji);
                                                // Support FontAwesome icon emoji :fa-xxx: > Using fontAwesome icon web fonts;
                                                // Support Editor.md logo icon emoji :editormd-logo: :editormd-logo-1x: > 1~8x;
@@ -3391,7 +3391,7 @@
             pageBreak            : true,
             atLink               : true,           // for @link
             emailLink            : true,           // for mail address auto link
-            taskList             : false,          // Enable Github Flavored Markdown task lists
+            taskList             : false,          // Enable Github Flavored Markdown Task lists
             emoji                : false,          // :emoji: , Support Twemoji, fontAwesome, Editor.md logo emojis.
             tex                  : false,          // TeX(LaTeX), based on KaTeX
             flowChart            : false,          // flowChart.js only support IE9+
@@ -3650,8 +3650,8 @@
         markedRenderer.listitem = function(text) {
             if (settings.taskList && /^\s*\[[x\s]\]\s*/.test(text)) 
             {
-                text = text.replace(/^\s*\[\s\]\s*/, "<input type=\"checkbox\" class=\"task-list-item-checkbox\" /> ")
-                           .replace(/^\s*\[x\]\s*/,  "<input type=\"checkbox\" class=\"task-list-item-checkbox\" checked disabled /> ");
+                text = text.replace(/^\s*\[\s\]\s*/, "<input type=\"checkbox\" class=\"Task-list-item-checkbox\" /> ")
+                           .replace(/^\s*\[x\]\s*/,  "<input type=\"checkbox\" class=\"Task-list-item-checkbox\" checked disabled /> ");
 
                 return "<li style=\"list-style: none;\">" + this.atLink(this.emoji(text)) + "</li>";
             }
@@ -3909,7 +3909,7 @@
             atLink               : true,    // for @link
             emailLink            : true,    // for mail address auto link
             tex                  : false,
-            taskList             : false,   // Github Flavored Markdown task lists
+            taskList             : false,   // Github Flavored Markdown Task lists
             emoji                : false,
             flowChart            : false,
             sequenceDiagram      : false,

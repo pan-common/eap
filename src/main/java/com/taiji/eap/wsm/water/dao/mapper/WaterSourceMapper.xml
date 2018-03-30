@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.water.dao.WaterSourceDao">
+
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.water.bean.WaterSource">
+        <id column="ID" property="id" jdbcType="VARCHAR"></id>
+        <result column="SYDMC" property="sydmc" jdbcType="VARCHAR" />
+        <result column="SYDBM" property="sydbm" jdbcType="VARCHAR" />
+        <result column="SYDLX" property="sydlx" jdbcType="VARCHAR" />
+        <result column="FWRK" property="fwrk" jdbcType="VARCHAR" />
+        <result column="SJQSL" property="sjqsl" jdbcType="VARCHAR" />
+        <result column="MCTJ" property="mctj" jdbcType="VARCHAR" />
+        <result column="SJJS" property="hsjzlx" jdbcType="VARCHAR" />
+        <result column="SWMS" property="swms" jdbcType="VARCHAR" />
+        <result column="SBDZYXCBDZB" property="sbdzyxcbdzb" jdbcType="VARCHAR" />
+        <result column="BZ" property="bz" jdbcType="VARCHAR" />
+        <result column="SCS" property="scs" jdbcType="VARCHAR" />
+        <result column="SCD" property="scd" jdbcType="VARCHAR" />
+        <result column="EXCELROW" property="excelrow" jdbcType="VARCHAR" />
+        <result column="ND" property="nd" jdbcType="VARCHAR" />
+        <result column="UPLOADFILENAME" property="uploadfilename" jdbcType="VARCHAR" />
+        <result column="SYDLXBM" property="sydlxbm" jdbcType="VARCHAR" />
+        <result column="MCTJBM" property="mctjbm" jdbcType="VARCHAR" />
+        <result column="HSJZLXBM" property="hsjzlxbm" jdbcType="VARCHAR" />
+        <result column="SHJQSL" property="shjqsl" jdbcType="VARCHAR" />
+        <result column="HBZDCSSY" property="hbzdcssy" jdbcType="VARCHAR" />
+        <result column="YCL" property="ycl" jdbcType="VARCHAR" />
+        <result column="SFKJSY" property="sfkjsy" jdbcType="VARCHAR" />
+        <result column="KJSHS" property="kjshs" jdbcType="VARCHAR" />
+        <result column="SSSX_GL" property="sssx_gl" jdbcType="VARCHAR" />
+        <result column="SSSX_EJZL" property="sssx_ejzl" jdbcType="VARCHAR" />
+        <result column="SSSX_SJZL" property="sssx_sjzl" jdbcType="VARCHAR" />
+        <result column="DYSC" property="dysc" jdbcType="VARCHAR" />
+        <result column="JCSJ" property="jcsj" jdbcType="TIMESTAMP" />
+        <result column="ZSQS" property="zsqs" jdbcType="TIMESTAMP" />
+        <result column="QSSW" property="qssw" jdbcType="VARCHAR" />
+        <result column="SJKSW" property="sjksw" jdbcType="VARCHAR" />
+        <result column="CCSY" property="ccsy" jdbcType="VARCHAR" />
+        <result column="SFDB" property="sfdb" jdbcType="VARCHAR" />
+        <result column="SYSYZT" property="sysyzt" jdbcType="VARCHAR" />
+        <result column="ZJHJ" property="zjhj" jdbcType="VARCHAR" />
+        <result column="SYSZSDM" property="syszsdm" jdbcType="VARCHAR" />
+        <result column="SYSZSHDM" property="syszshdm" jdbcType="VARCHAR" />
+        <result column="SYSZXDM" property="syszxdm" jdbcType="VARCHAR" />
+        <result column="SYSZXMC" property="syszxmc" jdbcType="VARCHAR" />
+        <result column="DATASTATE" property="datastate" jdbcType="VARCHAR" />
+        <result column="DATATYPE" property="datatype" jdbcType="VARCHAR" />
+        <result column="YEAR" property="year" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM city_2017_1_1_tmp
+    </select>
+
+</mapper>

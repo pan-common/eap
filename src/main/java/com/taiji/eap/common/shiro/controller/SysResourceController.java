@@ -215,10 +215,11 @@ public class SysResourceController extends BaseController{
             String[] arr = resourceIds.split(",");
             List<String> longs = Arrays.asList(arr);
             int k = sysResourceService.saveOrganResource(organId,ListUtils.stringToLongLst(longs));
-            if(k>0)
+            if(k>0) {
                 return renderSuccess("保存成功");
-            else
+            } else {
                 return renderError("保存失败");
+            }
         }else {
             return renderError("没有数据提交");
         }

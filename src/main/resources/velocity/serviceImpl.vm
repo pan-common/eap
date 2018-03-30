@@ -25,7 +25,7 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
     @Autowired
     private #toUpperCase(${param.alias})Dao ${param.alias}Dao;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteByPrimaryKey(#getPkFieldType($columns) primaryKey) {
 #if(${param.isTree}=="01")
@@ -38,7 +38,7 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
 #end
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int insert(#toUpperCase(${param.alias}) ${param.alias}) {
         return ${param.alias}Dao.insert(${param.alias});
@@ -49,7 +49,7 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         return ${param.alias}Dao.selectByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateByPrimaryKey(#toUpperCase(${param.alias}) ${param.alias}) {
         return ${param.alias}Dao.updateByPrimaryKey(${param.alias});
@@ -176,4 +176,21 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
         }
     }
 #end
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int insertSelective(#toUpperCase(${param.alias}) ${param.alias}) {
+        return ${param.alias}Dao.insertSelective(${param.alias});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public int updateByPrimaryKeySelective(#toUpperCase(${param.alias}) ${param.alias}) {
+        return ${param.alias}Dao.updateByPrimaryKeySelective(${param.alias});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public List<#toUpperCase(${param.alias})> queryAll(#toUpperCase(${param.alias}) ${param.alias}) {
+        return ${param.alias}Dao.queryAll(${param.alias});
+    }
 }

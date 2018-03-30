@@ -18,6 +18,12 @@ public class CommonController extends BaseController{
     @Autowired
     SelectDataSourceHelper selectDataSourceHelper;
 
+    /**
+     * 获取通用下拉列表
+     * @param datasource
+     * @param params
+     * @return
+     */
     @RequestMapping("getCommonSelectData")
     @ResponseBody
     public Response<List<Map<String,Object>>> getCommonSelectData(String datasource,String params){

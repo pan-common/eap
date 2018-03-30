@@ -10,7 +10,7 @@ import com.taiji.eap.common.base.BaseTree;
 public class Element extends BaseTree {
     private Long elementId;//元素ID
     private String elementName;//元素名称
-    @Dictionary(parentId = 97)
+    @Dictionary(dataSource = "dictionary",params = "97")
     private String elementType;//元素类型
     private Long parentId;//上级元素ID
     private String jsTemplatePath;//js模板路径

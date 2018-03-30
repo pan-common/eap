@@ -8,7 +8,7 @@ public class RedisKey extends BaseTree {
     private String keyValue;//key值
     private String keyName;//键名称
     private Long parentId;//上级ID
-    @Dictionary(parentId = 83)
+    @Dictionary(dataSource = "dictionary",params = "83")
     private String keyType;//键类型
     private String keyNote;//键注释
     private String dataSize;//对应数据大小

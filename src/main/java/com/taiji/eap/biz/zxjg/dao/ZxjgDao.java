@@ -58,4 +58,9 @@ public interface ZxjgDao{
      * @return
      */
     int deleteByZxjg(@Param("qybh") String qybh,@Param("jcdbh") String jcdbh,@Param("sj") String sj);
+
+    /**
+     * 调用存储过程同步数据
+     */
+    void syncData();
 }

@@ -33,6 +33,8 @@
         </div>
         <hr/>
         <p><a class="fl">注册账号</a><a class="fr">忘记密码？</a></p>
+
+        <input type="hidden" name="deviceType" value="1">
     </form>
 </div>
 </body>
@@ -48,7 +50,32 @@
                     if(data.body.resultCode=="0"){
                         window.location.href = baseServerUrl+"system/home";
                     }else {
-                        layer.msg(data.body.resultContent, {icon: 5});
+
+                        if(data.body.resultContent == "用户已登陆"){
+                            layer.confirm("用户已登陆，是否强制退出并重新登陆？",{
+                                btn: ['确定','取消']
+                            },function () {
+
+                                $.post(baseServerUrl+"sysUser/forceQuitLoginAgain",$("#loginform").serializeArray(),function (data,status) {
+                                    if(status=='success'){
+                                        if(data.body.resultCode=="0"){
+                                            window.location.href = baseServerUrl+"system/home";
+                                        }else {
+                                            layer.msg(data.body.resultContent, {icon: 5});
+                                        }
+                                    }else {
+                                        layer.msg('网络错误', {icon: 5});
+                                    }
+                                }).error(function (e) {
+                                    layer.msg('网络错误'+e.status, {icon: 5});
+                                });
+
+                            },function () {
+
+                            });
+                        }else {
+                            layer.msg(data.body.resultContent, {icon: 5});
+                        }
                     }
                 }else {
                     layer.msg('网络错误', {icon: 5});

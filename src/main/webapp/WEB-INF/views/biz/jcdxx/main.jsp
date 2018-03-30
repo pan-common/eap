@@ -44,7 +44,7 @@
 <script type="text/javascript">
     var qyhb = null;
     var jcdfl = null;
-
+    var qyfa = null;
     layui.use([ 'layer', 'form' ], function(layer, form) {
         var layer = layui.layer;
         var form =  layui.form;
@@ -53,6 +53,21 @@
         form.on("select(selectQy)",function(data){
            if(data.value){
                qyhb = data.value;
+               //查找企业当前在用方案
+               $.get("${pageContext.request.contextPath}/qyjbxx/selectOneByQybh",{
+                   qybh:qyhb
+               },function (data,status) {
+                   if(status=="success"){
+                       if(data.body.resultCode=="0"){
+                           qyfa = data.body.entity.vId;
+                       }else {
+                           layer.msg(data.body.resultContent, {icon: 5});
+                       }
+                   }else {
+                       layer.msg('网络错误', {icon: 5});
+                   }
+               });
+
            }else {
                qyhb = null;
            }
@@ -132,6 +147,11 @@
                     width:100
                 },
                 {
+                    title:"在用方案",
+                    field:"qyfa",
+                    width:100
+                },
+                {
                     title:"对应系统监测点编号",
                     field:"jcdbh",
                     width:100
@@ -183,6 +203,7 @@
                 pageNum : this.pageNumber, //页码
                 searchText : params.search,
                 qyhb : qyhb,
+                qyfa : qyfa,
                 jcdfl : jcdfl
             }
             return param;

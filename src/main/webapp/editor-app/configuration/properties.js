@@ -45,8 +45,8 @@ KISBPM.PROPERTY_CONFIG =
         "writeModeTemplateUrl": "editor-app/configuration/properties/execution-listeners-write-template.html"
     },
     "oryx-tasklisteners-multiplecomplex": {
-        "readModeTemplateUrl": "editor-app/configuration/properties/task-listeners-display-template.html",
-        "writeModeTemplateUrl": "editor-app/configuration/properties/task-listeners-write-template.html"
+        "readModeTemplateUrl": "editor-app/configuration/properties/Task-listeners-display-template.html",
+        "writeModeTemplateUrl": "editor-app/configuration/properties/Task-listeners-write-template.html"
     },
     "oryx-eventlisteners-multiplecomplex": {
         "readModeTemplateUrl": "editor-app/configuration/properties/event-listeners-display-template.html",

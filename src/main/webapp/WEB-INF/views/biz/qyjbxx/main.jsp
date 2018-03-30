@@ -40,6 +40,10 @@ pageEncoding="UTF-8"%>
                 maxmin:true,
                 success:function (layero, index) {
 
+                },
+                cancel: function(index, layero){
+                    refreshTable();
+                    return true;
                 }
             })
         };
@@ -104,13 +108,19 @@ pageEncoding="UTF-8"%>
                     width:100
                 },
                 {
+                    title:"方案",
+                    field:"vId",
+                    width:100
+                },
+                {
                     title : "操作",
                     align : "center",
-                    width:150,
+                    width:250,
                     events : {
-                        'click .spider': function (e, value, row, index) {
-                            $('#bootstrapTable').bootstrapTable('check',index);
-                            spider(row.id);
+                        'click .changeVid': function (e, value, row, index) {
+//                            $('#bootstrapTable').bootstrapTable('check',index);
+//                            spider(row.id);
+                            showModel("切换方案","${pageContext.request.contextPath}/sysResource/link?url=biz/qyjbxx/changeFA&qybh="+row.qybh+"&vid="+row.vId,"800px","550px");
                         },
                         'click .edit' : function(e, value, row, index) {
                             $('#bootstrapTable').bootstrapTable('check',index);
@@ -123,6 +133,7 @@ pageEncoding="UTF-8"%>
                     },
                     formatter : function () {
                         var buttons=[];
+                        buttons.push('<button type="button" class="changeVid layui-btn layui-btn-small">切换方案</button>&nbsp;');
                         buttons.push('<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;');
                         buttons.push('<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;');
                         return buttons.join('');

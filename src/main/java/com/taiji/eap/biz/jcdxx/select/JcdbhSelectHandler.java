@@ -38,7 +38,7 @@ public class JcdbhSelectHandler extends SelectCommonDataSourceHandler<Dictionary
 
     @Override
     public List<Dictionary> getDataSource(String... params) throws Exception {
-        return jcdxxService.getJcdbhByQybh(params[0],params[1]);
+        return jcdxxService.getJcdbhByQybh(params[0],params[1],params[2]);
     }
 
     @Override

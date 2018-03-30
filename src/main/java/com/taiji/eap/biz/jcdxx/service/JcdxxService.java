@@ -32,7 +32,7 @@ public interface JcdxxService{
      * @return
      * @throws Exception
      */
-    List<Jcdxx> selectByQybh(String qybh) throws Exception;
+    List<Jcdxx> selectByQybh(String qybh,String vid) throws Exception;
 
      /**
      * 根据主键修改数据
@@ -56,7 +56,7 @@ public interface JcdxxService{
      * @return
      * @throws Exception
      */
-    PageInfo<Jcdxx> list(int pageNum, int pageSize, String searchText,String qyhb,String jcdfl) throws Exception;
+    PageInfo<Jcdxx> list(int pageNum, int pageSize, String searchText,String qyhb,String jcdfl,String qyfa) throws Exception;
 
     /**
      *  根据企业编号和监测点分类查询监测点
@@ -64,6 +64,6 @@ public interface JcdxxService{
      * @param jcdfl 监测点分类
      * @return
      */
-    List<Dictionary> getJcdbhByQybh(String qybh,String jcdfl);
+    List<Dictionary> getJcdbhByQybh(String qybh,String jcdfl,String vid);
 
 }

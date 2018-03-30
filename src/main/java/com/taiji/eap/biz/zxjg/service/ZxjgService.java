@@ -59,4 +59,8 @@ public interface ZxjgService{
                         String startDate,
                         String endDate) throws Exception;
 
+    /**
+     * 调用存储过程同步数据
+     */
+    void syncData();
 }

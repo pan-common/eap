@@ -5,6 +5,7 @@ import com.taiji.eap.common.base.BaseController;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import com.taiji.eap.common.dictionary.service.DictionaryService;
 import com.taiji.eap.common.http.entity.Response;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +45,22 @@ public class DictionaryController extends BaseController{
         }
         return pageInfo;
     }
+    
+    @GetMapping(value = "selectAll")
+    @ResponseBody
+    public List<Dictionary> selectAll(){
+        List<Dictionary> dictionaries = null;
+        try {
+            dictionaries = dictionaryService.selectAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return dictionaries;
+    }
 
     @GetMapping(value = "listByPid")
     @ResponseBody
+    @ApiOperation(value = "字典表查询",notes = "通过上级节点ID查询字典表")
     public Response<List<Dictionary>> listByPid(Long parentId){
         List<Dictionary> dictionaries = null;
         try {

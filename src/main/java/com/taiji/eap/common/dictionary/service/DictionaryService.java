@@ -68,4 +68,10 @@ public interface DictionaryService {
     String getValueByKey(String keystone, Long parentId) throws Exception;
 
     Dictionary getDictionaryByKey(String keystone, Long parentId);
+
+    /**
+     * 查询全部字典表数据
+     * @return
+     */
+    List<Dictionary> selectAll() throws Exception;
 }

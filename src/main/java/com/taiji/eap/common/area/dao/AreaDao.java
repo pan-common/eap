@@ -55,4 +55,10 @@ public interface AreaDao {
      */
     List<Area> listByPid(@Param("parentId") Integer parentId,@Param("searchText") String searchText);
 
+    /**
+     *
+     * @param areaIds
+     * @return
+     */
+    List<Area> selectByIds(@Param("areaIds") List<Integer> areaIds);
 }

@@ -42,7 +42,7 @@ CodeMirror.defineMode("markdown", function(cmCfg, modeCfg) {
   // Turn on fenced code blocks? ("```" to start/end)
   if (modeCfg.fencedCodeBlocks === undefined) modeCfg.fencedCodeBlocks = false;
 
-  // Turn on task lists? ("- [ ] " and "- [x] ")
+  // Turn on Task lists? ("- [ ] " and "- [x] ")
   if (modeCfg.taskLists === undefined) modeCfg.taskLists = false;
 
   // Turn on strikethrough syntax

@@ -24,6 +24,9 @@ public class AreaServiceImpl implements AreaService{
     @Autowired
     private RedisFactoryDao<BaseTree> redisFactoryDao;
 
+    @Autowired
+    private RedisFactoryDao<Area> areaRedisFactoryDao;
+
     @Transactional
     @Override
     public int deleteByPrimaryKey(Integer primaryKey) {
@@ -103,6 +106,23 @@ public class AreaServiceImpl implements AreaService{
             }
         });
         return trees;
+    }
+
+    @Override
+    public List<Area> selectAll() throws Exception {
+        List<Area> areas = areaRedisFactoryDao.getDatas("areas", "", new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List<Area> fruitless() {
+                return areaDao.selectAll();
+            }
+        });
+        return areas;
+    }
+
+    @Override
+    public List<Area> selectByIds(List<Integer> areaIds) {
+        List<Area> areas = areaDao.selectByIds(areaIds);
+        return areas;
     }
 
     private Area findChildren(Area tree,List<Area> list){

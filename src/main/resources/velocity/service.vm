@@ -80,11 +80,28 @@ public interface #toUpperCase(${param.alias})Service{
     List<#toUpperCase(${param.alias})> getPath(#getPkFieldType($columns) primaryKey) throws Exception;
     /**
     * 显示树状视图
-    * @param parentId
+    * @param ${parentField}
     * @return
     * @throws Exception
     */
     List<LayuiTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception;
 #end
-
+    /**
+    * 选择性插入
+    * @param ${param.alias}
+    * @return
+    */
+    int insertSelective(#toUpperCase(${param.alias}) ${param.alias});
+    /**
+    * 选择性修改
+    * @param ${param.alias}
+    * @return
+    */
+    int updateByPrimaryKeySelective(#toUpperCase(${param.alias}) ${param.alias});
+    /**
+    * 按条件查询
+    * @param ${param.alias}
+    * @return
+    */
+    List<#toUpperCase(${param.alias})> queryAll(#toUpperCase(${param.alias}) ${param.alias});
 }

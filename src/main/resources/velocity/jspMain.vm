@@ -119,7 +119,7 @@ pageEncoding="UTF-8"%>
                 {
                     title : "操作",
                     align : "center",
-                    width:${column.widthPer},
+                    width:150,
                     events : {
 #if(${param.isTree}=="01")
                         'click .enter': function (e, value, row, index) {

@@ -44,7 +44,6 @@ public interface #toUpperCase(${param.alias})Dao {
      * @return
      */
     List<#toUpperCase(${param.alias})> selectAll();
-
 #if(${param.isTree}=="01")
      /**
      * 通过父节点ID搜索数据
@@ -52,6 +51,23 @@ public interface #toUpperCase(${param.alias})Dao {
      * @return
      */
     List<#toUpperCase(${param.alias})> listByPid(@Param("${parentField}") #getParentIdFieldType($columns) ${parentField},@Param("searchText") String searchText);
-#end
-
+#end##
+    /**
+     * 选择性插入
+     * @param dmsctest
+     * @return
+     */
+    int insertSelective(#toUpperCase(${param.alias}) ${param.alias});
+    /**
+     * 选择性修改
+     * @param dmsctest
+     * @return
+     */
+    int updateByPrimaryKeySelective(#toUpperCase(${param.alias}) ${param.alias});
+    /**
+     * 按条件查询
+     * @param dmsctest
+     * @return
+     */
+    List<#toUpperCase(${param.alias})> queryAll(#toUpperCase(${param.alias}) ${param.alias});
 }

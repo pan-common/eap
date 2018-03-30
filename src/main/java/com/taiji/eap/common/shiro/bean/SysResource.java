@@ -11,7 +11,7 @@ public class SysResource extends BaseTree {
     private Long resourceId;//主键
     private String resourceName;//资源名称
     private Long parentId;//上级资源ID
-    @Dictionary(parentId = 23)
+    @Dictionary(dataSource = "dictionary",params = "23")
     private String typeCode;//资源类型代码
     private String typeDesc;//资源类型描述
     private String resIcon;//资源图标

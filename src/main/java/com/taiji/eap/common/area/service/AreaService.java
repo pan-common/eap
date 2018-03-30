@@ -75,4 +75,11 @@ public interface AreaService{
     */
     List<BaseTree> treeView(Integer parentId) throws Exception;
 
+    /**
+     * 查询全部区划数据
+     * @return
+     */
+    List<Area> selectAll() throws Exception;
+
+    List<Area> selectByIds(List<Integer> areaIds);
 }

@@ -93,15 +93,41 @@
 		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
 	</bean>
 
+	<bean id="djx" class="com.alibaba.druid.pool.DruidDataSource"
+		  destroy-method="close">
+		<property name="driverClassName" value="${jdbc.djx.driver}" />
+		<property name="url" value="${jdbc.djx.url}" />
+		<property name="username" value="${jdbc.djx.username}" />
+		<property name="password" value="${jdbc.djx.password}" />
+		<property name="filters" value="${filters}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${maxActive}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${initialSize}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${maxWait}" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${minIdle}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="${validationQuery}" />
+		<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+		<!-- 1800 秒，也就是 30 分钟 -->
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+	</bean>
+
 	<bean id="dynamicDataSource" class="com.taiji.eap.common.datasource.base.DataSourceRouter">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
 				<entry key="mysql" value-ref="mysql"></entry>
 				<entry key="oracle" value-ref="oracle"></entry>
 				<entry key="jcpt" value-ref="jcpt"></entry>
+				<entry key="djx" value-ref="djx"></entry>
 			</map>
 		</property>
-		<property name="defaultTargetDataSource" ref="oracle"></property>
+		<property name="defaultTargetDataSource" ref="mysql"></property>
 	</bean>
 
 	<!--支持多类型数据库配置-->
@@ -130,11 +156,6 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="databaseIdProvider" ref="databaseIdProvider" />
-		<property name="plugins">
-			<array>
-				<bean class="com.taiji.eap.common.mybatis.intercept.SqlInterceptor"></bean>
-			</array>
-		</property>
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations">

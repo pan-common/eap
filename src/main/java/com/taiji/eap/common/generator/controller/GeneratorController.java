@@ -10,6 +10,7 @@ import com.taiji.eap.common.generator.bean.*;
 import com.taiji.eap.common.generator.service.ColumnExtendService;
 import com.taiji.eap.common.generator.service.GeneratorService;
 import com.taiji.eap.common.http.entity.Response;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -116,10 +117,11 @@ public class GeneratorController extends BaseController{
 	public Response<String> initColumnExtend(String schema, String table){
 		List<Column> columns = generatorService.selectColums(schema,table);
 		int k = columnExtendService.initColumnExtend(columns,schema,table);
-		if(k>0)
+		if(k>0) {
 			return renderSuccess("初始化成功");
-		else
+		} else {
 			return renderError("初始化失败");
+		}
 	}
 
 	@PostMapping(value = "execute")
@@ -179,6 +181,18 @@ public class GeneratorController extends BaseController{
 			return renderError(e.getMessage());
 		}
 		return renderSuccess(baseTrees);
+	}
+
+	/**
+	 * 生成表同步的sql语句
+	 * @param table 表名
+	 * @return
+	 */
+	@PostMapping(value = "syncSql")
+	@ResponseBody
+	public Response<String> syncSql(String schema,String table){
+		String sql = generatorService.syncSql(schema,table);
+		return renderSuccess(sql);
 	}
 
 }

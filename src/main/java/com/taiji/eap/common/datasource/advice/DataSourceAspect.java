@@ -9,12 +9,16 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 
@@ -29,7 +33,12 @@ import java.text.MessageFormat;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
 
+    private static String DATA_SOURCES_NAME = "targetDataSources";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceAspect.class);
+
+    @Autowired
+    private SqlSessionFactoryBean sqlSessionFactory;
 
     @Pointcut("(execution(public * *..*.*(..)))&&@within(com.taiji.eap.common.datasource.annotation.DataSource)")
     public void aspect(){
@@ -56,6 +65,12 @@ public class DataSourceAspect {
         }
         if(dataSource!=null&&!StringUtils.isEmpty(dataSource.value())){
             DataSourceHolder.setDataSource(dataSource.value());
+            try {
+                String databaseId =  sqlSessionFactory.getObject().getConfiguration().getDatabaseId();
+                LOGGER.info(databaseId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -5,7 +5,7 @@
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:mvc="http://www.springframework.org/schema/mvc"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:task="http://www.springframework.org/schema/task"
+	   xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/mvc 
@@ -18,8 +18,23 @@
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 	http://www.springframework.org/schema/task
 	http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/**" location="/" />
+
 	<!-- 启用CGliB -->
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 
 	<!--spring task注解-->
 	<task:annotation-driven scheduler="qbScheduler" mode="proxy"></task:annotation-driven>
@@ -88,6 +103,17 @@
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 
+	<!--日期转换工厂-->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.taiji.eap.common.base.converter.CustomDateConverter">
+					<constructor-arg type="java.lang.String" value="yyyy-MM-dd"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 配置国际化资源文件,包括动态切换 START -->
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor"
@@ -98,12 +124,15 @@
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
 
 
+	<!--<context:component-scan base-package="com.taiji.eap" />-->
+
+	<!--<context:property-placeholder ignore-unresolvable="true" location="classpath:properties/shiro.properties" />-->
 	<!-- 配置国际化资源文件,包括动态切换 END -->
-	<context:component-scan base-package="org.jeecgframework.poi.excel.view,com.taiji.eap" />
+	<context:component-scan base-package="com.taiji.eap" />
 
 	<context:property-placeholder
 			ignore-unresolvable="true"
-			location="classpath:properties/jdbc.properties,classpath:properties/redis.properties,classpath:properties/shiro.properties" />
+			location="classpath:properties/shiro.properties,classpath:properties/jdbc.properties,classpath:properties/redis.properties,classpath:properties/shiro.properties" />
 
 	<import resource="classpath:spring-mybatis.xml" />
 	<!--<import resource="classpath:spring-velocity.xml" />-->
@@ -111,6 +140,7 @@
 	<import resource="classpath:spring-activiti.xml" />
 	<import resource="classpath:spring-shiro.xml" />
 	<import resource="classpath:spring-easypoi.xml"/>
+	<import resource="classpath:spring-swagger2.xml"/>
 	<!--责任链相关配置文件-->
 	<import resource="classpath:corp/spring-select-datasource-helper.xml"></import>
 </beans>

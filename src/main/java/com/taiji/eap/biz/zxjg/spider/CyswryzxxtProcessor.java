@@ -115,23 +115,23 @@ public class CyswryzxxtProcessor extends BaseProcessor{
                     zxjg.setJcdfl(jcdxxes.get(i).getJcdfl());
                     zxjg.setJcdbh(jcdxxes.get(i).getJcdbh());
                     zxjg.setJcdmc(jcdmc);
-                    zxjg.setSj(cols.get(0).getText());
-                    zxjg.setKlwnd(cols.get(1).getText());
-                    zxjg.setKlwzsnd(cols.get(2).getText());
-                    zxjg.setKlwzl(cols.get(3).getText());
-                    zxjg.setEyhlnd(cols.get(4).getText());
-                    zxjg.setEyhlzsnd(cols.get(5).getText());
-                    zxjg.setEyhlzl(cols.get(6).getText());
-                    zxjg.setDyhwnd(cols.get(7).getText());
-                    zxjg.setDyhwzsnd(cols.get(8).getText());
-                    zxjg.setDyhwzl(cols.get(9).getText());
-                    zxjg.setBgll(cols.get(10).getText());
-                    zxjg.setYl(cols.get(11).getText());
-                    zxjg.setYw(cols.get(12).getText());
-                    zxjg.setHsl(cols.get(13).getText());
-                    zxjg.setGzxx(cols.get(14).getText());
-                    zxjg.setBz(cols.get(15).getText());
-                    zxjg.setSfyz(cols.get(16).getText());
+                    zxjg.setSj(cols.get(1).getText());
+                    zxjg.setKlwnd(cols.get(2).getText());
+                    zxjg.setKlwzsnd(cols.get(3).getText());
+                    zxjg.setKlwzl(cols.get(4).getText());
+                    zxjg.setEyhlnd(cols.get(5).getText());
+                    zxjg.setEyhlzsnd(cols.get(6).getText());
+                    zxjg.setEyhlzl(cols.get(7).getText());
+                    zxjg.setDyhwnd(cols.get(8).getText());
+                    zxjg.setDyhwzsnd(cols.get(9).getText());
+                    zxjg.setDyhwzl(cols.get(10).getText());
+                    zxjg.setBgll(cols.get(11).getText());
+                    zxjg.setYl(cols.get(12).getText());
+                    zxjg.setYw(cols.get(13).getText());
+                    zxjg.setHsl(cols.get(14).getText());
+                    zxjg.setGzxx(cols.get(15).getText());
+                    zxjg.setBz(cols.get(16).getText());
+                    zxjg.setSfyz(cols.get(17).getText());
 
                     List<Jcxmjg> jcxmjgs = new ArrayList<>();
                     List<Jcxm> jcxms = jcxmService.listByJcdbh(jcdxxes.get(i).getQybh(),jcdxxes.get(i).getJcdbh());
@@ -140,21 +140,21 @@ public class CyswryzxxtProcessor extends BaseProcessor{
                         if("01".equals(jcxm.getWrwbm())){
                             //烟尘
                             jcxmjg.setWrwbm("01");
-                            jcxmjg.setNd(cols.get(1).getText());
-                            jcxmjg.setZsnd(cols.get(2).getText());
-                            jcxmjg.setZl(cols.get(3).getText());
+                            jcxmjg.setNd(cols.get(2).getText());
+                            jcxmjg.setZsnd(cols.get(3).getText());
+                            jcxmjg.setZl(cols.get(4).getText());
                         }else if("02".equals(jcxm.getWrwbm())){
                             //二氧化硫
                             jcxmjg.setWrwbm("02");
-                            jcxmjg.setNd(cols.get(4).getText());
-                            jcxmjg.setZsnd(cols.get(5).getText());
-                            jcxmjg.setZl(cols.get(6).getText());
+                            jcxmjg.setNd(cols.get(5).getText());
+                            jcxmjg.setZsnd(cols.get(6).getText());
+                            jcxmjg.setZl(cols.get(7).getText());
                         }else if("03".equals(jcxm.getWrwbm())){
                             //氮氧化物
                             jcxmjg.setWrwbm("03");
-                            jcxmjg.setNd(cols.get(7).getText());
-                            jcxmjg.setZsnd(cols.get(8).getText());
-                            jcxmjg.setZl(cols.get(9).getText());
+                            jcxmjg.setNd(cols.get(8).getText());
+                            jcxmjg.setZsnd(cols.get(9).getText());
+                            jcxmjg.setZl(cols.get(10).getText());
                         }
                         jcxmjg.setJcxmbh(jcxm.getJcxmbh());
                         jcxmjgs.add(jcxmjg);

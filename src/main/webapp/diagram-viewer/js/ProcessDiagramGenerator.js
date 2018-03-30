@@ -249,14 +249,14 @@ var ProcessDiagramGenerator = {
         processDiagramCanvas.drawLabel(label.text, label.x, label.y, label.width, label.height);
 		};
 		
-		// task
+		// Task
 		this.activityDrawInstructions["task"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
 			processDiagramCanvas.setConextObject(activityImpl);
 			
 			// TODO: 
-			//console.error("task is not implemented yet");
+			//console.error("Task is not implemented yet");
 			/*
 			var activityImpl = this;
 			processDiagramCanvas.drawTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight(), thickBorder);
@@ -264,7 +264,7 @@ var ProcessDiagramGenerator = {
 		};
 		
 		
-		// user task
+		// user Task
 		this.activityDrawInstructions["userTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -273,7 +273,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawUserTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 		
-		// script task
+		// script Task
 		this.activityDrawInstructions["scriptTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -282,7 +282,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawScriptTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 		
-		// service task
+		// service Task
 		this.activityDrawInstructions["serviceTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -291,7 +291,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawServiceTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 
-		// receive task
+		// receive Task
 		this.activityDrawInstructions["receiveTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -300,7 +300,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawReceiveTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 		
-		// send task
+		// send Task
 		this.activityDrawInstructions["sendTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -309,7 +309,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawSendTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 
-		// manual task
+		// manual Task
 		this.activityDrawInstructions["manualTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;
@@ -318,7 +318,7 @@ var ProcessDiagramGenerator = {
 			processDiagramCanvas.drawManualTask(activityImpl.getProperty("name"), activityImpl.getX(), activityImpl.getY(), activityImpl.getWidth(), activityImpl.getHeight());
 		};
 
-		// businessRuleTask task
+		// businessRuleTask Task
 		this.activityDrawInstructions["businessRuleTask"] = function(){
 			var activityImpl = this.activity;
 			var processDiagramCanvas = this.processDiagramCanvas;

@@ -123,10 +123,10 @@ pageEncoding="UTF-8"%>
                     },
                     formatter : function () {
                         return [
-                            '<button type="button" class="selectRole layui-btn layui-btn-small">选角色</button>&nbsp;',
-                            '<button type="button" class="selectOrgan layui-btn layui-btn-small">选部门</button>&nbsp;',
-                            '<button type="button" class="edit layui-btn layui-btn-small">编辑</button>&nbsp;',
-                            '<button type="button" class="delete layui-btn layui-btn-small">删除</button>&nbsp;',].join('');
+                            '<button type="button" class="selectRole layui-btn layui-btn-sm">选角色</button>&nbsp;',
+                            '<button type="button" class="selectOrgan layui-btn layui-btn-sm">选部门</button>&nbsp;',
+                            '<button type="button" class="edit layui-btn layui-btn-sm">编辑</button>&nbsp;',
+                            '<button type="button" class="delete layui-btn layui-btn-sm">删除</button>&nbsp;',].join('');
                     }
                 }],
             onLoadError : function(status) { //加载失败时执行

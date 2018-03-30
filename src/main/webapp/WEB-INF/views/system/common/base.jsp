@@ -34,8 +34,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/jquery.form.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/layui/layui.all.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/layui/js/validator.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-table/js/bootstrap-table-editable.min.js"></script>
@@ -47,6 +45,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ztree/js/jquery.ztree.exhide.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/js/moment.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/js/locales.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/layui/layui.all.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/layui/js/validator.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/eap/system/library/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/eap/base/js/eap.js"></script>
 <script type="text/javascript">

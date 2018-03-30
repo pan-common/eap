@@ -32,6 +32,7 @@
         </div>
     </div>
     <input id="qybh" type="hidden" name="qybh">
+    <input id="qyfa" type="hidden" name="qyfa">
     <input id="jcdfl" type="hidden" name="jcdfl">
 </form>
 </body>
@@ -50,13 +51,11 @@
             layuiForm:form,
             layer:layer,
             datasource:"jcdbh",
-            params:parent.qyhb+","+parent.jcdfl,
+            params:parent.qyhb+","+parent.jcdfl+","+parent.qyfa,
             onSelect:function (data) {
 
             }
         });
-
-
 
         if(id){
             url = "${pageContext.request.contextPath}/jcdxx/edit";
@@ -79,6 +78,7 @@
         form.on("submit(submitBtn)",function (data,status) {
             $("#qybh").val(parent.qyhb);
             $("#jcdfl").val(parent.jcdfl);
+            $("#qyfa").val(parent.qyfa);
             $.post(url,$("#form").serializeArray(),function (data,status) {
                 if(status=='success'){
                     if(data.body.resultCode=="0"){

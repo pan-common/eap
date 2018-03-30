@@ -19,8 +19,8 @@
      "[comment&formatting&formatting-code-block ```]");
 
   FT("taskList",
-     "[variable-2&formatting&formatting-list&formatting-list-ul - ][meta&formatting&formatting-task [ ]]][variable-2  foo]",
-     "[variable-2&formatting&formatting-list&formatting-list-ul - ][property&formatting&formatting-task [x]]][variable-2  foo]");
+     "[variable-2&formatting&formatting-list&formatting-list-ul - ][meta&formatting&formatting-Task [ ]]][variable-2  foo]",
+     "[variable-2&formatting&formatting-list&formatting-list-ul - ][property&formatting&formatting-Task [x]]][variable-2  foo]");
 
   FT("formatting_strikethrough",
      "[strikethrough&formatting&formatting-strikethrough ~~][strikethrough foo][strikethrough&formatting&formatting-strikethrough ~~]");

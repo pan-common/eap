@@ -107,4 +107,8 @@
         SELECT * FROM t_sys_dictionary WHERE
         keystone = #{keystone,jdbcType=VARCHAR} and parent_id = #{parentId,jdbcType=DECIMAL}
     </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_sys_dictionary WHERE valid = '1'
+    </select>
 </mapper>

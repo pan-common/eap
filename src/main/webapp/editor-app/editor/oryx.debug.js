@@ -14285,7 +14285,7 @@ ORYX.Core.Node = {
 							svgShape.height = bounds.height() - svgShape.y - anchorOffset;
 						}
 						else {
-							// Hack for choreography task layouting
+							// Hack for choreography Task layouting
 							if (!svgShape._isYLocked) {
 								svgShape.y = bounds.height() - (anchorOffset + svgShape.height);
 							}

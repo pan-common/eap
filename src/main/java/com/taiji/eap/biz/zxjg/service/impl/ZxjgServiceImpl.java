@@ -81,6 +81,11 @@ public class ZxjgServiceImpl implements ZxjgService,Pipeline {
         return pageInfo;
     }
 
+    @Override
+    public void syncData() {
+        zxjgDao.syncData();
+    }
+
 
     @Override
     public void process(ResultItems resultItems, Task task) {

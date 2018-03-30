@@ -1,5 +1,6 @@
 package com.taiji.eap.biz.qyjbxx.dao;
 
+import com.taiji.eap.biz.qyjbxx.bean.Qyfaxx;
 import com.taiji.eap.biz.qyjbxx.bean.Qyjbxx;
 import com.taiji.eap.common.dictionary.bean.Dictionary;
 import org.apache.ibatis.annotations.Param;
@@ -57,4 +58,19 @@ public interface QyjbxxDao {
      * @return
      */
     List<Dictionary> getQybhByQymc(@Param("qymc") String qymc);
+
+    /**
+     * 通过企业编号查询企业历史方案和当前在用方案
+     * @param qybh 企业编号
+     * @return
+     */
+    List<Qyfaxx> getQyfaxxs(@Param("qybh") String qybh);
+
+    /**
+     * 修改企业方案信息
+     * @param qybh 企业编号
+     * @param vid 方案版本号
+     * @return
+     */
+    int updateQyfaxx(@Param("qybh")String qybh,@Param("vid") String vid);
 }

@@ -63,4 +63,6 @@ public interface DictionaryDao {
      * @return
      */
     Dictionary getDictionaryByKey(@Param("keystone")String keystone, @Param("parentId") Long parentId);
+
+    List<Dictionary> selectAll();
 }

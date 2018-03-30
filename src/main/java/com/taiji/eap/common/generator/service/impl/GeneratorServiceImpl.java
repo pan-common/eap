@@ -1,6 +1,7 @@
 package com.taiji.eap.common.generator.service.impl;
 
 import com.taiji.eap.common.base.BaseTree;
+import com.taiji.eap.common.datasource.annotation.DataSource;
 import com.taiji.eap.common.datasource.bean.Table;
 import com.taiji.eap.common.datasource.dao.DataSourceDao;
 import com.taiji.eap.common.generator.bean.*;
@@ -12,7 +13,7 @@ import com.taiji.eap.common.shiro.bean.SysResource;
 import com.taiji.eap.common.shiro.service.SysResourceService;
 import com.taiji.eap.common.utils.FileUtil;
 import com.taiji.eap.common.utils.UUIDUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -27,6 +28,7 @@ import java.io.*;
 import java.util.*;
 
 @Service
+@DataSource("mysql")
 public class GeneratorServiceImpl implements GeneratorService{
 
     @Autowired
@@ -55,6 +57,17 @@ public class GeneratorServiceImpl implements GeneratorService{
     }
 
     @Override
+    @DataSource("jcpt")
+    public String syncSql(String schema, String table) {
+        List<Column> columns = new ArrayList<>();
+        if(!StringUtils.isEmpty(table)){
+            columns.addAll(generatorDao.selectColums("",table));
+        }
+        return generateSyncSql(table,columns);
+    }
+
+
+    @Override
     public List<Column> selectColums(String schema, String table) {
         List<Column> list = new ArrayList<>();
         if(!StringUtils.isEmpty(table)){
@@ -76,8 +89,8 @@ public class GeneratorServiceImpl implements GeneratorService{
         if(columns.isEmpty()){
             throw new Exception("未找到表的扩展属性！");
         }
-
-        param.setIsExtenaField(isExtenaField(columns)?"01":"02");//01是 02 否
+        //01是 02 否
+        param.setIsExtenaField(isExtenaField(columns)?"01":"02");
 
         boolean isHavePk = false;
         boolean isTree = false;
@@ -340,6 +353,29 @@ public class GeneratorServiceImpl implements GeneratorService{
         String filePath = param.getPageFilePath();
         String fileName ="zTree.jsp";
         FileUtil.writeStrToFile(filePath,fileName,content);
+    }
+
+    /**
+     * 生成表同步SQL语句
+     * @param columns
+     * @return
+     */
+    private String generateSyncSql(String tableName,List<Column> columns) {
+        Collections.sort(columns);
+        Properties properties = new Properties();
+        try {
+            properties.load(this.getClass().getResourceAsStream("/properties/velocity.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Velocity.init(properties);
+        Template template = Velocity.getTemplate("/velocity/syncSql.vm");
+        VelocityContext velocityContext = new VelocityContext();
+        velocityContext.put("columns",columns);
+        velocityContext.put("tableName",tableName);
+        StringWriter sw = new StringWriter();
+        template.merge(velocityContext,sw);
+        return sw.toString();
     }
 
     private void generateMybatis(Param param,List<ColumnExtend> columns){

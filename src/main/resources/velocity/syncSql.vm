@@ -1,0 +1,35 @@
+##循环生成列
+#set($updatesql="")
+#set($insertsql="")
+#set($insertValue="")
+#set($primaryKey="")
+#foreach($column in $columns)
+##生成UPDATE内容
+#if(${column.columnKey}!="PRI")
+#if($!{velocityCount}<=2)
+#set($updatesql=${updatesql}+"A."+${column.columnName}+"=B."+${column.columnName})
+#else
+#set($updatesql=${updatesql}+",A."+${column.columnName}+"=B."+${column.columnName})
+#end
+#else
+#set($primaryKey=${column.columnName})
+#end
+##生成INSERT内容
+#if($!{velocityCount}<=1)
+#set($insertsql=${insertsql}+"A."+${column.columnName})
+#set($insertValue=${insertValue}+"B."+${column.columnName})
+#else
+#set($insertsql=${insertsql}+",A."+${column.columnName})
+#set($insertValue=${insertValue}+",B."+${column.columnName})
+#end
+#end
+merge into ${tableName} A ##
+using ${tableName}@JCPT_75 B ##
+on(A.${primaryKey}=B.${primaryKey}) ##
+when matched then ##
+update ##
+set ${updatesql} ##
+when not matched then ##
+insert(${insertsql}) ##
+values(${insertValue});
+commit;

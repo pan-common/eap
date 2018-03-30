@@ -31,12 +31,14 @@ public class DictionaryServiceImpl implements DictionaryService{
     @Transactional
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
+        redisFactoryDao.deleteByPattern("allDictionary");
         return dictionaryDao.deleteByPrimaryKey(primaryKey);
     }
 
     @Transactional
     @Override
     public int insert(Dictionary dictionary) {
+        redisFactoryDao.deleteByPattern("allDictionary");
         return dictionaryDao.insert(dictionary);
     }
 
@@ -50,6 +52,7 @@ public class DictionaryServiceImpl implements DictionaryService{
     public int updateByPrimaryKey(Dictionary dictionary) {
         int k = dictionaryDao.updateByPrimaryKey(dictionary);
         redisFactoryDao.deleteByPattern("dictionary:"+dictionary.getParentId());
+        redisFactoryDao.deleteByPattern("allDictionary");
         return k;
     }
 
@@ -103,6 +106,17 @@ public class DictionaryServiceImpl implements DictionaryService{
     @Override
     public Dictionary getDictionaryByKey(String keystone, Long parentId) {
         return dictionaryDao.getDictionaryByKey(keystone,parentId);
+    }
+
+    @Override
+    public List<Dictionary> selectAll() throws Exception {
+        List<Dictionary> dictionaries = redisFactoryDao.getDatas("allDictionary", "", new RedisFactoryDao.OnRedisSelectListener() {
+            @Override
+            public List fruitless() {
+                return dictionaryDao.selectAll();
+            }
+        });
+        return dictionaries;
     }
 
     private void disPlay(Long dicId,List<Dictionary> list){

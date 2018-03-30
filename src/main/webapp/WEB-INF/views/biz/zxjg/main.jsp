@@ -52,8 +52,8 @@
 
     var qybh = null;
     var jcdid = null;
-    var startDate = null;
-    var endDate = null;
+    var startDate = moment().format('YYYY-MM-DD');
+    var endDate = moment().format('YYYY-MM-DD');
 
     layui.use([ 'layer', 'form','laydate' ], function(layer, form) {
         var layer = layui.layer;
@@ -66,23 +66,37 @@
             }else {
                 qybh = null;
             }
+
             initJcdId(qybh);
             refreshTable();
         });
 
         function initJcdId(qybh) {
-            $("#jcdId").CommonSelect("init",{
-                layuiForm:form,
-                layer:layer,
-                datasource:"jcdxx",
-                params:qybh,
-                onSelect:function (data) {
-                    if(data.value){
-                        jcdid = data.value;
+            //查找企业当前在用方案
+            $.get("${pageContext.request.contextPath}/qyjbxx/selectOneByQybh",{
+                qybh:qybh
+            },function (data,status) {
+                if(status=="success"){
+                    if(data.body.resultCode=="0"){
+                        $("#jcdId").CommonSelect("init",{
+                            layuiForm:form,
+                            layer:layer,
+                            datasource:"jcdxx",
+                            params:qybh+","+data.body.entity.vId,
+                            onSelect:function (data) {
+                                if(data.value){
+                                    jcdid = data.value;
+                                }else {
+                                    jcdid = null;
+                                }
+                                refreshTable();
+                            }
+                        });
                     }else {
-                        jcdid = null;
+                        layer.msg(data.body.resultContent, {icon: 5});
                     }
-                    refreshTable();
+                }else {
+                    layer.msg('网络错误', {icon: 5});
                 }
             });
         }
@@ -139,7 +153,7 @@
             pageNumber : 1, //初始化加载第一页，默认第一页
             pageSize : 15, //每页的记录行数（*）
             pageList : [ 10, 15, 20, 50 ], //可供选择的每页的行数（*）
-            search : true,//是否显示表格搜索
+            search : false,//是否显示表格搜索
             searchAlign : "right",//指定搜索框位置
             dataField:"list",
             totalField:"total",

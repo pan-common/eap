@@ -2,9 +2,12 @@ package com.taiji.eap.common.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.base.BaseServiceImpl;
 import com.taiji.eap.common.generator.bean.EasyUISubmitData;
 import com.taiji.eap.common.shiro.bean.SysUser;
+import com.taiji.eap.common.shiro.bean.SysUserToken;
 import com.taiji.eap.common.shiro.dao.SysUserDao;
+import com.taiji.eap.common.shiro.dao.SysUserTokenDao;
 import com.taiji.eap.common.shiro.helper.PasswordHelper;
 import com.taiji.eap.common.shiro.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,16 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class SysUserServiceImpl implements SysUserService{
+public class SysUserServiceImpl extends BaseServiceImpl implements SysUserService{
 
     @Autowired
     private SysUserDao sysUserDao;
 
     @Autowired
     private PasswordHelper passwordHelper;
+
+    @Autowired
+    private SysUserTokenDao sysUserTokenDao;
 
     @Transactional
     @Override
@@ -44,6 +50,7 @@ public class SysUserServiceImpl implements SysUserService{
     @Transactional
     @Override
     public int updateByPrimaryKey(SysUser sysUser) {
+        passwordHelper.encryptPassword(sysUser);
         return sysUserDao.updateByPrimaryKey(sysUser);
     }
 
@@ -58,6 +65,11 @@ public class SysUserServiceImpl implements SysUserService{
         List<SysUser> sysUsers = sysUserDao.list(searchText);
         PageInfo<SysUser> pageInfo = new PageInfo<SysUser>(sysUsers);
         return pageInfo;
+    }
+
+    @Override
+    public List<SysUser> selectAll() {
+        return sysUserDao.selectAll();
     }
 
     @Override
@@ -97,4 +109,26 @@ public class SysUserServiceImpl implements SysUserService{
         SysUser sysUser =  sysUserDao.getUserByName(username);
         return sysUser;
     }
+
+    @Override
+    public SysUserToken selectUserToken(String token) {
+        return sysUserTokenDao.selectByPrimaryKey(token);
+    }
+
+    @Override
+    public int insertToken(SysUserToken sysUserToken) {
+        return sysUserTokenDao.insert(sysUserToken);
+    }
+
+    @Override
+    public int deleteTokenByUserId(String userName, String deviceType) {
+        return sysUserTokenDao.deleteByUserId(userName,deviceType);
+    }
+
+
+    @Override
+    public SysUserToken selectUserTokenByUserName(String userName, String deviceType) {
+        return sysUserTokenDao.selectUserTokenByUserName(userName,deviceType);
+}
+
 }
