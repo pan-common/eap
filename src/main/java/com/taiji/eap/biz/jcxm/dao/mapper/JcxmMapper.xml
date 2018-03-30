@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.jcxm.dao.JcxmDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.jcxm.bean.Jcxm">
+        <id column="jcxm_id" property="jcxmId" jdbcType="DECIMAL"></id>
+        <result column="qybh" property="qybh" jdbcType="VARCHAR"/>
+        <result column="jcdbh" property="jcdbh" jdbcType="VARCHAR"/>
+        <result column="jcxmmc" property="jcxmmc" jdbcType="VARCHAR"/>
+        <result column="jcxmbh" property="jcxmbh" jdbcType="VARCHAR"/>
+        <result column="wrwbm" property="wrwbm" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcxm
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+            <if test="qybh!=null">
+                AND qybh = #{qybh,jdbcType=VARCHAR}
+            </if>
+            <if test="jcdbh!=null">
+                AND jcdbh = #{jcdbh,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcxm
+        WHERE jcxm_id = #{jcxmId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.jcxm.bean.Jcxm">
+        <selectKey resultType="java.lang.Long" keyProperty="jcxmId" order="AFTER">
+            SELECT t_biz_jcxm_jcxm_id_SEQ.nextval AS jcxm_id FROM dual
+        </selectKey>
+        INSERT INTO t_biz_jcxm(
+        jcxm_id,qybh,jcdbh,jcxmmc,jcxmbh,wrwbm)
+        VALUES(
+        #{jcxmId,jdbcType=DECIMAL},#{qybh,jdbcType=VARCHAR},#{jcdbh,jdbcType=VARCHAR},#{jcxmmc,jdbcType=VARCHAR},#{jcxmbh,jdbcType=VARCHAR},#{wrwbm,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.jcxm.bean.Jcxm">
+        UPDATE t_biz_jcxm SET
+        jcxm_id=#{jcxmId,jdbcType=DECIMAL},qybh=#{qybh,jdbcType=VARCHAR},jcdbh=#{jcdbh,jdbcType=VARCHAR},jcxmmc=#{jcxmmc,jdbcType=VARCHAR},jcxmbh=#{jcxmbh,jdbcType=VARCHAR},wrwbm=#{wrwbm,jdbcType=VARCHAR}
+        WHERE jcxm_id = #{jcxmId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_jcxm WHERE jcxm_id = #{jcxmId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_jcxm
+    </select>
+
+    <select id="getJcxmByJcdbh" resultType="com.taiji.eap.common.dictionary.bean.Dictionary">
+        select v.X_ID keystone, x.zbmc value
+  from HB_SJCJ_QY_JCXX_V t
+  left join hb_sjcj_qy_jyjc_jcxm_v v
+    on t.v_id = v.v_id
+  left join hb_bz_xmzb x
+    on v.jcxmzbid = x.zb_id
+ where t.qybh = #{qybh,jdbcType=VARCHAR}
+   and v.jcfs = 'B'
+   and v.jcd_id =#{jcdbh,jdbcType=VARCHAR}
+    </select>
+</mapper>

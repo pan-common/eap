@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.Task.dao.TaskDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.Task.bean.Task">
+        <id column="task_id" property="taskId" jdbcType="VARCHAR"></id>
+        <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+        <result column="task_content" property="taskContent" jdbcType="VARCHAR" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="task_sheng" property="taskSheng" jdbcType="VARCHAR" />
+        <result column="task_shi" property="taskShi" jdbcType="VARCHAR" />
+        <result column="task_xian" property="taskXian" jdbcType="VARCHAR" />
+        <result column="task_creator" property="taskCreator" jdbcType="DECIMAL" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        task_id,task_name,task_content,start_time,end_time,task_sheng,task_shi,task_xian,task_creator,remarks,create_time
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="taskId!=null and taskId!=''">
+                AND task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="taskName!=null and taskName!=''">
+                ,AND task_name = #{taskName,jdbcType=VARCHAR}
+            </if>
+            <if test="taskContent!=null and taskContent!=''">
+                ,AND task_content = #{taskContent,jdbcType=VARCHAR}
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                ,AND start_time = #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                ,AND end_time = #{endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="taskSheng!=null and taskSheng!=''">
+                ,AND task_sheng = #{taskSheng,jdbcType=VARCHAR}
+            </if>
+            <if test="taskShi!=null and taskShi!=''">
+                ,AND task_shi = #{taskShi,jdbcType=VARCHAR}
+            </if>
+            <if test="taskXian!=null and taskXian!=''">
+                ,AND task_xian = #{taskXian,jdbcType=VARCHAR}
+            </if>
+            <if test="taskCreator!=null and taskCreator!=''">
+                ,AND task_creator = #{taskCreator,jdbcType=DECIMAL}
+            </if>
+            <if test="remarks!=null and remarks!=''">
+                ,AND remarks = #{remarks,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                ,AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM wsm_task
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM wsm_task
+        WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.wsm.Task.bean.Task">
+        INSERT INTO wsm_task(
+        task_id,task_name,task_content,start_time,end_time,task_sheng,task_shi,task_xian,task_creator,remarks,create_time)
+        VALUES(
+        #{taskId,jdbcType=VARCHAR},#{taskName,jdbcType=VARCHAR},#{taskContent,jdbcType=VARCHAR},#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{taskSheng,jdbcType=VARCHAR},#{taskShi,jdbcType=VARCHAR},#{taskXian,jdbcType=VARCHAR},#{taskCreator,jdbcType=DECIMAL},#{remarks,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.wsm.Task.bean.Task">
+        INSERT INTO wsm_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            task_id,
+            <if test="taskName!=null">
+                task_name,
+            </if>
+            <if test="taskContent!=null">
+                task_content,
+            </if>
+            <if test="startTime!=null">
+                start_time,
+            </if>
+            <if test="endTime!=null">
+                end_time,
+            </if>
+            <if test="taskSheng!=null">
+                task_sheng,
+            </if>
+            <if test="taskShi!=null">
+                task_shi,
+            </if>
+            <if test="taskXian!=null">
+                task_xian,
+            </if>
+            <if test="taskCreator!=null">
+                task_creator,
+            </if>
+            <if test="remarks!=null">
+                remarks,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{taskId,jdbcType=VARCHAR},
+            <if test="taskName!=null">
+                #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="taskContent!=null">
+                #{taskContent,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime!=null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime!=null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taskSheng!=null">
+                #{taskSheng,jdbcType=VARCHAR},
+            </if>
+            <if test="taskShi!=null">
+                #{taskShi,jdbcType=VARCHAR},
+            </if>
+            <if test="taskXian!=null">
+                #{taskXian,jdbcType=VARCHAR},
+            </if>
+            <if test="taskCreator!=null">
+                #{taskCreator,jdbcType=DECIMAL},
+            </if>
+            <if test="remarks!=null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.String">
+        UPDATE wsm_task
+        <set>
+            <if test="taskId!=null">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="taskName!=null">
+                task_name = #{taskName,jdbcType=VARCHAR},
+            </if>
+            <if test="taskContent!=null">
+                task_content = #{taskContent,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime!=null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime!=null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="taskSheng!=null">
+                task_sheng = #{taskSheng,jdbcType=VARCHAR},
+            </if>
+            <if test="taskShi!=null">
+                task_shi = #{taskShi,jdbcType=VARCHAR},
+            </if>
+            <if test="taskXian!=null">
+                task_xian = #{taskXian,jdbcType=VARCHAR},
+            </if>
+            <if test="taskCreator!=null">
+                task_creator = #{taskCreator,jdbcType=DECIMAL},
+            </if>
+            <if test="remarks!=null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.wsm.Task.bean.Task">
+        UPDATE wsm_task SET
+        task_id=#{taskId,jdbcType=VARCHAR},task_name=#{taskName,jdbcType=VARCHAR},task_content=#{taskContent,jdbcType=VARCHAR},start_time=#{startTime,jdbcType=TIMESTAMP},end_time=#{endTime,jdbcType=TIMESTAMP},task_sheng=#{taskSheng,jdbcType=VARCHAR},task_shi=#{taskShi,jdbcType=VARCHAR},task_xian=#{taskXian,jdbcType=VARCHAR},task_creator=#{taskCreator,jdbcType=DECIMAL},remarks=#{remarks,jdbcType=VARCHAR},create_time=#{createTime,jdbcType=TIMESTAMP}
+        WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM wsm_task WHERE task_id = #{taskId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM wsm_task
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.wsm.Task.bean.Task" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM wsm_task
+        <include refid="condition"/>
+    </select>
+
+    <select id="getCurrentTaskByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+          select b.* from wsm_task_user a
+          LEFT JOIN wsm_task b
+          on a.task_id = b.task_id
+          where a.user_id = #{userId,jdbcType=VARCHAR}
+          and b.end_time is null
+    </select>
+
+    <select id="getHistoryTaskByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+          select b.* from wsm_task_user a
+          LEFT JOIN wsm_task b
+          on a.task_id = b.task_id
+          where a.user_id = #{userId,jdbcType=VARCHAR}
+          and b.end_time is not null
+    </select>
+
+</mapper>

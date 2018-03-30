@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.yhysje.dao.YhysjeDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.yhysje.bean.Yhysje">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="hm" property="hm" jdbcType="VARCHAR" />
+        <result column="zh" property="zh" jdbcType="VARCHAR" />
+        <result column="bz" property="bz" jdbcType="VARCHAR" />
+        <result column="kmh" property="kmh" jdbcType="VARCHAR" />
+        <result column="dw" property="dw" jdbcType="VARCHAR" />
+        <result column="rq" property="rq" jdbcType="VARCHAR" />
+        <result column="sj" property="sj" jdbcType="VARCHAR" />
+        <result column="zy" property="zy" jdbcType="VARCHAR" />
+        <result column="pzpc" property="pzpc" jdbcType="VARCHAR" />
+        <result column="pzhm" property="pzhm" jdbcType="VARCHAR" />
+        <result column="jffse" property="jffse" jdbcType="DOUBLE" />
+        <result column="dffse" property="dffse" jdbcType="DOUBLE" />
+        <result column="ye" property="ye" jdbcType="DOUBLE" />
+        <result column="cph" property="cph" jdbcType="VARCHAR" />
+        <result column="czyh" property="czyh" jdbcType="VARCHAR" />
+        <result column="dbbz" property="dbbz" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        id,hm,zh,bz,kmh,dw,rq,sj,zy,pzpc,pzhm,jffse,dffse,ye,cph,czyh,dbbz
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="id!=null and id!=''">
+                AND id = #{id,jdbcType=DECIMAL}
+            </if>
+            <if test="hm!=null and hm!=''">
+                ,AND hm = #{hm,jdbcType=VARCHAR}
+            </if>
+            <if test="zh!=null and zh!=''">
+                ,AND zh = #{zh,jdbcType=VARCHAR}
+            </if>
+            <if test="bz!=null and bz!=''">
+                ,AND bz = #{bz,jdbcType=VARCHAR}
+            </if>
+            <if test="kmh!=null and kmh!=''">
+                ,AND kmh = #{kmh,jdbcType=VARCHAR}
+            </if>
+            <if test="dw!=null and dw!=''">
+                ,AND dw = #{dw,jdbcType=VARCHAR}
+            </if>
+            <if test="rq!=null and rq!=''">
+                ,AND rq = #{rq,jdbcType=VARCHAR}
+            </if>
+            <if test="sj!=null and sj!=''">
+                ,AND sj = #{sj,jdbcType=VARCHAR}
+            </if>
+            <if test="zy!=null and zy!=''">
+                ,AND zy = #{zy,jdbcType=VARCHAR}
+            </if>
+            <if test="pzpc!=null and pzpc!=''">
+                ,AND pzpc = #{pzpc,jdbcType=VARCHAR}
+            </if>
+            <if test="pzhm!=null and pzhm!=''">
+                ,AND pzhm = #{pzhm,jdbcType=VARCHAR}
+            </if>
+            <if test="jffse!=null and jffse!=''">
+                ,AND jffse = #{jffse,jdbcType=DOUBLE}
+            </if>
+            <if test="dffse!=null and dffse!=''">
+                ,AND dffse = #{dffse,jdbcType=DOUBLE}
+            </if>
+            <if test="ye!=null and ye!=''">
+                ,AND ye = #{ye,jdbcType=DOUBLE}
+            </if>
+            <if test="cph!=null and cph!=''">
+                ,AND cph = #{cph,jdbcType=VARCHAR}
+            </if>
+            <if test="czyh!=null and czyh!=''">
+                ,AND czyh = #{czyh,jdbcType=VARCHAR}
+            </if>
+            <if test="dbbz!=null and dbbz!=''">
+                ,AND dbbz = #{dbbz,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_yh_ysje
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_yh_ysje
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.yhysje.bean.Yhysje">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_yh_ysje_id_SEQ.nextval AS id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_yh_ysje(
+        id,hm,zh,bz,kmh,dw,rq,sj,zy,pzpc,pzhm,jffse,dffse,ye,cph,czyh,dbbz)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{hm,jdbcType=VARCHAR},#{zh,jdbcType=VARCHAR},#{bz,jdbcType=VARCHAR},#{kmh,jdbcType=VARCHAR},#{dw,jdbcType=VARCHAR},#{rq,jdbcType=VARCHAR},#{sj,jdbcType=VARCHAR},#{zy,jdbcType=VARCHAR},#{pzpc,jdbcType=VARCHAR},#{pzhm,jdbcType=VARCHAR},#{jffse,jdbcType=DOUBLE},#{dffse,jdbcType=DOUBLE},#{ye,jdbcType=DOUBLE},#{cph,jdbcType=VARCHAR},#{czyh,jdbcType=VARCHAR},#{dbbz,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.biz.yhysje.bean.Yhysje">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_yh_ysje_id_SEQ.nextval AS id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_yh_ysje
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                id,
+            <if test="hm!=null">
+                hm,
+            </if>
+            <if test="zh!=null">
+                zh,
+            </if>
+            <if test="bz!=null">
+                bz,
+            </if>
+            <if test="kmh!=null">
+                kmh,
+            </if>
+            <if test="dw!=null">
+                dw,
+            </if>
+            <if test="rq!=null">
+                rq,
+            </if>
+            <if test="sj!=null">
+                sj,
+            </if>
+            <if test="zy!=null">
+                zy,
+            </if>
+            <if test="pzpc!=null">
+                pzpc,
+            </if>
+            <if test="pzhm!=null">
+                pzhm,
+            </if>
+            <if test="jffse!=null">
+                jffse,
+            </if>
+            <if test="dffse!=null">
+                dffse,
+            </if>
+            <if test="ye!=null">
+                ye,
+            </if>
+            <if test="cph!=null">
+                cph,
+            </if>
+            <if test="czyh!=null">
+                czyh,
+            </if>
+            <if test="dbbz!=null">
+                dbbz,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #{id,jdbcType=DECIMAL},
+            <if test="hm!=null">
+                #{hm,jdbcType=VARCHAR},
+            </if>
+            <if test="zh!=null">
+                #{zh,jdbcType=VARCHAR},
+            </if>
+            <if test="bz!=null">
+                #{bz,jdbcType=VARCHAR},
+            </if>
+            <if test="kmh!=null">
+                #{kmh,jdbcType=VARCHAR},
+            </if>
+            <if test="dw!=null">
+                #{dw,jdbcType=VARCHAR},
+            </if>
+            <if test="rq!=null">
+                #{rq,jdbcType=VARCHAR},
+            </if>
+            <if test="sj!=null">
+                #{sj,jdbcType=VARCHAR},
+            </if>
+            <if test="zy!=null">
+                #{zy,jdbcType=VARCHAR},
+            </if>
+            <if test="pzpc!=null">
+                #{pzpc,jdbcType=VARCHAR},
+            </if>
+            <if test="pzhm!=null">
+                #{pzhm,jdbcType=VARCHAR},
+            </if>
+            <if test="jffse!=null">
+                #{jffse,jdbcType=DOUBLE},
+            </if>
+            <if test="dffse!=null">
+                #{dffse,jdbcType=DOUBLE},
+            </if>
+            <if test="ye!=null">
+                #{ye,jdbcType=DOUBLE},
+            </if>
+            <if test="cph!=null">
+                #{cph,jdbcType=VARCHAR},
+            </if>
+            <if test="czyh!=null">
+                #{czyh,jdbcType=VARCHAR},
+            </if>
+            <if test="dbbz!=null">
+                #{dbbz,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.Long">
+        UPDATE t_biz_yh_ysje
+        <set>
+            <if test="id!=null">
+                id = #{id,jdbcType=DECIMAL}
+            </if>
+            <if test="hm!=null">
+                hm = #{hm,jdbcType=VARCHAR}
+            </if>
+            <if test="zh!=null">
+                zh = #{zh,jdbcType=VARCHAR}
+            </if>
+            <if test="bz!=null">
+                bz = #{bz,jdbcType=VARCHAR}
+            </if>
+            <if test="kmh!=null">
+                kmh = #{kmh,jdbcType=VARCHAR}
+            </if>
+            <if test="dw!=null">
+                dw = #{dw,jdbcType=VARCHAR}
+            </if>
+            <if test="rq!=null">
+                rq = #{rq,jdbcType=VARCHAR}
+            </if>
+            <if test="sj!=null">
+                sj = #{sj,jdbcType=VARCHAR}
+            </if>
+            <if test="zy!=null">
+                zy = #{zy,jdbcType=VARCHAR}
+            </if>
+            <if test="pzpc!=null">
+                pzpc = #{pzpc,jdbcType=VARCHAR}
+            </if>
+            <if test="pzhm!=null">
+                pzhm = #{pzhm,jdbcType=VARCHAR}
+            </if>
+            <if test="jffse!=null">
+                jffse = #{jffse,jdbcType=DOUBLE}
+            </if>
+            <if test="dffse!=null">
+                dffse = #{dffse,jdbcType=DOUBLE}
+            </if>
+            <if test="ye!=null">
+                ye = #{ye,jdbcType=DOUBLE}
+            </if>
+            <if test="cph!=null">
+                cph = #{cph,jdbcType=VARCHAR}
+            </if>
+            <if test="czyh!=null">
+                czyh = #{czyh,jdbcType=VARCHAR}
+            </if>
+            <if test="dbbz!=null">
+                dbbz = #{dbbz,jdbcType=VARCHAR}
+            </if>
+        </set>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.yhysje.bean.Yhysje">
+        UPDATE t_biz_yh_ysje SET
+        id=#{id,jdbcType=DECIMAL},hm=#{hm,jdbcType=VARCHAR},zh=#{zh,jdbcType=VARCHAR},bz=#{bz,jdbcType=VARCHAR},kmh=#{kmh,jdbcType=VARCHAR},dw=#{dw,jdbcType=VARCHAR},rq=#{rq,jdbcType=VARCHAR},sj=#{sj,jdbcType=VARCHAR},zy=#{zy,jdbcType=VARCHAR},pzpc=#{pzpc,jdbcType=VARCHAR},pzhm=#{pzhm,jdbcType=VARCHAR},jffse=#{jffse,jdbcType=DOUBLE},dffse=#{dffse,jdbcType=DOUBLE},ye=#{ye,jdbcType=DOUBLE},cph=#{cph,jdbcType=VARCHAR},czyh=#{czyh,jdbcType=VARCHAR},dbbz=#{dbbz,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_yh_ysje WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_yh_ysje
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.biz.yhysje.bean.Yhysje" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM t_biz_yh_ysje
+        <include refid="condition"/>
+    </select>
+
+</mapper>

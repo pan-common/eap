@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.baseInfo.dao.BaseInfoDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.baseInfo.bean.BaseInfo">
+        <id column="base_id" property="baseId" jdbcType="VARCHAR"></id>
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="VARCHAR" />
+        <result column="nation" property="nation" jdbcType="VARCHAR" />
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="marital_status" property="maritalStatus" jdbcType="VARCHAR" />
+        <result column="identity_card" property="identityCard" jdbcType="VARCHAR" />
+        <result column="politics_status" property="politicsStatus" jdbcType="VARCHAR" />
+        <result column="zsbz" property="zsbz" jdbcType="VARCHAR" />
+        <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="valid" property="valid" jdbcType="VARCHAR" />
+        <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+        <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        base_id,user_id,full_name,gender,nation,education,marital_status,identity_card,politics_status,zsbz,phone_number,update_time,create_time,valid,organ_id,job_title
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="baseId!=null and baseId!=''">
+                AND base_id = #{baseId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId!=null and userId!=''">
+                ,AND user_id = #{userId,jdbcType=DECIMAL}
+            </if>
+            <if test="fullName!=null and fullName!=''">
+                ,AND full_name = #{fullName,jdbcType=VARCHAR}
+            </if>
+            <if test="gender!=null and gender!=''">
+                ,AND gender = #{gender,jdbcType=VARCHAR}
+            </if>
+            <if test="nation!=null and nation!=''">
+                ,AND nation = #{nation,jdbcType=VARCHAR}
+            </if>
+            <if test="education!=null and education!=''">
+                ,AND education = #{education,jdbcType=VARCHAR}
+            </if>
+            <if test="maritalStatus!=null and maritalStatus!=''">
+                ,AND marital_status = #{maritalStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="identityCard!=null and identityCard!=''">
+                ,AND identity_card = #{identityCard,jdbcType=VARCHAR}
+            </if>
+            <if test="politicsStatus!=null and politicsStatus!=''">
+                ,AND politics_status = #{politicsStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="zsbz!=null and zsbz!=''">
+                ,AND zsbz = #{zsbz,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneNumber!=null and phoneNumber!=''">
+                ,AND phone_number = #{phoneNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                ,AND update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                ,AND create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="valid!=null and valid!=''">
+                ,AND valid = #{valid,jdbcType=VARCHAR}
+            </if>
+            <if test="valid!=null and valid!=''">
+                ,AND organ_id = #{organId,jdbcType=VARCHAR}
+            </if>
+            <if test="valid!=null and valid!=''">
+                ,AND job_title = #{jobTitle,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM wsm_user_baseinfo
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT(full_name,',',gender,',',nation,',',identity_card,',',phone_number,',',update_time) LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM wsm_user_baseinfo
+        WHERE base_id = #{baseId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.wsm.baseInfo.bean.BaseInfo">
+        INSERT INTO wsm_user_baseinfo(
+        base_id,user_id,full_name,gender,nation,education,marital_status,identity_card,politics_status,zsbz,phone_number,update_time,create_time,valid,organ_id,job_title)
+        VALUES(
+        #{baseId,jdbcType=VARCHAR},#{userId,jdbcType=DECIMAL},#{fullName,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{nation,jdbcType=VARCHAR},#{education,jdbcType=VARCHAR},#{maritalStatus,jdbcType=VARCHAR},#{identityCard,jdbcType=VARCHAR},#{politicsStatus,jdbcType=VARCHAR},#{zsbz,jdbcType=VARCHAR},#{phoneNumber,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},#{createTime,jdbcType=TIMESTAMP},#{valid,jdbcType=VARCHAR},#{organId,jdbcType=VARCHAR},#{jobTitle,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.wsm.baseInfo.bean.BaseInfo">
+        INSERT INTO wsm_user_baseinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            base_id,
+            <if test="userId!=null">
+                user_id,
+            </if>
+            <if test="fullName!=null">
+                full_name,
+            </if>
+            <if test="gender!=null">
+                gender,
+            </if>
+            <if test="nation!=null">
+                nation,
+            </if>
+            <if test="education!=null">
+                education,
+            </if>
+            <if test="maritalStatus!=null">
+                marital_status,
+            </if>
+            <if test="identityCard!=null">
+                identity_card,
+            </if>
+            <if test="politicsStatus!=null">
+                politics_status,
+            </if>
+            <if test="zsbz!=null">
+                zsbz,
+            </if>
+            <if test="phoneNumber!=null">
+                phone_number,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+            <if test="createTime!=null">
+                create_time,
+            </if>
+            <if test="valid!=null">
+                valid,
+            </if>
+            <if test="organId!=null">
+                organ_id,
+            </if>
+            <if test="jobTitle!=null">
+                job_title,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{baseId,jdbcType=VARCHAR},
+            <if test="userId!=null">
+                #{userId,jdbcType=DECIMAL},
+            </if>
+            <if test="fullName!=null">
+                #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender!=null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="nation!=null">
+                #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="education!=null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="maritalStatus!=null">
+                #{maritalStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="identityCard!=null">
+                #{identityCard,jdbcType=VARCHAR},
+            </if>
+            <if test="politicsStatus!=null">
+                #{politicsStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="zsbz!=null">
+                #{zsbz,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber!=null">
+                #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valid!=null">
+                #{valid,jdbcType=VARCHAR},
+            </if>
+            <if test="organId!=null">
+                #{organId,jdbcType=VARCHAR},
+            </if>
+            <if test="jobTitle!=null">
+                #{jobTitle,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.String">
+        UPDATE wsm_user_baseinfo
+        <set>
+            <if test="userId!=null">
+                user_id = #{userId,jdbcType=DECIMAL},
+            </if>
+            <if test="fullName!=null">
+                full_name = #{fullName,jdbcType=VARCHAR},
+            </if>
+            <if test="gender!=null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="nation!=null">
+                nation = #{nation,jdbcType=VARCHAR},
+            </if>
+            <if test="education!=null">
+                education = #{education,jdbcType=VARCHAR},
+            </if>
+            <if test="maritalStatus!=null">
+                marital_status = #{maritalStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="identityCard!=null">
+                identity_card = #{identityCard,jdbcType=VARCHAR},
+            </if>
+            <if test="politicsStatus!=null">
+                politics_status = #{politicsStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="zsbz!=null">
+                zsbz = #{zsbz,jdbcType=VARCHAR},
+            </if>
+            <if test="phoneNumber!=null">
+                phone_number = #{phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valid!=null">
+                valid = #{valid,jdbcType=VARCHAR},
+            </if>
+            <if test="organId!=null">
+                organ_id = #{organId,jdbcType=VARCHAR},
+            </if>
+            <if test="jobTitle!=null">
+                job_title = #{jobTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE base_id = #{baseId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.wsm.baseInfo.bean.BaseInfo">
+        UPDATE wsm_user_baseinfo SET
+        base_id=#{baseId,jdbcType=VARCHAR},user_id=#{userId,jdbcType=DECIMAL},full_name=#{fullName,jdbcType=VARCHAR},gender=#{gender,jdbcType=VARCHAR},nation=#{nation,jdbcType=VARCHAR},education=#{education,jdbcType=VARCHAR},marital_status=#{maritalStatus,jdbcType=VARCHAR},identity_card=#{identityCard,jdbcType=VARCHAR},politics_status=#{politicsStatus,jdbcType=VARCHAR},zsbz=#{zsbz,jdbcType=VARCHAR},phone_number=#{phoneNumber,jdbcType=VARCHAR},update_time=#{updateTime,jdbcType=TIMESTAMP},create_time=#{createTime,jdbcType=TIMESTAMP},valid=#{valid,jdbcType=VARCHAR},organ_id = #{organId,jdbcType=VARCHAR},job_title = #{jobTitle,jdbcType=VARCHAR}
+        WHERE base_id = #{baseId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM wsm_user_baseinfo WHERE base_id = #{baseId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM wsm_user_baseinfo
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.wsm.baseInfo.bean.BaseInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM wsm_user_baseinfo
+        <include refid="condition"/>
+    </select>
+
+    <select id="selectByTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT b.* FROM wsm_task_user a
+        LEFT JOIN wsm_user_baseinfo b
+        ON a.user_id = b.user_id
+        WHERE a.task_id = #{taskId,jdbcType=VARCHAR} AND a.is_principal = #{isPrincipal,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectOneByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM wsm_user_baseinfo WHERE user_id = #{userId,jdbcType=DECIMAL}
+    </select>
+
+</mapper>

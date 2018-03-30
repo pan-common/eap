@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.dmsctest.dao.DmsctestDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.dmsctest.bean.Dmsctest">
+        <id column="test_id" property="testId" jdbcType="DECIMAL"></id>
+        <result column="test_name" property="testName" jdbcType="VARCHAR" />
+        <result column="test_1" property="test1" jdbcType="VARCHAR" />
+        <result column="test_2" property="test2" jdbcType="VARCHAR" />
+        <result column="test_3" property="test3" jdbcType="VARCHAR" />
+        <result column="test_4" property="test4" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        test_id,test_name,test_1,test_2,test_3,test_4
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="testId!=null and testId!=''">
+                AND test_id = #{testId,jdbcType=DECIMAL}
+            </if>
+            <if test="testName!=null and testName!=''">
+                ,AND test_name = #{testName,jdbcType=VARCHAR}
+            </if>
+            <if test="test1!=null and test1!=''">
+                ,AND test_1 = #{test1,jdbcType=VARCHAR}
+            </if>
+            <if test="test2!=null and test2!=''">
+                ,AND test_2 = #{test2,jdbcType=VARCHAR}
+            </if>
+            <if test="test3!=null and test3!=''">
+                ,AND test_3 = #{test3,jdbcType=VARCHAR}
+            </if>
+            <if test="test4!=null and test4!=''">
+                ,AND test_4 = #{test4,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_dmsc_test
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_dmsc_test
+        WHERE test_id = #{testId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.dmsctest.bean.Dmsctest">
+        <selectKey resultType="java.lang.Long" keyProperty="testId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS test_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_dmsc_test_test_id_SEQ.nextval AS test_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_dmsc_test(
+        test_id,test_name,test_1,test_2,test_3,test_4)
+        VALUES(
+        #{testId,jdbcType=DECIMAL},#{testName,jdbcType=VARCHAR},#{test1,jdbcType=VARCHAR},#{test2,jdbcType=VARCHAR},#{test3,jdbcType=VARCHAR},#{test4,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.biz.dmsctest.bean.Dmsctest">
+        <selectKey resultType="java.lang.Long" keyProperty="testId" order="AFTER">
+            <if test="_databaseId == 'mysql'">
+                SELECT LAST_INSERT_ID() AS test_id
+            </if>
+            <if test="_databaseId == 'oracle'">
+                SELECT t_biz_dmsc_test_test_id_SEQ.nextval AS test_id FROM dual
+            </if>
+        </selectKey>
+        INSERT INTO t_biz_dmsc_test
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                test_id,
+            <if test="testName!=null">
+                test_name,
+            </if>
+            <if test="test1!=null">
+                test_1,
+            </if>
+            <if test="test2!=null">
+                test_2,
+            </if>
+            <if test="test3!=null">
+                test_3,
+            </if>
+            <if test="test4!=null">
+                test_4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #{testId,jdbcType=DECIMAL},
+            <if test="testName!=null">
+                #{testName,jdbcType=VARCHAR},
+            </if>
+            <if test="test1!=null">
+                #{test1,jdbcType=VARCHAR},
+            </if>
+            <if test="test2!=null">
+                #{test2,jdbcType=VARCHAR},
+            </if>
+            <if test="test3!=null">
+                #{test3,jdbcType=VARCHAR},
+            </if>
+            <if test="test4!=null">
+                #{test4,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.Long">
+        UPDATE t_biz_dmsc_test
+        <set>
+            <if test="testId!=null">
+                test_id = #{testId,jdbcType=DECIMAL}
+            </if>
+            <if test="testName!=null">
+                test_name = #{testName,jdbcType=VARCHAR}
+            </if>
+            <if test="test1!=null">
+                test_1 = #{test1,jdbcType=VARCHAR}
+            </if>
+            <if test="test2!=null">
+                test_2 = #{test2,jdbcType=VARCHAR}
+            </if>
+            <if test="test3!=null">
+                test_3 = #{test3,jdbcType=VARCHAR}
+            </if>
+            <if test="test4!=null">
+                test_4 = #{test4,jdbcType=VARCHAR}
+            </if>
+        </set>
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.dmsctest.bean.Dmsctest">
+        UPDATE t_biz_dmsc_test SET
+        test_id=#{testId,jdbcType=DECIMAL},test_name=#{testName,jdbcType=VARCHAR},test_1=#{test1,jdbcType=VARCHAR},test_2=#{test2,jdbcType=VARCHAR},test_3=#{test3,jdbcType=VARCHAR},test_4=#{test4,jdbcType=VARCHAR}
+        WHERE test_id = #{testId,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_dmsc_test WHERE test_id = #{testId,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_dmsc_test
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.biz.dmsctest.bean.Dmsctest" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM t_biz_dmsc_test
+        <include refid="condition"/>
+    </select>
+
+</mapper>

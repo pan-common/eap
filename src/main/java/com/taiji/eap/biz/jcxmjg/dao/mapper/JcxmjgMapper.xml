@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.biz.jcxmjg.dao.JcxmjgDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.biz.jcxmjg.bean.Jcxmjg">
+        <id column="id" property="id" jdbcType="DECIMAL"></id>
+        <result column="zxjg_id" property="zxjgId" jdbcType="DECIMAL" />
+        <result column="wrwbm" property="wrwbm" jdbcType="VARCHAR" />
+        <result column="nd" property="nd" jdbcType="VARCHAR" />
+        <result column="zsnd" property="zsnd" jdbcType="VARCHAR" />
+        <result column="zl" property="zl" jdbcType="VARCHAR" />
+        <result column="jcxmbh" property="jcxmbh" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg_jcxm
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg_jcxm
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.biz.jcxmjg.bean.Jcxmjg">
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
+                SELECT t_biz_zxjg_jcxm_id_SEQ.nextval AS id FROM dual
+        </selectKey>
+        INSERT INTO t_biz_zxjg_jcxm(
+        id,zxjg_id,wrwbm,nd,zsnd,zl,jcxmbh)
+        VALUES(
+        #{id,jdbcType=DECIMAL},#{zxjgId,jdbcType=DECIMAL},#{wrwbm,jdbcType=VARCHAR},#{nd,jdbcType=VARCHAR},#{zsnd,jdbcType=VARCHAR},#{zl,jdbcType=VARCHAR},#{jcxmbh,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.biz.jcxmjg.bean.Jcxmjg">
+        UPDATE t_biz_zxjg_jcxm SET
+        id=#{id,jdbcType=DECIMAL},zxjg_id=#{zxjgId,jdbcType=DECIMAL},wrwbm=#{wrwbm,jdbcType=VARCHAR},nd=#{nd,jdbcType=VARCHAR},zsnd=#{zsnd,jdbcType=VARCHAR},zl=#{zl,jdbcType=VARCHAR},jcxmbh=#{jcxmbh,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM t_biz_zxjg_jcxm WHERE id = #{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_biz_zxjg_jcxm
+    </select>
+</mapper>
