@@ -7,6 +7,8 @@ package ${serviceImplPackage};
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.taiji.eap.common.utils.UUIDUtils;
+import com.taiji.eap.common.base.BaseServiceImpl;
 import ${beanPackage}.#toUpperCase(${param.alias});
 import ${daoPackage}.#toUpperCase(${param.alias})Dao;
 import ${servicePackage}.#toUpperCase(${param.alias})Service;
@@ -20,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${param.alias})Service{
+public class #toUpperCase(${param.alias})ServiceImpl extends BaseServiceImpl  implements #toUpperCase(${param.alias})Service{
 
     @Autowired
     private #toUpperCase(${param.alias})Dao ${param.alias}Dao;
@@ -132,9 +134,9 @@ public class #toUpperCase(${param.alias})ServiceImpl implements #toUpperCase(${p
     }
 
     @Override
-    public List<LayuiTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception {
+    public List<BaseTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception {
         List<#toUpperCase(${param.alias})> list = ${param.alias}Dao.selectAll();
-        List<LayuiTree> trees = new ArrayList<LayuiTree>();
+        List<BaseTree> trees = new ArrayList<BaseTree>();
         for (#toUpperCase(${param.alias}) tree: list) {
             if(${parentField}==tree.get#toUpperCase(${parentField})()){
                 trees.add(findChildren(tree,list));

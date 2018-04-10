@@ -65,4 +65,11 @@ public interface DictionaryDao {
     Dictionary getDictionaryByKey(@Param("keystone")String keystone, @Param("parentId") Long parentId);
 
     List<Dictionary> selectAll();
+
+    /**
+     * 取第一条记录
+     * @param parentId 上级节点ID
+     * @return
+     */
+    Dictionary queryFirst(@Param("parentId")Long parentId);
 }

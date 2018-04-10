@@ -2,6 +2,8 @@ package com.taiji.eap.wsm.Task.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.taiji.eap.common.base.BaseController;
+import com.taiji.eap.common.dictionary.bean.Dictionary;
+import com.taiji.eap.common.dictionary.service.DictionaryService;
 import com.taiji.eap.wsm.Task.bean.Task;
 import com.taiji.eap.wsm.Task.bean.TaskArea;
 import com.taiji.eap.wsm.Task.service.TaskService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +29,9 @@ public class TaskController extends BaseController{
 
     @Autowired
     private TaskService taskService;
+
+    @Autowired
+    private DictionaryService dictionaryService;
 
     @Override
     @InitBinder
@@ -46,6 +52,18 @@ public class TaskController extends BaseController{
             e.printStackTrace();
         }
         return pageInfo;
+    }
+
+    @GetMapping(value = "selectAll")
+    @ResponseBody
+    public List<Task> selectAll(){
+        List<Task> tasks = new ArrayList<>();
+        try {
+            tasks = taskService.selectAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return tasks;
     }
 
     @GetMapping(value = "getTaskByUserId")
@@ -146,6 +164,51 @@ public class TaskController extends BaseController{
     @ResponseBody
     public List<TaskArea> getTaskAreasByTaskId(String taskId){
         return taskService.getTaskAreasByTaskId(taskId);
+    }
+
+    /**
+     * 添加期数
+     * @param dictionary
+     * @return
+     */
+    @PostMapping(value = "addIssue")
+    @ResponseBody
+    public Response<String> addIssue(Dictionary dictionary){
+        dictionary.setCreateTime(new Date());
+        dictionary.setUpdateTime(new Date());
+        dictionary.setValid("1");
+        dictionary.setCreater(getCurrentUser().getUserId());
+        try {
+            int k = dictionaryService.insertMissParam(dictionary);
+            if(k>0){
+                return renderSuccess("添加成功");
+            }else {
+                return renderError("失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+    }
+
+    @PostMapping(value = "editIssue")
+    @ResponseBody
+    public Response<String> editIssue(Dictionary dictionary){
+        dictionary.setUpdateTime(new Date());
+        dictionary.setValid("1");
+        dictionary.setCreater(getCurrentUser().getUserId());
+        try {
+            int k = dictionaryService.updateByPrimaryKey(dictionary);
+            if(k>0){
+                return renderSuccess("修改成功");
+            }else {
+                return renderError("失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return renderError(e.getMessage());
+        }
+
     }
 
 }

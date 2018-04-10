@@ -11,7 +11,7 @@ public interface FileService{
      * @param primaryKey
      * @return
      */
-    int deleteByPrimaryKey(Long primaryKey) throws Exception;
+    int deleteByPrimaryKey(String primaryKey) throws Exception;
      /**
      * 插入数据
      * @param file
@@ -23,7 +23,7 @@ public interface FileService{
      * @param primaryKey
      * @return
      */
-    CommonFileInfo selectByPrimaryKey(Long primaryKey) throws Exception;
+    CommonFileInfo selectByPrimaryKey(String primaryKey) throws Exception;
      /**
      * 根据主键修改数据
      * @param file

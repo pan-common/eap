@@ -10,7 +10,7 @@ public interface FileDao {
      * @param primaryKey
      * @return
      */
-    int deleteByPrimaryKey(Long primaryKey);
+    int deleteByPrimaryKey(String primaryKey);
      /**
      * 添加数据
      * @param file
@@ -22,7 +22,7 @@ public interface FileDao {
      * @param primaryKey
      * @return
      */
-    CommonFileInfo selectByPrimaryKey(Long primaryKey);
+    CommonFileInfo selectByPrimaryKey(String primaryKey);
      /**
      * 修改数据
      * @param file

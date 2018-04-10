@@ -148,7 +148,7 @@ public class FileController extends BaseController{
 
     @PostMapping(value = "delete")
     @ResponseBody
-    public Response<String> delete(Long fileId){
+    public Response<String> delete(String fileId){
         try {
             int k = fileService.deleteByPrimaryKey(fileId);
             if(k>0){
@@ -164,7 +164,7 @@ public class FileController extends BaseController{
 
     @GetMapping(value = "selectOne")
     @ResponseBody
-    public Response<CommonFileInfo> selectOne(Long fileId){
+    public Response<CommonFileInfo> selectOne(String fileId){
         try {
             return renderSuccess(fileService.selectByPrimaryKey(fileId));
         } catch (Exception e) {

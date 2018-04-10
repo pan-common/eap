@@ -38,6 +38,7 @@
 
             </if>
         </where>
+        order by seq
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -110,5 +111,9 @@
 
     <select id="selectAll" resultMap="BaseResultMap">
         SELECT * FROM t_sys_dictionary WHERE valid = '1'
+    </select>
+
+    <select id="queryFirst" resultMap="BaseResultMap">
+        select * from t_sys_dictionary where parent_id = #{parentId,jdbcType=DECIMAL} and valid = '1' order by seq desc LIMIT 1
     </select>
 </mapper>

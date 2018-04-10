@@ -73,4 +73,6 @@ public interface TaskService{
     List<Integer> getAreaIdsByTaskId(String taskId);
 
     List<TaskArea> getTaskAreasByTaskId(String taskId);
+
+    List<Task> selectAll();
 }

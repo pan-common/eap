@@ -54,7 +54,7 @@
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        SELECT * FROM t_sys_area
+        SELECT * FROM t_sys_area WHERE level_ NOT IN (4,0)
     </select>
 
     <select id="selectLevel3" resultMap="BaseResultMap">

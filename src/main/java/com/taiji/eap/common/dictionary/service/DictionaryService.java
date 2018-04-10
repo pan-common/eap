@@ -21,6 +21,14 @@ public interface DictionaryService {
     int insert(Dictionary dictionary) throws Exception;
 
     /**
+     * 新增的时候缺少参数
+     * @param dictionary
+     * @return
+     * @throws Exception
+     */
+    int insertMissParam(Dictionary dictionary) throws Exception;
+
+    /**
      *
      * @param primaryKey
      * @return

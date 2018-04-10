@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taiji.eap.wsm.water.dao.City1_3Mapper">
+  <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.water.bean.City1_3">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SYDMC" jdbcType="VARCHAR" property="sydmc" />
+    <result column="SYDBM" jdbcType="VARCHAR" property="sydbm" />
+    <result column="SYDLX" jdbcType="VARCHAR" property="sydlx" />
+    <result column="GLCS_SYDBMGF" jdbcType="VARCHAR" property="glcsSydbmgf" />
+    <result column="GLCS_DAGLZD" jdbcType="VARCHAR" property="glcsDaglzd" />
+    <result column="GLCS_DQXJ" jdbcType="VARCHAR" property="glcsDqxj" />
+    <result column="GLCS_DQPG" jdbcType="VARCHAR" property="glcsDqpg" />
+    <result column="GLCS_XXHGLPT" jdbcType="VARCHAR" property="glcsXxhglpt" />
+    <result column="GLCS_XXGK_SZSJ" jdbcType="VARCHAR" property="glcsXxgkSzsj" />
+    <result column="GLCS_XXGK_GLSJ" jdbcType="VARCHAR" property="glcsXxgkGlsj" />
+    <result column="BHQJSQK_BHQHF_BHQHF" jdbcType="VARCHAR" property="bhqjsqkBhqhfBhqhf" />
+    <result column="BHQJSQK_BHQHF_BHQPHSJ" jdbcType="TIMESTAMP" property="bhqjsqkBhqhfBhqphsj" />
+    <result column="BHQJSQK_BHQHF_PFWH" jdbcType="VARCHAR" property="bhqjsqkBhqhfPfwh" />
+    <result column="BHQJSQK_BHQMJ_YJ" jdbcType="VARCHAR" property="bhqjsqkBhqmjYj" />
+    <result column="BHQJSQK_BHQMJ_EJ" jdbcType="VARCHAR" property="bhqjsqkBhqmjEj" />
+    <result column="BHQJSQK_BHQMJ_ZHUN" jdbcType="VARCHAR" property="bhqjsqkBhqmjZhun" />
+    <result column="BHQJSQK_WCBHQBZSZ" jdbcType="VARCHAR" property="bhqjsqkWcbhqbzsz" />
+    <result column="BHQJSQK_YJGFWCBHQBZSZ" jdbcType="VARCHAR" property="bhqjsqkYjgfwcbhqbzsz" />
+    <result column="BHQJSQK_YWCGLFHGCL" jdbcType="VARCHAR" property="bhqjsqkYwcglfhgcl" />
+    <result column="BHQJSQK_SJWCGLFHGCL" jdbcType="VARCHAR" property="bhqjsqkSjwcglfhgcl" />
+    <result column="JCJKNL_WCJCZBMC" jdbcType="VARCHAR" property="jcjknlWcjczbmc" />
+    <result column="JCJKNL_WCJCZBSL" jdbcType="VARCHAR" property="jcjknlWcjczbsl" />
+    <result column="JCJKNL_SFYKZYJJK" jdbcType="VARCHAR" property="jcjknlSfykzyjjk" />
+    <result column="JCJKNL_YWCYJJKSL" jdbcType="VARCHAR" property="jcjknlYwcyjjksl" />
+    <result column="JCJKNL_SJWCJKSL" jdbcType="VARCHAR" property="jcjknlSjwcjksl" />
+    <result column="JCJKNL_YJJKZBMC" jdbcType="VARCHAR" property="jcjknlYjjkzbmc" />
+    <result column="JCJKNL_YJJKZBSL" jdbcType="VARCHAR" property="jcjknlYjjkzbsl" />
+    <result column="JCJKNL_SFKZSPJK" jdbcType="VARCHAR" property="jcjknlSfkzspjk" />
+    <result column="JCJKNL_YWCSPJKSL" jdbcType="VARCHAR" property="jcjknlYwcspjksl" />
+    <result column="JCJKNL_SJWCSPJKSL" jdbcType="VARCHAR" property="jcjknlSjwcspjksl" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+    <result column="SCS" jdbcType="VARCHAR" property="scs" />
+    <result column="SCD" jdbcType="VARCHAR" property="scd" />
+    <result column="EXCELROW" jdbcType="VARCHAR" property="excelrow" />
+    <result column="ND" jdbcType="VARCHAR" property="nd" />
+    <result column="UPLOADFILENAME" jdbcType="VARCHAR" property="uploadfilename" />
+    <result column="SYSZSDM" jdbcType="VARCHAR" property="syszsdm" />
+    <result column="SYSZSHDM" jdbcType="VARCHAR" property="syszshdm" />
+    <result column="SYSZXDM" jdbcType="VARCHAR" property="syszxdm" />
+    <result column="SYSZXMC" jdbcType="VARCHAR" property="syszxmc" />
+    <result column="DATASTATE" jdbcType="VARCHAR" property="datastate" />
+    <result column="DATATYPE" jdbcType="VARCHAR" property="datatype" />
+    <result column="BHQJSQK_BHQHF_PFDW" jdbcType="VARCHAR" property="bhqjsqkBhqhfPfdw" />
+    <result column="YEAR" jdbcType="VARCHAR" property="year" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, SYDMC, SYDBM, SYDLX, GLCS_SYDBMGF, GLCS_DAGLZD, GLCS_DQXJ, GLCS_DQPG, GLCS_XXHGLPT, 
+    GLCS_XXGK_SZSJ, GLCS_XXGK_GLSJ, BHQJSQK_BHQHF_BHQHF, BHQJSQK_BHQHF_BHQPHSJ, BHQJSQK_BHQHF_PFWH, 
+    BHQJSQK_BHQMJ_YJ, BHQJSQK_BHQMJ_EJ, BHQJSQK_BHQMJ_ZHUN, BHQJSQK_WCBHQBZSZ, BHQJSQK_YJGFWCBHQBZSZ, 
+    BHQJSQK_YWCGLFHGCL, BHQJSQK_SJWCGLFHGCL, JCJKNL_WCJCZBMC, JCJKNL_WCJCZBSL, JCJKNL_SFYKZYJJK, 
+    JCJKNL_YWCYJJKSL, JCJKNL_SJWCJKSL, JCJKNL_YJJKZBMC, JCJKNL_YJJKZBSL, JCJKNL_SFKZSPJK, 
+    JCJKNL_YWCSPJKSL, JCJKNL_SJWCSPJKSL, BZ, SCS, SCD, EXCELROW, ND, UPLOADFILENAME, 
+    SYSZSDM, SYSZSHDM, SYSZXDM, SYSZXMC, DATASTATE, DATATYPE, BHQJSQK_BHQHF_PFDW, YEAR
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CITY_2017_1_3_TMP
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CITY_2017_1_3_TMP
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.taiji.eap.wsm.water.bean.City1_3">
+    insert into CITY_2017_1_3_TMP (ID, SYDMC, SYDBM, 
+      SYDLX, GLCS_SYDBMGF, GLCS_DAGLZD, 
+      GLCS_DQXJ, GLCS_DQPG, GLCS_XXHGLPT, 
+      GLCS_XXGK_SZSJ, GLCS_XXGK_GLSJ, BHQJSQK_BHQHF_BHQHF, 
+      BHQJSQK_BHQHF_BHQPHSJ, BHQJSQK_BHQHF_PFWH, 
+      BHQJSQK_BHQMJ_YJ, BHQJSQK_BHQMJ_EJ, BHQJSQK_BHQMJ_ZHUN, 
+      BHQJSQK_WCBHQBZSZ, BHQJSQK_YJGFWCBHQBZSZ, 
+      BHQJSQK_YWCGLFHGCL, BHQJSQK_SJWCGLFHGCL, 
+      JCJKNL_WCJCZBMC, JCJKNL_WCJCZBSL, JCJKNL_SFYKZYJJK, 
+      JCJKNL_YWCYJJKSL, JCJKNL_SJWCJKSL, JCJKNL_YJJKZBMC, 
+      JCJKNL_YJJKZBSL, JCJKNL_SFKZSPJK, JCJKNL_YWCSPJKSL, 
+      JCJKNL_SJWCSPJKSL, BZ, SCS, 
+      SCD, EXCELROW, ND, 
+      UPLOADFILENAME, SYSZSDM, SYSZSHDM, 
+      SYSZXDM, SYSZXMC, DATASTATE, 
+      DATATYPE, BHQJSQK_BHQHF_PFDW, YEAR
+      )
+    values (#{id,jdbcType=VARCHAR}, #{sydmc,jdbcType=VARCHAR}, #{sydbm,jdbcType=VARCHAR}, 
+      #{sydlx,jdbcType=VARCHAR}, #{glcsSydbmgf,jdbcType=VARCHAR}, #{glcsDaglzd,jdbcType=VARCHAR}, 
+      #{glcsDqxj,jdbcType=VARCHAR}, #{glcsDqpg,jdbcType=VARCHAR}, #{glcsXxhglpt,jdbcType=VARCHAR}, 
+      #{glcsXxgkSzsj,jdbcType=VARCHAR}, #{glcsXxgkGlsj,jdbcType=VARCHAR}, #{bhqjsqkBhqhfBhqhf,jdbcType=VARCHAR}, 
+      #{bhqjsqkBhqhfBhqphsj,jdbcType=TIMESTAMP}, #{bhqjsqkBhqhfPfwh,jdbcType=VARCHAR}, 
+      #{bhqjsqkBhqmjYj,jdbcType=VARCHAR}, #{bhqjsqkBhqmjEj,jdbcType=VARCHAR}, #{bhqjsqkBhqmjZhun,jdbcType=VARCHAR}, 
+      #{bhqjsqkWcbhqbzsz,jdbcType=VARCHAR}, #{bhqjsqkYjgfwcbhqbzsz,jdbcType=VARCHAR}, 
+      #{bhqjsqkYwcglfhgcl,jdbcType=VARCHAR}, #{bhqjsqkSjwcglfhgcl,jdbcType=VARCHAR}, 
+      #{jcjknlWcjczbmc,jdbcType=VARCHAR}, #{jcjknlWcjczbsl,jdbcType=VARCHAR}, #{jcjknlSfykzyjjk,jdbcType=VARCHAR}, 
+      #{jcjknlYwcyjjksl,jdbcType=VARCHAR}, #{jcjknlSjwcjksl,jdbcType=VARCHAR}, #{jcjknlYjjkzbmc,jdbcType=VARCHAR}, 
+      #{jcjknlYjjkzbsl,jdbcType=VARCHAR}, #{jcjknlSfkzspjk,jdbcType=VARCHAR}, #{jcjknlYwcspjksl,jdbcType=VARCHAR}, 
+      #{jcjknlSjwcspjksl,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{scs,jdbcType=VARCHAR}, 
+      #{scd,jdbcType=VARCHAR}, #{excelrow,jdbcType=VARCHAR}, #{nd,jdbcType=VARCHAR}, 
+      #{uploadfilename,jdbcType=VARCHAR}, #{syszsdm,jdbcType=VARCHAR}, #{syszshdm,jdbcType=VARCHAR}, 
+      #{syszxdm,jdbcType=VARCHAR}, #{syszxmc,jdbcType=VARCHAR}, #{datastate,jdbcType=VARCHAR}, 
+      #{datatype,jdbcType=VARCHAR}, #{bhqjsqkBhqhfPfdw,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.taiji.eap.wsm.water.bean.City1_3">
+    insert into CITY_2017_1_3_TMP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="sydmc != null">
+        SYDMC,
+      </if>
+      <if test="sydbm != null">
+        SYDBM,
+      </if>
+      <if test="sydlx != null">
+        SYDLX,
+      </if>
+      <if test="glcsSydbmgf != null">
+        GLCS_SYDBMGF,
+      </if>
+      <if test="glcsDaglzd != null">
+        GLCS_DAGLZD,
+      </if>
+      <if test="glcsDqxj != null">
+        GLCS_DQXJ,
+      </if>
+      <if test="glcsDqpg != null">
+        GLCS_DQPG,
+      </if>
+      <if test="glcsXxhglpt != null">
+        GLCS_XXHGLPT,
+      </if>
+      <if test="glcsXxgkSzsj != null">
+        GLCS_XXGK_SZSJ,
+      </if>
+      <if test="glcsXxgkGlsj != null">
+        GLCS_XXGK_GLSJ,
+      </if>
+      <if test="bhqjsqkBhqhfBhqhf != null">
+        BHQJSQK_BHQHF_BHQHF,
+      </if>
+      <if test="bhqjsqkBhqhfBhqphsj != null">
+        BHQJSQK_BHQHF_BHQPHSJ,
+      </if>
+      <if test="bhqjsqkBhqhfPfwh != null">
+        BHQJSQK_BHQHF_PFWH,
+      </if>
+      <if test="bhqjsqkBhqmjYj != null">
+        BHQJSQK_BHQMJ_YJ,
+      </if>
+      <if test="bhqjsqkBhqmjEj != null">
+        BHQJSQK_BHQMJ_EJ,
+      </if>
+      <if test="bhqjsqkBhqmjZhun != null">
+        BHQJSQK_BHQMJ_ZHUN,
+      </if>
+      <if test="bhqjsqkWcbhqbzsz != null">
+        BHQJSQK_WCBHQBZSZ,
+      </if>
+      <if test="bhqjsqkYjgfwcbhqbzsz != null">
+        BHQJSQK_YJGFWCBHQBZSZ,
+      </if>
+      <if test="bhqjsqkYwcglfhgcl != null">
+        BHQJSQK_YWCGLFHGCL,
+      </if>
+      <if test="bhqjsqkSjwcglfhgcl != null">
+        BHQJSQK_SJWCGLFHGCL,
+      </if>
+      <if test="jcjknlWcjczbmc != null">
+        JCJKNL_WCJCZBMC,
+      </if>
+      <if test="jcjknlWcjczbsl != null">
+        JCJKNL_WCJCZBSL,
+      </if>
+      <if test="jcjknlSfykzyjjk != null">
+        JCJKNL_SFYKZYJJK,
+      </if>
+      <if test="jcjknlYwcyjjksl != null">
+        JCJKNL_YWCYJJKSL,
+      </if>
+      <if test="jcjknlSjwcjksl != null">
+        JCJKNL_SJWCJKSL,
+      </if>
+      <if test="jcjknlYjjkzbmc != null">
+        JCJKNL_YJJKZBMC,
+      </if>
+      <if test="jcjknlYjjkzbsl != null">
+        JCJKNL_YJJKZBSL,
+      </if>
+      <if test="jcjknlSfkzspjk != null">
+        JCJKNL_SFKZSPJK,
+      </if>
+      <if test="jcjknlYwcspjksl != null">
+        JCJKNL_YWCSPJKSL,
+      </if>
+      <if test="jcjknlSjwcspjksl != null">
+        JCJKNL_SJWCSPJKSL,
+      </if>
+      <if test="bz != null">
+        BZ,
+      </if>
+      <if test="scs != null">
+        SCS,
+      </if>
+      <if test="scd != null">
+        SCD,
+      </if>
+      <if test="excelrow != null">
+        EXCELROW,
+      </if>
+      <if test="nd != null">
+        ND,
+      </if>
+      <if test="uploadfilename != null">
+        UPLOADFILENAME,
+      </if>
+      <if test="syszsdm != null">
+        SYSZSDM,
+      </if>
+      <if test="syszshdm != null">
+        SYSZSHDM,
+      </if>
+      <if test="syszxdm != null">
+        SYSZXDM,
+      </if>
+      <if test="syszxmc != null">
+        SYSZXMC,
+      </if>
+      <if test="datastate != null">
+        DATASTATE,
+      </if>
+      <if test="datatype != null">
+        DATATYPE,
+      </if>
+      <if test="bhqjsqkBhqhfPfdw != null">
+        BHQJSQK_BHQHF_PFDW,
+      </if>
+      <if test="year != null">
+        YEAR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sydmc != null">
+        #{sydmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sydbm != null">
+        #{sydbm,jdbcType=VARCHAR},
+      </if>
+      <if test="sydlx != null">
+        #{sydlx,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsSydbmgf != null">
+        #{glcsSydbmgf,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDaglzd != null">
+        #{glcsDaglzd,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDqxj != null">
+        #{glcsDqxj,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDqpg != null">
+        #{glcsDqpg,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxhglpt != null">
+        #{glcsXxhglpt,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxgkSzsj != null">
+        #{glcsXxgkSzsj,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxgkGlsj != null">
+        #{glcsXxgkGlsj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfBhqhf != null">
+        #{bhqjsqkBhqhfBhqhf,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfBhqphsj != null">
+        #{bhqjsqkBhqhfBhqphsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhqjsqkBhqhfPfwh != null">
+        #{bhqjsqkBhqhfPfwh,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjYj != null">
+        #{bhqjsqkBhqmjYj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjEj != null">
+        #{bhqjsqkBhqmjEj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjZhun != null">
+        #{bhqjsqkBhqmjZhun,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkWcbhqbzsz != null">
+        #{bhqjsqkWcbhqbzsz,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkYjgfwcbhqbzsz != null">
+        #{bhqjsqkYjgfwcbhqbzsz,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkYwcglfhgcl != null">
+        #{bhqjsqkYwcglfhgcl,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkSjwcglfhgcl != null">
+        #{bhqjsqkSjwcglfhgcl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlWcjczbmc != null">
+        #{jcjknlWcjczbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlWcjczbsl != null">
+        #{jcjknlWcjczbsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSfykzyjjk != null">
+        #{jcjknlSfykzyjjk,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYwcyjjksl != null">
+        #{jcjknlYwcyjjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSjwcjksl != null">
+        #{jcjknlSjwcjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYjjkzbmc != null">
+        #{jcjknlYjjkzbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYjjkzbsl != null">
+        #{jcjknlYjjkzbsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSfkzspjk != null">
+        #{jcjknlSfkzspjk,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYwcspjksl != null">
+        #{jcjknlYwcspjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSjwcspjksl != null">
+        #{jcjknlSjwcspjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="scs != null">
+        #{scs,jdbcType=VARCHAR},
+      </if>
+      <if test="scd != null">
+        #{scd,jdbcType=VARCHAR},
+      </if>
+      <if test="excelrow != null">
+        #{excelrow,jdbcType=VARCHAR},
+      </if>
+      <if test="nd != null">
+        #{nd,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadfilename != null">
+        #{uploadfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="syszsdm != null">
+        #{syszsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszshdm != null">
+        #{syszshdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszxdm != null">
+        #{syszxdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszxmc != null">
+        #{syszxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="datastate != null">
+        #{datastate,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        #{datatype,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfPfdw != null">
+        #{bhqjsqkBhqhfPfdw,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.taiji.eap.wsm.water.bean.City1_3">
+    update CITY_2017_1_3_TMP
+    <set>
+      <if test="sydmc != null">
+        SYDMC = #{sydmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sydbm != null">
+        SYDBM = #{sydbm,jdbcType=VARCHAR},
+      </if>
+      <if test="sydlx != null">
+        SYDLX = #{sydlx,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsSydbmgf != null">
+        GLCS_SYDBMGF = #{glcsSydbmgf,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDaglzd != null">
+        GLCS_DAGLZD = #{glcsDaglzd,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDqxj != null">
+        GLCS_DQXJ = #{glcsDqxj,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsDqpg != null">
+        GLCS_DQPG = #{glcsDqpg,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxhglpt != null">
+        GLCS_XXHGLPT = #{glcsXxhglpt,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxgkSzsj != null">
+        GLCS_XXGK_SZSJ = #{glcsXxgkSzsj,jdbcType=VARCHAR},
+      </if>
+      <if test="glcsXxgkGlsj != null">
+        GLCS_XXGK_GLSJ = #{glcsXxgkGlsj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfBhqhf != null">
+        BHQJSQK_BHQHF_BHQHF = #{bhqjsqkBhqhfBhqhf,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfBhqphsj != null">
+        BHQJSQK_BHQHF_BHQPHSJ = #{bhqjsqkBhqhfBhqphsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bhqjsqkBhqhfPfwh != null">
+        BHQJSQK_BHQHF_PFWH = #{bhqjsqkBhqhfPfwh,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjYj != null">
+        BHQJSQK_BHQMJ_YJ = #{bhqjsqkBhqmjYj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjEj != null">
+        BHQJSQK_BHQMJ_EJ = #{bhqjsqkBhqmjEj,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqmjZhun != null">
+        BHQJSQK_BHQMJ_ZHUN = #{bhqjsqkBhqmjZhun,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkWcbhqbzsz != null">
+        BHQJSQK_WCBHQBZSZ = #{bhqjsqkWcbhqbzsz,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkYjgfwcbhqbzsz != null">
+        BHQJSQK_YJGFWCBHQBZSZ = #{bhqjsqkYjgfwcbhqbzsz,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkYwcglfhgcl != null">
+        BHQJSQK_YWCGLFHGCL = #{bhqjsqkYwcglfhgcl,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkSjwcglfhgcl != null">
+        BHQJSQK_SJWCGLFHGCL = #{bhqjsqkSjwcglfhgcl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlWcjczbmc != null">
+        JCJKNL_WCJCZBMC = #{jcjknlWcjczbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlWcjczbsl != null">
+        JCJKNL_WCJCZBSL = #{jcjknlWcjczbsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSfykzyjjk != null">
+        JCJKNL_SFYKZYJJK = #{jcjknlSfykzyjjk,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYwcyjjksl != null">
+        JCJKNL_YWCYJJKSL = #{jcjknlYwcyjjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSjwcjksl != null">
+        JCJKNL_SJWCJKSL = #{jcjknlSjwcjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYjjkzbmc != null">
+        JCJKNL_YJJKZBMC = #{jcjknlYjjkzbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYjjkzbsl != null">
+        JCJKNL_YJJKZBSL = #{jcjknlYjjkzbsl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSfkzspjk != null">
+        JCJKNL_SFKZSPJK = #{jcjknlSfkzspjk,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlYwcspjksl != null">
+        JCJKNL_YWCSPJKSL = #{jcjknlYwcspjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="jcjknlSjwcspjksl != null">
+        JCJKNL_SJWCSPJKSL = #{jcjknlSjwcspjksl,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null">
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="scs != null">
+        SCS = #{scs,jdbcType=VARCHAR},
+      </if>
+      <if test="scd != null">
+        SCD = #{scd,jdbcType=VARCHAR},
+      </if>
+      <if test="excelrow != null">
+        EXCELROW = #{excelrow,jdbcType=VARCHAR},
+      </if>
+      <if test="nd != null">
+        ND = #{nd,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadfilename != null">
+        UPLOADFILENAME = #{uploadfilename,jdbcType=VARCHAR},
+      </if>
+      <if test="syszsdm != null">
+        SYSZSDM = #{syszsdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszshdm != null">
+        SYSZSHDM = #{syszshdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszxdm != null">
+        SYSZXDM = #{syszxdm,jdbcType=VARCHAR},
+      </if>
+      <if test="syszxmc != null">
+        SYSZXMC = #{syszxmc,jdbcType=VARCHAR},
+      </if>
+      <if test="datastate != null">
+        DATASTATE = #{datastate,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        DATATYPE = #{datatype,jdbcType=VARCHAR},
+      </if>
+      <if test="bhqjsqkBhqhfPfdw != null">
+        BHQJSQK_BHQHF_PFDW = #{bhqjsqkBhqhfPfdw,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        YEAR = #{year,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taiji.eap.wsm.water.bean.City1_3">
+    update CITY_2017_1_3_TMP
+    set SYDMC = #{sydmc,jdbcType=VARCHAR},
+      SYDBM = #{sydbm,jdbcType=VARCHAR},
+      SYDLX = #{sydlx,jdbcType=VARCHAR},
+      GLCS_SYDBMGF = #{glcsSydbmgf,jdbcType=VARCHAR},
+      GLCS_DAGLZD = #{glcsDaglzd,jdbcType=VARCHAR},
+      GLCS_DQXJ = #{glcsDqxj,jdbcType=VARCHAR},
+      GLCS_DQPG = #{glcsDqpg,jdbcType=VARCHAR},
+      GLCS_XXHGLPT = #{glcsXxhglpt,jdbcType=VARCHAR},
+      GLCS_XXGK_SZSJ = #{glcsXxgkSzsj,jdbcType=VARCHAR},
+      GLCS_XXGK_GLSJ = #{glcsXxgkGlsj,jdbcType=VARCHAR},
+      BHQJSQK_BHQHF_BHQHF = #{bhqjsqkBhqhfBhqhf,jdbcType=VARCHAR},
+      BHQJSQK_BHQHF_BHQPHSJ = #{bhqjsqkBhqhfBhqphsj,jdbcType=TIMESTAMP},
+      BHQJSQK_BHQHF_PFWH = #{bhqjsqkBhqhfPfwh,jdbcType=VARCHAR},
+      BHQJSQK_BHQMJ_YJ = #{bhqjsqkBhqmjYj,jdbcType=VARCHAR},
+      BHQJSQK_BHQMJ_EJ = #{bhqjsqkBhqmjEj,jdbcType=VARCHAR},
+      BHQJSQK_BHQMJ_ZHUN = #{bhqjsqkBhqmjZhun,jdbcType=VARCHAR},
+      BHQJSQK_WCBHQBZSZ = #{bhqjsqkWcbhqbzsz,jdbcType=VARCHAR},
+      BHQJSQK_YJGFWCBHQBZSZ = #{bhqjsqkYjgfwcbhqbzsz,jdbcType=VARCHAR},
+      BHQJSQK_YWCGLFHGCL = #{bhqjsqkYwcglfhgcl,jdbcType=VARCHAR},
+      BHQJSQK_SJWCGLFHGCL = #{bhqjsqkSjwcglfhgcl,jdbcType=VARCHAR},
+      JCJKNL_WCJCZBMC = #{jcjknlWcjczbmc,jdbcType=VARCHAR},
+      JCJKNL_WCJCZBSL = #{jcjknlWcjczbsl,jdbcType=VARCHAR},
+      JCJKNL_SFYKZYJJK = #{jcjknlSfykzyjjk,jdbcType=VARCHAR},
+      JCJKNL_YWCYJJKSL = #{jcjknlYwcyjjksl,jdbcType=VARCHAR},
+      JCJKNL_SJWCJKSL = #{jcjknlSjwcjksl,jdbcType=VARCHAR},
+      JCJKNL_YJJKZBMC = #{jcjknlYjjkzbmc,jdbcType=VARCHAR},
+      JCJKNL_YJJKZBSL = #{jcjknlYjjkzbsl,jdbcType=VARCHAR},
+      JCJKNL_SFKZSPJK = #{jcjknlSfkzspjk,jdbcType=VARCHAR},
+      JCJKNL_YWCSPJKSL = #{jcjknlYwcspjksl,jdbcType=VARCHAR},
+      JCJKNL_SJWCSPJKSL = #{jcjknlSjwcspjksl,jdbcType=VARCHAR},
+      BZ = #{bz,jdbcType=VARCHAR},
+      SCS = #{scs,jdbcType=VARCHAR},
+      SCD = #{scd,jdbcType=VARCHAR},
+      EXCELROW = #{excelrow,jdbcType=VARCHAR},
+      ND = #{nd,jdbcType=VARCHAR},
+      UPLOADFILENAME = #{uploadfilename,jdbcType=VARCHAR},
+      SYSZSDM = #{syszsdm,jdbcType=VARCHAR},
+      SYSZSHDM = #{syszshdm,jdbcType=VARCHAR},
+      SYSZXDM = #{syszxdm,jdbcType=VARCHAR},
+      SYSZXMC = #{syszxmc,jdbcType=VARCHAR},
+      DATASTATE = #{datastate,jdbcType=VARCHAR},
+      DATATYPE = #{datatype,jdbcType=VARCHAR},
+      BHQJSQK_BHQHF_PFDW = #{bhqjsqkBhqhfPfdw,jdbcType=VARCHAR},
+      YEAR = #{year,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

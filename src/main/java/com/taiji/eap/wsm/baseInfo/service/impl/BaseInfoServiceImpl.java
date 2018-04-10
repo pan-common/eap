@@ -127,4 +127,9 @@ public class BaseInfoServiceImpl extends BaseServiceImpl implements BaseInfoServ
     public BaseInfo selectOneByUserId(String userId) {
         return baseInfoDao.selectOneByUserId(Long.valueOf(userId));
     }
+
+    @Override
+    public List<BaseInfo> selectAll() {
+        return baseInfoDao.selectAll();
+    }
 }

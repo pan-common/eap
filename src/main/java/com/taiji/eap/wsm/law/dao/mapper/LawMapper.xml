@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.law.dao.LawDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.law.bean.Law">
+        <id column="law_id" property="lawId" jdbcType="VARCHAR"></id>
+        <result column="law_title" property="lawTitle" jdbcType="VARCHAR" />
+        <result column="law_describe" property="lawDescribe" jdbcType="VARCHAR" />
+        <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_user" property="createUser" jdbcType="DECIMAL" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        law_id,law_title,law_describe,file_id,update_time,create_user
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="lawId!=null and lawId!=''">
+                AND law_id = #{lawId,jdbcType=VARCHAR}
+            </if>
+            <if test="lawTitle!=null and lawTitle!=''">
+                ,AND law_title = #{lawTitle,jdbcType=VARCHAR}
+            </if>
+            <if test="lawDescribe!=null and lawDescribe!=''">
+                ,AND law_describe = #{lawDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="fileId!=null and fileId!=''">
+                ,AND file_id = #{fileId,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                ,AND update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createUser!=null and createUser!=''">
+                ,AND create_user = #{createUser,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM wsm_law
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM wsm_law
+        WHERE law_id = #{lawId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.wsm.law.bean.Law">
+        INSERT INTO wsm_law(
+        law_id,law_title,law_describe,file_id,update_time,create_user)
+        VALUES(
+        #{lawId,jdbcType=VARCHAR},#{lawTitle,jdbcType=VARCHAR},#{lawDescribe,jdbcType=VARCHAR},#{fileId,jdbcType=VARCHAR},#{updateTime,jdbcType=TIMESTAMP},#{createUser,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.wsm.law.bean.Law">
+        INSERT INTO wsm_law
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                law_id,
+            <if test="lawTitle!=null">
+                law_title,
+            </if>
+            <if test="lawDescribe!=null">
+                law_describe,
+            </if>
+            <if test="fileId!=null">
+                file_id,
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+            </if>
+            <if test="createUser!=null">
+                create_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #{lawId,jdbcType=VARCHAR},
+            <if test="lawTitle!=null">
+                #{lawTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="lawDescribe!=null">
+                #{lawDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="fileId!=null">
+                #{fileId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime!=null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser!=null">
+                #{createUser,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.String">
+        UPDATE wsm_law
+        <set>
+            <if test="lawId!=null">
+                law_id = #{lawId,jdbcType=VARCHAR},
+            </if>
+            <if test="lawTitle!=null">
+                law_title = #{lawTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="lawDescribe!=null">
+                law_describe = #{lawDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="fileId!=null">
+                file_id = #{fileId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser!=null">
+                create_user = #{createUser,jdbcType=DECIMAL},
+            </if>
+        </set>
+        WHERE law_id = #{lawId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.wsm.law.bean.Law">
+        UPDATE wsm_law SET
+        law_id=#{lawId,jdbcType=VARCHAR},law_title=#{lawTitle,jdbcType=VARCHAR},law_describe=#{lawDescribe,jdbcType=VARCHAR},file_id=#{fileId,jdbcType=VARCHAR},update_time=#{updateTime,jdbcType=TIMESTAMP},create_user=#{createUser,jdbcType=DECIMAL}
+        WHERE law_id = #{lawId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM wsm_law WHERE law_id = #{lawId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM wsm_law
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.wsm.law.bean.Law" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM wsm_law
+        <include refid="condition"/>
+    </select>
+
+</mapper>

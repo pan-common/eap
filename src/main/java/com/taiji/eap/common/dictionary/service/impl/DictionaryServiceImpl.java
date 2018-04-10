@@ -28,17 +28,45 @@ public class DictionaryServiceImpl implements DictionaryService{
     @Autowired
     private StringRedisFactoryDao stringRedisFactoryDao;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int deleteByPrimaryKey(Long primaryKey) {
         redisFactoryDao.deleteByPattern("allDictionary");
         return dictionaryDao.deleteByPrimaryKey(primaryKey);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int insert(Dictionary dictionary) {
         redisFactoryDao.deleteByPattern("allDictionary");
+        return dictionaryDao.insert(dictionary);
+    }
+
+    @Override
+    public int insertMissParam(Dictionary dictionary) throws Exception {
+        redisFactoryDao.deleteByPattern("allDictionary");
+        Dictionary dic =  dictionaryDao.queryFirst(dictionary.getParentId());
+        if(dic!=null) {
+            //开始时间
+            String startDate = dictionary.getParam1();
+            //结束时间
+            String endDate = dictionary.getParam2();
+            //上期结束时间
+            String lastEndDate = dic.getParam2();
+            if (lastEndDate.compareTo(startDate) >= 0) {
+                throw new Exception("本期开始时间在上期结束时间之前，请确认");
+            } else {
+                if (startDate.compareTo(endDate) >= 0) {
+                    throw new Exception("结束时间在开始时间之前，请确认");
+                }
+            }
+            dictionary.setSeq(dic.getSeq()+1);
+            dictionary.setKeystone(String.valueOf(Integer.valueOf(dic.getKeystone())+1));
+        }else {
+            dictionary.setSeq(1);
+            dictionary.setKeystone("1");
+        }
+
         return dictionaryDao.insert(dictionary);
     }
 

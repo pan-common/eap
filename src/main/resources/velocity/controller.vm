@@ -156,8 +156,8 @@ public class #toUpperCase(${param.alias})Controller extends BaseController{
 
     @GetMapping(value = "treeView")
     @ResponseBody
-    public Response<List<LayuiTree>> treeView(#getParentIdFieldType($columns) ${parentField}){
-        List<LayuiTree> layuiTrees = null;
+    public Response<List<BaseTree>> treeView(#getParentIdFieldType($columns) ${parentField}){
+        List<BaseTree> layuiTrees = null;
         try {
             layuiTrees = ${param.alias}Service.treeView(parentId);
         } catch (Exception e) {

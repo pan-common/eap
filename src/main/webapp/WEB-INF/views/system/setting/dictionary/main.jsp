@@ -16,7 +16,7 @@
         </div>
         <div  id="toolbar">
             <button id='addBtn' class="layui-btn layui-btn-small">
-                <i class="layui-icon">&#xe608;</i> 添加菜单
+                <i class="layui-icon">&#xe608;</i> 添加字典
             </button>
         </div>
     </div>

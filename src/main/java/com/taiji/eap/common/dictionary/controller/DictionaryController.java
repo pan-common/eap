@@ -78,7 +78,7 @@ public class DictionaryController extends BaseController{
         dictionary.setCreateTime(new Date());
         dictionary.setUpdateTime(new Date());
         dictionary.setValid("1");
-        dictionary.setCreater(1L);
+        dictionary.setCreater(getCurrentUser().getUserId());
         try {
             int k = dictionaryService.insert(dictionary);
             if(k>0){

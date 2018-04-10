@@ -74,11 +74,13 @@ public class TaskServiceImpl extends BaseController implements TaskService{
         }
         //插入任务相关地区信息
         List<Area> areas = task.getAreas();
-        for (int i = 0; i < areas.size(); i++) {
-            TaskArea taskArea = new TaskArea();
-            taskArea.setTaskId(taskId);
-            taskArea.setAreaId(areas.get(i).getAreaId());
-            k+=taskAreaDao.insert(taskArea);
+        if(areas!=null&&areas.size()>0) {
+            for (int i = 0; i < areas.size(); i++) {
+                TaskArea taskArea = new TaskArea();
+                taskArea.setTaskId(taskId);
+                taskArea.setAreaId(areas.get(i).getAreaId());
+                k += taskAreaDao.insert(taskArea);
+            }
         }
         //插入任务信息
         task.setTaskId(taskId);
@@ -212,6 +214,23 @@ public class TaskServiceImpl extends BaseController implements TaskService{
     @Override
     public List<TaskArea> getTaskAreasByTaskId(String taskId) {
         return taskAreaDao.getTaskAreasByTaskId(taskId);
+    }
+
+    @Override
+    public List<Task> selectAll() {
+        List<Task> tasks =  taskDao.selectAll();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            //添加任务成员
+            List<BaseInfo> baseInfos = baseInfoDao.selectByTaskId(task.getTaskId(),"2");
+            BaseInfo principal = baseInfoDao.selectByTaskId(task.getTaskId(),"1").get(0);
+            tasks.get(i).setBaseInfos(baseInfos);
+            tasks.get(i).setPrincipal(principal);
+            //添加任务区域
+            List<Area> areas = taskAreaDao.getAreaByTaskId(task.getTaskId());
+            tasks.get(i).setAreas(areas);
+        }
+        return tasks;
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -1,57 +1,94 @@
 package com.taiji.eap.wsm.water.bean;
 
+import java.io.Serializable;
+
 /**
- * 城市饮用水源风险管理能力调查表-地下水
- * @author 潘宏智
- * @date
+ * @author 
  */
-public class City3_3 {
+public class City3_3 implements Serializable {
+    private String id;
 
-    private String id;//主键
-    private String sydmc;//水源名称
-    private String sydbm;//水源代码
-    private String sydlx;//地下水类型
-    private String czfxy;//存在风险源（是/否）
-    private String jlfxyml;//建立风险源名录（是/否）
-    private String czsycyYj;//风险管理-一级保护区-存在输油管道（是/否）
-    private String czwsgdYj;//风险管理-一级保护区-存在污水管道（是/否）
-    private String czjtcyYj;//风险管理-一级保护区-存在交通穿越（是/否）
-    private String fxlssYj;//风险管理-一级保护区-防护设施设置-防泄露设施（是/否）
-    private String JTJSPYj;//风险管理-一级保护区-防护设施设置-交通警示牌（是/否）
-    private String qtYj;//风险管理-一级保护区-防护设施设置-其他
-    private String czsygdEj;//风险管理-二级保护区-存在输油管道（是/否）
-    private String sygdEj;//风险管理-二级保护区-存在污水管道（是/否）
-    private String jtcyEj;//风险管理-二级保护区-存在交通穿越（是/否）
-    private String fxlssEj;//风险管理-二级保护区-防护设施设置-防泄露设施（是/否）
-    private String jtjspEj;//风险管理-二级保护区-防护设施设置-交通警示牌   （是/否）
-    private String qtEj;//风险管理-二级保护区-防护设施设置-其他
-    private String hxpyszd;//风险管理-建立危险化学品运输管理制度（是/否）
-    private String zjbjqnrbhq;//风险管理-直接补给区纳入保护区（是/否）
-    private String yjyabz;//应急能力-突发环境事件应急预案编制、修订与备案（有/无）
-    private String yjyl;//应急能力-应急演练（有/无）
-    private String ydtfsj;//应急能力-应对重大突发污染事故的物资和技术储备（有/无）
-    private String yjfhgc;//应急能力-应急防护工程设施建设（有/无）
-    private String yjzjk;//应急能力-应急专家库（有/无）
-    private String yjjcnl;//应急能力-应急监测能力（有/无）
-    private String bz;//备注
-    private String scs;//上传省份
-    private String scd;//上传地市
-    private String excelrow;//excel中行
-    private String nd;//年度
-    private String uploadDileName;//数据对应的上传文件
-    private String syszsdm;//水源所在省代码
-    private String syszshdm;//水源所在市代码
-    private String syszxdm;//水源所在县代码
-    private String syszxmc;//水源所在县名称
-    private String dataState;//数据状态（1、县2、市3、省、4国）
-    private String dataType;//数据类型（地级上、地级下）
-    private String year;//年
-    private String czjtcyYjcyx;//风险管理-一级保护区-存在交通穿越条数
-    private String jtcyEjcyx;//风险管理-二级保护区-存在交通穿越条数
+    private String sydmc;
 
+    private String sydbm;
 
-    public City3_3() {
-    }
+    private String sydlx;
+
+    private String czfxy;
+
+    private String jlfxyml;
+
+    private String czsycyYj;
+
+    private String czwsgdYj;
+
+    private String czjtcyYj;
+
+    private String fxlssYj;
+
+    private String jtjspYj;
+
+    private String qtYj;
+
+    private String czsygdEj;
+
+    private String sygdEj;
+
+    private String jtcyEj;
+
+    private String fxlssEj;
+
+    private String jtjspEj;
+
+    private String qtEj;
+
+    private String hxpyszd;
+
+    private String zjbjqnrbhq;
+
+    private String yjyabz;
+
+    private String yjyl;
+
+    private String ydtfsj;
+
+    private String yjfhgc;
+
+    private String yjzjk;
+
+    private String yjjcnl;
+
+    private String bz;
+
+    private String scs;
+
+    private String scd;
+
+    private String excelrow;
+
+    private String nd;
+
+    private String uploadfilename;
+
+    private String syszsdm;
+
+    private String syszshdm;
+
+    private String syszxdm;
+
+    private String syszxmc;
+
+    private String datastate;
+
+    private String datatype;
+
+    private String year;
+
+    private String czjtcyYjcyx;
+
+    private String jtcyEjcyx;
+
+    private static final long serialVersionUID = 1L;
 
     public String getId() {
         return id;
@@ -133,12 +170,12 @@ public class City3_3 {
         this.fxlssYj = fxlssYj;
     }
 
-    public String getJTJSPYj() {
-        return JTJSPYj;
+    public String getJtjspYj() {
+        return jtjspYj;
     }
 
-    public void setJTJSPYj(String JTJSPYj) {
-        this.JTJSPYj = JTJSPYj;
+    public void setJtjspYj(String jtjspYj) {
+        this.jtjspYj = jtjspYj;
     }
 
     public String getQtYj() {
@@ -301,12 +338,12 @@ public class City3_3 {
         this.nd = nd;
     }
 
-    public String getUploadDileName() {
-        return uploadDileName;
+    public String getUploadfilename() {
+        return uploadfilename;
     }
 
-    public void setUploadDileName(String uploadDileName) {
-        this.uploadDileName = uploadDileName;
+    public void setUploadfilename(String uploadfilename) {
+        this.uploadfilename = uploadfilename;
     }
 
     public String getSyszsdm() {
@@ -341,20 +378,20 @@ public class City3_3 {
         this.syszxmc = syszxmc;
     }
 
-    public String getDataState() {
-        return dataState;
+    public String getDatastate() {
+        return datastate;
     }
 
-    public void setDataState(String dataState) {
-        this.dataState = dataState;
+    public void setDatastate(String datastate) {
+        this.datastate = datastate;
     }
 
-    public String getDataType() {
-        return dataType;
+    public String getDatatype() {
+        return datatype;
     }
 
-    public void setDataType(String dataType) {
-        this.dataType = dataType;
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
     }
 
     public String getYear() {
@@ -382,49 +419,157 @@ public class City3_3 {
     }
 
     @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        City3_3 other = (City3_3) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getSydmc() == null ? other.getSydmc() == null : this.getSydmc().equals(other.getSydmc()))
+            && (this.getSydbm() == null ? other.getSydbm() == null : this.getSydbm().equals(other.getSydbm()))
+            && (this.getSydlx() == null ? other.getSydlx() == null : this.getSydlx().equals(other.getSydlx()))
+            && (this.getCzfxy() == null ? other.getCzfxy() == null : this.getCzfxy().equals(other.getCzfxy()))
+            && (this.getJlfxyml() == null ? other.getJlfxyml() == null : this.getJlfxyml().equals(other.getJlfxyml()))
+            && (this.getCzsycyYj() == null ? other.getCzsycyYj() == null : this.getCzsycyYj().equals(other.getCzsycyYj()))
+            && (this.getCzwsgdYj() == null ? other.getCzwsgdYj() == null : this.getCzwsgdYj().equals(other.getCzwsgdYj()))
+            && (this.getCzjtcyYj() == null ? other.getCzjtcyYj() == null : this.getCzjtcyYj().equals(other.getCzjtcyYj()))
+            && (this.getFxlssYj() == null ? other.getFxlssYj() == null : this.getFxlssYj().equals(other.getFxlssYj()))
+            && (this.getJtjspYj() == null ? other.getJtjspYj() == null : this.getJtjspYj().equals(other.getJtjspYj()))
+            && (this.getQtYj() == null ? other.getQtYj() == null : this.getQtYj().equals(other.getQtYj()))
+            && (this.getCzsygdEj() == null ? other.getCzsygdEj() == null : this.getCzsygdEj().equals(other.getCzsygdEj()))
+            && (this.getSygdEj() == null ? other.getSygdEj() == null : this.getSygdEj().equals(other.getSygdEj()))
+            && (this.getJtcyEj() == null ? other.getJtcyEj() == null : this.getJtcyEj().equals(other.getJtcyEj()))
+            && (this.getFxlssEj() == null ? other.getFxlssEj() == null : this.getFxlssEj().equals(other.getFxlssEj()))
+            && (this.getJtjspEj() == null ? other.getJtjspEj() == null : this.getJtjspEj().equals(other.getJtjspEj()))
+            && (this.getQtEj() == null ? other.getQtEj() == null : this.getQtEj().equals(other.getQtEj()))
+            && (this.getHxpyszd() == null ? other.getHxpyszd() == null : this.getHxpyszd().equals(other.getHxpyszd()))
+            && (this.getZjbjqnrbhq() == null ? other.getZjbjqnrbhq() == null : this.getZjbjqnrbhq().equals(other.getZjbjqnrbhq()))
+            && (this.getYjyabz() == null ? other.getYjyabz() == null : this.getYjyabz().equals(other.getYjyabz()))
+            && (this.getYjyl() == null ? other.getYjyl() == null : this.getYjyl().equals(other.getYjyl()))
+            && (this.getYdtfsj() == null ? other.getYdtfsj() == null : this.getYdtfsj().equals(other.getYdtfsj()))
+            && (this.getYjfhgc() == null ? other.getYjfhgc() == null : this.getYjfhgc().equals(other.getYjfhgc()))
+            && (this.getYjzjk() == null ? other.getYjzjk() == null : this.getYjzjk().equals(other.getYjzjk()))
+            && (this.getYjjcnl() == null ? other.getYjjcnl() == null : this.getYjjcnl().equals(other.getYjjcnl()))
+            && (this.getBz() == null ? other.getBz() == null : this.getBz().equals(other.getBz()))
+            && (this.getScs() == null ? other.getScs() == null : this.getScs().equals(other.getScs()))
+            && (this.getScd() == null ? other.getScd() == null : this.getScd().equals(other.getScd()))
+            && (this.getExcelrow() == null ? other.getExcelrow() == null : this.getExcelrow().equals(other.getExcelrow()))
+            && (this.getNd() == null ? other.getNd() == null : this.getNd().equals(other.getNd()))
+            && (this.getUploadfilename() == null ? other.getUploadfilename() == null : this.getUploadfilename().equals(other.getUploadfilename()))
+            && (this.getSyszsdm() == null ? other.getSyszsdm() == null : this.getSyszsdm().equals(other.getSyszsdm()))
+            && (this.getSyszshdm() == null ? other.getSyszshdm() == null : this.getSyszshdm().equals(other.getSyszshdm()))
+            && (this.getSyszxdm() == null ? other.getSyszxdm() == null : this.getSyszxdm().equals(other.getSyszxdm()))
+            && (this.getSyszxmc() == null ? other.getSyszxmc() == null : this.getSyszxmc().equals(other.getSyszxmc()))
+            && (this.getDatastate() == null ? other.getDatastate() == null : this.getDatastate().equals(other.getDatastate()))
+            && (this.getDatatype() == null ? other.getDatatype() == null : this.getDatatype().equals(other.getDatatype()))
+            && (this.getYear() == null ? other.getYear() == null : this.getYear().equals(other.getYear()))
+            && (this.getCzjtcyYjcyx() == null ? other.getCzjtcyYjcyx() == null : this.getCzjtcyYjcyx().equals(other.getCzjtcyYjcyx()))
+            && (this.getJtcyEjcyx() == null ? other.getJtcyEjcyx() == null : this.getJtcyEjcyx().equals(other.getJtcyEjcyx()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getSydmc() == null) ? 0 : getSydmc().hashCode());
+        result = prime * result + ((getSydbm() == null) ? 0 : getSydbm().hashCode());
+        result = prime * result + ((getSydlx() == null) ? 0 : getSydlx().hashCode());
+        result = prime * result + ((getCzfxy() == null) ? 0 : getCzfxy().hashCode());
+        result = prime * result + ((getJlfxyml() == null) ? 0 : getJlfxyml().hashCode());
+        result = prime * result + ((getCzsycyYj() == null) ? 0 : getCzsycyYj().hashCode());
+        result = prime * result + ((getCzwsgdYj() == null) ? 0 : getCzwsgdYj().hashCode());
+        result = prime * result + ((getCzjtcyYj() == null) ? 0 : getCzjtcyYj().hashCode());
+        result = prime * result + ((getFxlssYj() == null) ? 0 : getFxlssYj().hashCode());
+        result = prime * result + ((getJtjspYj() == null) ? 0 : getJtjspYj().hashCode());
+        result = prime * result + ((getQtYj() == null) ? 0 : getQtYj().hashCode());
+        result = prime * result + ((getCzsygdEj() == null) ? 0 : getCzsygdEj().hashCode());
+        result = prime * result + ((getSygdEj() == null) ? 0 : getSygdEj().hashCode());
+        result = prime * result + ((getJtcyEj() == null) ? 0 : getJtcyEj().hashCode());
+        result = prime * result + ((getFxlssEj() == null) ? 0 : getFxlssEj().hashCode());
+        result = prime * result + ((getJtjspEj() == null) ? 0 : getJtjspEj().hashCode());
+        result = prime * result + ((getQtEj() == null) ? 0 : getQtEj().hashCode());
+        result = prime * result + ((getHxpyszd() == null) ? 0 : getHxpyszd().hashCode());
+        result = prime * result + ((getZjbjqnrbhq() == null) ? 0 : getZjbjqnrbhq().hashCode());
+        result = prime * result + ((getYjyabz() == null) ? 0 : getYjyabz().hashCode());
+        result = prime * result + ((getYjyl() == null) ? 0 : getYjyl().hashCode());
+        result = prime * result + ((getYdtfsj() == null) ? 0 : getYdtfsj().hashCode());
+        result = prime * result + ((getYjfhgc() == null) ? 0 : getYjfhgc().hashCode());
+        result = prime * result + ((getYjzjk() == null) ? 0 : getYjzjk().hashCode());
+        result = prime * result + ((getYjjcnl() == null) ? 0 : getYjjcnl().hashCode());
+        result = prime * result + ((getBz() == null) ? 0 : getBz().hashCode());
+        result = prime * result + ((getScs() == null) ? 0 : getScs().hashCode());
+        result = prime * result + ((getScd() == null) ? 0 : getScd().hashCode());
+        result = prime * result + ((getExcelrow() == null) ? 0 : getExcelrow().hashCode());
+        result = prime * result + ((getNd() == null) ? 0 : getNd().hashCode());
+        result = prime * result + ((getUploadfilename() == null) ? 0 : getUploadfilename().hashCode());
+        result = prime * result + ((getSyszsdm() == null) ? 0 : getSyszsdm().hashCode());
+        result = prime * result + ((getSyszshdm() == null) ? 0 : getSyszshdm().hashCode());
+        result = prime * result + ((getSyszxdm() == null) ? 0 : getSyszxdm().hashCode());
+        result = prime * result + ((getSyszxmc() == null) ? 0 : getSyszxmc().hashCode());
+        result = prime * result + ((getDatastate() == null) ? 0 : getDatastate().hashCode());
+        result = prime * result + ((getDatatype() == null) ? 0 : getDatatype().hashCode());
+        result = prime * result + ((getYear() == null) ? 0 : getYear().hashCode());
+        result = prime * result + ((getCzjtcyYjcyx() == null) ? 0 : getCzjtcyYjcyx().hashCode());
+        result = prime * result + ((getJtcyEjcyx() == null) ? 0 : getJtcyEjcyx().hashCode());
+        return result;
+    }
+
+    @Override
     public String toString() {
-        return "City3_3{" +
-                "id='" + id + '\'' +
-                ", sydmc='" + sydmc + '\'' +
-                ", sydbm='" + sydbm + '\'' +
-                ", sydlx='" + sydlx + '\'' +
-                ", czfxy='" + czfxy + '\'' +
-                ", jlfxyml='" + jlfxyml + '\'' +
-                ", czsycyYj='" + czsycyYj + '\'' +
-                ", czwsgdYj='" + czwsgdYj + '\'' +
-                ", czjtcyYj='" + czjtcyYj + '\'' +
-                ", fxlssYj='" + fxlssYj + '\'' +
-                ", JTJSPYj='" + JTJSPYj + '\'' +
-                ", qtYj='" + qtYj + '\'' +
-                ", czsygdEj='" + czsygdEj + '\'' +
-                ", sygdEj='" + sygdEj + '\'' +
-                ", jtcyEj='" + jtcyEj + '\'' +
-                ", fxlssEj='" + fxlssEj + '\'' +
-                ", jtjspEj='" + jtjspEj + '\'' +
-                ", qtEj='" + qtEj + '\'' +
-                ", hxpyszd='" + hxpyszd + '\'' +
-                ", zjbjqnrbhq='" + zjbjqnrbhq + '\'' +
-                ", yjyabz='" + yjyabz + '\'' +
-                ", yjyl='" + yjyl + '\'' +
-                ", ydtfsj='" + ydtfsj + '\'' +
-                ", yjfhgc='" + yjfhgc + '\'' +
-                ", yjzjk='" + yjzjk + '\'' +
-                ", yjjcnl='" + yjjcnl + '\'' +
-                ", bz='" + bz + '\'' +
-                ", scs='" + scs + '\'' +
-                ", scd='" + scd + '\'' +
-                ", excelrow='" + excelrow + '\'' +
-                ", nd='" + nd + '\'' +
-                ", uploadDileName='" + uploadDileName + '\'' +
-                ", syszsdm='" + syszsdm + '\'' +
-                ", syszshdm='" + syszshdm + '\'' +
-                ", syszxdm='" + syszxdm + '\'' +
-                ", syszxmc='" + syszxmc + '\'' +
-                ", dataState='" + dataState + '\'' +
-                ", dataType='" + dataType + '\'' +
-                ", year='" + year + '\'' +
-                ", czjtcyYjcyx='" + czjtcyYjcyx + '\'' +
-                ", jtcyEjcyx='" + jtcyEjcyx + '\'' +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", sydmc=").append(sydmc);
+        sb.append(", sydbm=").append(sydbm);
+        sb.append(", sydlx=").append(sydlx);
+        sb.append(", czfxy=").append(czfxy);
+        sb.append(", jlfxyml=").append(jlfxyml);
+        sb.append(", czsycyYj=").append(czsycyYj);
+        sb.append(", czwsgdYj=").append(czwsgdYj);
+        sb.append(", czjtcyYj=").append(czjtcyYj);
+        sb.append(", fxlssYj=").append(fxlssYj);
+        sb.append(", jtjspYj=").append(jtjspYj);
+        sb.append(", qtYj=").append(qtYj);
+        sb.append(", czsygdEj=").append(czsygdEj);
+        sb.append(", sygdEj=").append(sygdEj);
+        sb.append(", jtcyEj=").append(jtcyEj);
+        sb.append(", fxlssEj=").append(fxlssEj);
+        sb.append(", jtjspEj=").append(jtjspEj);
+        sb.append(", qtEj=").append(qtEj);
+        sb.append(", hxpyszd=").append(hxpyszd);
+        sb.append(", zjbjqnrbhq=").append(zjbjqnrbhq);
+        sb.append(", yjyabz=").append(yjyabz);
+        sb.append(", yjyl=").append(yjyl);
+        sb.append(", ydtfsj=").append(ydtfsj);
+        sb.append(", yjfhgc=").append(yjfhgc);
+        sb.append(", yjzjk=").append(yjzjk);
+        sb.append(", yjjcnl=").append(yjjcnl);
+        sb.append(", bz=").append(bz);
+        sb.append(", scs=").append(scs);
+        sb.append(", scd=").append(scd);
+        sb.append(", excelrow=").append(excelrow);
+        sb.append(", nd=").append(nd);
+        sb.append(", uploadfilename=").append(uploadfilename);
+        sb.append(", syszsdm=").append(syszsdm);
+        sb.append(", syszshdm=").append(syszshdm);
+        sb.append(", syszxdm=").append(syszxdm);
+        sb.append(", syszxmc=").append(syszxmc);
+        sb.append(", datastate=").append(datastate);
+        sb.append(", datatype=").append(datatype);
+        sb.append(", year=").append(year);
+        sb.append(", czjtcyYjcyx=").append(czjtcyYjcyx);
+        sb.append(", jtcyEjcyx=").append(jtcyEjcyx);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

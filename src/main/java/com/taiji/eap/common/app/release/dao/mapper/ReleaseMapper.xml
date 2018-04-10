@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.common.app.release.dao.ReleaseDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.common.app.release.bean.Release">
+        <id column="version_id" property="versionId" jdbcType="VARCHAR"></id>
+        <result column="version" property="version" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+        <result column="file_id" property="fileId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        version_id,version,content,url,updatetime,file_id
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="versionId!=null and versionId!=''">
+                AND version_id = #{versionId,jdbcType=VARCHAR}
+            </if>
+            <if test="version!=null and version!=''">
+                ,AND version = #{version,jdbcType=VARCHAR}
+            </if>
+            <if test="content!=null and content!=''">
+                ,AND content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="url!=null and url!=''">
+                ,AND url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="updatetime!=null and updatetime!=''">
+                ,AND updatetime = #{updatetime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="fileId!=null and fileId!=''">
+                ,AND file_id = #{fileId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM t_app_release
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM t_app_release
+        WHERE version_id = #{versionId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.common.app.release.bean.Release">
+        INSERT INTO t_app_release(
+        version_id,version,content,url,updatetime,file_id)
+        VALUES(
+        #{versionId,jdbcType=VARCHAR},#{version,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{updatetime,jdbcType=TIMESTAMP},#{fileId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.common.app.release.bean.Release">
+        INSERT INTO t_app_release
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                version_id,
+            <if test="version!=null">
+                version,
+            </if>
+            <if test="content!=null">
+                content,
+            </if>
+            <if test="url!=null">
+                url,
+            </if>
+            <if test="updatetime!=null">
+                updatetime,
+            </if>
+            <if test="fileId!=null">
+                file_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #{versionId,jdbcType=VARCHAR},
+            <if test="version!=null">
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="content!=null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="url!=null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime!=null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fileId!=null">
+                #{fileId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.String">
+        UPDATE t_app_release
+        <set>
+            <if test="versionId!=null">
+                version_id = #{versionId,jdbcType=VARCHAR},
+            </if>
+            <if test="version!=null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="content!=null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="url!=null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime!=null">
+                updatetime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fileId!=null">
+                file_id = #{fileId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE version_id = #{versionId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.common.app.release.bean.Release">
+        UPDATE t_app_release SET
+        version_id=#{versionId,jdbcType=VARCHAR},version=#{version,jdbcType=VARCHAR},content=#{content,jdbcType=VARCHAR},url=#{url,jdbcType=VARCHAR},updatetime=#{updatetime,jdbcType=TIMESTAMP},file_id=#{fileId,jdbcType=VARCHAR}
+        WHERE version_id = #{versionId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM t_app_release WHERE version_id = #{versionId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM t_app_release
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.common.app.release.bean.Release" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM t_app_release
+        <include refid="condition"/>
+    </select>
+
+    <select id="getLastVersion" resultMap="BaseResultMap">
+        SELECT <include refid="BASE_COLUMN_LIST"/> FROM t_app_release
+        ORDER BY version DESC LIMIT 1
+    </select>
+
+</mapper>

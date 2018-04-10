@@ -12,11 +12,12 @@
         province:0,
         city:0,
         district:0,
+        level:3,
         onSelect:function (level,value) {
 
         },
         onSelectResult:function (sheng,shi,xian) {
-            
+
         }
     };
 
@@ -102,8 +103,9 @@
                                     '</div>';
                                 $this.append(areaHtml);
                                 $this.append(cityHtml);
-                                $this.append(districtHtml);
-
+                                if(settings.level==3){
+                                    $this.append(districtHtml);
+                                }
                                 $('#provinceSelect').append(areaOptions.join(''));
                                 $('#citySelect').append(citysOptions.join(''));
                                 $('#districtSelect').append(districtOptions.join(''));

@@ -11,12 +11,12 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 #if(${param.isTree}=="01")
-import com.taiji.eap.common.generator.bean.LayuiTree;
+import com.taiji.eap.common.base.BaseTree;
 #else
 import com.taiji.eap.common.base.BaseModel;
 #end
 #if(${param.isTree}=="01")
-    #set($extendClass="LayuiTree")
+    #set($extendClass="BaseTree")
 #else
     #set($extendClass="BaseModel")
 #end

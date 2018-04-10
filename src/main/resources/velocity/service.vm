@@ -84,7 +84,7 @@ public interface #toUpperCase(${param.alias})Service{
     * @return
     * @throws Exception
     */
-    List<LayuiTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception;
+    List<BaseTree> treeView(#getParentIdFieldType($columns) ${parentField}) throws Exception;
 #end
     /**
     * 选择性插入

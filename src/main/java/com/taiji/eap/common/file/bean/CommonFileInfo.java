@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.taiji.eap.common.base.BaseModel;
 public class CommonFileInfo extends BaseModel{
-    private Long fileId;//文件主键
+    private String fileId;//文件主键
     private String fileSuffix;//文件后缀
     private String fileNativeName;//原始名称
     private String fileGenerateName;//生成名称
@@ -22,11 +22,11 @@ public class CommonFileInfo extends BaseModel{
     private Long creater;//
     private String valid;//
 
-    public Long getFileId() {
+    public String getFileId() {
         return fileId;
     }
 
-    public void setFileId(Long fileId) {
+    public void setFileId(String fileId) {
         this.fileId = fileId;
     }
 

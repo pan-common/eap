@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taiji.eap.wsm.water.dao.ConfigTreeDao">
+    <resultMap id="BaseResultMap" type="com.taiji.eap.wsm.water.bean.ConfigTree">
+        <id column="id" property="id" jdbcType="VARCHAR"></id>
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="jump_page" property="jumpPage" jdbcType="VARCHAR" />
+        <result column="config_type" property="configType" jdbcType="VARCHAR" />
+        <result column="view" property="view" jdbcType="VARCHAR" />
+        <result column="seq" property="seq" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="BASE_COLUMN_LIST">
+        id,title,parent_id,image,jump_page,config_type,view
+    </sql>
+
+    <sql id="condition">
+        <where>
+            1=1
+            <if test="id!=null and id!=''">
+                AND id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="title!=null and title!=''">
+                ,AND title = #{title,jdbcType=VARCHAR}
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                ,AND parent_id = #{parentId,jdbcType=VARCHAR}
+            </if>
+            <if test="image!=null and image!=''">
+                ,AND image = #{image,jdbcType=VARCHAR}
+            </if>
+            <if test="jumpPage!=null and jumpPage!=''">
+                ,AND jump_page = #{jumpPage,jdbcType=VARCHAR}
+            </if>
+            <if test="type!=null and type!=''">
+                ,AND config_type = #{configType,jdbcType=VARCHAR}
+            </if>
+            <if test="view!=null and view!=''">
+                ,AND view = #{view,jdbcType=VARCHAR}
+            </if>
+            <if test="view!=null and view!=''">
+                ,AND seq = #{seq,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT * FROM wsm_water_config_tree
+        <where>
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+    </select>
+    <select id="listByPid" resultMap="BaseResultMap">
+        SELECT * FROM wsm_water_config_tree
+        <where>
+            parent_id = #{parentId,jdbcType=VARCHAR}
+            <if test="searchText!=null and searchText!=''">
+                AND CONCAT() LIKE CONCAT("%",#{searchText},"%")
+            </if>
+        </where>
+        ORDER BY seq
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        SELECT * FROM wsm_water_config_tree
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.taiji.eap.wsm.water.bean.ConfigTree">
+        INSERT INTO wsm_water_config_tree(
+        id,title,parent_id,image,jump_page,config_type,view,seq)
+        VALUES(
+        #{id,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{parentId,jdbcType=VARCHAR},#{image,jdbcType=VARCHAR},#{jumpPage,jdbcType=VARCHAR},#{configType,jdbcType=VARCHAR},#{view,jdbcType=VARCHAR},#{seq,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.taiji.eap.wsm.water.bean.ConfigTree">
+        INSERT INTO wsm_water_config_tree
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                id,
+            <if test="title!=null">
+                title,
+            </if>
+            <if test="parentId!=null">
+                parent_id,
+            </if>
+            <if test="image!=null">
+                image,
+            </if>
+            <if test="jumpPage!=null">
+                jump_page,
+            </if>
+            <if test="configType!=null">
+                config_type,
+            </if>
+            <if test="view!=null">
+                view,
+            </if>
+            <if test="seq!=null">
+                seq,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                #{id,jdbcType=VARCHAR},
+            <if test="title!=null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId!=null">
+                #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="image!=null">
+                #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="jumpPage!=null">
+                #{jumpPage,jdbcType=VARCHAR},
+            </if>
+            <if test="configType!=null">
+                #{configType,jdbcType=VARCHAR},
+            </if>
+            <if test="view!=null">
+                #{view,jdbcType=VARCHAR},
+            </if>
+            <if test="seq!=null">
+                #{seq,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="java.lang.String">
+        UPDATE wsm_water_config_tree
+        <set>
+            <if test="id!=null">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="title!=null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId!=null">
+                parent_id = #{parentId,jdbcType=VARCHAR},
+            </if>
+            <if test="image!=null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="jumpPage!=null">
+                jump_page = #{jumpPage,jdbcType=VARCHAR},
+            </if>
+            <if test="configType!=null">
+                config_type = #{configType,jdbcType=VARCHAR},
+            </if>
+            <if test="view!=null">
+                view = #{view,jdbcType=VARCHAR},
+            </if>
+            <if test="seq!=null">
+                seq = #{seq,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.taiji.eap.wsm.water.bean.ConfigTree">
+        UPDATE wsm_water_config_tree SET
+        id=#{id,jdbcType=VARCHAR},title=#{title,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=VARCHAR},image=#{image,jdbcType=VARCHAR},jump_page=#{jumpPage,jdbcType=VARCHAR},config_type=#{configType,jdbcType=VARCHAR},view=#{view,jdbcType=VARCHAR},seq=#{seq,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM wsm_water_config_tree WHERE id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM wsm_water_config_tree
+    </select>
+
+    <select id="queryAll" parameterType="com.taiji.eap.wsm.water.bean.ConfigTree" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN_LIST"/>
+        FROM wsm_water_config_tree
+        <include refid="condition"/>
+    </select>
+
+</mapper>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("baseInfo")
 public class BaseInfoController extends BaseController{
@@ -32,6 +34,19 @@ public class BaseInfoController extends BaseController{
         }
         return pageInfo;
     }
+
+    @GetMapping(value = "selectAll")
+    @ResponseBody
+    public List<BaseInfo> selectAll(){
+        List<BaseInfo> baseInfos = null;
+        try {
+            baseInfos = baseInfoService.selectAll();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return baseInfos;
+    }
+
     @PostMapping(value = "add")
     @ResponseBody
     public Response<String> add(BaseInfo baseInfo){

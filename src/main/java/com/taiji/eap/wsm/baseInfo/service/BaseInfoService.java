@@ -65,4 +65,10 @@ public interface BaseInfoService{
     List<BaseInfo> queryAll(BaseInfo baseInfo);
 
     BaseInfo selectOneByUserId(String userId);
+
+    /**
+     * 查询全部用户基本信息
+     * @return
+     */
+    List<BaseInfo> selectAll();
 }

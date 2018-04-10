@@ -97,14 +97,14 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
      * @throws Exception
      */
     public List<T> getDatas(String key,String extraKey,long timeout,TimeUnit unit,OnRedisSelectListener listener) throws Exception{
-        boolean isKey = false;
-        if("redis:keynames".equals(key)) {
-            isKey = true;
-        } else {
-            List<String> allKeys =  redisKeyService.getAllKeys();
-            isKey = allKeys.contains(key);
-        }
-        if(isKey) {
+//        boolean isKey = false;
+//        if("redis:keynames".equals(key)) {
+//            isKey = true;
+//        } else {
+//            List<String> allKeys =  redisKeyService.getAllKeys();
+//            isKey = allKeys.contains(key);
+//        }
+//        if(isKey) {
             String keyName = StringUtils.isEmpty(extraKey)?key:key+":"+extraKey;
             ListOperations<String, T> listOperations = redisTemplate.opsForList();
             try {
@@ -129,9 +129,9 @@ public class RedisFactoryDao<T extends Serializable> extends RedisGeneratorDao<T
                 List<T> list = listener.fruitless();
                 return list;
             }
-        }else {
-            throw new Exception("key名称不正确，Redis缓存失败");
-        }
+//        }else {
+//            throw new Exception("key名称不正确，Redis缓存失败");
+//        }
     }
 
     /**

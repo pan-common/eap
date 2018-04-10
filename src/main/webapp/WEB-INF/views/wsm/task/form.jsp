@@ -28,7 +28,7 @@
                     <div id="district" class="layui-input-block" style="margin-right: 10px;width: 600px">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item" hidden="true">
                     <label class="layui-form-label">任务地区</label>
                     <div class="layui-input-inline" style="margin-right: 10px;width: 320px">
                         <div class="layui-row layui-col-space12">
@@ -138,6 +138,7 @@
         $('#district').District('init',{
             layuiForm:form,
             layer:layer,
+            level:2,
             onSelect:function (level,value) {
 
             },
